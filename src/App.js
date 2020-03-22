@@ -7,10 +7,14 @@ function SetPhrase(G, ctx, phrase) {
 
 function Guess(G, ctx, phrase) {
         G.guesses.push(ctx.playerID + ": " + phrase);
+        if(phrase == G.phrase) {
+                G.points[ctx.playerID] += 1;
+                ctx.events.endTurn();
+        }
 }
 
 const Kalambury = {
-        setup: (ctx, setupData) => ({ phrase: "", guesses: [] }),
+        setup: (ctx, setupData) => ({ phrase: "", points: Array(ctx.numPlayers).fill(0), guesses: [] }),
 
         moves: { SetPhrase },
 
