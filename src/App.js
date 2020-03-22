@@ -1,24 +1,47 @@
 import { Client } from 'boardgame.io/react';
 import KalamburyBoard from './KalamburyBoard';
 
-Array.prototype.shuffle = function() {
-  for (let i = this.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [this[i], this[j]] = [this[j], this[i]];
-  }
-  return this;
-}
 
 function Guess(G, ctx, phrase) {
-  G.guesses.push(ctx.playerID + ": " + phrase);
-  if(phrase === G.phrase) {
+  if (!phrase) { phrase = G.phrase; } // DEBUG
+  if(phrase.toLowerCase() === G.phrase.toLowerCase()) {
     G.points[ctx.playerID] += 1;
+    G.points[ctx.currentPlayer] += 1;
     ctx.events.endTurn();
   }
 }
 
 function UpdateDrawing(G, _ctx, lines) {
   G.drawing = lines
+}
+
+function Forfeit(G, ctx) {
+  G.points[ctx.currentPlayer] -= 1;
+  ctx.events.endTurn();
+}
+
+function IndexOfMax(array) {
+  let max = array[0];
+  let maxIndexes = [0];
+
+  for (let i = 1; i < array.length; i++) {
+    if (array[i] > max) {
+      max = array[i];
+      maxIndexes = [i]
+    } else if (array[i] === max) {
+      maxIndexes.push(i);
+    }
+  }
+
+  return maxIndexes;
+}
+
+Array.prototype.shuffle = function() {
+  for (let i = this.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [this[i], this[j]] = [this[j], this[i]];
+  }
+  return this;
 }
 
 const PHRASES = [
@@ -36,14 +59,15 @@ const PHRASES = [
 const Kalambury = {
   setup: (ctx, setupData) => ({ phrase: "", points: Array(ctx.numPlayers).fill(0), phrases: PHRASES.slice().shuffle(), drawing: [] }),
 
-  moves: { },
-
   turn: {
     onBegin: (G, ctx) => {
       G.phrase = G.phrases.pop();
-      ctx.events.setActivePlayers({ currentPlayer: 'draw', others: 'guess' });
+      ctx.events.setActivePlayers({currentPlayer: 'draw', others: 'guess' });
     },
     stages: {
+      draw: {
+        moves: { Forfeit }
+      },
       guess: {
         moves: { Guess }
       },
@@ -51,7 +75,13 @@ const Kalambury = {
         moves: { UpdateDrawing }
       }
     }
-  }
+  },
+
+  endIf: (G, ctx) => {
+    if (G.phrases.length === 0 && !G.phrase) {
+      return { winners: IndexOfMax(G.points) };
+    }
+  },
 };
 
 const App = Client({ 
