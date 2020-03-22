@@ -1,6 +1,14 @@
 import { Client } from 'boardgame.io/react';
 import KalamburyBoard from './KalamburyBoard';
 
+Array.prototype.shuffle = function() {
+  for (let i = this.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [this[i], this[j]] = [this[j], this[i]];
+  }
+  return this;
+}
+
 function Guess(G, ctx, phrase) {
   G.guesses.push(ctx.playerID + ": " + phrase);
   if(phrase === G.phrase) {
@@ -9,12 +17,8 @@ function Guess(G, ctx, phrase) {
   }
 }
 
-Array.prototype.shuffle = function() {
-  for (let i = this.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [this[i], this[j]] = [this[j], this[i]];
-  }
-  return this;
+function UpdateDrawing(G, _ctx, lines) {
+  G.drawing = lines
 }
 
 const PHRASES = [
@@ -30,18 +34,21 @@ const PHRASES = [
 ]
 
 const Kalambury = {
-  setup: (ctx, setupData) => ({ phrase: "", points: Array(ctx.numPlayers).fill(0), phrases: PHRASES.slice().shuffle() }),
+  setup: (ctx, setupData) => ({ phrase: "", points: Array(ctx.numPlayers).fill(0), phrases: PHRASES.slice().shuffle(), drawing: [] }),
 
-  moves: {},
+  moves: { },
 
   turn: {
     onBegin: (G, ctx) => {
       G.phrase = G.phrases.pop();
-      ctx.events.setActivePlayers({ others: 'guess' });
+      ctx.events.setActivePlayers({ currentPlayer: 'draw', others: 'guess' });
     },
     stages: {
       guess: {
         moves: { Guess }
+      },
+      draw: {
+        moves: { UpdateDrawing }
       }
     }
   }

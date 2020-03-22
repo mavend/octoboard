@@ -1,30 +1,42 @@
 import React, { useState, useEffect } from "react";
 
-const DrawArea = ({width, height}) => {
+const DrawArea = ({width, height, onUpdate}) => {
   const [lines, setLines] = useState([]);
   const [isDrawing, setIsDrawing] = useState(false);
 
   useEffect(() => {
     document.addEventListener('mouseup', handleMouseUp);
     return () => document.removeEventListener('mouseup', handleMouseUp);
-  }, [])
+  }, []);
+
+  const addPointFromEvent = (event, addLine=false) => {
+    const point = relativeCoordsForEvent(event);
+    let newLines;
+    if (addLine) {
+      newLines = [...lines, [point]];
+    } else {
+      newLines = [
+        ...lines.slice(0, lines.length - 1),
+        [...lines[lines.length - 1], point]
+      ]
+    }
+    setLines(newLines);
+    if(onUpdate) window.requestAnimationFrame(() => onUpdate(newLines));
+  }
 
   const relativeCoordsForEvent = ({ currentTarget, clientX, clientY }) => {
     const { left, top } = currentTarget.getBoundingClientRect();
-    return { x: clientX - left, y: clientY - top };
+    return [clientX - left, clientY - top ];
   };
 
   const handleMouseDown = (e) => {
     setIsDrawing(true);
-    setLines([...lines, [relativeCoordsForEvent(e)]])
+    addPointFromEvent(e, true);
   };
 
   const handleMouseMove = (e) => {
     if (isDrawing) {
-      setLines([
-        ...lines.slice(0, lines.length - 1),
-        [...lines[lines.length - 1], relativeCoordsForEvent(e)]
-      ])
+      addPointFromEvent(e);
     }
   };
 
@@ -39,7 +51,8 @@ const DrawArea = ({width, height}) => {
       style={{
         width: `${width}px`,
         height: `${height}px`,
-        backgroundColor: "#eeeeee"
+        backgroundColor: "#eeeeee",
+        cursor: "crosshair",
       }}>
       <Drawing width={width} height={height} lines={lines} />
     </div>
@@ -55,7 +68,7 @@ const Drawing = ({ lines }) => (
 );
 
 const DrawingLine = ({ line }) => {
-  const pathData = "M " + line.map(p => `${p.x} ${p.y}`).join(" L ");
+  const pathData = "M " + line.map(p => p.join(' ')).join(" L ");
   return (
     <path fill="none" stroke="black" d={pathData} />
   );
