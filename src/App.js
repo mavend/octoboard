@@ -66,14 +66,11 @@ const Kalambury = {
     },
     stages: {
       draw: {
-        moves: { Forfeit }
+        moves: { UpdateDrawing, Forfeit }
       },
       guess: {
         moves: { Guess }
       },
-      draw: {
-        moves: { UpdateDrawing }
-      }
     }
   },
 
