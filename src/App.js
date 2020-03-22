@@ -1,5 +1,7 @@
+import React from 'react';
 import { PlayerView } from 'boardgame.io/core';
 import { Client } from 'boardgame.io/react';
+import { Local } from 'boardgame.io/multiplayer';
 import KalamburyBoard from './KalamburyBoard';
 
 function setupKalambury(ctx, setupData) {
@@ -103,11 +105,21 @@ const Kalambury = {
   playerView: PlayerView.STRIP_SECRETS,
 };
 
-const App = Client({ 
+const KalamburyClient = Client({ 
   game: Kalambury, 
   board: KalamburyBoard,
-  numPlayers: 3
+  multiplayer: Local(),
+  numPlayers: 3,
+  debug: false
 });
+
+const App = () => (
+  <div>
+    <KalamburyClient playerID="0" />
+    <KalamburyClient playerID="1" />
+    <KalamburyClient playerID="2" />
+  </div>
+);
 
 export default App;
 
