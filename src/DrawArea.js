@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Drawing from "./Drawing";
 
-const DrawArea = ({width, height, onUpdate}) => {
-  const [lines, setLines] = useState([]);
+const DrawArea = ({initialLines, width, height, onUpdate}) => {
+  const [lines, setLines] = useState(initialLines || []);
   const [isDrawing, setIsDrawing] = useState(false);
   const [penColor, setPenColor] = useState("#000000");
 
@@ -23,7 +23,9 @@ const DrawArea = ({width, height, onUpdate}) => {
       ]
     }
     setLines(newLines);
-    if(onUpdate) window.requestAnimationFrame(() => onUpdate(newLines));
+    if(onUpdate) {
+      window.requestAnimationFrame(() => onUpdate(newLines));
+    }
   }
 
   const relativeCoordsForEvent = ({ currentTarget, clientX, clientY }) => {
