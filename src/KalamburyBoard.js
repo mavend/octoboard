@@ -1,10 +1,15 @@
 import React from "react";
 import DrawArea from "./DrawArea";
 
-const KalamburyBoard = ({ G, moves }) => {
+const KalamburyBoard = ({ G, ctx, moves }) => {
 
-  const { phrase } = G;
+  const { players } = G;
   const { UpdateDrawing } = moves;
+  const { currentPlayer } = ctx;
+  let phrase = "";
+  if (players[currentPlayer]) {
+    phrase = players[currentPlayer].phrase;
+  }
 
   return (
     <div>
