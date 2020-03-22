@@ -13,9 +13,9 @@ const Drawing = ({ lines, width, height }) => (
 );
 
 const DrawingLine = ({ line }) => {
-  const pathData = "M " + line.map(p => p.join(' ')).join(" L ");
+  const pathData = "M " + line.points.map(p => p.join(' ')).join(" L ");
   return (
-    <path fill="none" stroke="black" d={pathData} />
+    <path fill="none" stroke={line.color} d={pathData} />
   );
 };
 
