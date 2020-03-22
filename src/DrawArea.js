@@ -15,14 +15,12 @@ const DrawArea = ({width, height}) => {
   };
 
   const handleMouseDown = (e) => {
-    console.log("Down")
     setIsDrawing(true);
     setLines([...lines, [relativeCoordsForEvent(e)]])
   };
 
   const handleMouseMove = (e) => {
     if (isDrawing) {
-      console.log("Move");
       setLines([
         ...lines.slice(0, lines.length - 1),
         [...lines[lines.length - 1], relativeCoordsForEvent(e)]
@@ -31,7 +29,6 @@ const DrawArea = ({width, height}) => {
   };
 
   const handleMouseUp = (e) => {
-    console.log("Up")
     setIsDrawing(false);
   };
 
