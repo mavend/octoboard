@@ -6,7 +6,7 @@ function setupKalambury(ctx, setupData) {
   const G = {
     secret: {
       phrase: "",
-      phrases: PHRASES.slice().shuffle(),
+      phrases: ctx.random.Shuffle(PHRASES.slice()),
     },
     players: {},
     points: Array(ctx.numPlayers).fill(0),
@@ -56,14 +56,6 @@ function IndexOfMax(array) {
   return maxIndexes;
 }
 
-Array.prototype.shuffle = function() {
-  for (let i = this.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [this[i], this[j]] = [this[j], this[i]];
-  }
-  return this;
-}
-
 const PHRASES = [
   "Baba z wozu koniom lżej",
   "Gdzie kucharek sześć tam nie ma co jeść",
@@ -77,6 +69,8 @@ const PHRASES = [
 ]
 
 const Kalambury = {
+  seed: "test",
+
   setup: setupKalambury,
 
   turn: {
