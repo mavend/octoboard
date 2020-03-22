@@ -2,20 +2,27 @@ import React from "react";
 
 const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll }) => {
   const colors = [
-    "#000000",
-    "#ff0000",
-    "#00ff00",
-    "#0000ff",
+    "#424953",
+    "#D94452",
+    "#FB6D51",
+    "#FECD57",
+    "#8AC054",
+    "#B4E080",
+    "#46CEAD",
+    "#4B89DA",
+    "#AC92EA",
+    "#F299CE",
+    "#F4D0B5"
   ];
 
   const onClickEraser = () => {
-    onColorChange("#eeeeee");
+    onColorChange("#F4F6F9");
     onSizeChange(25);
   };
 
   const onClickColor = (color) => {
     onColorChange(color);
-    onSizeChange(2);
+    onSizeChange(3);
   }
 
   const colorsItems = colors.map((color) =>
@@ -46,11 +53,11 @@ const ColorBox = ({ color, onClick }) => (
     onClick={onClick}
     style={{
       boxSizing: "border-box",
-      border: "2px solid black",
+      border: "2px solid #A9B1BC",
       width: "20px",
       height: "20px",
       margin: "0 5px",
-      backgroundColor: color || "#eeeeee",
+      backgroundColor: color || "#F4F6F9",
       cursor: "pointer" }}>
   </div>
 );

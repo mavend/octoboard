@@ -7,8 +7,8 @@ var simplify = require('simplify-path');
 const DrawArea = ({initialLines, width, height, onUpdate}) => {
   const [lines, setLines] = useState(initialLines || []);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [penColor, setPenColor] = useState("#000000");
-  const [penSize, setPenSize] = useState(2);
+  const [penColor, setPenColor] = useState("#424953");
+  const [penSize, setPenSize] = useState(3);
 
   useEffect(() => {
     document.addEventListener('mouseup', handleMouseUp);

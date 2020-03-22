@@ -4,7 +4,7 @@ const Drawing = ({ lines, width, height }) => (
   <svg style={{
     width: `${width}px`,
     height: `${height}px`,
-    backgroundColor: "#eeeeee"
+    backgroundColor: "#F4F6F9"
   }}>
     {lines.map((line, id) => (
       <DrawingLine key={id} line={line} />
