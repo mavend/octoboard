@@ -32,7 +32,7 @@ function Guess(G, ctx, phrase) {
 }
 
 function UpdateDrawing(G, _ctx, lines) {
-  G.drawing = lines
+  G.drawing = lines;
 }
 
 function Forfeit(G, ctx) {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Drawing from "./Drawing";
 
 const DrawArea = ({width, height, onUpdate}) => {
   const [lines, setLines] = useState([]);
@@ -48,33 +49,10 @@ const DrawArea = ({width, height, onUpdate}) => {
     <div id="draw-area"
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
-      style={{
-        width: `${width}px`,
-        height: `${height}px`,
-        backgroundColor: "#eeeeee",
-        cursor: "crosshair",
-      }}>
+      style={{cursor: "crosshair"}}>
       <Drawing width={width} height={height} lines={lines} />
     </div>
   )
 };
 
-const Drawing = ({ lines }) => (
-  <svg style={{width: "100%", height: "100%"}}>
-    {lines.map((line, id) => (
-      <DrawingLine key={id} line={line} />
-    ))}
-  </svg>
-);
-
-const DrawingLine = ({ line }) => {
-  const pathData = "M " + line.map(p => p.join(' ')).join(" L ");
-  return (
-    <path fill="none" stroke="black" d={pathData} />
-  );
-};
-
 export default DrawArea;
-export {
-  Drawing
-}
