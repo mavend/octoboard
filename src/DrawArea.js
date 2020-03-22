@@ -52,12 +52,17 @@ const DrawArea = ({initialLines, width, height, onUpdate}) => {
     setPenColor(newColor);
   }
 
+  const handleClearAll = () => {
+    setLines([])
+    if(onUpdate) { onUpdate([]) }
+  }
+
   return (
     <div style={{
       width: `${width}px`,
       height: `${parseFloat(height) + 20}px`
     }}>
-      <Toolbar handleColorChange={handleColorChange} width={width} height={20} />
+      <Toolbar handleColorChange={handleColorChange} handleClearAll={handleClearAll} width={width} height={20} />
       <div id="draw-area"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
@@ -68,15 +73,25 @@ const DrawArea = ({initialLines, width, height, onUpdate}) => {
   )
 };
 
-const Toolbar = ({ handleColorChange }) => {
+const Toolbar = ({ handleColorChange, handleClearAll }) => {
   const colors = [
     "#000000",
     "#ff0000",
     "#00ff00",
-    "#0000ff"
+    "#0000ff",
+    null
   ];
   const colorsItems = colors.map((color) => 
-    <div key={color} onMouseDown={(e) => handleColorChange(color)} style={{ width: "20px", height: "20px", backgroundColor: `${color}`, float: "left", cursor: "pointer" }}></div>
+    <span key={color} 
+      onMouseDown={(e) => handleColorChange(color)} 
+      style={{
+        width: "20px",
+        height: "20px",
+        backgroundColor: color || "#eeeeee",
+        float: "left",
+        cursor: "pointer" 
+      }}>
+    </span>
   );
   return (
     <div style={{
@@ -84,6 +99,7 @@ const Toolbar = ({ handleColorChange }) => {
       height: "20px"
     }}>
       {colorsItems}
+      <button onClick={handleClearAll}>Clear All</button>
     </div>
   );
 };

@@ -14,8 +14,12 @@ const Drawing = ({ lines, width, height }) => (
 
 const DrawingLine = ({ line }) => {
   const pathData = "M " + line.points.map(p => p.join(' ')).join(" L ");
+  const isRubber = !line.color;
   return (
-    <path fill="none" stroke={line.color} d={pathData} />
+    <path fill="none" 
+      stroke={isRubber ? "#eeeeee" : line.color}
+      strokeWidth={isRubber ? 25 : 2} 
+      d={pathData} />
   );
 };
 
