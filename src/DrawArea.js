@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Drawing from "./Drawing";
+import Toolbar from "./Toolbar";
 
 const DrawArea = ({initialLines, width, height, onUpdate}) => {
   const [lines, setLines] = useState(initialLines || []);
@@ -48,10 +49,6 @@ const DrawArea = ({initialLines, width, height, onUpdate}) => {
     setIsDrawing(false);
   };
 
-  const handleColorChange = (newColor) => {
-    setPenColor(newColor);
-  }
-
   const handleClearAll = () => {
     setLines([])
     if(onUpdate) { onUpdate([]) }
@@ -62,7 +59,7 @@ const DrawArea = ({initialLines, width, height, onUpdate}) => {
       width: `${width}px`,
       height: `${parseFloat(height) + 20}px`
     }}>
-      <Toolbar handleColorChange={handleColorChange} handleClearAll={handleClearAll} width={width} height={20} />
+      <Toolbar currentColor={penColor} handleColorChange={setPenColor} handleClearAll={handleClearAll} width={width} height={20} />
       <div id="draw-area"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
@@ -71,37 +68,6 @@ const DrawArea = ({initialLines, width, height, onUpdate}) => {
       </div>
     </div>
   )
-};
-
-const Toolbar = ({ handleColorChange, handleClearAll }) => {
-  const colors = [
-    "#000000",
-    "#ff0000",
-    "#00ff00",
-    "#0000ff",
-    null
-  ];
-  const colorsItems = colors.map((color) => 
-    <span key={color} 
-      onMouseDown={(e) => handleColorChange(color)} 
-      style={{
-        width: "20px",
-        height: "20px",
-        backgroundColor: color || "#eeeeee",
-        float: "left",
-        cursor: "pointer" 
-      }}>
-    </span>
-  );
-  return (
-    <div style={{
-      width: "100%",
-      height: "20px"
-    }}>
-      {colorsItems}
-      <button onClick={handleClearAll}>Clear All</button>
-    </div>
-  );
 };
 
 export default DrawArea;
