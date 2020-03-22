@@ -6,6 +6,7 @@ const DrawArea = ({initialLines, width, height, onUpdate}) => {
   const [lines, setLines] = useState(initialLines || []);
   const [isDrawing, setIsDrawing] = useState(false);
   const [penColor, setPenColor] = useState("#000000");
+  const [penSize, setPenSize] = useState(2);
 
   useEffect(() => {
     document.addEventListener('mouseup', handleMouseUp);
@@ -14,15 +15,10 @@ const DrawArea = ({initialLines, width, height, onUpdate}) => {
 
   const addPointFromEvent = (event, addLine=false) => {
     const point = relativeCoordsForEvent(event);
-    let newLines;
-    if (addLine) {
-      newLines = [...lines, { points: [point], color: penColor }];
-    } else {
-      newLines = [
-        ...lines.slice(0, lines.length - 1),
-        { points: [...lines[lines.length - 1].points, point], color: penColor }
-      ]
-    }
+    const newLines = [...lines];
+    if (addLine) newLines.push({points: [], color: penColor, width: penSize});
+    newLines[newLines.length - 1].points.push(point);
+
     setLines(newLines);
     if(onUpdate) {
       window.requestAnimationFrame(() => onUpdate(newLines));
@@ -31,7 +27,7 @@ const DrawArea = ({initialLines, width, height, onUpdate}) => {
 
   const relativeCoordsForEvent = ({ currentTarget, clientX, clientY }) => {
     const { left, top } = currentTarget.getBoundingClientRect();
-    return [clientX - left, clientY - top ];
+    return [clientX - left, clientY - top];
   };
 
   const handleMouseDown = (e) => {
@@ -59,7 +55,7 @@ const DrawArea = ({initialLines, width, height, onUpdate}) => {
       width: `${width}px`,
       height: `${parseFloat(height) + 20}px`
     }}>
-      <Toolbar currentColor={penColor} handleColorChange={setPenColor} handleClearAll={handleClearAll} width={width} height={20} />
+      <Toolbar currentColor={penColor} onColorChange={setPenColor} onSizeChange={setPenSize} onClearAll={handleClearAll} width={width} height={20} />
       <div id="draw-area"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}

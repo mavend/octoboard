@@ -12,13 +12,12 @@ const Drawing = ({ lines, width, height }) => (
   </svg>
 );
 
-const DrawingLine = ({ line }) => {
-  const pathData = "M " + line.points.map(p => p.join(' ')).join(" L ");
-  const isRubber = !line.color;
+const DrawingLine = ({ line: { points, color, width} }) => {
+  const pathData = "M " + points.map(p => p.join(' ')).join(" L ");
   return (
     <path fill="none" 
-      stroke={isRubber ? "#eeeeee" : line.color}
-      strokeWidth={isRubber ? 25 : 2} 
+      stroke={color}
+      strokeWidth={width} 
       d={pathData} />
   );
 };
