@@ -2,11 +2,33 @@ import { Client } from 'boardgame.io/react';
 import KalamburyBoard from './KalamburyBoard';
 
 function Guess(G, ctx, phrase) {
-  G.guesses.push(ctx.playerID + ": " + phrase);
+  if (!phrase) { phrase = G.phrase; } // DEBUG
   if(phrase === G.phrase) {
     G.points[ctx.playerID] += 1;
+    G.points[ctx.currentPlayer] += 1;
     ctx.events.endTurn();
   }
+}
+
+function Forfeit(G, ctx) {
+  G.points[ctx.currentPlayer] -= 1;
+  ctx.events.endTurn();
+}
+
+function IndexOfMax(array) {
+  let max = array[0];
+  let maxIndexes = [0];
+
+  for (let i = 1; i < array.length; i++) {
+    if (array[i] > max) {
+      max = array[i];
+      maxIndexes = [i]
+    } else if (array[i] === max) {
+      maxIndexes.push(i);
+    }
+  }
+
+  return maxIndexes;
 }
 
 Array.prototype.shuffle = function() {
@@ -32,19 +54,26 @@ const PHRASES = [
 const Kalambury = {
   setup: (ctx, setupData) => ({ phrase: "", points: Array(ctx.numPlayers).fill(0), phrases: PHRASES.slice().shuffle() }),
 
-  moves: {},
-
   turn: {
     onBegin: (G, ctx) => {
       G.phrase = G.phrases.pop();
-      ctx.events.setActivePlayers({ others: 'guess' });
+      ctx.events.setActivePlayers({currentPlayer: 'draw', others: 'guess' });
     },
     stages: {
+      draw: {
+        moves: { Forfeit }
+      },
       guess: {
         moves: { Guess }
       }
     }
-  }
+  },
+
+  endIf: (G, ctx) => {
+    if (G.phrases.length === 0 && !G.phrase) {
+      return { winners: IndexOfMax(G.points) };
+    }
+  },
 };
 
 const App = Client({ 
