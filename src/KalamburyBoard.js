@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   Container,
+  Transition,
   Header,
   Form,
   Input,
@@ -23,8 +24,7 @@ const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
   const guessInputRef = useRef();
 
   useEffect(() => {
-    let interval = null
-    interval = setInterval(Ping, 1000);
+    let interval = setInterval(Ping, 1000);
     return () => clearInterval(interval);
   }, [Ping]);
 
@@ -52,10 +52,9 @@ const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
 
   const envokeLastAnswer = (lastGuess) => {
     if(!isDrawing) {
-      setGuess(lastGuess)
-      guessInputRef.current.inputRef.current.setSelectionRange(lastGuess.length, lastGuess.length);
+      setGuess(lastGuess);
       guessInputRef.current.inputRef.current.blur();
-      guessInputRef.current.focus();
+      setTimeout(() => guessInputRef.current.focus(), 1);
     }
   }
 
@@ -79,7 +78,7 @@ const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
             { isDrawing ? (
               <DrawingBoard playerData={playerData} {...{ G, ctx, moves }} />
             ) : (
-              <GuessingBoard envokeLastAnswer={envokeLastAnswer} previousUserGuesses={getUserGuesses(guesses, playerID)} guessInputRef={guessInputRef} guess={guess} setGuess={setGuess} {...{ G, ctx, moves }} />
+              <GuessingBoard envokeLastAnswer={envokeLastAnswer} previousUserGuesses={getUserGuesses(guesses, playerID)} playerID={playerID} guessInputRef={guessInputRef} guess={guess} setGuess={setGuess} {...{ G, ctx, moves }} />
             )}
             <Header as="h3" textAlign="center" style={{marginTop: 0}}>{remainingTime()}</Header>
           </Grid.Column>
@@ -114,10 +113,15 @@ const DrawingBoard = ({
 const GuessingBoard = ({
   G: { drawing, remainingSeconds },
   moves: { Guess },
-  guess, setGuess, guessInputRef,
+  guess, setGuess, guessInputRef, playerID,
   previousUserGuesses,
   envokeLastAnswer
 }) => {
+
+  const [animateInput, setAnimateInput] = useState(true);
+  const [inputLocked, setInputLocked] = useState(false);
+  const [lastGuess, setLastGuess] = useState();
+  const [lastSuccess, setLastSuccess] = useState(true);
 
   const sendGuess = () => {
     Guess(guess);
@@ -125,7 +129,7 @@ const GuessingBoard = ({
   }
 
   const handleEvokingLastAnswer = (e) => {
-    if(e.key == 'ArrowUp' && previousUserGuesses.length > 0) {
+    if(e.key === 'ArrowUp' && previousUserGuesses.length > 0) {
       envokeLastAnswer(previousUserGuesses[0].phrase);
     }
   }
@@ -136,6 +140,8 @@ const GuessingBoard = ({
 
   var guessInput = (
     <Input fluid
+      autoFocus
+      readOnly={inputLocked}
       ref={guessInputRef}
       placeholder='The drawing shows...'
       value={guess}
@@ -154,6 +160,18 @@ const GuessingBoard = ({
     />
   )
 
+  useEffect(() => {
+    let guess = previousUserGuesses[0];
+    if (!guess) { return; }
+    if (!lastGuess) { setLastGuess(guess); return; }
+    if (lastGuess.time === guess.time) { return; }
+    setLastGuess(guess);
+    setLastSuccess(guess.success);
+    setInputLocked(true);
+    setTimeout(() => setInputLocked(false), 250);
+    setAnimateInput(!animateInput);
+  }, [previousUserGuesses]);
+
   return (
     <>
       <Header as='h2' textAlign="center">
@@ -161,7 +179,18 @@ const GuessingBoard = ({
         <Header.Subheader>What's on the drawing?</Header.Subheader>
       </Header>
       <Form onSubmit={sendGuess}>
-        {guessInput}
+        <Transition
+          animation={lastSuccess ? "pulse" : "shake"}
+          duration={300}
+          visible={animateInput}
+        >
+          <Form.Field
+            error={inputLocked && !lastSuccess}
+            className={inputLocked && lastSuccess ? "success" : ""}
+          >
+            {guessInput}
+          </Form.Field>
+        </Transition>
       </Form>
       <Drawing remainingSeconds={remainingSeconds} lines={drawing} />
     </>

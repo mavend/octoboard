@@ -40,7 +40,7 @@ function stripPhrase(phrase) {
 function Guess(G, ctx, phrase) {
   const { playerID, currentPlayer } = ctx;
   if (!phrase) { phrase = G.secret.phrase; } // DEBUG
-  let success = stripPhrase(phrase) === stripPhrase(G.secret.phrase);
+  let success = stripPhrase(phrase).includes(stripPhrase(G.secret.phrase));
   G.guesses.push({
     time: Date.now(),
     playerID,
