@@ -1,6 +1,7 @@
 import { PlayerView } from 'boardgame.io/core';
 import phrases from './data/phrases/pl/proverbs.json';
 import removeAccents  from 'remove-accents';
+import { avatarForName } from "./utils/avatar";
 
 const NAMES = ["John Doe", "Jay Query", "Myszojeleń"];
 
@@ -23,7 +24,7 @@ function setupKalambury(ctx, setupData) {
     };
     G.playersData[i] = {
       name: NAMES[i],
-      avatar: `https://api.adorable.io/avatars/128/${encodeURI(NAMES[i])}.png`,
+      avatar: avatarForName(NAMES[i]),
     };
   }
 
@@ -78,8 +79,11 @@ function IndexOfMax(array) {
 }
 
 export const Kalambury = {
-  seed: "test",
+  name: "Kalambury",
+  minPlayers: 2,
+  maxPlayers: 10,
 
+  seed: "test",
   setup: setupKalambury,
 
   turn: {
