@@ -1,23 +1,25 @@
 import React from "react";
 import smooth_path from "./utils/smooth_path";
 
-const Drawing = ({ lines, width, height }) => (
-  <div style={{
-    width: `${width}px`,
-    height: `${height}px`,
-    margin: "0 auto",
-  }}>
-    <svg style={{
+const Drawing = ({ lines }) => {
+  const styles = {
+    svg: {
       width: "100%",
       height: "100%",
       backgroundColor: "#FFF",
-    }}>
-      {lines.map((line, id) => (
-        <DrawingLine key={id} line={line} />
-      ))}
-    </svg>
-  </div>
-);
+    }
+  }
+
+  return (
+    <div>
+      <svg style={styles.svg} viewBox={`0 0 800 600`}>
+        {lines.map((line, id) => (
+          <DrawingLine key={id} line={line} />
+        ))}
+      </svg>
+    </div>
+  );
+};
 
 const DrawingLine = ({ line: { points, color, width} }) => (
   <path fill="none"

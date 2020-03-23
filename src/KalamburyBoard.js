@@ -58,9 +58,7 @@ const DrawingBoard = ({
       Your phrase
       <Header.Subheader>{phrase}</Header.Subheader>
     </Header>
-    <DrawArea 
-      width="800"
-      height="600"
+    <DrawArea
       initialLines={drawing}
       onUpdate={lines => UpdateDrawing(lines)} />
   </Container>
@@ -100,7 +98,7 @@ const GuessingBoard = ({
           }}
           style={styles.guessInput} />
       </Form>
-      <Drawing width="800" height="600" lines={drawing} />
+      <Drawing lines={drawing} />
     </Container>
   )
 };
