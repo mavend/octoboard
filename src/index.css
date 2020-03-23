@@ -12,3 +12,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.ui.active.progress .bar {
+  min-width: 0;
+  -webkit-transition: width .8s ease-out, background-color 1s ease;
+  transition: width .8s ease-out, background-color 1s ease;
+}

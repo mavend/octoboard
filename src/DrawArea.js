@@ -3,7 +3,7 @@ import Drawing from "./Drawing";
 import Toolbar from "./Toolbar";
 import simplify from "simplify-path";
 
-const DrawArea = ({initialLines, onUpdate}) => {
+const DrawArea = ({initialLines, remainingSeconds, onUpdate, onForfeit}) => {
   const [lines, setLines] = useState(initialLines || []);
   const [isDrawing, setIsDrawing] = useState(false);
   const [penColor, setPenColor] = useState("#1b1c1d");
@@ -68,10 +68,12 @@ const DrawArea = ({initialLines, onUpdate}) => {
         onSizeChange={setPenSize}
         onClearAll={handleClearAll}
         onUndoDrawing={handleUndo}
+        onForfeit={onForfeit}
         canUndo={lines.length > 0}/>
       <div style={{cursor: "crosshair"}}>
         <Drawing 
           lines={lines}
+          remainingSeconds={remainingSeconds}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove} />
       </div>

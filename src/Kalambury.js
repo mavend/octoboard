@@ -16,6 +16,7 @@ function setupKalambury(ctx, setupData) {
     points: Array(ctx.numPlayers).fill(0),
     drawing: [],
     guesses: [],
+    remainingSeconds: 120,
   }
 
   for (let i = 0; i < ctx.numPlayers; i++) {
@@ -62,6 +63,10 @@ function Forfeit(G, ctx) {
   ctx.events.endTurn();
 }
 
+function TickTime(G, ctx) {
+  G.remainingSeconds -= 1;
+}
+
 function IndexOfMax(array) {
   let max = array[0];
   let maxIndexes = [0];
@@ -91,11 +96,16 @@ export const Kalambury = {
       G.secret.phrase = G.secret.phrases.pop();
       G.players[ctx.currentPlayer].phrase = G.secret.phrase;
       G.drawing = [];
+      G.remainingSeconds = 120;
       ctx.events.setActivePlayers({currentPlayer: 'draw', others: 'guess' });
     },
+    onEnd: (G, ctx) => {
+      if (G.remainingSeconds <= 0) { G.points[ctx.currentPlayer] -= 1; }
+    },
+    endIf: (G, ctx) => (G.remainingSeconds <= 0),
     stages: {
       draw: {
-        moves: { UpdateDrawing, Forfeit }
+        moves: { UpdateDrawing, TickTime, Forfeit }
       },
       guess: {
         moves: {

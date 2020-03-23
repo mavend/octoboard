@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon, Menu, Popup } from 'semantic-ui-react';
 
-const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndoDrawing, canUndo }) => {
+const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndoDrawing, onForfeit, canUndo }) => {
   const eraserColor = "#FFFFFF";
   const colors = [
     "#1b1c1d",
@@ -70,6 +70,16 @@ const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndo
               onClick={onClearAll}
             >
               <Icon fitted color='red' name="trash alternate outline" />
+            </Menu.Item>
+          } />
+        <Popup content="Give up :("
+          trigger={
+            <Menu.Item
+              name="flag"
+              active={false}
+              onClick={onForfeit}
+            >
+              <Icon fitted color='red' name="flag" />
             </Menu.Item>
           } />
       </Menu.Menu>
