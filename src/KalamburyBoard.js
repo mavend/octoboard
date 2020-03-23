@@ -107,7 +107,7 @@ const GuessingBoard = ({
             onClick: sendGuess
           }}
           style={{
-            height: "43px"
+            height: "41px"
           }}
         />
       </Form>
