@@ -1,4 +1,5 @@
 import { PlayerView } from 'boardgame.io/core';
+import removeAccents  from 'remove-accents';
 
 const NAMES = ["John doe", "Jay Query", "Myszojeleń"];
 
@@ -35,7 +36,7 @@ function Guess(G, ctx, phrase) {
     time: Date.now(),
     phrase: phrase,
   })
-  if (phrase.toLowerCase() === G.secret.phrase.toLowerCase()) {
+  if (removeAccents(phrase).toLowerCase().replace(/\W/g,'') === removeAccents(G.secret.phrase).toLowerCase().replace(/\W/g,'')) {
     G.points[ctx.playerID] += 1;
     G.points[ctx.currentPlayer] += 1;
     ctx.events.endTurn();
@@ -88,6 +89,7 @@ export const Kalambury = {
     onBegin: (G, ctx) => {
       G.secret.phrase = G.secret.phrases.pop();
       G.players[ctx.currentPlayer].phrase = G.secret.phrase;
+      G.drawing = [];
       ctx.events.setActivePlayers({currentPlayer: 'draw', others: 'guess' });
     },
     stages: {

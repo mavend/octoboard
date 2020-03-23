@@ -47,20 +47,22 @@ const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndo
       >
         <Icon name="eraser" />
       </Menu.Item>
-      <Menu.Item
-        name='undo'
-        active={false}
-        onClick={onUndoDrawing}
-      >
-        <Icon name="undo" />
-      </Menu.Item>
-      <Menu.Item
-        name='trash'
-        active={false}
-        onClick={onClearAll}
-      >
-        <Icon name="trash alternate" />
-      </Menu.Item>
+      <Menu.Menu position='right'>
+        <Menu.Item
+          name='undo'
+          active={false}
+          onClick={onUndoDrawing}
+        >
+          <Icon name="undo" />
+        </Menu.Item>
+        <Menu.Item
+          name='trash'
+          active={false}
+          onClick={onClearAll}
+        >
+          <Icon color='red' name="trash alternate outline" />
+        </Menu.Item>
+      </Menu.Menu>
     </Menu>
   )
 };
