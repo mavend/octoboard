@@ -47,7 +47,7 @@ const PlayerEntry = ({ name, avatar, points, guesses, isDrawing, isWinning, isCu
             {name} {isCurrentPlayer && <span>(You)</span>}
           </Feed.Date>
           <Feed.Content>
-            <Icon name="star" color={isWinning ? "yellow" : "grey"} />{points}<span> Points</span>
+            <Icon name="trophy" color={isWinning ? "yellow" : "grey"} />{points}<span> Points</span>
           </Feed.Content>
           <Feed.Extra text style={{ maxWidth: "230px", marginLeft: "-50px" }}>
             {
@@ -60,7 +60,7 @@ const PlayerEntry = ({ name, avatar, points, guesses, isDrawing, isWinning, isCu
                   :
                   <Transition.Group
                     as={List}
-                    animation='fade right'
+                    animation='fade left'
                     duration={200}
                     verticalAlign='middle'
                   >

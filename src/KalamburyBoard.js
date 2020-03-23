@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect, useRef } from "react";
 import {
   Container,
   Header,
@@ -13,10 +14,19 @@ import KalamburySidebar from "./KalamburySidebar";
 const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
   const { players, guesses } = G;
   const { activePlayers } = ctx;
+  const { Ping } = moves;
 
   const [guess, setGuess] = useState("");
   const playerData = players[playerID];
   const isDrawing = activePlayers[playerID] === "draw";
+
+  const guessInputRef = useRef();
+
+  useEffect(() => {
+    let interval = null
+    interval = setInterval(Ping, 1000);
+    return () => clearInterval(interval);
+  }, [Ping]);
 
   const styles = {
     mainHeader: {
@@ -32,11 +42,26 @@ const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
   const handleGuessClick = (e) => {
     if (!isDrawing) {
       setGuess(e.target.textContent);
+      guessInputRef.current.focus();
     }
   }
 
-  const getUserGuesses = (guesses, _playerID) =>{
+  const getUserGuesses = (guesses, _playerID) => {
     return [...guesses].reverse().filter(({playerID}) => playerID === _playerID);
+  }
+
+  const envokeLastAnswer = (lastGuess) => {
+    if(!isDrawing) {
+      setGuess(lastGuess)
+      guessInputRef.current.inputRef.current.setSelectionRange(lastGuess.length, lastGuess.length);
+    }
+  }
+
+  const remainingTime = () => {
+    let minutes = Math.floor(G.remainingSeconds / 60);
+    let seconds = G.remainingSeconds - minutes * 60;
+    if (seconds < 10) { seconds = "0" + seconds }
+    return minutes + ":" + seconds
   }
 
   return (
@@ -52,9 +77,9 @@ const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
             { isDrawing ? (
               <DrawingBoard playerData={playerData} {...{ G, ctx, moves }} />
             ) : (
-              <GuessingBoard previousUserGuesses={getUserGuesses(guesses, playerID)} guess={guess} setGuess={setGuess} {...{ G, ctx, moves }} />
+              <GuessingBoard envokeLastAnswer={envokeLastAnswer} previousUserGuesses={getUserGuesses(guesses, playerID)} guessInputRef={guessInputRef} guess={guess} setGuess={setGuess} {...{ G, ctx, moves }} />
             )}
-            <Header as="h3" textAlign="centered" style={{marginTop: 0}}>2:00</Header>
+            <Header as="h3" textAlign="center" style={{marginTop: 0}}>{remainingTime()}</Header>
           </Grid.Column>
           <Grid.Column width="4" style={{marginTop: "19px"}}>
             <KalamburySidebar handleGuessClick={handleGuessClick} getUserGuesses={getUserGuesses} {...{ G, ctx, playerID, moves }} />
@@ -66,8 +91,8 @@ const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
 }
 
 const DrawingBoard = ({
-  G: { drawing },
-  moves: { UpdateDrawing },
+  G: { drawing, remainingSeconds },
+  moves: { UpdateDrawing, Forfeit },
   playerData: { phrase }
 }) => (
   <>
@@ -77,15 +102,19 @@ const DrawingBoard = ({
     </Header>
     <DrawArea
       initialLines={drawing}
-      onUpdate={lines => UpdateDrawing(lines)} />
+      remainingSeconds={remainingSeconds}
+      onUpdate={lines => UpdateDrawing(lines)}
+      onForfeit={() => Forfeit()}
+    />
   </>
 );
 
 const GuessingBoard = ({
-  G: { drawing },
+  G: { drawing, remainingSeconds },
   moves: { Guess },
-  guess, setGuess,
+  guess, setGuess, guessInputRef,
   previousUserGuesses,
+  envokeLastAnswer
 }) => {
 
   const sendGuess = () => {
@@ -95,15 +124,33 @@ const GuessingBoard = ({
 
   const handleEvokingLastAnswer = (e) => {
     if(e.key == 'ArrowUp' && previousUserGuesses.length > 0) {
-      setGuess(previousUserGuesses[0].phrase);
-      e.target.selectionStart = previousUserGuesses[0].phrase.length;
-      e.target.selectionEnd = previousUserGuesses[0].phrase.length;
+      envokeLastAnswer(previousUserGuesses[0].phrase);
     }
   }
 
   const handleChange = (e) => {
     setGuess(e.target.value);
   }
+
+  var guessInput = (
+    <Input fluid
+      ref={guessInputRef}
+      placeholder='The drawing shows...'
+      value={guess}
+      onChange={handleChange}
+      onKeyDown={handleEvokingLastAnswer}
+      action={{
+        content: "Send your guess",
+        icon: "chat",
+        labelPosition: "right",
+        color: "green",
+        onClick: sendGuess
+      }}
+      style={{
+        height: "41px"
+      }}
+    />
+  )
 
   return (
     <>
@@ -112,24 +159,9 @@ const GuessingBoard = ({
         <Header.Subheader>What's on the drawing?</Header.Subheader>
       </Header>
       <Form onSubmit={sendGuess}>
-        <Input fluid
-          icon='talk'
-          iconPosition='left'
-          placeholder='Your guess...'
-          value={guess}
-          onChange={handleChange}
-          onKeyDown={handleEvokingLastAnswer}
-          action={{
-            content: "Guess",
-            color: "orange",
-            onClick: sendGuess
-          }}
-          style={{
-            height: "41px"
-          }}
-        />
+        {guessInput}
       </Form>
-      <Drawing lines={drawing} />
+      <Drawing remainingSeconds={remainingSeconds} lines={drawing} />
     </>
   )
 };
