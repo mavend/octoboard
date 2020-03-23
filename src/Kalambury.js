@@ -1,5 +1,7 @@
 import { PlayerView } from 'boardgame.io/core';
 
+const NAMES = ["John doe", "Jay Query", "Myszojeleń"];
+
 function setupKalambury(ctx, setupData) {
   const G = {
     secret: {
@@ -7,13 +9,19 @@ function setupKalambury(ctx, setupData) {
       phrases: ctx.random.Shuffle(PHRASES.slice()),
     },
     players: {},
+    playersData: {},
     points: Array(ctx.numPlayers).fill(0),
     drawing: [],
+    guesses: [],
   }
 
   for (let i = 0; i < ctx.numPlayers; i++) {
     G.players[i] = {
       phrase: "",
+    };
+    G.playersData[i] = {
+      name: NAMES[i],
+      avatar: `https://api.adorable.io/avatars/128/${encodeURI(NAMES[i])}.png`,
     };
   }
 
@@ -22,6 +30,11 @@ function setupKalambury(ctx, setupData) {
 
 function Guess(G, ctx, phrase) {
   if (!phrase) { phrase = G.secret.phrase; } // DEBUG
+  G.guesses.push({
+    playerId: ctx.playerID,
+    time: Date.now(),
+    phrase: phrase,
+  })
   if (phrase.toLowerCase() === G.secret.phrase.toLowerCase()) {
     G.points[ctx.playerID] += 1;
     G.points[ctx.currentPlayer] += 1;

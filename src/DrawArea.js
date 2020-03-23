@@ -33,8 +33,10 @@ const DrawArea = ({initialLines, onUpdate}) => {
   };
 
   const handleMouseDown = (e) => {
-    setIsDrawing(true);
-    addPointFromEvent(e, true);
+    if (e.nativeEvent.which === 1) {
+      setIsDrawing(true);
+      addPointFromEvent(e, true);
+    }
   };
 
   const handleMouseMove = (e) => {

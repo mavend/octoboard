@@ -1,10 +1,19 @@
 import React, { useState } from "react";
-import { Container, Header, Segment, Icon, Form, Input } from "semantic-ui-react";
+import { 
+  Container,
+  Header,
+  Segment,
+  Icon,
+  Form,
+  Input,
+  Grid,
+} from "semantic-ui-react";
 import DrawArea from "./DrawArea";
 import Drawing from "./Drawing";
+import KalamburySidebar from "./KalamburySidebar";
 
 const KalamburyBoard = ({ G, ctx, moves }) => {
-  const { players } = G;
+  const { players  } = G;
   const { activePlayers } = ctx;
 
   const playerId = Object.keys(players)[0];
@@ -13,12 +22,11 @@ const KalamburyBoard = ({ G, ctx, moves }) => {
   const styles = {
     mainHeader: {
       marginTop: "20px",
-      marginBottom: "30px",
+      marginBottom: "40px",
     },
     mainContent: {
       marginLeft: "auto",
       marginRight: "auto",
-      width: "800px",
     },
     footer: {
       marginTop: "20px",
@@ -34,11 +42,19 @@ const KalamburyBoard = ({ G, ctx, moves }) => {
       </Container>
 
       <Container style={styles.mainContent}>
-        { activePlayers[playerId] === "draw" ? (
-          <DrawingBoard playerData={playerData} {...{ G, ctx, moves }} />
-        ) : (
-          <GuessingBoard playerData={playerData} {...{ G, ctx, moves }} />
-        )}
+        <Grid>
+          <Grid.Column width="12">
+            { activePlayers[playerId] === "draw" ? (
+              <DrawingBoard playerData={playerData} {...{ G, ctx, moves }} />
+            ) : (
+              <GuessingBoard playerData={playerData} {...{ G, ctx, moves }} />
+            )}
+          </Grid.Column>
+          <Grid.Column width="4">
+            <KalamburySidebar {...{ G, ctx, moves }} />
+          </Grid.Column>
+        </Grid>
+        
 
         <Segment textAlign="center" style={styles.footer}>
           PlayerId: {playerId}
@@ -53,7 +69,7 @@ const DrawingBoard = ({
   moves: { UpdateDrawing },
   playerData: { phrase }
 }) => (
-  <Container>
+  <>
     <Header as='h2' textAlign="center">
       Your phrase
       <Header.Subheader>{phrase}</Header.Subheader>
@@ -61,7 +77,7 @@ const DrawingBoard = ({
     <DrawArea
       initialLines={drawing}
       onUpdate={lines => UpdateDrawing(lines)} />
-  </Container>
+  </>
 );
 
 const GuessingBoard = ({
@@ -82,7 +98,7 @@ const GuessingBoard = ({
   }
 
   return (
-    <Container>
+    <>
       <Header as='h2' textAlign="center">Guess the phrase</Header>
       <Form onSubmit={sendGuess}>
         <Input fluid
@@ -99,7 +115,7 @@ const GuessingBoard = ({
           style={styles.guessInput} />
       </Form>
       <Drawing lines={drawing} />
-    </Container>
+    </>
   )
 };
 
