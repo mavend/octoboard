@@ -13,7 +13,7 @@ import KalamburySidebar from "./KalamburySidebar";
 const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
   const { players } = G;
   const { activePlayers } = ctx;
-  const { TickTime } = moves;
+  const { Ping } = moves;
 
   const [guess, setGuess] = useState("");
   const playerData = players[playerID];
@@ -23,9 +23,9 @@ const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
 
   useEffect(() => {
     let interval = null
-    if (isDrawing) { interval = setInterval(TickTime, 1000); }
+    interval = setInterval(Ping, 1000);
     return () => clearInterval(interval);
-  }, [isDrawing, TickTime]);
+  }, [Ping]);
 
   const styles = {
     mainHeader: {
