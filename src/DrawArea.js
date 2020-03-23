@@ -6,7 +6,7 @@ import simplify from "simplify-path";
 const DrawArea = ({initialLines, onUpdate}) => {
   const [lines, setLines] = useState(initialLines || []);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [penColor, setPenColor] = useState("#424953");
+  const [penColor, setPenColor] = useState("#1b1c1d");
   const [penSize, setPenSize] = useState(3);
 
   useEffect(() => {

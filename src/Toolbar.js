@@ -31,7 +31,7 @@ const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndo
   };
 
   return (
-    <Menu size="small" style={{ height: "41px" }}>
+    <Menu borderless size="small" style={{ height: "41px" }}>
       {colors.map(color => (
         <Menu.Item
           key={color}
