@@ -1,5 +1,5 @@
 import React from "react";
-import { Segment } from "semantic-ui-react";
+import { Segment, Progress } from "semantic-ui-react";
 import smooth_path from "./utils/smooth_path";
 
 const Drawing = ({ lines, ...props }) => {
@@ -33,6 +33,7 @@ const Drawing = ({ lines, ...props }) => {
             viewBoxWidth />
         ))}
       </svg>
+      <Progress indicating percent={100} attached='bottom' />
     </Segment>
   );
 };

@@ -66,7 +66,9 @@ const PlayerEntry = ({ name, avatar, points, guesses, isDrawing, isWinning, isCu
                     {
                       guesses.slice(0, 3).map(({time, phrase}, idx) => (
                         <List.Item key={time} style={{ opacity: (3-idx)/3, marginRight: "8px" }}>
-                          <Label basic pointing="left" style={{ maxWidth: "100%", cursor: "pointer" }} onClick={handleGuessClick}>{phrase}</Label>
+                          <Label basic pointing="left" style={{ maxWidth: "100%", cursor: "pointer" }} onClick={handleGuessClick}>
+                            {phrase}
+                          </Label>
                         </List.Item>
                       ))
                     }

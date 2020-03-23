@@ -26,14 +26,13 @@ const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
     mainContent: {
       marginLeft: "auto",
       marginRight: "auto",
-    },
-    footer: {
-      marginTop: "20px",
     }
   }
 
   const handleGuessClick = (e) => {
-    setGuess(e.target.textContent);
+    if (!isDrawing) {
+      setGuess(e.target.textContent);
+    }
   }
 
   return (
@@ -51,8 +50,9 @@ const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
             ) : (
               <GuessingBoard playerData={playerData} guess={guess} setGuess={setGuess} {...{ G, ctx, moves }} />
             )}
+            <Header as="h3" textAlign="centered">2:00</Header>
           </Grid.Column>
-          <Grid.Column width="4" style={{marginTop: isDrawing ? "19px" : "0"}}>
+          <Grid.Column width="4" style={{marginTop: "19px"}}>
             <KalamburySidebar handleGuessClick={handleGuessClick} {...{ G, ctx, playerID, moves }} />
           </Grid.Column>
         </Grid>
@@ -68,7 +68,7 @@ const DrawingBoard = ({
 }) => (
   <>
     <Header as='h2' textAlign="center">
-      Your phrase
+      You are drawing!
       <Header.Subheader>{phrase}</Header.Subheader>
     </Header>
     <DrawArea
@@ -88,15 +88,12 @@ const GuessingBoard = ({
     setGuess("");
   }
 
-  const styles = {
-    guessInput: {
-      marginBottom: "20px",
-    },
-  }
-
   return (
     <>
-      <Header as='h2' textAlign="center">Guess the phrase</Header>
+      <Header as='h2' textAlign="center">
+        You are guessing!
+        <Header.Subheader>What's on the drawing?</Header.Subheader>
+      </Header>
       <Form onSubmit={sendGuess}>
         <Input fluid
           icon='talk' 
@@ -109,7 +106,10 @@ const GuessingBoard = ({
             color: "orange",
             onClick: sendGuess
           }}
-          style={styles.guessInput} />
+          style={{
+            height: "43px"
+          }}
+        />
       </Form>
       <Drawing lines={drawing} />
     </>
