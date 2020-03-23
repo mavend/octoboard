@@ -1,15 +1,21 @@
 import React from "react";
 
 const Drawing = ({ lines, width, height }) => (
-  <svg style={{
+  <div style={{
     width: `${width}px`,
     height: `${height}px`,
-    backgroundColor: "#F4F6F9"
+    margin: "0 auto",
   }}>
-    {lines.map((line, id) => (
-      <DrawingLine key={id} line={line} />
-    ))}
-  </svg>
+    <svg style={{
+      width: "100%",
+      height: "100%",
+      backgroundColor: "#F4F6F9",
+    }}>
+      {lines.map((line, id) => (
+        <DrawingLine key={id} line={line} />
+      ))}
+    </svg>
+  </div>
 );
 
 const DrawingLine = ({ line: { points, color, width} }) => {

@@ -55,7 +55,8 @@ const DrawArea = ({initialLines, width, height, onUpdate}) => {
   return (
     <div style={{
       width: `${width}px`,
-      height: `${parseFloat(height) + 20}px`
+      height: `${parseFloat(height) + 43}px`,
+      margin: "0 auto",
     }}>
       <Toolbar currentColor={penColor} onColorChange={setPenColor} onSizeChange={setPenSize} onClearAll={handleClearAll} width={width} height={20} />
       <div id="draw-area"
