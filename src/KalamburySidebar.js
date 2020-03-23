@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Icon,
+  Transition,
   Header,
   List,
   Label,
@@ -53,16 +54,20 @@ const PlayerEntry = ({ name, avatar, points, guesses, isDrawing, isWinning, isCu
                     Drawing...
                   </Label>
                   :
-                  <List>
+                  <Transition.Group
+                    as={List}
+                    animation='fade right'
+                    duration={200}
+                    verticalAlign='middle'
+                  >
                     {
                       guesses.slice(0, 3).map(({time, phrase}, idx) => (
-                        <React.Fragment key={time}>
-                          <List.Item style={{opacity: (3-idx)/3}}>
-                            <Label basic pointing="left">{phrase}</Label>
-                          </List.Item>
-                        </React.Fragment>
-                      ))}
-                  </List>
+                        <List.Item key={time} style={{opacity: (3-idx)/3}}>
+                          <Label basic pointing="left">{phrase}</Label>
+                        </List.Item>
+                      ))
+                    }
+                  </Transition.Group>
             }
           </Feed.Extra>
         </Feed.Content>
