@@ -12,9 +12,9 @@ const RoomsList = ({ rooms, games, style }) => (
     <List divided relaxed size="big">
       {rooms.map(room => (
         <RoomsListItem
-          key={room.roomId}
+          key={room.gameID}
           room={room} 
-          game={games.find(g => g.id === room.gameId)} />
+          game={games.find(g => g.name === room.gameName)} />
       ))}
     </List>
     <div style={{textAlign: "center"}}>
@@ -33,24 +33,24 @@ const RoomsList = ({ rooms, games, style }) => (
 
 const RoomsListItem = ({
   room: {
-    roomId,
+    gameID,
     description,
-    maxPlayers,
-    currentPlayers
+    players,
   },
-  game: {
-    name: gameName,
-    image
-  }
+  game
 }) => {
+  if(!game) return;
+
+  const maxPlayers = players.length;
+  const currentPlayers = players.filter(p => p.name).length
   const isFull = currentPlayers === maxPlayers;
   
   return (
     <List.Item>
-      <Image avatar src={image} />
+      <Image avatar src={game.image} />
       <List.Content>
-        <List.Header>{gameName}</List.Header>
-        <Label>#{roomId}</Label> {description}
+        <List.Header>{game.name}</List.Header>
+        <Label>#{gameID}</Label> {description}
       </List.Content>
       <List.Content floated='right'>
         <Button

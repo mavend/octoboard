@@ -1,5 +1,5 @@
 import React from 'react';
-import { Client } from 'boardgame.io/react';
+import { Client, Lobby } from 'boardgame.io/react';
 import { SocketIO } from 'boardgame.io/multiplayer';
 import { Kalambury } from './Kalambury';
 import KalamburyBoard from './KalamburyBoard';
@@ -20,11 +20,14 @@ const App = () => {
   const urlParams= new URLSearchParams(queryString);
   return (
     <div>
-      <GameLobby 
+      <GameLobby
         lobbyServer="http://localhost:8000"
         gameComponents={[{game: Kalambury, board: KalamburyBoard}]}
         playerName={"Patryk"}
         />
+      <Lobby
+        lobbyServer="http://localhost:8000"
+        gameComponents={[{game: Kalambury, board: KalamburyBoard}]} />
       {/* <KalamburyClient playerID={urlParams.get('id') || "0"} /> */}
     </div>
   );

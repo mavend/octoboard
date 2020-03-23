@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Cookies from 'react-cookies';
 import { 
   Container,
   Header,
@@ -9,22 +10,6 @@ import {
 import RoomsList from "./RoomsList";
 import CreateRoomForm from './CreateRoomForm';
 import LobbyConnection from "./LobbyConnection";
-
-const GAMES = [
-  {id: "kalambury", name: "Kalambury", image: "/images/kalambury-icon.png"},
-  {id: "tysiac", name: "Tysiąc", image: "/images/cards-girl-icon.png"},
-]
-
-const ROOMS = [
-  {gameId: "kalambury", roomId: "503", description: "Patryk's room", currentPlayers: 3, maxPlayers: 10},
-  {gameId: "kalambury", roomId: "1040", description: "", currentPlayers: 5, maxPlayers: 5},
-  {gameId: "tysiac", roomId: "104234", description: "wbijać!", currentPlayers: 2, maxPlayers: 4},
-  {gameId: "kalambury", roomId: "1030", description: "", currentPlayers: 3, maxPlayers: 10},
-  {gameId: "tysiac", roomId: "1041", description: "wolne", currentPlayers: 2, maxPlayers: 4},
-  {gameId: "kalambury", roomId: "1031", description: "", currentPlayers: 3, maxPlayers: 7},
-  {gameId: "kalambury", roomId: "1043", description: "wbijać!", currentPlayers: 2, maxPlayers: 4},
-  {gameId: "kalambury", roomId: "1034", description: "", currentPlayers: 3, maxPlayers: 10},
-]
 
 const GameLobby = ({ lobbyServer, gameComponents, playerName }) => {
   const styles = {
@@ -39,18 +24,38 @@ const GameLobby = ({ lobbyServer, gameComponents, playerName }) => {
   };
 
   const [lobbyConnection, setLobbyConnection] = useState();
+  const [error, setError] = useState();
+  const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
+    let cookie = Cookies.load('lobbyState') || {};
     const connection = LobbyConnection({
       server: lobbyServer,
       gameComponents,
       playerName,
-      playerCredentials: {},
+      playerCredentials: cookie.credentialStore,
     });
+    const updateRooms = async () => {
+      await connection.refresh();
+      setRooms(connection.rooms);
+    }
+    updateRooms();
+
     setLobbyConnection(connection);
   }, [lobbyServer, gameComponents, playerName])
 
   const games = gameComponents.map(g => g.game);
+
+  const createRoom = async (game, numPlayers) => {
+    try {
+      await lobbyConnection.create(game.name, numPlayers);
+      await lobbyConnection.refresh();
+      setRooms(lobbyConnection.rooms);
+      this.setState({});
+    } catch (error) {
+      setError(error.message);
+    }
+  }
 
   return (
     <div>
@@ -68,13 +73,13 @@ const GameLobby = ({ lobbyServer, gameComponents, playerName }) => {
           <Grid.Column width="12">
             <Segment>
               <Header as="h3" textAlign="center">Available rooms</Header>
-              <RoomsList rooms={ROOMS} games={GAMES} />
+              <RoomsList rooms={rooms} games={games} />
             </Segment>
           </Grid.Column>
           <Grid.Column width="4">
             <Segment>
               <Header as="h3" textAlign="center">Create room</Header>
-              <CreateRoomForm games={games} />
+              <CreateRoomForm games={games} onCreateRoom={createRoom} />
             </Segment>
           </Grid.Column>
         </Grid>

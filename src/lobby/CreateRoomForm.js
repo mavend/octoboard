@@ -1,33 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Form,
 } from "semantic-ui-react";
 
-const CreateRoomForm = ({ games }) => {
-  const [game, setGame] = useState("kalamabury");
-  const [players, setPlayers] = useState(2);
+const CreateRoomForm = ({ games, onCreateRoom }) => {
+  const [game, setGame] = useState();
+  const [players, setPlayers] = useState();
+  const [playersOptions, setPlayersOptions] = useState([]);
   const [description, setDescription] = useState("");
 
-  const options = games.map(({ id, name, image }) => (
+  const gamesOptions = games.map(({ name, image }) => (
     {
-      key: id,
-      value: id,
+      key: name,
+      value: name,
       text: name,
       image: { avatar: true, src: image }
     }
   ));
 
+  useEffect(() => {
+    setGame(games[0]);
+  }, [games, setGame])
+
+  useEffect(() => {
+    if (game) {
+      const { minPlayers, maxPlayers } = game;
+      const range = [...Array(maxPlayers - minPlayers + 1).keys()].map(i => i + minPlayers);
+      setPlayersOptions(range.map(i => ({key: i, value: i, text: i})));
+      setPlayers(range[0])
+    }
+  }, [game, setPlayersOptions, setPlayers])
+
+  const handleCreate = () => {
+    if (game && players) {
+      onCreateRoom(game, players, description);
+    } else {
+      alert("Not valid!");
+    }
+  };
+
   return (
     <Form>
       <Form.Select fluid
         label='Game'
-        options={options} 
-        value={game} 
-        onChange={(_, { value }) => setGame(value)} />
-      <Form.Input
+        options={gamesOptions} 
+        value={game && game.name} 
+        onChange={(_, { value }) => setGame(games.find(g => g.name === value))} />
+      <Form.Select
         label="Number of players"
-        type="number"
+        options={playersOptions}
         value={players}
         onChange={(_, { value }) => setPlayers(value)} />
       <Form.Input
@@ -35,7 +57,7 @@ const CreateRoomForm = ({ games }) => {
         type='text'
         value={description}
         onChange={(_, { value }) => setDescription(value)} />
-      <Button fluid color="green">Create</Button>
+      <Button fluid color="green" onClick={handleCreate}>Create</Button>
     </Form>
   )
 };
