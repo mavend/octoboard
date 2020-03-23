@@ -4,7 +4,6 @@ const Drawing = ({ lines, width, height }) => (
   <div style={{
     width: `${width}px`,
     height: `${height}px`,
-    margin: "0 auto",
   }}>
     <svg style={{
       width: "100%",
