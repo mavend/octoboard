@@ -14,7 +14,8 @@ const KalamburySidebar = ({
   G: { playersData, guesses, points },
   ctx: { activePlayers },
   playerID,
-  handleGuessClick
+  handleGuessClick,
+  getUserGuesses
 }) => (
   <>
     <Header as="h2" textAlign="center">
@@ -25,7 +26,7 @@ const KalamburySidebar = ({
         <PlayerEntry
           key={pid}
           points={points[pid]}
-          guesses={[...guesses].reverse().filter(({playerID}) => playerID === pid)}
+          guesses={getUserGuesses(guesses, pid)}
           isWinning={points[pid] === Math.max(...points)}
           isDrawing={activePlayers[pid] === "draw"}
           isCurrentPlayer={pid === playerID}

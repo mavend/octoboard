@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { 
+import {
   Container,
   Header,
   Form,
@@ -11,7 +11,7 @@ import Drawing from "./Drawing";
 import KalamburySidebar from "./KalamburySidebar";
 
 const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
-  const { players } = G;
+  const { players, guesses } = G;
   const { activePlayers } = ctx;
 
   const [guess, setGuess] = useState("");
@@ -35,6 +35,10 @@ const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
     }
   }
 
+  const getUserGuesses = (guesses, _playerID) =>{
+    return [...guesses].reverse().filter(({playerID}) => playerID === _playerID);
+  }
+
   return (
     <div>
       <Container>
@@ -48,12 +52,12 @@ const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
             { isDrawing ? (
               <DrawingBoard playerData={playerData} {...{ G, ctx, moves }} />
             ) : (
-              <GuessingBoard playerData={playerData} guess={guess} setGuess={setGuess} {...{ G, ctx, moves }} />
+              <GuessingBoard previousUserGuesses={getUserGuesses(guesses, playerID)} guess={guess} setGuess={setGuess} {...{ G, ctx, moves }} />
             )}
             <Header as="h3" textAlign="centered" style={{marginTop: 0}}>2:00</Header>
           </Grid.Column>
           <Grid.Column width="4" style={{marginTop: "19px"}}>
-            <KalamburySidebar handleGuessClick={handleGuessClick} {...{ G, ctx, playerID, moves }} />
+            <KalamburySidebar handleGuessClick={handleGuessClick} getUserGuesses={getUserGuesses} {...{ G, ctx, playerID, moves }} />
           </Grid.Column>
         </Grid>
       </Container>
@@ -80,12 +84,25 @@ const DrawingBoard = ({
 const GuessingBoard = ({
   G: { drawing },
   moves: { Guess },
-  guess, setGuess
+  guess, setGuess,
+  previousUserGuesses,
 }) => {
 
   const sendGuess = () => {
     Guess(guess);
     setGuess("");
+  }
+
+  const handleEvokingLastAnswer = (e) => {
+    if(e.key == 'ArrowUp' && previousUserGuesses.length > 0) {
+      setGuess(previousUserGuesses[0].phrase);
+      e.target.selectionStart = previousUserGuesses[0].phrase.length;
+      e.target.selectionEnd = previousUserGuesses[0].phrase.length;
+    }
+  }
+
+  const handleChange = (e) => {
+    setGuess(e.target.value);
   }
 
   return (
@@ -96,11 +113,12 @@ const GuessingBoard = ({
       </Header>
       <Form onSubmit={sendGuess}>
         <Input fluid
-          icon='talk' 
+          icon='talk'
           iconPosition='left'
           placeholder='Your guess...'
           value={guess}
-          onChange={(e) => setGuess(e.target.value)}
+          onChange={handleChange}
+          onKeyDown={handleEvokingLastAnswer}
           action={{
             content: "Guess",
             color: "orange",
