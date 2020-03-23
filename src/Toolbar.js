@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon, Menu } from 'semantic-ui-react';
 
-const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll }) => {
+const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndoDrawing }) => {
   const eraserColor = "#F4F6F9";
   const colors = [
     "#424953",
@@ -46,6 +46,13 @@ const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll }) => {
         onClick={onClickEraser}
       >
         <Icon name="eraser" />
+      </Menu.Item>
+      <Menu.Item
+        name='undo'
+        active={false}
+        onClick={onUndoDrawing}
+      >
+        <Icon name="undo" />
       </Menu.Item>
       <Menu.Item
         name='trash'

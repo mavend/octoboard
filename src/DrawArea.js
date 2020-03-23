@@ -52,13 +52,19 @@ const DrawArea = ({initialLines, width, height, onUpdate}) => {
     if(onUpdate) { onUpdate([]) }
   }
 
+  const handleUndo = () => {
+    lines.pop();
+    setLines(lines);
+    if(onUpdate) { window.requestAnimationFrame(() => onUpdate(lines)); }
+  }
+
   return (
     <div style={{
       width: `${width}px`,
       height: `${parseFloat(height) + 43}px`,
       margin: "0 auto",
     }}>
-      <Toolbar currentColor={penColor} onColorChange={setPenColor} onSizeChange={setPenSize} onClearAll={handleClearAll} width={width} height={20} />
+      <Toolbar currentColor={penColor} onColorChange={setPenColor} onSizeChange={setPenSize} onClearAll={handleClearAll} onUndoDrawing={handleUndo} width={width} height={20} />
       <div id="draw-area"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
