@@ -4,17 +4,20 @@ import { Icon, Menu, Popup } from 'semantic-ui-react';
 const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndoDrawing, canUndo }) => {
   const eraserColor = "#FFFFFF";
   const colors = [
-    "#424953",
-    "#D94452",
-    "#FB6D51",
-    "#FECD57",
-    "#8AC054",
-    "#B4E080",
-    "#46CEAD",
-    "#4B89DA",
-    "#AC92EA",
-    "#F299CE",
-    "#F4D0B5"
+    "#1b1c1d",
+    "#767676",
+    "#db2828",
+    "#f2711c",
+    "#fbbd08",
+    "#b5cc18",
+    "#21ba45",
+    "#00b5ad",
+    "#2185d0",
+    "#6435c9",
+    "#a333c8",
+    "#e03997",
+    "#f4d0b5",
+    "#a5673f"
   ];
 
   const onClickColor = (color) => {
