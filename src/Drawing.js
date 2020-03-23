@@ -1,14 +1,11 @@
 import React from "react";
+import { Segment } from "semantic-ui-react";
 import smooth_path from "./utils/smooth_path";
 
 const Drawing = ({ lines, ...props }) => {
   const styles = {
     wrapper: {
-      border: "1px solid rgba(34,36,38,.15)",
-      boxShadow: "0 1px 2px 0 rgba(34,36,38,.15)",
-      backgroundColor: "white",
-      borderRadius: ".28571429rem",
-      overflow: "hidden",
+      padding: 0
     },
     svg: {
       width: "100%",
@@ -24,7 +21,7 @@ const Drawing = ({ lines, ...props }) => {
   });
 
   return (
-    <div style={styles.wrapper}>
+    <Segment style={styles.wrapper}>
       <svg 
         style={styles.svg} 
         viewBox={`0 0 ${vbWidth} ${vbHeight}`}
@@ -36,7 +33,7 @@ const Drawing = ({ lines, ...props }) => {
             viewBoxWidth />
         ))}
       </svg>
-    </div>
+    </Segment>
   );
 };
 
