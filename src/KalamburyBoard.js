@@ -54,6 +54,8 @@ const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
     if(!isDrawing) {
       setGuess(lastGuess)
       guessInputRef.current.inputRef.current.setSelectionRange(lastGuess.length, lastGuess.length);
+      guessInputRef.current.inputRef.current.blur();
+      guessInputRef.current.focus();
     }
   }
 
