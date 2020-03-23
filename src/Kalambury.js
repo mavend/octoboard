@@ -76,6 +76,7 @@ export const Kalambury = {
     onBegin: (G, ctx) => {
       G.secret.phrase = G.secret.phrases.pop();
       G.players[ctx.currentPlayer].phrase = G.secret.phrase;
+      G.drawing = [];
       ctx.events.setActivePlayers({currentPlayer: 'draw', others: 'guess' });
     },
     stages: {
