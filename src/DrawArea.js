@@ -62,7 +62,13 @@ const DrawArea = ({initialLines, onUpdate}) => {
 
   return (
     <div>
-      <Toolbar currentColor={penColor} onColorChange={setPenColor} onSizeChange={setPenSize} onClearAll={handleClearAll} onUndoDrawing={handleUndo} />
+      <Toolbar
+        currentColor={penColor}
+        onColorChange={setPenColor}
+        onSizeChange={setPenSize}
+        onClearAll={handleClearAll}
+        onUndoDrawing={handleUndo}
+        canUndo={lines.length > 0}/>
       <div style={{cursor: "crosshair"}}>
         <Drawing 
           lines={lines}

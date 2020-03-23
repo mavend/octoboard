@@ -1,7 +1,7 @@
 import React from "react";
-import { Icon, Menu } from 'semantic-ui-react';
+import { Icon, Menu, Popup } from 'semantic-ui-react';
 
-const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndoDrawing }) => {
+const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndoDrawing, canUndo }) => {
   const eraserColor = "#FFFFFF";
   const colors = [
     "#424953",
@@ -48,20 +48,27 @@ const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndo
         <Icon name="eraser" />
       </Menu.Item>
       <Menu.Menu position='right'>
-        <Menu.Item
-          name='undo'
-          active={false}
-          onClick={onUndoDrawing}
-        >
-          <Icon name="undo" />
-        </Menu.Item>
-        <Menu.Item
-          name='trash'
-          active={false}
-          onClick={onClearAll}
-        >
-          <Icon color='red' name="trash alternate outline" />
-        </Menu.Item>
+        <Popup content="Remove last line"
+          trigger={
+            <Menu.Item
+              name='undo'
+              active={false}
+              disabled={!canUndo}
+              onClick={onUndoDrawing}
+            >
+              <Icon name="undo" />
+            </Menu.Item>
+          } />
+        <Popup content="Clear drawing"
+          trigger={
+            <Menu.Item
+              name='trash'
+              active={false}
+              onClick={onClearAll}
+            >
+              <Icon color='red' name="trash alternate outline" />
+            </Menu.Item>
+          } />
       </Menu.Menu>
     </Menu>
   )
