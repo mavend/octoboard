@@ -45,7 +45,7 @@ const PlayerEntry = ({ name, avatar, points, guesses, isDrawing, isWinning, isCu
           <Feed.Content>
             <Icon name="star" color={isWinning ? "yellow" : "grey"} />{points}<span> Points</span>
           </Feed.Content>
-          <Feed.Extra text>
+          <Feed.Extra text style={{ maxWidth: "230px", marginLeft: "-50px" }}>
             {
               isDrawing
                 ?
@@ -62,8 +62,8 @@ const PlayerEntry = ({ name, avatar, points, guesses, isDrawing, isWinning, isCu
                   >
                     {
                       guesses.slice(0, 3).map(({time, phrase}, idx) => (
-                        <List.Item key={time} style={{opacity: (3-idx)/3}}>
-                          <Label basic pointing="left">{phrase}</Label>
+                        <List.Item key={time} style={{ opacity: (3-idx)/3, marginRight: "8px" }}>
+                          <Label basic pointing="left" style={{ maxWidth: "100%" }}>{phrase}</Label>
                         </List.Item>
                       ))
                     }
