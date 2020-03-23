@@ -18,9 +18,9 @@ const App = () => {
   const queryString = window.location.search;
   const urlParams= new URLSearchParams(queryString);
   return (
-  <div>
-    <KalamburyClient playerID={urlParams.get('id') || "0"} />
-  </div>
+    <div>
+      <KalamburyClient playerID={urlParams.get('id') || "0"} />
+    </div>
   );
 };
 

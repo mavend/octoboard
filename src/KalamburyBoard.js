@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { 
   Container,
   Header,
-  Segment,
-  Icon,
   Form,
   Input,
   Grid,
@@ -37,10 +35,9 @@ const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
     <div>
       <Container>
         <Header as="h1" textAlign="center" style={styles.mainHeader}>
-          <Icon name="pencil" /> Kalambury
+          Kalambury
         </Header>
       </Container>
-
       <Container style={styles.mainContent}>
         <Grid>
           <Grid.Column width="12">

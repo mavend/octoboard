@@ -1,12 +1,11 @@
 import React from "react";
-import * as moment from 'moment';
 import {
-  Header,
-  Card,
-  Image,
   Icon,
+  Header,
+  List,
+  Label,
+  Segment,
   Feed,
-  Divider
 } from "semantic-ui-react";
 
 const KalamburySidebar = ({
@@ -15,68 +14,61 @@ const KalamburySidebar = ({
   playerID
 }) => (
   <>
-    <Header as='h2' textAlign="center">
-      Recent guesses
-    </Header>
-    <RecentGuesses guesses={guesses} playersData={playersData} />
-
-    <Header as='h2' textAlign="center">
+    <Header as="h2" textAlign="center">
       Players
     </Header>
-    {Object.keys(playersData).map(pid => (
-      <PlayerCard
-        key={pid}
-        points={points[pid] }
-        isDrawing={activePlayers[pid] === "draw"}
-        isCurrentPlayer={pid === playerID}
-        {...playersData[pid]} />
-    ))}
+    <Segment.Group>
+      {Object.keys(playersData).map(pid => (
+        <PlayerEntry
+          key={pid}
+          points={points[pid]}
+          guesses={[...guesses].reverse().filter(({playerID}) => playerID === pid)}
+          isWinning={points[pid] === Math.max(...points)}
+          isDrawing={activePlayers[pid] === "draw"}
+          isCurrentPlayer={pid === playerID}
+          {...playersData[pid]} />
+      ))}
+    </Segment.Group>
   </>
 );
 
-const RecentGuesses = ({ guesses, playersData }) => (
-  <Card style={{
-    height: "300px",
-    overflowY: "scroll",
-  }}>
-    <Card.Content>
-      <Feed>
-        {[...guesses].reverse().map(({playerID, time, phrase, success}) => (
-          <React.Fragment key={time}>
-            {success ? <Divider /> : null}
-            <Feed.Event
-              image={playersData[playerID].avatar}
-              date={moment(time).format("H:mm:ss")}
-              summary={phrase}
-              meta={success ? "Success +1 point!" : null}
-            />
-          </React.Fragment>
-        ))}
-      </Feed>
-    </Card.Content>
-  </Card>
-);
-
-const PlayerCard = ({name, avatar, points, isDrawing, isCurrentPlayer}) => (
-  <Card color={isDrawing ? "orange" : null}>
-    <Card.Content>
-      <Image
-        floated='right'
-        size='mini'
-        circular
-        src={avatar}
-      />
-      <Card.Header>{name} {isCurrentPlayer &&
-      <Icon color="grey" name="user" size="small" />
-        }</Card.Header>
-      <Card.Meta>Points: {points}</Card.Meta>
-      { isDrawing && (
-        <Card.Description>
-          <Icon name="pencil" /> Drawing...
-        </Card.Description>
-      )}
-    </Card.Content>
-  </Card>
+const PlayerEntry = ({ name, avatar, points, guesses, isDrawing, isWinning, isCurrentPlayer }) => (
+  <Segment disabled={isDrawing}>
+    <Feed>
+      <Feed.Event>
+        <Feed.Label image={avatar} />
+        <Feed.Content>
+          <Feed.Date>
+            {name} {isCurrentPlayer && <span>(You)</span>}
+          </Feed.Date>
+          <Feed.Content>
+            <Icon name="star" color={isWinning ? "yellow" : "grey"} />{points}<span> Points</span>
+          </Feed.Content>
+          <Feed.Extra text>
+            {
+              isDrawing
+                ?
+                  <Label>
+                    <Icon name="pencil" />
+                    Drawing...
+                  </Label>
+                  :
+                  <List>
+                    {
+                      guesses.slice(0, 3).map(({time, phrase}, idx) => (
+                        <React.Fragment key={time}>
+                          <List.Item style={{opacity: (3-idx)/3}}>
+                            <Label basic pointing="left">{phrase}</Label>
+                          </List.Item>
+                        </React.Fragment>
+                      ))}
+                  </List>
+            }
+          </Feed.Extra>
+        </Feed.Content>
+      </Feed.Event>
+    </Feed>
+  </Segment>
 )
 
 export default KalamburySidebar;

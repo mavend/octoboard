@@ -25,7 +25,7 @@ const Loading = ({ G, ctx }) => {
     <div>
       <Container>
         <Header as="h1" textAlign="center" style={styles.mainHeader}>
-          <Icon name="pencil" /> Kalambury
+          Kalambury
         </Header>
       </Container>
 
