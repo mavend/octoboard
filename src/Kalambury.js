@@ -65,7 +65,6 @@ function Forfeit(G, ctx) {
 }
 
 function Ping(G, ctx) {
-  console.log(G.secret);
   G.remainingSeconds = 120 - Math.floor((new Date() - G.secret.startTime) / 1000);
 }
 
