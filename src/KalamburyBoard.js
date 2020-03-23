@@ -12,13 +12,12 @@ import DrawArea from "./DrawArea";
 import Drawing from "./Drawing";
 import KalamburySidebar from "./KalamburySidebar";
 
-const KalamburyBoard = ({ G, ctx, moves }) => {
+const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
   const { players } = G;
   const { activePlayers } = ctx;
 
-  const playerId = Object.keys(players)[0];
-  const playerData = players[playerId];
-  const isDrawing = activePlayers[playerId] === "draw";
+  const playerData = players[playerID];
+  const isDrawing = activePlayers[playerID] === "draw";
 
   const styles = {
     mainHeader: {
@@ -52,14 +51,9 @@ const KalamburyBoard = ({ G, ctx, moves }) => {
             )}
           </Grid.Column>
           <Grid.Column width="4" style={{marginTop: isDrawing ? "19px" : "0"}}>
-            <KalamburySidebar {...{ G, ctx, moves }} />
+            <KalamburySidebar {...{ G, ctx, playerID, moves }} />
           </Grid.Column>
         </Grid>
-        
-
-        <Segment textAlign="center" style={styles.footer}>
-          PlayerId: {playerId}
-        </Segment>
       </Container>
     </div>
   )
