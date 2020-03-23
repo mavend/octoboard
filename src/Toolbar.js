@@ -1,59 +1,53 @@
 import React from "react";
+import { Icon, Menu } from 'semantic-ui-react';
 
 const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll }) => {
   const colors = [
-    "#000000",
-    "#ff0000",
-    "#00ff00",
-    "#0000ff",
+    {name: "black", value: "#000000"},
+    {name: "red", value: "#ff0000"},
+    {name: "green", value: "#00ff00"},
+    {name: "blue", value: "#0000ff"},
   ];
+
+  const onClickColor = (color) => {
+    onColorChange(color.value);
+    onSizeChange(2);
+  };
 
   const onClickEraser = () => {
     onColorChange("#eeeeee");
     onSizeChange(25);
   };
 
-  const onClickColor = (color) => {
-    onColorChange(color);
-    onSizeChange(2);
-  }
-
-  const colorsItems = colors.map((color) =>
-    <ColorBox key={color} color={color} onClick={() => onClickColor(color)} />
-  );
-
   return (
-    <div style={{
-      width: "100%",
-      height: "20px",
-      display: "flex"
-    }}>
-      <span style={{ margin: "0 5px" }}>Current:</span>
-      <ColorBox color={currentColor} />
+    <Menu>
+      {colors.map((color) => (
+        <Menu.Item
+          name={`color-${color.name}`}
+          active={currentColor === color.value}
+          onClick={() => onClickColor(color)}
+        >
+          <Icon name="circle" color={color.name} />
+        </Menu.Item>
+      ))}
 
-      <span style={{ margin: "0 5px" }}>Available:</span>
-      {colorsItems}
-
-      <button onClick={onClickEraser} style={{ margin: "0 5px" }}>Eraser</button>
-
-      <button onClick={onClearAll} style={{ margin: "0 5px" }}>Clear All</button>
-    </div>
-  );
+      <Menu.Item
+        name='eraser'
+        active={currentColor === "#eeeeee"}
+        onClick={onClickEraser}
+      >
+        <Icon name="eraser" />
+      </Menu.Item>
+      <Menu.Item
+        name='trash'
+        active={false}
+        onClick={onClearAll}
+      >
+        <Icon name="trash alternate" />
+      </Menu.Item>
+    </Menu>
+  )
 };
-
-const ColorBox = ({ color, onClick }) => (
-  <div
-    onClick={onClick}
-    style={{
-      boxSizing: "border-box",
-      border: "2px solid black",
-      width: "20px",
-      height: "20px",
-      margin: "0 5px",
-      backgroundColor: color || "#eeeeee",
-      cursor: "pointer" }}>
-  </div>
-);
 
 export default Toolbar;
 

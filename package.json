@@ -9,7 +9,9 @@
     "boardgame.io": "^0.38.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "semantic-ui-react": "^0.88.2",
+    "simplify-path": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
