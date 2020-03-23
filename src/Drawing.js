@@ -3,6 +3,13 @@ import smooth_path from "./utils/smooth_path";
 
 const Drawing = ({ lines }) => {
   const styles = {
+    wrapper: {
+      border: "1px solid rgba(34,36,38,.15)",
+      boxShadow: "0 1px 2px 0 rgba(34,36,38,.15)",
+      backgroundColor: "white",
+      borderRadius: ".28571429rem",
+      overflow: "hidden",
+    },
     svg: {
       width: "100%",
       height: "100%",
@@ -17,7 +24,7 @@ const Drawing = ({ lines }) => {
   });
 
   return (
-    <div>
+    <div style={styles.wrapper}>
       <svg style={styles.svg} viewBox={`0 0 ${vbWidth} ${vbHeight}`}>
         {lines.map((line, id) => (
           <DrawingLine 
