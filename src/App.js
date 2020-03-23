@@ -3,10 +3,12 @@ import { Client } from 'boardgame.io/react';
 import { SocketIO } from 'boardgame.io/multiplayer';
 import { Kalambury } from './Kalambury';
 import KalamburyBoard from './KalamburyBoard';
+import Loading from './Loading';
 
 const KalamburyClient = Client({ 
   game: Kalambury, 
   board: KalamburyBoard,
+  loading: Loading,
   multiplayer: SocketIO({ server: 'localhost:8000' }),
   numPlayers: 3,
   debug: false
