@@ -11,6 +11,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
+    "remove-accents": "^0.4.2",
     "semantic-ui-react": "^0.88.2",
     "simplify-path": "^1.1.0"
   },
