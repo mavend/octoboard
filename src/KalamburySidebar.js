@@ -13,7 +13,8 @@ import { avatarForName } from "./utils/avatar";
 const KalamburySidebar = ({
   G: { playersData, guesses, points },
   ctx: { activePlayers },
-  playerID
+  playerID,
+  handleGuessClick
 }) => (
   <>
     <Header as="h2" textAlign="center">
@@ -28,13 +29,14 @@ const KalamburySidebar = ({
           isWinning={points[pid] === Math.max(...points)}
           isDrawing={activePlayers[pid] === "draw"}
           isCurrentPlayer={pid === playerID}
+          handleGuessClick={handleGuessClick}
           {...playersData[pid]} />
       ))}
     </Segment.Group>
   </>
 );
 
-const PlayerEntry = ({ name, avatar, points, guesses, isDrawing, isWinning, isCurrentPlayer }) => (
+const PlayerEntry = ({ name, avatar, points, guesses, isDrawing, isWinning, isCurrentPlayer, handleGuessClick }) => (
   <Segment disabled={isDrawing}>
     <Feed>
       <Feed.Event>
@@ -64,7 +66,7 @@ const PlayerEntry = ({ name, avatar, points, guesses, isDrawing, isWinning, isCu
                     {
                       guesses.slice(0, 3).map(({time, phrase}, idx) => (
                         <List.Item key={time} style={{ opacity: (3-idx)/3, marginRight: "8px" }}>
-                          <Label basic pointing="left" style={{ maxWidth: "100%" }}>{phrase}</Label>
+                          <Label basic pointing="left" style={{ maxWidth: "100%", cursor: "pointer" }} onClick={handleGuessClick}>{phrase}</Label>
                         </List.Item>
                       ))
                     }

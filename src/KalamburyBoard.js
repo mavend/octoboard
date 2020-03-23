@@ -14,6 +14,7 @@ const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
   const { players } = G;
   const { activePlayers } = ctx;
 
+  const [guess, setGuess] = useState("");
   const playerData = players[playerID];
   const isDrawing = activePlayers[playerID] === "draw";
 
@@ -31,6 +32,10 @@ const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
     }
   }
 
+  const handleGuessClick = (e) => {
+    setGuess(e.target.textContent);
+  }
+
   return (
     <div>
       <Container>
@@ -44,11 +49,11 @@ const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
             { isDrawing ? (
               <DrawingBoard playerData={playerData} {...{ G, ctx, moves }} />
             ) : (
-              <GuessingBoard playerData={playerData} {...{ G, ctx, moves }} />
+              <GuessingBoard playerData={playerData} guess={guess} setGuess={setGuess} {...{ G, ctx, moves }} />
             )}
           </Grid.Column>
           <Grid.Column width="4" style={{marginTop: isDrawing ? "19px" : "0"}}>
-            <KalamburySidebar {...{ G, ctx, playerID, moves }} />
+            <KalamburySidebar handleGuessClick={handleGuessClick} {...{ G, ctx, playerID, moves }} />
           </Grid.Column>
         </Grid>
       </Container>
@@ -74,9 +79,9 @@ const DrawingBoard = ({
 
 const GuessingBoard = ({
   G: { drawing },
-  moves: { Guess }
+  moves: { Guess },
+  guess, setGuess
 }) => {
-  const [guess, setGuess] = useState("");
 
   const sendGuess = () => {
     Guess(guess);
