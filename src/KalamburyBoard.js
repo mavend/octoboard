@@ -16,7 +16,7 @@ const KalamburyBoard = ({ G, ctx, moves }) => {
       { activePlayers[playerId] === "draw" ? (
         <>
           <h1>Your phrase is: {phrase} {}</h1>
-          <DrawArea width="800" height="600" initialLines={G.drawing} onUpdate={(lines) => UpdateDrawing(lines)} />
+          <DrawArea width="800" height="600" initialLines={G.drawing} onUpdate={lines => UpdateDrawing(lines)} />
         </>
       ) : (
         <>

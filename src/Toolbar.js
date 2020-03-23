@@ -2,38 +2,47 @@ import React from "react";
 import { Icon, Menu } from 'semantic-ui-react';
 
 const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll }) => {
+  const eraserColor = "#F4F6F9";
   const colors = [
-    {name: "black", value: "#000000"},
-    {name: "red", value: "#ff0000"},
-    {name: "green", value: "#00ff00"},
-    {name: "blue", value: "#0000ff"},
+    "#424953",
+    "#D94452",
+    "#FB6D51",
+    "#FECD57",
+    "#8AC054",
+    "#B4E080",
+    "#46CEAD",
+    "#4B89DA",
+    "#AC92EA",
+    "#F299CE",
+    "#F4D0B5"
   ];
 
   const onClickColor = (color) => {
-    onColorChange(color.value);
+    onColorChange(color);
     onSizeChange(2);
   };
 
   const onClickEraser = () => {
-    onColorChange("#eeeeee");
+    onColorChange(eraserColor);
     onSizeChange(25);
   };
 
   return (
     <Menu>
-      {colors.map((color) => (
+      {colors.map(color => (
         <Menu.Item
-          name={`color-${color.name}`}
-          active={currentColor === color.value}
+          key={color}
+          name={`color-${color}`}
+          active={currentColor === color}
           onClick={() => onClickColor(color)}
         >
-          <Icon name="circle" color={color.name} />
+          <ColorBox color={color} />
         </Menu.Item>
       ))}
 
       <Menu.Item
         name='eraser'
-        active={currentColor === "#eeeeee"}
+        active={currentColor === eraserColor}
         onClick={onClickEraser}
       >
         <Icon name="eraser" />
@@ -48,6 +57,16 @@ const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll }) => {
     </Menu>
   )
 };
+
+const ColorBox = ({ color }) => (
+  <div
+    style={{
+      boxSizing: "border-box",
+      width: "15px",
+      height: "15px",
+      backgroundColor: color}}>
+  </div>
+);
 
 export default Toolbar;
 
