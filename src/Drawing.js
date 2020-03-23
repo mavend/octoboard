@@ -41,7 +41,7 @@ const DrawingLine = ({ line: { points, color, width} }) => (
   <path fill="none"
     stroke={color}
     strokeWidth={width}
-    d={smooth_path(points, 0.2)} />
+    d={smooth_path(points, 0.15)} />
 );
 
 export default Drawing;
