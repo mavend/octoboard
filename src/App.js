@@ -4,6 +4,7 @@ import { SocketIO } from 'boardgame.io/multiplayer';
 import { Kalambury } from './Kalambury';
 import KalamburyBoard from './KalamburyBoard';
 import Loading from './Loading';
+import GameLobby from "./lobby";
 
 const KalamburyClient = Client({ 
   game: Kalambury, 
@@ -19,7 +20,12 @@ const App = () => {
   const urlParams= new URLSearchParams(queryString);
   return (
     <div>
-      <KalamburyClient playerID={urlParams.get('id') || "0"} />
+      <GameLobby 
+        lobbyServer="http://localhost:8000"
+        gameComponents={[{game: Kalambury, board: KalamburyBoard}]}
+        playerName={"Patryk"}
+        />
+      {/* <KalamburyClient playerID={urlParams.get('id') || "0"} /> */}
     </div>
   );
 };

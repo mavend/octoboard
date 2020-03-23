@@ -79,7 +79,9 @@ function IndexOfMax(array) {
 }
 
 export const Kalambury = {
+  id: "kalamabury",
   name: "Kalambury",
+  image: "/images/kalambury-icon.png",
   minPlayers: 2,
   maxPlayers: 10,
 

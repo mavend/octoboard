@@ -8,7 +8,6 @@ import {
   Segment,
   Feed,
 } from "semantic-ui-react";
-import { avatarForName } from "./utils/avatar";
 
 const KalamburySidebar = ({
   G: { playersData, guesses, points },

@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Container,
   Header,
   Image,
   Segment,
   Grid,
-  Button,
-  Form,
 } from "semantic-ui-react";
 import RoomsList from "./RoomsList";
 import CreateRoomForm from './CreateRoomForm';
+import LobbyConnection from "./LobbyConnection";
 
 const GAMES = [
   {id: "kalambury", name: "Kalambury", image: "/images/kalambury-icon.png"},
@@ -19,15 +18,15 @@ const GAMES = [
 const ROOMS = [
   {gameId: "kalambury", roomId: "503", description: "Patryk's room", currentPlayers: 3, maxPlayers: 10},
   {gameId: "kalambury", roomId: "1040", description: "", currentPlayers: 5, maxPlayers: 5},
-  {gameId: "tysiac", roomId: "1040", description: "wbijać!", currentPlayers: 2, maxPlayers: 4},
+  {gameId: "tysiac", roomId: "104234", description: "wbijać!", currentPlayers: 2, maxPlayers: 4},
   {gameId: "kalambury", roomId: "1030", description: "", currentPlayers: 3, maxPlayers: 10},
-  {gameId: "tysiac", roomId: "1040", description: "wolne", currentPlayers: 2, maxPlayers: 4},
-  {gameId: "kalambury", roomId: "1030", description: "", currentPlayers: 3, maxPlayers: 7},
-  {gameId: "kalambury", roomId: "1040", description: "wbijać!", currentPlayers: 2, maxPlayers: 4},
-  {gameId: "kalambury", roomId: "1030", description: "", currentPlayers: 3, maxPlayers: 10},
+  {gameId: "tysiac", roomId: "1041", description: "wolne", currentPlayers: 2, maxPlayers: 4},
+  {gameId: "kalambury", roomId: "1031", description: "", currentPlayers: 3, maxPlayers: 7},
+  {gameId: "kalambury", roomId: "1043", description: "wbijać!", currentPlayers: 2, maxPlayers: 4},
+  {gameId: "kalambury", roomId: "1034", description: "", currentPlayers: 3, maxPlayers: 10},
 ]
 
-const GameLobby = (props) => {
+const GameLobby = ({ lobbyServer, gameComponents, playerName }) => {
   const styles = {
     mainImage: {
       width: "300px",
@@ -38,6 +37,20 @@ const GameLobby = (props) => {
       marginBottom: "40px",
     },
   };
+
+  const [lobbyConnection, setLobbyConnection] = useState();
+
+  useEffect(() => {
+    const connection = LobbyConnection({
+      server: lobbyServer,
+      gameComponents,
+      playerName,
+      playerCredentials: {},
+    });
+    setLobbyConnection(connection);
+  }, [lobbyServer, gameComponents, playerName])
+
+  const games = gameComponents.map(g => g.game);
 
   return (
     <div>
@@ -61,7 +74,7 @@ const GameLobby = (props) => {
           <Grid.Column width="4">
             <Segment>
               <Header as="h3" textAlign="center">Create room</Header>
-              <CreateRoomForm games={GAMES} />
+              <CreateRoomForm games={games} />
             </Segment>
           </Grid.Column>
         </Grid>

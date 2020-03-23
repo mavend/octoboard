@@ -11,7 +11,10 @@ const RoomsList = ({ rooms, games, style }) => (
   <div style={style}>
     <List divided relaxed size="big">
       {rooms.map(room => (
-        <RoomsListItem room={room} game={games.find(g => g.id === room.gameId)} />
+        <RoomsListItem
+          key={room.roomId}
+          room={room} 
+          game={games.find(g => g.id === room.gameId)} />
       ))}
     </List>
     <div style={{textAlign: "center"}}>

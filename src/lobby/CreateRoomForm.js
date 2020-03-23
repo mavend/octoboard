@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Button,
   Form,
 } from "semantic-ui-react";
 
 const CreateRoomForm = ({ games }) => {
-  const [game, setGame] = useState("kalambury");
+  const [game, setGame] = useState("kalamabury");
   const [players, setPlayers] = useState(2);
-  const [description, setDescription] = useState(2);
+  const [description, setDescription] = useState("");
 
   const options = games.map(({ id, name, image }) => (
     {
@@ -24,17 +24,17 @@ const CreateRoomForm = ({ games }) => {
         label='Game'
         options={options} 
         value={game} 
-        onChange={(e) => setGame(e.target.value)} />
+        onChange={(_, { value }) => setGame(value)} />
       <Form.Input
         label="Number of players"
         type="number"
         value={players}
-        onChange={(e) => setPlayers(e.target.value)} />
+        onChange={(_, { value }) => setPlayers(value)} />
       <Form.Input
         label='Description'
         type='text'
         value={description}
-        onChange={(e) => setDescription(e.target.value)} />
+        onChange={(_, { value }) => setDescription(value)} />
       <Button fluid color="green">Create</Button>
     </Form>
   )
