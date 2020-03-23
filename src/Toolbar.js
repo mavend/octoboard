@@ -19,7 +19,7 @@ const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndo
 
   const onClickColor = (color) => {
     onColorChange(color);
-    onSizeChange(2);
+    onSizeChange(3);
   };
 
   const onClickEraser = () => {

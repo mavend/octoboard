@@ -13,7 +13,7 @@ import Drawing from "./Drawing";
 import KalamburySidebar from "./KalamburySidebar";
 
 const KalamburyBoard = ({ G, ctx, moves }) => {
-  const { players  } = G;
+  const { players } = G;
   const { activePlayers } = ctx;
 
   const playerId = Object.keys(players)[0];

@@ -9,12 +9,21 @@ const Drawing = ({ lines }) => {
       backgroundColor: "#FFF",
     }
   }
+  const vbWidth = 800, vbHeight = 600;
+
+  const scaleToViewBox = ({ points, ...line }) => ({
+    ...line,
+    points: points.map(p => [p[0] * vbWidth, p[1] * vbHeight])
+  });
 
   return (
     <div>
-      <svg style={styles.svg} viewBox={`0 0 800 600`}>
+      <svg style={styles.svg} viewBox={`0 0 ${vbWidth} ${vbHeight}`}>
         {lines.map((line, id) => (
-          <DrawingLine key={id} line={line} />
+          <DrawingLine 
+            key={id}
+            line={scaleToViewBox(line)}
+            viewBoxWidth />
         ))}
       </svg>
     </div>

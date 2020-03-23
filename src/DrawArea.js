@@ -19,7 +19,7 @@ const DrawArea = ({initialLines, onUpdate}) => {
     const newLines = [...lines];
     if (addLine) newLines.push({points: [], color: penColor, width: penSize});
     const lastLine = newLines[newLines.length - 1];
-    lastLine.points = simplify([...lastLine.points, point], 1.05);
+    lastLine.points = simplify([...lastLine.points, point], 0.001);
 
     setLines(newLines);
     if(onUpdate) {
@@ -28,8 +28,8 @@ const DrawArea = ({initialLines, onUpdate}) => {
   }
 
   const relativeCoordsForEvent = ({ currentTarget, clientX, clientY }) => {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    return [clientX - left, clientY - top];
+    const { left, top, width, height } = currentTarget.getBoundingClientRect();
+    return [(clientX - left) / width, (clientY - top) / height];
   };
 
   const handleMouseDown = (e) => {
