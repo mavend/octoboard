@@ -2,7 +2,7 @@ import React from "react";
 import { Icon, Menu } from 'semantic-ui-react';
 
 const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndoDrawing }) => {
-  const eraserColor = "#F4F6F9";
+  const eraserColor = "#FFFFFF";
   const colors = [
     "#424953",
     "#D94452",
