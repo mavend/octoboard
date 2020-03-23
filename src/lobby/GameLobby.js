@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import Cookies from 'react-cookies';
-import { 
-  Container,
-  Header,
-  Image,
-  Segment,
-  Grid,
-} from "semantic-ui-react";
+import React, { useEffect } from "react";
+import { Container, Header, Image, Segment, Grid } from "semantic-ui-react";
 import RoomsList from "./RoomsList";
-import CreateRoomForm from './CreateRoomForm';
-import LobbyConnection from "./LobbyConnection";
+import CreateRoomForm from "./CreateRoomForm";
+import { useLobbyConnection } from "./lobby_connection";
 
-const GameLobby = ({ lobbyServer, gameComponents, playerName }) => {
+const GameLobby = ({
+  lobbyServer,
+  gameComponents,
+  playerName,
+  playerCredentials,
+  onUpdateCredentials,
+  onUpdateGame,
+}) => {
   const styles = {
     mainImage: {
       width: "300px",
@@ -22,40 +22,30 @@ const GameLobby = ({ lobbyServer, gameComponents, playerName }) => {
       marginBottom: "40px",
     },
   };
-
-  const [lobbyConnection, setLobbyConnection] = useState();
-  const [error, setError] = useState();
-  const [rooms, setRooms] = useState([]);
-
-  useEffect(() => {
-    let cookie = Cookies.load('lobbyState') || {};
-    const connection = LobbyConnection({
-      server: lobbyServer,
-      gameComponents,
-      playerName,
-      playerCredentials: cookie.credentialStore,
-    });
-    const updateRooms = async () => {
-      await connection.refresh();
-      setRooms(connection.rooms);
-    }
-    updateRooms();
-
-    setLobbyConnection(connection);
-  }, [lobbyServer, gameComponents, playerName])
-
   const games = gameComponents.map(g => g.game);
 
-  const createRoom = async (game, numPlayers) => {
-    try {
-      await lobbyConnection.create(game.name, numPlayers);
-      await lobbyConnection.refresh();
-      setRooms(lobbyConnection.rooms);
-      this.setState({});
-    } catch (error) {
-      setError(error.message);
+  const { rooms, credentials, error, createRoom, joinRoom } = useLobbyConnection({
+    server: lobbyServer,
+    gameComponents,
+    playerName,
+    playerCredentials: playerCredentials[playerName],
+  });
+
+  useEffect(() => {
+    if (credentials) {
+      onUpdateCredentials({ ...playerCredentials, [playerName]: credentials });
     }
-  }
+  }, [credentials, onUpdateCredentials]);
+
+  const handleCreate = async (game, numPlayers) => {
+    const gameID = await createRoom(game, numPlayers);
+    handleJoin(game.name, gameID, 0);
+  };
+
+  const handleJoin = async (gameName, gameID, freeSpotId) => {
+    await joinRoom(gameName, gameID, freeSpotId);
+    onUpdateGame({ gameName, gameID, playerID: "" + freeSpotId });
+  };
 
   return (
     <div>
@@ -63,27 +53,34 @@ const GameLobby = ({ lobbyServer, gameComponents, playerName }) => {
         <Image style={styles.mainImage} src="/images/game-hugo.png" />
         <Header as="h1" textAlign="center" style={styles.mainHeader}>
           Corona Games
-          <Header.Subheader>
-            Games in the time of plague
-          </Header.Subheader>
+          <Header.Subheader>Games in the time of plague</Header.Subheader>
         </Header>
       </Container>
       <Container>
         <Grid>
           <Grid.Column width="12">
             <Segment>
-              <Header as="h3" textAlign="center">Available rooms</Header>
-              <RoomsList rooms={rooms} games={games} />
+              <Header as="h3" textAlign="center">
+                Available rooms
+              </Header>
+              {rooms.length > 0 ? (
+                <RoomsList rooms={rooms} games={games} onJoinRoom={handleJoin} />
+              ) : (
+                <p>No rooms available...</p>
+              )}
             </Segment>
           </Grid.Column>
           <Grid.Column width="4">
             <Segment>
-              <Header as="h3" textAlign="center">Create room</Header>
-              <CreateRoomForm games={games} onCreateRoom={createRoom} />
+              <Header as="h3" textAlign="center">
+                Create room
+              </Header>
+              <CreateRoomForm games={games} onCreateRoom={handleCreate} />
             </Segment>
           </Grid.Column>
         </Grid>
       </Container>
+      {error}
     </div>
   );
 };

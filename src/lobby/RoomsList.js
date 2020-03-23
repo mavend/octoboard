@@ -7,14 +7,15 @@ import {
   Label,
 } from "semantic-ui-react";
 
-const RoomsList = ({ rooms, games, style }) => (
+const RoomsList = ({ rooms, games, style, onJoinRoom }) => (
   <div style={style}>
     <List divided relaxed size="big">
       {rooms.map(room => (
         <RoomsListItem
           key={room.gameID}
           room={room} 
-          game={games.find(g => g.name === room.gameName)} />
+          game={games.find(g => g.name === room.gameName)}
+          onJoin={onJoinRoom} />
       ))}
     </List>
     <div style={{textAlign: "center"}}>
@@ -37,14 +38,23 @@ const RoomsListItem = ({
     description,
     players,
   },
-  game
+  game,
+  onJoin,
 }) => {
-  if(!game) return;
+  if(!game) return null;
 
   const maxPlayers = players.length;
   const currentPlayers = players.filter(p => p.name).length
   const isFull = currentPlayers === maxPlayers;
   
+  
+  const handleClick = () => {
+    if (!isFull) {
+      const freeSpotId = players.find(p => !p.name).id;
+      onJoin(game.name, gameID, freeSpotId);
+    }
+  };
+
   return (
     <List.Item>
       <Image avatar src={game.image} />
@@ -64,6 +74,7 @@ const RoomsListItem = ({
             color: isFull ? "red" : null,
           }}
           labelPosition='left'
+          onClick={handleClick}
         />
       </List.Content>
     </List.Item>

@@ -1,3 +1,3 @@
-import GameLobby from "./GameLobby";
+import LobbyPage from "./LobbyPage";
 
-export default GameLobby;
+export default LobbyPage;

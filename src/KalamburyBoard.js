@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { 
   Container,
   Header,
@@ -82,8 +82,6 @@ const GuessingBoard = ({
   moves: { Guess },
   guess, setGuess
 }) => {
-  const inputRef = useRef();
-
   const sendGuess = () => {
     Guess(guess);
     setGuess("");
@@ -100,7 +98,6 @@ const GuessingBoard = ({
       <Header as='h2' textAlign="center">Guess the phrase</Header>
       <Form onSubmit={sendGuess}>
         <Input fluid
-          ref={inputRef}
           icon='talk' 
           iconPosition='left'
           placeholder='Your guess...'
