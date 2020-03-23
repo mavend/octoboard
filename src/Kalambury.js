@@ -1,4 +1,5 @@
 import { PlayerView } from 'boardgame.io/core';
+import phrases from './data/phrases/pl/proverbs.json';
 import removeAccents  from 'remove-accents';
 
 const NAMES = ["John doe", "Jay Query", "Myszojeleń"];
@@ -7,7 +8,7 @@ function setupKalambury(ctx, setupData) {
   const G = {
     secret: {
       phrase: "",
-      phrases: ctx.random.Shuffle(PHRASES.slice()),
+      phrases: ctx.random.Shuffle(phrases.slice()),
     },
     players: {},
     playersData: {},
@@ -67,18 +68,6 @@ function IndexOfMax(array) {
 
   return maxIndexes;
 }
-
-const PHRASES = [
-  "Baba z wozu koniom lżej",
-  "Gdzie kucharek sześć tam nie ma co jeść",
-  "Mądry Polak po szkodzie",
-  "Gdyby kózka nie skakała to by nóżki nie złamała",
-  "Apetyt rośnie w miarę jedzenia",
-  "Biednemu zawsze wiatr w oczy",
-  "Gdzie dwóch się bije, tam trzeci korzysta",
-  "Na bezrybiu i rak ryba",
-  "Prawda w oczy kole",
-]
 
 export const Kalambury = {
   seed: "test",
