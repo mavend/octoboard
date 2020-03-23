@@ -50,7 +50,7 @@ const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
             ) : (
               <GuessingBoard playerData={playerData} guess={guess} setGuess={setGuess} {...{ G, ctx, moves }} />
             )}
-            <Header as="h3" textAlign="centered">2:00</Header>
+            <Header as="h3" textAlign="centered" style={{marginTop: 0}}>2:00</Header>
           </Grid.Column>
           <Grid.Column width="4" style={{marginTop: "19px"}}>
             <KalamburySidebar handleGuessClick={handleGuessClick} {...{ G, ctx, playerID, moves }} />

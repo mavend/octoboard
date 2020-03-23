@@ -48,7 +48,7 @@ const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndo
         active={currentColor === eraserColor}
         onClick={onClickEraser}
       >
-        <Icon name="eraser" />
+        <Icon fitted name="eraser" />
       </Menu.Item>
       <Menu.Menu position='right'>
         <Popup content="Remove last line"
@@ -59,7 +59,7 @@ const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndo
               disabled={!canUndo}
               onClick={onUndoDrawing}
             >
-              <Icon name="undo" />
+              <Icon fitted name="undo" />
             </Menu.Item>
           } />
         <Popup content="Clear drawing"
@@ -69,7 +69,7 @@ const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndo
               active={false}
               onClick={onClearAll}
             >
-              <Icon color='red' name="trash alternate outline" />
+              <Icon fitted color='red' name="trash alternate outline" />
             </Menu.Item>
           } />
       </Menu.Menu>

@@ -61,7 +61,7 @@ const DrawArea = ({initialLines, onUpdate}) => {
   }
 
   return (
-    <div>
+    <div style={{margin: "1rem 0"}}>
       <Toolbar
         currentColor={penColor}
         onColorChange={setPenColor}
