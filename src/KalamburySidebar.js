@@ -11,7 +11,8 @@ import {
 
 const KalamburySidebar = ({
   G: { playersData, guesses, points },
-  ctx: { activePlayers }
+  ctx: { activePlayers },
+  playerID
 }) => (
   <>
     <Header as='h2' textAlign="center">
@@ -22,12 +23,13 @@ const KalamburySidebar = ({
     <Header as='h2' textAlign="center">
       Players
     </Header>
-    {Object.keys(playersData).map(playerID => (
+    {Object.keys(playersData).map(pid => (
       <PlayerCard
-        key={playerID}
-        points={points[playerID] }
-        isDrawing={activePlayers[playerID] === "draw"}
-        {...playersData[playerID]} />
+        key={pid}
+        points={points[pid] }
+        isDrawing={activePlayers[pid] === "draw"}
+        isCurrentPlayer={pid === playerID}
+        {...playersData[pid]} />
     ))}
   </>
 );
@@ -55,7 +57,7 @@ const RecentGuesses = ({ guesses, playersData }) => (
   </Card>
 );
 
-const PlayerCard = ({name, avatar, points, isDrawing}) => (
+const PlayerCard = ({name, avatar, points, isDrawing, isCurrentPlayer}) => (
   <Card color={isDrawing ? "orange" : null}>
     <Card.Content>
       <Image
@@ -64,12 +66,14 @@ const PlayerCard = ({name, avatar, points, isDrawing}) => (
         circular
         src={avatar}
       />
-      <Card.Header>{name}</Card.Header>
+      <Card.Header>{name} {isCurrentPlayer &&
+      <Icon color="grey" name="user" size="small" />
+        }</Card.Header>
       <Card.Meta>Points: {points}</Card.Meta>
       { isDrawing && (
         <Card.Description>
           <Icon name="pencil" /> Drawing...
-      </Card.Description>
+        </Card.Description>
       )}
     </Card.Content>
   </Card>

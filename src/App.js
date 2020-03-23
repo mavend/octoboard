@@ -11,7 +11,7 @@ const KalamburyClient = Client({
   loading: Loading,
   multiplayer: SocketIO({ server: 'localhost:8000' }),
   numPlayers: 3,
-  debug: false
+  debug: new URLSearchParams(window.location.search).get('debug') || false
 });
 
 const App = () => {
