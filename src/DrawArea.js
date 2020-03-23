@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Drawing from "./Drawing";
 import Toolbar from "./Toolbar";
-
-var simplify = require('simplify-path');
+import simplify from "simplify-path";
 
 const DrawArea = ({initialLines, width, height, onUpdate}) => {
   const [lines, setLines] = useState(initialLines || []);
@@ -19,7 +18,8 @@ const DrawArea = ({initialLines, width, height, onUpdate}) => {
     const point = relativeCoordsForEvent(event);
     const newLines = [...lines];
     if (addLine) newLines.push({points: [], color: penColor, width: penSize});
-    newLines[newLines.length - 1].points = simplify([...newLines[newLines.length - 1].points, point], 1.05);
+    const lastLine = newLines[newLines.length - 1];
+    lastLine.points = simplify([...lastLine.points, point], 1.05);
 
     setLines(newLines);
     if(onUpdate) {
@@ -48,14 +48,14 @@ const DrawArea = ({initialLines, width, height, onUpdate}) => {
   };
 
   const handleClearAll = () => {
-    setLines([])
-    if(onUpdate) { onUpdate([]) }
+    setLines([]);
+    if(onUpdate) onUpdate([]);
   }
 
   const handleUndo = () => {
     lines.pop();
     setLines(lines);
-    if(onUpdate) { window.requestAnimationFrame(() => onUpdate(lines)); }
+    if(onUpdate) onUpdate(lines);
   }
 
   return (
