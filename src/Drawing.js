@@ -1,7 +1,7 @@
 import React from "react";
 import smooth_path from "./utils/smooth_path";
 
-const Drawing = ({ lines }) => {
+const Drawing = ({ lines, ...props }) => {
   const styles = {
     wrapper: {
       border: "1px solid rgba(34,36,38,.15)",
@@ -25,7 +25,10 @@ const Drawing = ({ lines }) => {
 
   return (
     <div style={styles.wrapper}>
-      <svg style={styles.svg} viewBox={`0 0 ${vbWidth} ${vbHeight}`}>
+      <svg 
+        style={styles.svg} 
+        viewBox={`0 0 ${vbWidth} ${vbHeight}`}
+        {...props}>
         {lines.map((line, id) => (
           <DrawingLine 
             key={id}

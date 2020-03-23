@@ -18,6 +18,7 @@ const KalamburyBoard = ({ G, ctx, moves }) => {
 
   const playerId = Object.keys(players)[0];
   const playerData = players[playerId];
+  const isDrawing = activePlayers[playerId] === "draw";
 
   const styles = {
     mainHeader: {
@@ -44,13 +45,13 @@ const KalamburyBoard = ({ G, ctx, moves }) => {
       <Container style={styles.mainContent}>
         <Grid>
           <Grid.Column width="12">
-            { activePlayers[playerId] === "draw" ? (
+            { isDrawing ? (
               <DrawingBoard playerData={playerData} {...{ G, ctx, moves }} />
             ) : (
               <GuessingBoard playerData={playerData} {...{ G, ctx, moves }} />
             )}
           </Grid.Column>
-          <Grid.Column width="4">
+          <Grid.Column width="4" style={{marginTop: isDrawing ? "19px" : "0"}}>
             <KalamburySidebar {...{ G, ctx, moves }} />
           </Grid.Column>
         </Grid>

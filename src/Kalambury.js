@@ -2,7 +2,7 @@ import { PlayerView } from 'boardgame.io/core';
 import phrases from './data/phrases/pl/proverbs.json';
 import removeAccents  from 'remove-accents';
 
-const NAMES = ["John doe", "Jay Query", "Myszojeleń"];
+const NAMES = ["John Doe", "Jay Query", "Myszojeleń"];
 
 function setupKalambury(ctx, setupData) {
   const G = {
@@ -30,16 +30,24 @@ function setupKalambury(ctx, setupData) {
   return G;
 }
 
+function stripPhrase(phrase) {
+  return removeAccents(phrase).toLowerCase().replace(/\W/g,'');
+}
+
 function Guess(G, ctx, phrase) {
+  const { playerID, currentPlayer } = ctx;
   if (!phrase) { phrase = G.secret.phrase; } // DEBUG
+  let success = stripPhrase(phrase) === stripPhrase(G.secret.phrase);
   G.guesses.push({
-    playerId: ctx.playerID,
     time: Date.now(),
-    phrase: phrase,
+    playerID,
+    phrase,
+    success
   })
-  if (removeAccents(phrase).toLowerCase().replace(/\W/g,'') === removeAccents(G.secret.phrase).toLowerCase().replace(/\W/g,'')) {
-    G.points[ctx.playerID] += 1;
-    G.points[ctx.currentPlayer] += 1;
+
+  if (success) {
+    G.points[playerID] += 1;
+    G.points[currentPlayer] += 1;
     ctx.events.endTurn();
   }
 }

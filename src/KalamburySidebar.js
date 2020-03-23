@@ -6,6 +6,7 @@ import {
   Image,
   Icon,
   Feed,
+  Divider
 } from "semantic-ui-react";
 
 const KalamburySidebar = ({
@@ -21,12 +22,12 @@ const KalamburySidebar = ({
     <Header as='h2' textAlign="center">
       Players
     </Header>
-    {Object.keys(playersData).map(playerId => (
+    {Object.keys(playersData).map(playerID => (
       <PlayerCard
-        key={playerId}
-        points={points[playerId] }
-        isDrawing={activePlayers[playerId] === "draw"}
-        {...playersData[playerId]} />
+        key={playerID}
+        points={points[playerID] }
+        isDrawing={activePlayers[playerID] === "draw"}
+        {...playersData[playerID]} />
     ))}
   </>
 );
@@ -38,13 +39,16 @@ const RecentGuesses = ({ guesses, playersData }) => (
   }}>
     <Card.Content>
       <Feed>
-        {[...guesses].reverse().map(({playerId, time, phrase}) => (
-          <Feed.Event 
-            key={time}
-            image={playersData[playerId].avatar}
-            date={moment(time).format("H:mm:ss")}
-            summary={phrase}
-          />
+        {[...guesses].reverse().map(({playerID, time, phrase, success}) => (
+          <React.Fragment key={time}>
+            {success ? <Divider /> : null}
+            <Feed.Event
+              image={playersData[playerID].avatar}
+              date={moment(time).format("H:mm:ss")}
+              summary={phrase}
+              meta={success ? "Success +1 point!" : null}
+            />
+          </React.Fragment>
         ))}
       </Feed>
     </Card.Content>
@@ -57,6 +61,7 @@ const PlayerCard = ({name, avatar, points, isDrawing}) => (
       <Image
         floated='right'
         size='mini'
+        circular
         src={avatar}
       />
       <Card.Header>{name}</Card.Header>
