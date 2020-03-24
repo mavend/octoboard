@@ -31,6 +31,13 @@ function stripPhrase(phrase) {
   return removeAccents(phrase).toLowerCase().replace(/\W/g, "");
 }
 
+function nextActivePlayer(G, { currentPlayer }) {
+  const activePlayersIdxs = Object.keys(G.playersData).filter((pid) => G.playersData[pid].isActive);
+  const nextActivePlayerIdx =
+    (activePlayersIdxs.indexOf(currentPlayer) + 1) % activePlayersIdxs.length;
+  return activePlayersIdxs[nextActivePlayerIdx];
+}
+
 function Guess(G, ctx, phrase) {
   const { playerID, currentPlayer } = ctx;
   if (!phrase) {
@@ -47,7 +54,7 @@ function Guess(G, ctx, phrase) {
   if (success) {
     G.points[playerID] += 1;
     G.points[currentPlayer] += 1;
-    ctx.events.endTurn();
+    ctx.events.endTurn({ next: nextActivePlayer(G, ctx) });
   }
 }
 
@@ -93,18 +100,13 @@ function updatePlayersData(G, playerID, playerData) {
 }
 
 function indexOfMax(array) {
-  let max = array[0];
-  let maxIndexes = [0];
-
-  for (let i = 1; i < array.length; i++) {
-    if (array[i] > max) {
-      max = array[i];
-      maxIndexes = [i];
-    } else if (array[i] === max) {
-      maxIndexes.push(i);
-    }
+  const maxValue = Math.max(...array);
+  const maxIndexes = [];
+  let index = array.indexOf(maxValue);
+  while (index >= 0) {
+    maxIndexes.push(index);
+    index = array.indexOf(maxValue, index + 1);
   }
-
   return maxIndexes;
 }
 
