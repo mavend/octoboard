@@ -1,9 +1,6 @@
-import { PlayerView } from 'boardgame.io/core';
-import phrases from './data/phrases/pl/proverbs.json';
-import removeAccents  from 'remove-accents';
-import { avatarForName } from "./utils/avatar";
-
-const NAMES = ["John Doe", "Jay Query", "Myszojeleń"];
+import { PlayerView } from "boardgame.io/core";
+import phrases from "./data/phrases/pl/proverbs.json";
+import removeAccents from "remove-accents";
 
 function setupKalambury(ctx, setupData) {
   const G = {
@@ -12,19 +9,14 @@ function setupKalambury(ctx, setupData) {
       phrases: ctx.random.Shuffle(phrases.slice()),
     },
     players: {},
-    playersData: {},
     points: Array(ctx.numPlayers).fill(0),
     drawing: [],
     guesses: [],
-  }
+  };
 
   for (let i = 0; i < ctx.numPlayers; i++) {
     G.players[i] = {
       phrase: "",
-    };
-    G.playersData[i] = {
-      name: NAMES[i],
-      avatar: avatarForName(NAMES[i]),
     };
   }
 
@@ -32,19 +24,21 @@ function setupKalambury(ctx, setupData) {
 }
 
 function stripPhrase(phrase) {
-  return removeAccents(phrase).toLowerCase().replace(/\W/g,'');
+  return removeAccents(phrase).toLowerCase().replace(/\W/g, "");
 }
 
 function Guess(G, ctx, phrase) {
   const { playerID, currentPlayer } = ctx;
-  if (!phrase) { phrase = G.secret.phrase; } // DEBUG
+  if (!phrase) {
+    phrase = G.secret.phrase;
+  } // DEBUG
   let success = stripPhrase(phrase) === stripPhrase(G.secret.phrase);
   G.guesses.push({
     time: Date.now(),
     playerID,
     phrase,
-    success
-  })
+    success,
+  });
 
   if (success) {
     G.points[playerID] += 1;
@@ -69,7 +63,7 @@ function IndexOfMax(array) {
   for (let i = 1; i < array.length; i++) {
     if (array[i] > max) {
       max = array[i];
-      maxIndexes = [i]
+      maxIndexes = [i];
     } else if (array[i] === max) {
       maxIndexes.push(i);
     }
@@ -92,11 +86,11 @@ export const Kalambury = {
       G.secret.phrase = G.secret.phrases.pop();
       G.players[ctx.currentPlayer].phrase = G.secret.phrase;
       G.drawing = [];
-      ctx.events.setActivePlayers({currentPlayer: 'draw', others: 'guess' });
+      ctx.events.setActivePlayers({ currentPlayer: "draw", others: "guess" });
     },
     stages: {
       draw: {
-        moves: { UpdateDrawing, Forfeit }
+        moves: { UpdateDrawing, Forfeit },
       },
       guess: {
         moves: {
@@ -117,4 +111,3 @@ export const Kalambury = {
 
   playerView: PlayerView.STRIP_SECRETS,
 };
-

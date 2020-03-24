@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
-import { Button, Icon, Container } from "semantic-ui-react";
+import { Button, Icon, Container, Confirm } from "semantic-ui-react";
 import Loading from "../Loading";
 
 const GameClient = ({ gameComponent, playerID, gameID, credentials, leaveGame }) => {
+  const [confirmOpen, setConfirmOpen] = useState(false);
+
   if (!gameComponent || !playerID) return null;
   const { game, board } = gameComponent;
 
@@ -19,11 +21,16 @@ const GameClient = ({ gameComponent, playerID, gameID, credentials, leaveGame })
   return (
     <div>
       <NewGameCLient playerID={"" + playerID} gameID={gameID} credentials={credentials} />
-      <Container>
-        <Button color="red" onClick={() => leaveGame(game.name, gameID)}>
+      <Container style={{ marginTop: "20px" }}>
+        <Button color="red" onClick={() => setConfirmOpen(true)}>
           <Icon name="close" />
           Leave game
         </Button>
+        <Confirm
+          open={confirmOpen}
+          onCancel={() => setConfirmOpen(false)}
+          onConfirm={() => leaveGame(game.name, gameID)}
+        />
       </Container>
     </div>
   );

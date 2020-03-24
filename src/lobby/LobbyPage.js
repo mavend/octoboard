@@ -23,6 +23,7 @@ const LobbyPage = ({ lobbyServer, gameComponents, playerName }) => {
 
   // Check if player is already in a game room
   useEffect(() => {
+    if (!playerName) return;
     const room = rooms.find((room) => room.players.find((p) => p.name === playerName));
     if (room) {
       const { gameID, gameName, players } = room;
@@ -32,7 +33,7 @@ const LobbyPage = ({ lobbyServer, gameComponents, playerName }) => {
     } else {
       setCurrentGame(null);
     }
-  }, [rooms, setCurrentGame]);
+  }, [playerName, rooms, setCurrentGame]);
 
   const handleCreate = async (game, numPlayers) => {
     const gameID = await createRoom(game, numPlayers);
@@ -46,7 +47,7 @@ const LobbyPage = ({ lobbyServer, gameComponents, playerName }) => {
 
   return (
     <>
-      {currentGame && currentGame.gameID ? (
+      {playerName && currentGame && currentGame.gameID ? (
         <GameClient
           playerID={currentGame.playerID}
           gameID={currentGame.gameID}

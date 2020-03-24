@@ -31,8 +31,8 @@ const RoomsListItem = ({ room: { gameID, description, players }, game, onJoin })
   if (!game) return null;
 
   const maxPlayers = players.length;
-  const currentPlayers = players.filter((p) => p.name).length;
-  const isFull = currentPlayers === maxPlayers;
+  const currentPlayers = players.filter((p) => p.name);
+  const isFull = currentPlayers.length === maxPlayers;
 
   const handleClick = () => {
     if (!isFull) {
@@ -48,7 +48,7 @@ const RoomsListItem = ({ room: { gameID, description, players }, game, onJoin })
         <List.Header>{game.name}</List.Header>
         <Label>#{gameID}</Label>
         {description}
-        <em>{players.map((p) => p.name).join(", ")}</em>
+        <em>{currentPlayers.map((p) => p.name).join(", ")}</em>
       </List.Content>
       <List.Content floated="right">
         <Button
@@ -57,7 +57,7 @@ const RoomsListItem = ({ room: { gameID, description, players }, game, onJoin })
           label={{
             basic: true,
             pointing: "right",
-            content: `${currentPlayers}/${maxPlayers}`,
+            content: `${currentPlayers.length}/${maxPlayers}`,
             icon: "male",
             color: isFull ? "red" : null,
           }}
