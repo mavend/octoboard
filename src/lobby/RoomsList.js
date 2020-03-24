@@ -1,9 +1,9 @@
 import React from "react";
-import { Image, List, Button, Pagination, Label } from "semantic-ui-react";
+import { Image, List, Button, Pagination, Label, Icon } from "semantic-ui-react";
 
 const RoomsList = ({ rooms, games, style, onJoinRoom }) => (
   <div style={style}>
-    <List divided relaxed size="big">
+    <List divided relaxed="very" size="big">
       {rooms.map((room) => (
         <RoomsListItem
           key={room.gameID}
@@ -45,10 +45,8 @@ const RoomsListItem = ({ room: { gameID, description, players }, game, onJoin })
     <List.Item>
       <Image avatar src={game.image} />
       <List.Content>
-        <List.Header>{game.name}</List.Header>
-        <Label>#{gameID}</Label>
-        {description}
-        <em>{currentPlayers.map((p) => p.name).join(", ")}</em>
+        <List.Header>{game.name} <Label as="span" style={{ marginLeft: "1rem" }}>#<Label.Detail>{gameID}</Label.Detail></Label></List.Header>
+        <List horizontal size="small">{currentPlayers.map((p) => (<List.Item key={p.id}><List.Content><Icon name="user" size="small" color="grey" />{p.name}</List.Content></List.Item>))}</List>
       </List.Content>
       <List.Content floated="right">
         <Button

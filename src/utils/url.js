@@ -8,4 +8,8 @@ function setUrlParam(key, value) {
   window.history.pushState("", "", "?" + urlParams);
 }
 
-export { setUrlParam };
+function setUrlHash(value) {
+  window.location.hash = value || "";
+}
+
+export { setUrlParam, setUrlHash };
