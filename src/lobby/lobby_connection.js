@@ -172,13 +172,18 @@ function useLobbyConnection({ server, gameComponents, playerName, playerCredenti
 
   const refetch = useCallback(async () => {
     if (connection) {
-      await connection.refresh();
-      const { rooms: newRooms, playerCredentials: newCredentials } = connection;
+      try {
+        await connection.refresh();
+        const { rooms: newRooms, playerCredentials: newCredentials } = connection;
 
-      setRooms(rooms => (isEqual(newRooms, rooms) ? rooms : newRooms));
-      setCredentials(credentials =>
-        credentials === newCredentials ? credentials : newCredentials
-      );
+        setRooms(rooms => (isEqual(newRooms, rooms) ? rooms : newRooms));
+        setCredentials(credentials =>
+          credentials === newCredentials ? credentials : newCredentials
+        );
+        setError(null);
+      } catch (error) {
+        setError(error.message);
+      }
     }
   }, [connection]);
 

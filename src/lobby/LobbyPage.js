@@ -3,6 +3,8 @@ import { isEqual, find } from "lodash";
 import GameClient from "./GameClient";
 import GameLobby from "./GameLobby";
 import { useLobbyConnection } from "./lobby_connection";
+import { Container, Segment } from "semantic-ui-react";
+import { setUrlParam } from "../utils/url";
 
 const LobbyPage = ({ lobbyServer, gameComponents, playerName }) => {
   const [playerCredentials, setPlayerCredentials] = useState();
@@ -31,17 +33,22 @@ const LobbyPage = ({ lobbyServer, gameComponents, playerName }) => {
       const newGame = { gameName, gameID, playerID };
       setCurrentGame((currentGame) => (isEqual(currentGame, newGame) ? currentGame : newGame));
     } else {
-      setCurrentGame(null);
-      // Check gameID from URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const gameID = urlParams.get("gameID");
-      if (gameID) {
-        const room = find(rooms, { gameID });
-        const freeSpot = room && room.players.find((p) => !p.name);
-        if (room && freeSpot) {
-          handleJoin(room.gameName, gameID, freeSpot.id);
+      if (!currentGame) {
+        // Check gameID from URL
+        console.log("Running");
+        const urlParams = new URLSearchParams(window.location.search);
+        const gameID = urlParams.get("gameID");
+        if (gameID) {
+          const room = find(rooms, { gameID });
+          const freeSpot = room && room.players.find((p) => !p.name);
+          if (room && freeSpot) {
+            console.log("Joining");
+            handleJoin(room.gameName, gameID, freeSpot.id);
+          }
         }
       }
+
+      setCurrentGame(null);
     }
   }, [playerName, rooms, setCurrentGame]);
 
@@ -57,6 +64,13 @@ const LobbyPage = ({ lobbyServer, gameComponents, playerName }) => {
 
   return (
     <>
+      {error && (
+        <Container>
+          <Segment inverted color="red">
+            {error}
+          </Segment>
+        </Container>
+      )}
       {playerName && currentGame && currentGame.gameID ? (
         <GameClient
           playerID={currentGame.playerID}
@@ -74,7 +88,6 @@ const LobbyPage = ({ lobbyServer, gameComponents, playerName }) => {
           joinRoom={handleJoin}
         />
       )}
-      {error}
     </>
   );
 };
