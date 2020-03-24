@@ -1,9 +1,9 @@
 import React from "react";
-import { Container, Header, Image, Segment, Grid } from "semantic-ui-react";
+import { Container, Header, Image, Segment, Grid, Dimmer, Loader } from "semantic-ui-react";
 import RoomsList from "./RoomsList";
 import CreateRoomForm from "./CreateRoomForm";
 
-const GameLobby = ({ rooms, gameComponents, joinRoom, createRoom }) => {
+const GameLobby = ({ loading, rooms, gameComponents, joinRoom, createRoom }) => {
   const styles = {
     mainImage: {
       width: "300px",
@@ -13,6 +13,7 @@ const GameLobby = ({ rooms, gameComponents, joinRoom, createRoom }) => {
       marginTop: "20px",
       marginBottom: "40px",
     },
+    noRoomImage: { margin: "0 auto" },
   };
   const games = gameComponents.map(g => g.game);
 
@@ -32,11 +33,23 @@ const GameLobby = ({ rooms, gameComponents, joinRoom, createRoom }) => {
               <Header as="h3" textAlign="center">
                 Available rooms
               </Header>
-              {rooms.length > 0 ? (
-                <RoomsList rooms={rooms} games={games} onJoinRoom={joinRoom} />
-              ) : (
-                <p>No rooms available...</p>
-              )}
+              <div>
+                {rooms.length > 0 ? (
+                  <RoomsList rooms={rooms} games={games} onJoinRoom={joinRoom} />
+                ) : (
+                  <>
+                    <Header as="h4" textAlign="center" color="grey">
+                      No rooms available at the moment
+                    </Header>
+                    <Image style={styles.noRoomImage} src="/images/hugo-out.png" size="medium" />
+                  </>
+                )}
+                {loading && (
+                  <Dimmer active inverted>
+                    <Loader inverted content="Loading rooms" />
+                  </Dimmer>
+                )}
+              </div>
             </Segment>
           </Grid.Column>
           <Grid.Column width="4">
