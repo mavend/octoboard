@@ -1,31 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Image, List, Button, Pagination, Label, Icon } from "semantic-ui-react";
+import { paginate } from "../utils/paginate";
 
-const RoomsList = ({ rooms, games, style, onJoinRoom }) => (
-  <div style={style}>
-    <List divided relaxed="very" size="big">
-      {rooms.map((room) => (
-        <RoomsListItem
-          key={room.gameID}
-          room={room}
-          game={games.find((g) => g.name === room.gameName)}
-          onJoin={onJoinRoom}
+const RoomsList = ({ rooms, games, style, onJoinRoom }) => {
+  const [pagesCount, setPagesCount] = useState(1);
+  const [pageNum, setPageNum] = useState(1);
+
+  const perPage = 6;
+
+  useEffect(() => {
+    setPagesCount(Math.ceil(rooms.length / perPage));
+  }, [rooms]);
+
+  const handlePageChange = (e, {activePage}) => {
+    setPageNum(activePage);
+  }
+
+  return (
+    <div style={style}>
+      <List divided relaxed="very" size="big">
+        {paginate(rooms, perPage, pageNum).map((room) => (
+          <RoomsListItem
+            key={room.gameID}
+            room={room}
+            game={games.find((g) => g.name === room.gameName)}
+            onJoin={onJoinRoom}
+          />
+        ))}
+      </List>
+      <div style={{ textAlign: "center" }}>
+        <Pagination
+          onPageChange={handlePageChange}
+          activePage={pageNum}
+          boundaryRange={0}
+          siblingRange={1}
+          totalPages={pagesCount}
         />
-      ))}
-    </List>
-    <div style={{ textAlign: "center" }}>
-      <Pagination
-        boundaryRange={0}
-        defaultActivePage={1}
-        ellipsisItem={null}
-        firstItem={null}
-        lastItem={null}
-        siblingRange={1}
-        totalPages={10}
-      />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const RoomsListItem = ({ room: { gameID, description, players }, game, onJoin }) => {
   if (!game) return null;
