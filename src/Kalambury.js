@@ -132,10 +132,7 @@ export const Kalambury = {
         G.points[ctx.currentPlayer] -= 1;
       }
     },
-    endIf: (G, ctx) => {
-      G.remainingSeconds <= 0;
-      return { next: nextActivePlayer(G, ctx) };
-    },
+    endIf: (G, ctx) => G.remainingSeconds <= 0 && { next: nextActivePlayer(G, ctx) },
     stages: {
       draw: {
         moves: {
