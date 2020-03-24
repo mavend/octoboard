@@ -164,10 +164,12 @@ function LobbyConnection(opts) {
   return new _LobbyConnectionImpl(opts);
 }
 
-function useLobbyConnection({ server, gameComponents, playerName, playerCredentials, poll }) {
+function useLobbyConnection({ server, gameComponents, playerName, playerCredentials }) {
   const [connection, setConnection] = useState();
+  const [polling, setPolling] = useState(true);
   const [error, setError] = useState();
   const [rooms, setRooms] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [credentials, setCredentials] = useState(playerCredentials);
 
   const refetch = useCallback(async () => {
@@ -181,18 +183,19 @@ function useLobbyConnection({ server, gameComponents, playerName, playerCredenti
           credentials === newCredentials ? credentials : newCredentials
         );
         setError(null);
+        setLoading(false);
       } catch (error) {
         setError(error.message);
       }
     }
-  }, [connection]);
+  }, [connection, polling]);
 
   useEffect(() => {
-    if (connection) {
+    if (connection && polling) {
       const interval = setInterval(() => refetch(), 1000);
       return () => clearInterval(interval);
     }
-  }, [connection]);
+  }, [connection, polling]);
 
   useEffect(() => {
     const con = LobbyConnection({
@@ -234,7 +237,8 @@ function useLobbyConnection({ server, gameComponents, playerName, playerCredenti
   }
 
   return {
-    connection,
+    loading,
+    setPolling,
     rooms,
     credentials,
     error,

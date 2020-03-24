@@ -3,19 +3,34 @@ import { isEqual, find } from "lodash";
 import GameClient from "./GameClient";
 import GameLobby from "./GameLobby";
 import { useLobbyConnection } from "./lobby_connection";
-import { Container, Segment } from "semantic-ui-react";
-import { setUrlParam } from "../utils/url";
+import { Container, Segment, Dimmer, Loader } from "semantic-ui-react";
 
 const LobbyPage = ({ lobbyServer, gameComponents, playerName }) => {
   const [playerCredentials, setPlayerCredentials] = useState();
   const [currentGame, setCurrentGame] = useState();
+  const [urlGameParam, setUrlGameParam] = useState();
 
-  const { rooms, credentials, error, createRoom, joinRoom, leaveGame } = useLobbyConnection({
+  const {
+    loading,
+    setPolling,
+    rooms,
+    credentials,
+    error,
+    createRoom,
+    joinRoom,
+    leaveGame,
+  } = useLobbyConnection({
     server: lobbyServer,
     gameComponents,
     playerName,
     playerCredentials: localStorage.getItem("playerCredentials"),
   });
+
+  // Load gameID from URL on the page load
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    setUrlGameParam(urlParams.get("gameID"));
+  }, [setUrlGameParam]);
 
   // Update credentials in localStorage
   useEffect(() => {
@@ -25,32 +40,30 @@ const LobbyPage = ({ lobbyServer, gameComponents, playerName }) => {
 
   // Check if player is already in a game room
   useEffect(() => {
-    if (!playerName) return;
+    if (loading || !playerName || currentGame) return;
+
     const room = rooms.find((room) => room.players.find((p) => p.name === playerName));
     if (room) {
+      // Player already in room
       const { gameID, gameName, players } = room;
       const playerID = find(players, { name: playerName }).id.toString();
       const newGame = { gameName, gameID, playerID };
       setCurrentGame((currentGame) => (isEqual(currentGame, newGame) ? currentGame : newGame));
+      setUrlGameParam(null);
+      setPolling(false);
     } else {
-      if (!currentGame) {
-        // Check gameID from URL
-        console.log("Running");
-        const urlParams = new URLSearchParams(window.location.search);
-        const gameID = urlParams.get("gameID");
-        if (gameID) {
-          const room = find(rooms, { gameID });
-          const freeSpot = room && room.players.find((p) => !p.name);
-          if (room && freeSpot) {
-            console.log("Joining");
-            handleJoin(room.gameName, gameID, freeSpot.id);
-          }
+      // Check gameID from URL
+      if (urlGameParam && !currentGame) {
+        const room = find(rooms, { gameID: urlGameParam });
+        const freeSpot = room && room.players.find((p) => !p.name);
+        if (room && freeSpot) {
+          handleJoin(room.gameName, urlGameParam, freeSpot.id);
+        } else {
+          setUrlGameParam(null);
         }
       }
-
-      setCurrentGame(null);
     }
-  }, [playerName, rooms, setCurrentGame]);
+  }, [loading, urlGameParam, playerName, rooms, setCurrentGame]);
 
   const handleCreate = async (game, numPlayers) => {
     const gameID = await createRoom(game, numPlayers);
@@ -60,10 +73,25 @@ const LobbyPage = ({ lobbyServer, gameComponents, playerName }) => {
   const handleJoin = async (gameName, gameID, freeSpotId) => {
     await joinRoom(gameName, gameID, freeSpotId);
     setCurrentGame({ gameName, gameID, playerID: freeSpotId.toString() });
+    setUrlGameParam(null);
+    setPolling(false);
+  };
+
+  const handleLeave = async (gameName, gameID) => {
+    await leaveGame(gameName, gameID);
+    setCurrentGame(null);
+    setUrlGameParam(null);
+    setPolling(true);
   };
 
   return (
     <>
+      {urlGameParam && !currentGame && (
+        <Dimmer active>
+          <Loader>Joining game</Loader>
+        </Dimmer>
+      )}
+
       {error && (
         <Container>
           <Segment inverted color="red">
@@ -71,13 +99,14 @@ const LobbyPage = ({ lobbyServer, gameComponents, playerName }) => {
           </Segment>
         </Container>
       )}
+
       {playerName && currentGame && currentGame.gameID ? (
         <GameClient
           playerID={currentGame.playerID}
           gameID={currentGame.gameID}
           credentials={playerCredentials}
           gameComponent={gameComponents.find((g) => g.game.name === currentGame.gameName)}
-          leaveGame={leaveGame}
+          leaveGame={handleLeave}
         />
       ) : (
         <GameLobby
