@@ -79,7 +79,7 @@ function UpdateDrawing(G, _ctx, lines) {
 
 function Forfeit(G, ctx) {
   G.points[ctx.currentPlayer] -= 1;
-  ctx.events.endTurn();
+  ctx.events.endTurn({ next: nextActivePlayer(G, ctx) });
 }
 
 function Ping(G, { playerID }, playerData) {
@@ -132,7 +132,10 @@ export const Kalambury = {
         G.points[ctx.currentPlayer] -= 1;
       }
     },
-    endIf: (G, ctx) => G.remainingSeconds <= 0,
+    endIf: (G, ctx) => {
+      G.remainingSeconds <= 0;
+      return { next: nextActivePlayer(G, ctx) };
+    },
     stages: {
       draw: {
         moves: {
