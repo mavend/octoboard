@@ -19,7 +19,7 @@ function setupKalambury(ctx, setupData) {
     drawing: [],
     guesses: [],
     remainingSeconds: 120,
-  }
+  };
 
   for (let i = 0; i < ctx.numPlayers; i++) {
     G.players[i] = {
