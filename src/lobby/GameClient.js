@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
 import { Button, Icon, Container, Confirm } from "semantic-ui-react";
 import Loading from "../Loading";
+import { setUrlParam } from "../utils/url";
 
 const GameClient = ({ gameComponent, playerID, gameID, credentials, leaveGame }) => {
   const [confirmOpen, setConfirmOpen] = useState(false);
+
+  useEffect(() => {
+    setUrlParam("gameID", gameID);
+    return () => setUrlParam("gameID", null);
+  }, [gameID]);
 
   if (!gameComponent || !playerID) return null;
   const { game, board } = gameComponent;

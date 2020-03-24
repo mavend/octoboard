@@ -32,6 +32,16 @@ const LobbyPage = ({ lobbyServer, gameComponents, playerName }) => {
       setCurrentGame((currentGame) => (isEqual(currentGame, newGame) ? currentGame : newGame));
     } else {
       setCurrentGame(null);
+      // Check gameID from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const gameID = urlParams.get("gameID");
+      if (gameID) {
+        const room = find(rooms, { gameID });
+        const freeSpot = room && room.players.find((p) => !p.name);
+        if (room && freeSpot) {
+          handleJoin(room.gameName, gameID, freeSpot.id);
+        }
+      }
     }
   }, [playerName, rooms, setCurrentGame]);
 

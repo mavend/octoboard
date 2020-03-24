@@ -3,18 +3,17 @@ import LobbyPage from "./lobby";
 import LoginPage from "./LoginPage";
 
 const CoronaGames = ({ lobbyServer, gameComponents }) => {
-  const [loggedIn, setLoggedIn] = useState(false);
   const [playerName, setPlayerName] = useState(localStorage.getItem("playerName") || "");
 
   const handleLogin = (name) => {
+    name = [name, Math.random().toString(36).substr(2, 5)].join("-");
     setPlayerName(name);
     localStorage.setItem("playerName", name);
-    setLoggedIn(true);
   };
 
   return (
     <div>
-      {loggedIn ? (
+      {playerName ? (
         <LobbyPage
           lobbyServer={lobbyServer}
           gameComponents={gameComponents}
