@@ -12,6 +12,7 @@ import {
 import DrawArea from "./DrawArea";
 import Drawing from "./Drawing";
 import KalamburySidebar from "./KalamburySidebar";
+import { avatarForName } from "./utils/avatar";
 
 const KalamburyBoard = ({ G, ctx, playerID, moves, gameMetadata }) => {
   const { players, guesses, canChangePhrase } = G;
@@ -20,14 +21,24 @@ const KalamburyBoard = ({ G, ctx, playerID, moves, gameMetadata }) => {
 
   const [guess, setGuess] = useState("");
   const playerData = players[playerID];
+  const playerMetadata = gameMetadata[playerID] || {};
+  const playerName = playerMetadata.name;
   const isDrawing = activePlayers[playerID] === "draw";
 
   const guessInputRef = useRef();
 
+  const pingPlayersData = () => {
+    Ping({
+      name: playerName,
+      avatar: avatarForName(playerName),
+    });
+  };
+
   useEffect(() => {
-    let interval = setInterval(Ping, 1000);
+    pingPlayersData();
+    let interval = setInterval(pingPlayersData, 1000);
     return () => clearInterval(interval);
-  }, [Ping]);
+  }, [Ping, playerName]);
 
   const styles = {
     mainHeader: {
@@ -204,7 +215,7 @@ const GuessingBoard = ({
     setLastSuccess(guess.success);
     setInputLocked(true);
     setTimeout(() => setInputLocked(false), 250);
-    setAnimateInput(!animateInput);
+    setAnimateInput(animateInput => !animateInput);
   }, [previousUserGuesses]);
 
   return (

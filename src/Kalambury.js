@@ -11,6 +11,7 @@ function setupKalambury(ctx, setupData) {
     },
     canChangePhrase: true,
     players: {},
+    playersData: {},
     points: Array(ctx.numPlayers).fill(0),
     drawing: [],
     guesses: [],
@@ -74,11 +75,24 @@ function Forfeit(G, ctx) {
   ctx.events.endTurn();
 }
 
-function Ping(G, ctx) {
+function Ping(G, { playerID }, playerData) {
   G.remainingSeconds = 120 - Math.floor((new Date() - G.secret.startTime) / 1000);
+  updatePlayersData(G, playerID, playerData);
 }
 
-function IndexOfMax(array) {
+function updatePlayersData(G, playerID, playerData) {
+  G.playersData[playerID] = {
+    ...(G.playersData[playerID] || {}),
+    ...playerData,
+    lastActivity: new Date(),
+    id: playerID,
+  };
+  Object.values(G.playersData).forEach((player) => {
+    player.isActive = new Date() - player.lastActivity < 5000;
+  });
+}
+
+function indexOfMax(array) {
   let max = array[0];
   let maxIndexes = [0];
 
@@ -152,7 +166,7 @@ export const Kalambury = {
 
   endIf: (G, ctx) => {
     if (G.secret.phrases.length === 0 && !G.secret.phrase) {
-      return { winners: IndexOfMax(G.points) };
+      return { winners: indexOfMax(G.points) };
     }
   },
 
