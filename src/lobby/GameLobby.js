@@ -1,17 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Container, Header, Image, Segment, Grid } from "semantic-ui-react";
 import RoomsList from "./RoomsList";
 import CreateRoomForm from "./CreateRoomForm";
-import { useLobbyConnection } from "./lobby_connection";
 
-const GameLobby = ({
-  lobbyServer,
-  gameComponents,
-  playerName,
-  playerCredentials,
-  onUpdateCredentials,
-  onUpdateGame,
-}) => {
+const GameLobby = ({ rooms, gameComponents, joinRoom, createRoom }) => {
   const styles = {
     mainImage: {
       width: "300px",
@@ -23,29 +15,6 @@ const GameLobby = ({
     },
   };
   const games = gameComponents.map(g => g.game);
-
-  const { rooms, credentials, error, createRoom, joinRoom } = useLobbyConnection({
-    server: lobbyServer,
-    gameComponents,
-    playerName,
-    playerCredentials: playerCredentials[playerName],
-  });
-
-  useEffect(() => {
-    if (credentials) {
-      onUpdateCredentials({ ...playerCredentials, [playerName]: credentials });
-    }
-  }, [credentials, onUpdateCredentials]);
-
-  const handleCreate = async (game, numPlayers) => {
-    const gameID = await createRoom(game, numPlayers);
-    handleJoin(game.name, gameID, 0);
-  };
-
-  const handleJoin = async (gameName, gameID, freeSpotId) => {
-    await joinRoom(gameName, gameID, freeSpotId);
-    onUpdateGame({ gameName, gameID, playerID: "" + freeSpotId });
-  };
 
   return (
     <div>
@@ -64,7 +33,7 @@ const GameLobby = ({
                 Available rooms
               </Header>
               {rooms.length > 0 ? (
-                <RoomsList rooms={rooms} games={games} onJoinRoom={handleJoin} />
+                <RoomsList rooms={rooms} games={games} onJoinRoom={joinRoom} />
               ) : (
                 <p>No rooms available...</p>
               )}
@@ -75,12 +44,11 @@ const GameLobby = ({
               <Header as="h3" textAlign="center">
                 Create room
               </Header>
-              <CreateRoomForm games={games} onCreateRoom={handleCreate} />
+              <CreateRoomForm games={games} onCreateRoom={createRoom} />
             </Segment>
           </Grid.Column>
         </Grid>
       </Container>
-      {error}
     </div>
   );
 };

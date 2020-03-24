@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { isEqual } from "lodash";
 /*
  * Copyright 2018 The boardgame.io Authors
  *
@@ -163,7 +164,7 @@ function LobbyConnection(opts) {
   return new _LobbyConnectionImpl(opts);
 }
 
-function useLobbyConnection({ server, gameComponents, playerName, playerCredentials }) {
+function useLobbyConnection({ server, gameComponents, playerName, playerCredentials, poll }) {
   const [connection, setConnection] = useState();
   const [error, setError] = useState();
   const [rooms, setRooms] = useState([]);
@@ -172,14 +173,14 @@ function useLobbyConnection({ server, gameComponents, playerName, playerCredenti
   const refetch = useCallback(async () => {
     if (connection) {
       await connection.refresh();
-      const { rooms, playerCredentials: newCredentials } = connection;
+      const { rooms: newRooms, playerCredentials: newCredentials } = connection;
 
-      setRooms(rooms);
-      if (newCredentials && newCredentials !== credentials) {
-        setCredentials(newCredentials);
-      }
+      setRooms(rooms => (isEqual(newRooms, rooms) ? rooms : newRooms));
+      setCredentials(credentials =>
+        credentials === newCredentials ? credentials : newCredentials
+      );
     }
-  }, [connection, credentials]);
+  }, [connection]);
 
   useEffect(() => {
     if (connection) {
@@ -218,6 +219,15 @@ function useLobbyConnection({ server, gameComponents, playerName, playerCredenti
     }
   }
 
+  async function leaveGame(gameName, gameID) {
+    try {
+      await connection.leave(gameName, gameID);
+      await refetch();
+    } catch (error) {
+      setError(error.message);
+    }
+  }
+
   return {
     connection,
     rooms,
@@ -226,6 +236,7 @@ function useLobbyConnection({ server, gameComponents, playerName, playerCredenti
     refetch,
     createRoom,
     joinRoom,
+    leaveGame,
   };
 }
 

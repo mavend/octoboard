@@ -1,24 +1,19 @@
 import React from "react";
-import { 
-  Image,
-  List,
-  Button,
-  Pagination,
-  Label,
-} from "semantic-ui-react";
+import { Image, List, Button, Pagination, Label } from "semantic-ui-react";
 
 const RoomsList = ({ rooms, games, style, onJoinRoom }) => (
   <div style={style}>
     <List divided relaxed size="big">
-      {rooms.map(room => (
+      {rooms.map((room) => (
         <RoomsListItem
           key={room.gameID}
-          room={room} 
-          game={games.find(g => g.name === room.gameName)}
-          onJoin={onJoinRoom} />
+          room={room}
+          game={games.find((g) => g.name === room.gameName)}
+          onJoin={onJoinRoom}
+        />
       ))}
     </List>
-    <div style={{textAlign: "center"}}>
+    <div style={{ textAlign: "center" }}>
       <Pagination
         boundaryRange={0}
         defaultActivePage={1}
@@ -32,25 +27,16 @@ const RoomsList = ({ rooms, games, style, onJoinRoom }) => (
   </div>
 );
 
-const RoomsListItem = ({
-  room: {
-    gameID,
-    description,
-    players,
-  },
-  game,
-  onJoin,
-}) => {
-  if(!game) return null;
+const RoomsListItem = ({ room: { gameID, description, players }, game, onJoin }) => {
+  if (!game) return null;
 
   const maxPlayers = players.length;
-  const currentPlayers = players.filter(p => p.name).length
+  const currentPlayers = players.filter((p) => p.name).length;
   const isFull = currentPlayers === maxPlayers;
-  
-  
+
   const handleClick = () => {
     if (!isFull) {
-      const freeSpotId = players.find(p => !p.name).id;
+      const freeSpotId = players.find((p) => !p.name).id;
       onJoin(game.name, gameID, freeSpotId);
     }
   };
@@ -60,9 +46,11 @@ const RoomsListItem = ({
       <Image avatar src={game.image} />
       <List.Content>
         <List.Header>{game.name}</List.Header>
-        <Label>#{gameID}</Label> {description}
+        <Label>#{gameID}</Label>
+        {description}
+        <em>{players.map((p) => p.name).join(", ")}</em>
       </List.Content>
-      <List.Content floated='right'>
+      <List.Content floated="right">
         <Button
           content={isFull ? "Full" : "Join"}
           color={isFull ? "grey" : "green"}
@@ -73,12 +61,12 @@ const RoomsListItem = ({
             icon: "male",
             color: isFull ? "red" : null,
           }}
-          labelPosition='left'
+          labelPosition="left"
           onClick={handleClick}
         />
       </List.Content>
     </List.Item>
   );
-}
+};
 
 export default RoomsList;
