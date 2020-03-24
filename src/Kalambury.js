@@ -1,4 +1,4 @@
-import { PlayerView } from "boardgame.io/core";
+import { PlayerView, INVALID_MOVE } from "boardgame.io/core";
 import phrases from "./data/phrases/pl/proverbs.json";
 import removeAccents from "remove-accents";
 
