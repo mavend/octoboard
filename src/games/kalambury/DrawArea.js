@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Drawing from "./Drawing";
 import Toolbar from "./Toolbar";
-import simplify from "simplify-path";
-import { useInterval } from "./hooks/IntervalHook";
+import { useInterval } from "../../hooks/IntervalHook";
 
 const DrawArea = ({ initialLines, remainingSeconds, onUpdate, onForfeit }) => {
   const [lines, setLines] = useState(initialLines || []);
@@ -24,8 +23,7 @@ const DrawArea = ({ initialLines, remainingSeconds, onUpdate, onForfeit }) => {
     if (addLine) {
       newLines.push({ points: [], color: penColor, width: penSize });
     }
-    const lastLine = newLines[newLines.length - 1];
-    lastLine.points = simplify([...lastLine.points, point], 0.007);
+    newLines[newLines.length - 1].points.push(point);
     setLines(newLines);
   };
 

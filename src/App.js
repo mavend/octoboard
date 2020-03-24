@@ -1,6 +1,6 @@
 import React from "react";
-import { Kalambury } from "./Kalambury";
-import KalamburyBoard from "./KalamburyBoard";
+import { Kalambury } from "./games/kalambury/Kalambury";
+import KalamburyBoard from "./games/kalambury/KalamburyBoard";
 import CoronaGames from "./CoronaGames";
 
 const App = () => {
