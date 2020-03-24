@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Image, List, Button, Pagination, Label, Icon } from "semantic-ui-react";
+import { Item, Button, Pagination, Label, Icon } from "semantic-ui-react";
 import { paginate } from "../utils/paginate";
 
 const RoomsList = ({ rooms, games, style, onJoinRoom }) => {
@@ -18,7 +18,7 @@ const RoomsList = ({ rooms, games, style, onJoinRoom }) => {
 
   return (
     <div style={style}>
-      <List divided relaxed="very" size="big">
+      <Item.Group divided relaxed="very" size="big">
         {paginate(rooms, perPage, pageNum).map((room) => (
           <RoomsListItem
             key={room.gameID}
@@ -27,7 +27,7 @@ const RoomsList = ({ rooms, games, style, onJoinRoom }) => {
             onJoin={onJoinRoom}
           />
         ))}
-      </List>
+      </Item.Group>
       <div style={{ textAlign: "center" }}>
         <Pagination
           onPageChange={handlePageChange}
@@ -56,28 +56,32 @@ const RoomsListItem = ({ room: { gameID, description, players }, game, onJoin })
   };
 
   return (
-    <List.Item>
-      <Image avatar src={game.image} />
-      <List.Content>
-        <List.Header>{game.name} <Label as="span" style={{ marginLeft: "1rem" }}>#<Label.Detail>{gameID}</Label.Detail></Label></List.Header>
-        <List horizontal size="small">{currentPlayers.map((p) => (<List.Item key={p.id}><List.Content><Icon name="user" size="small" color="grey" />{p.name}</List.Content></List.Item>))}</List>
-      </List.Content>
-      <List.Content floated="right">
-        <Button
-          content={isFull ? "Full" : "Join"}
-          color={isFull ? "grey" : "green"}
-          label={{
-            basic: true,
-            pointing: "right",
-            content: `${currentPlayers.length}/${maxPlayers}`,
-            icon: "male",
-            color: isFull ? "red" : null,
-          }}
-          labelPosition="left"
-          onClick={handleClick}
-        />
-      </List.Content>
-    </List.Item>
+    <Item>
+      <Item.Image avatar size="tiny" src={game.image} />
+      <Item.Content>
+        <Item.Header style={{ display: "block" }}>{game.name} <Label as="span" style={{ marginLeft: "1rem" }}>#<Label.Detail>{gameID}</Label.Detail></Label>
+          <Button floated="right"
+            content={isFull ? "Full" : "Join"}
+            color={isFull ? "grey" : "green"}
+            label={{
+              basic: true,
+              pointing: "right",
+              content: `${currentPlayers.length}/${maxPlayers}`,
+              icon: "male",
+              color: isFull ? "red" : null,
+            }}
+            labelPosition="left"
+            onClick={handleClick}
+          />
+
+
+        </Item.Header>
+        <Item.Extra>
+          {currentPlayers.map((p) => (<Button key={p.id} icon labelPosition="left" compact size="tiny" disabled><Icon name="user" color="grey" />{p.name}</Button>))}
+          {Array(maxPlayers - currentPlayers.length).fill(0).map((_, idx) => (<Button key={"dummy" + idx} basic icon compact size="tiny" disabled><Icon name="user outline" color="grey" /></Button>))}
+        </Item.Extra>
+      </Item.Content>
+    </Item>
   );
 };
 

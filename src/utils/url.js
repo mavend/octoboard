@@ -12,4 +12,8 @@ function setUrlHash(value) {
   window.location.hash = value || "";
 }
 
-export { setUrlParam, setUrlHash };
+function getUrlHash() {
+  return window.location.hash.slice(1);
+}
+
+export { setUrlParam, setUrlHash, getUrlHash };
