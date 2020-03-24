@@ -1,4 +1,4 @@
-import { PlayerView } from 'boardgame.io/core';
+import { PlayerView, INVALID_MOVE } from 'boardgame.io/core';
 import phrases from './data/phrases/pl/proverbs.json';
 import removeAccents  from 'remove-accents';
 import { avatarForName } from "./utils/avatar";
@@ -12,6 +12,7 @@ function setupKalambury(ctx, setupData) {
       startTime: new Date(),
       phrases: ctx.random.Shuffle(phrases.slice()),
     },
+    canChangePhrase: true,
     players: {},
     playersData: {},
     points: Array(ctx.numPlayers).fill(0),
@@ -55,6 +56,21 @@ function Guess(G, ctx, phrase) {
   }
 }
 
+function SetNewPhrase(G, ctx) {
+  G.secret.phrase = G.secret.phrases.pop();
+  G.players[ctx.currentPlayer].phrase = G.secret.phrase;
+  G.drawing = [];
+}
+
+function ChangePhrase(G, ctx) {
+  // TODO: Track number of allowed changes?
+  if (!G.canChangePhrase) {
+    return INVALID_MOVE;
+  }
+  G.canChangePhrase = false;;
+  SetNewPhrase(G, ctx);
+}
+
 function UpdateDrawing(G, _ctx, lines) {
   G.drawing = lines;
 }
@@ -95,9 +111,8 @@ export const Kalambury = {
   turn: {
     onBegin: (G, ctx) => {
       G.secret.startTime = new Date();
-      G.secret.phrase = G.secret.phrases.pop();
-      G.players[ctx.currentPlayer].phrase = G.secret.phrase;
-      G.drawing = [];
+      G.canChangePhrase = true;
+      SetNewPhrase(G, ctx);
       G.remainingSeconds = 120;
       ctx.events.setActivePlayers({currentPlayer: 'draw', others: 'guess' });
     },
@@ -109,6 +124,10 @@ export const Kalambury = {
       draw: {
         moves: {
           UpdateDrawing,
+          ChangePhrase: {
+            move: ChangePhrase,
+            client: false
+          },
           Ping: {
             move: Ping,
             client: false

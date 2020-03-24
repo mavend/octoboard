@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   Container,
   Transition,
+  Segment,
+  Button,
   Header,
   Form,
   Input,
@@ -13,9 +15,9 @@ import Drawing from "./Drawing";
 import KalamburySidebar from "./KalamburySidebar";
 
 const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
-  const { players, guesses } = G;
+  const { players, guesses, canChangePhrase } = G;
   const { activePlayers } = ctx;
-  const { Ping } = moves;
+  const { Ping, ChangePhrase } = moves;
 
   const [guess, setGuess] = useState("");
   const playerData = players[playerID];
@@ -81,6 +83,11 @@ const KalamburyBoard = ({ G, ctx, playerID, moves }) => {
               <GuessingBoard envokeLastAnswer={envokeLastAnswer} previousUserGuesses={getUserGuesses(guesses, playerID)} playerID={playerID} guessInputRef={guessInputRef} guess={guess} setGuess={setGuess} {...{ G, ctx, moves }} />
             )}
             <Header as="h3" textAlign="center" style={{marginTop: 0}}>{remainingTime()}</Header>
+            { isDrawing ? (
+              <Segment basic textAlign="center">
+                <Button color="yellow" disabled={!canChangePhrase} onClick={() => ChangePhrase()}>Get new phrase</Button>
+              </Segment>
+            ) : (<></>) }
           </Grid.Column>
           <Grid.Column width="4" style={{marginTop: "19px"}}>
             <KalamburySidebar handleGuessClick={handleGuessClick} getUserGuesses={getUserGuesses} {...{ G, ctx, playerID, moves }} />
