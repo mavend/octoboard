@@ -1,8 +1,11 @@
+body, html {
+  height: auto;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f4f6f9;
@@ -10,5 +13,24 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  monospace;
+}
+
+.ui.active.progress .bar {
+  min-width: 0;
+  -webkit-transition: width .8s ease-out, background-color 1s ease;
+  transition: width .8s ease-out, background-color 1s ease;
+}
+
+.ui.form .field.success .input {
+    color: #21ba45;
+}
+
+.ui.form .field.success input[type="text"] {
+    background: #f6fff6;
+    border-color: #aeebbc;
+    color: #21ba45;
+    border-radius: '';
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }

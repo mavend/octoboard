@@ -6,12 +6,15 @@ function setupKalambury(ctx, setupData) {
   const G = {
     secret: {
       phrase: "",
+      startTime: new Date(),
       phrases: ctx.random.Shuffle(phrases.slice()),
     },
+    canChangePhrase: true,
     players: {},
     points: Array(ctx.numPlayers).fill(0),
     drawing: [],
     guesses: [],
+    remainingSeconds: 120,
   };
 
   for (let i = 0; i < ctx.numPlayers; i++) {
@@ -32,7 +35,7 @@ function Guess(G, ctx, phrase) {
   if (!phrase) {
     phrase = G.secret.phrase;
   } // DEBUG
-  let success = stripPhrase(phrase) === stripPhrase(G.secret.phrase);
+  let success = stripPhrase(phrase).includes(stripPhrase(G.secret.phrase));
   G.guesses.push({
     time: Date.now(),
     playerID,
@@ -47,6 +50,21 @@ function Guess(G, ctx, phrase) {
   }
 }
 
+function SetNewPhrase(G, ctx) {
+  G.secret.phrase = G.secret.phrases.pop();
+  G.players[ctx.currentPlayer].phrase = G.secret.phrase;
+  G.drawing = [];
+}
+
+function ChangePhrase(G, ctx) {
+  // TODO: Track number of allowed changes?
+  if (!G.canChangePhrase) {
+    return INVALID_MOVE;
+  }
+  G.canChangePhrase = false;
+  SetNewPhrase(G, ctx);
+}
+
 function UpdateDrawing(G, _ctx, lines) {
   G.drawing = lines;
 }
@@ -54,6 +72,10 @@ function UpdateDrawing(G, _ctx, lines) {
 function Forfeit(G, ctx) {
   G.points[ctx.currentPlayer] -= 1;
   ctx.events.endTurn();
+}
+
+function Ping(G, ctx) {
+  G.remainingSeconds = 120 - Math.floor((new Date() - G.secret.startTime) / 1000);
 }
 
 function IndexOfMax(array) {
@@ -83,19 +105,44 @@ export const Kalambury = {
 
   turn: {
     onBegin: (G, ctx) => {
-      G.secret.phrase = G.secret.phrases.pop();
-      G.players[ctx.currentPlayer].phrase = G.secret.phrase;
-      G.drawing = [];
+      G.secret.startTime = new Date();
+      G.canChangePhrase = true;
+      SetNewPhrase(G, ctx);
+      G.remainingSeconds = 120;
       ctx.events.setActivePlayers({ currentPlayer: "draw", others: "guess" });
     },
+    onEnd: (G, ctx) => {
+      if (G.remainingSeconds <= 0) {
+        G.points[ctx.currentPlayer] -= 1;
+      }
+    },
+    endIf: (G, ctx) => G.remainingSeconds <= 0,
     stages: {
       draw: {
-        moves: { UpdateDrawing, Forfeit },
+        moves: {
+          UpdateDrawing,
+          ChangePhrase: {
+            move: ChangePhrase,
+            client: false,
+          },
+          Ping: {
+            move: Ping,
+            client: false,
+          },
+          Forfeit: {
+            move: Forfeit,
+            client: false,
+          },
+        },
       },
       guess: {
         moves: {
           Guess: {
             move: Guess,
+            client: false,
+          },
+          Ping: {
+            move: Ping,
             client: false,
           },
         },

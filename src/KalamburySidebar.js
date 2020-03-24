@@ -3,11 +3,12 @@ import { Icon, Transition, Header, List, Label, Segment, Feed } from "semantic-u
 import { avatarForName } from "./utils/avatar";
 
 const KalamburySidebar = ({
-  G: { playersData, guesses, points },
+  G: { guesses, points },
   ctx: { activePlayers },
   playerID,
   gameMetadata,
   handleGuessClick,
+  getUserGuesses,
 }) => (
   <>
     <Header as="h2" textAlign="center">
@@ -18,7 +19,7 @@ const KalamburySidebar = ({
         <PlayerEntry
           key={pid}
           points={points[pid]}
-          guesses={[...guesses].reverse().filter(({ playerID }) => playerID === pid)}
+          guesses={getUserGuesses(guesses, pid)}
           isWinning={points[pid] === Math.max(...points)}
           isDrawing={activePlayers[pid] === "draw"}
           isCurrentPlayer={pid === playerID}
@@ -32,6 +33,7 @@ const KalamburySidebar = ({
 
 const PlayerEntry = ({
   name,
+  avatar,
   points,
   guesses,
   isDrawing,
@@ -48,7 +50,7 @@ const PlayerEntry = ({
             {name || "Waiting for player..."} {isCurrentPlayer && <span>(You)</span>}
           </Feed.Date>
           <Feed.Content>
-            <Icon name="star" color={isWinning ? "yellow" : "grey"} />
+            <Icon name="trophy" color={isWinning ? "yellow" : "grey"} />
             {points}
             <span> Points</span>
           </Feed.Content>
@@ -61,14 +63,14 @@ const PlayerEntry = ({
             ) : (
               <Transition.Group
                 as={List}
-                animation="fade right"
+                animation="fade left"
                 duration={200}
                 verticalAlign="middle"
               >
-                {guesses.slice(0, 3).map(({ time, phrase }, idx) => (
+                {guesses.slice(0, 3).map(({ time, phrase, success }, idx) => (
                   <List.Item key={time} style={{ opacity: (3 - idx) / 3, marginRight: "8px" }}>
                     <Label
-                      basic
+                      basic={!success}
                       pointing="left"
                       style={{ maxWidth: "100%", cursor: "pointer" }}
                       onClick={handleGuessClick}

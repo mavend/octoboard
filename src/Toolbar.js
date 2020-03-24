@@ -1,10 +1,11 @@
 import React from "react";
 import { Icon, Menu, Popup } from 'semantic-ui-react';
 
-const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndoDrawing, canUndo }) => {
+const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndoDrawing, onForfeit, canUndo }) => {
   const eraserColor = "#FFFFFF";
   const colors = [
     "#1b1c1d",
+    "#767676",
     "#db2828",
     "#f2711c",
     "#fbbd08",
@@ -30,7 +31,7 @@ const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndo
   };
 
   return (
-    <Menu>
+    <Menu borderless size="small" style={{ height: "41px" }}>
       {colors.map(color => (
         <Menu.Item
           key={color}
@@ -47,7 +48,7 @@ const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndo
         active={currentColor === eraserColor}
         onClick={onClickEraser}
       >
-        <Icon name="eraser" />
+        <Icon fitted name="eraser" />
       </Menu.Item>
       <Menu.Menu position='right'>
         <Popup content="Remove last line"
@@ -58,7 +59,7 @@ const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndo
               disabled={!canUndo}
               onClick={onUndoDrawing}
             >
-              <Icon name="undo" />
+              <Icon fitted name="undo" />
             </Menu.Item>
           } />
         <Popup content="Clear drawing"
@@ -68,7 +69,17 @@ const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndo
               active={false}
               onClick={onClearAll}
             >
-              <Icon color='red' name="trash alternate outline" />
+              <Icon fitted color='red' name="trash alternate outline" />
+            </Menu.Item>
+          } />
+        <Popup content="Give up :("
+          trigger={
+            <Menu.Item
+              name="flag"
+              active={false}
+              onClick={onForfeit}
+            >
+              <Icon fitted color='red' name="flag" />
             </Menu.Item>
           } />
       </Menu.Menu>
