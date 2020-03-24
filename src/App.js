@@ -1,6 +1,5 @@
 import React from "react";
-import { Kalambury } from "./games/kalambury/Kalambury";
-import KalamburyBoard from "./games/kalambury/KalamburyBoard";
+import { KalamburyComponent } from "./games/Games";
 import CoronaGames from "./CoronaGames";
 
 const App = () => {
@@ -8,7 +7,7 @@ const App = () => {
     <div>
       <CoronaGames
         lobbyServer="http://localhost:8000"
-        gameComponents={[{ game: Kalambury, board: KalamburyBoard }]}
+        gameComponents={[KalamburyComponent]}
       />
     </div>
   );

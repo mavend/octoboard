@@ -1,4 +1,4 @@
-const Kalambury = require('./games/kalambury/Kalambury').Kalambury;
+const { Kalambury } = require('./games/kalambury/Kalambury');
 const { Server, Mongo, Firebase } = require('boardgame.io/server');
 
 // const serviceAccount = require('./serviceAccountKey.json');
