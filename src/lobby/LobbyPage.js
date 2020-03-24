@@ -110,7 +110,7 @@ const LobbyPage = ({ lobbyServer, gameComponents, playerName }) => {
         />
       ) : (
         <GameLobby
-          loading={loading}
+          loading={loading && (!urlGameParam || currentGame)}
           rooms={rooms || []}
           gameComponents={gameComponents}
           playerName={playerName}

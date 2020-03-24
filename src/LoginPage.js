@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Modal, Button, Input, Image, Header } from "semantic-ui-react";
+import { Modal, Form, Image, Header } from "semantic-ui-react";
 
 const LoginPage = ({ open, playerName, onLogin }) => {
   const [name, setName] = useState(playerName);
+
+  const handleLogin = () => name && onLogin(name);
 
   return (
     <Modal open={open}>
@@ -11,10 +13,21 @@ const LoginPage = ({ open, playerName, onLogin }) => {
         <Image wrapped size="medium" src="/images/game-hugo.png" />
         <Modal.Description>
           <Header>Login with your name</Header>
-          <Input type="text" value={name} onChange={(_, { value }) => setName(value)} />
-          <Button color="green" disabled={!name} onClick={() => name && onLogin(name)}>
-            Login
-          </Button>
+          <Form onSubmit={handleLogin}>
+            <Form.Input
+              type="text"
+              maxLength="24"
+              placeholder="Name..."
+              value={name}
+              onChange={(_, { value }) => setName(value)}
+              action={{
+                color: "green",
+                content: "Login",
+                disabled: !name,
+                onClick: handleLogin,
+              }}
+            />
+          </Form>
         </Modal.Description>
       </Modal.Content>
     </Modal>

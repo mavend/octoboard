@@ -5,7 +5,6 @@ const CreateRoomForm = ({ games, onCreateRoom }) => {
   const [game, setGame] = useState();
   const [players, setPlayers] = useState();
   const [playersOptions, setPlayersOptions] = useState([]);
-  const [description, setDescription] = useState("");
 
   const gamesOptions = games.map(({ name, image }) => ({
     key: name,
@@ -29,7 +28,7 @@ const CreateRoomForm = ({ games, onCreateRoom }) => {
 
   const handleCreate = () => {
     if (game && players) {
-      onCreateRoom(game, players, description);
+      onCreateRoom(game, players);
     } else {
       alert("Not valid!");
     }
@@ -45,16 +44,10 @@ const CreateRoomForm = ({ games, onCreateRoom }) => {
         onChange={(_, { value }) => setGame(games.find(g => g.name === value))}
       />
       <Form.Select
-        label="Number of players"
+        label="Maximum number of players"
         options={playersOptions}
         value={players}
         onChange={(_, { value }) => setPlayers(value)}
-      />
-      <Form.Input
-        label="Description"
-        type="text"
-        value={description}
-        onChange={(_, { value }) => setDescription(value)}
       />
       <Button fluid color="green" onClick={handleCreate}>
         Create

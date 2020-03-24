@@ -31,13 +31,6 @@ function stripPhrase(phrase) {
   return removeAccents(phrase).toLowerCase().replace(/\W/g, "");
 }
 
-function nextActivePlayer(G, { currentPlayer }) {
-  const activePlayersIdxs = Object.keys(G.playersData).filter((pid) => G.playersData[pid].isActive);
-  const nextActivePlayerIdx =
-    (activePlayersIdxs.indexOf(currentPlayer) + 1) % activePlayersIdxs.length;
-  return activePlayersIdxs[nextActivePlayerIdx];
-}
-
 function Guess(G, ctx, phrase) {
   const { playerID, currentPlayer } = ctx;
   if (!phrase) {
@@ -54,7 +47,7 @@ function Guess(G, ctx, phrase) {
   if (success) {
     G.points[playerID] += 1;
     G.points[currentPlayer] += 1;
-    ctx.events.endTurn({ next: nextActivePlayer(G, ctx) });
+    ctx.events.endTurn();
   }
 }
 
@@ -79,7 +72,7 @@ function UpdateDrawing(G, _ctx, lines) {
 
 function Forfeit(G, ctx) {
   G.points[ctx.currentPlayer] -= 1;
-  ctx.events.endTurn({ next: nextActivePlayer(G, ctx) });
+  ctx.events.endTurn();
 }
 
 function Ping(G, { playerID }, playerData) {
@@ -132,7 +125,18 @@ export const Kalambury = {
         G.points[ctx.currentPlayer] -= 1;
       }
     },
-    endIf: (G, ctx) => G.remainingSeconds <= 0 && { next: nextActivePlayer(G, ctx) },
+    endIf: (G, _ctx) => G.remainingSeconds <= 0,
+    order: {
+      first: () => 0,
+      next: (G, ctx) => {
+        const activePlayersIdxs = Object.keys(G.playersData).filter(
+          (pid) => G.playersData[pid].isActive
+        );
+        const nextActivePlayerIdx =
+          (activePlayersIdxs.indexOf(ctx.currentPlayer) + 1) % activePlayersIdxs.length;
+        return parseInt(activePlayersIdxs[nextActivePlayerIdx]);
+      },
+    },
     stages: {
       draw: {
         moves: {
