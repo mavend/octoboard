@@ -10,7 +10,6 @@ const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndo
     "#ffd52b",
     "#21ba45",
     "#2185d0",
-    "#6435c9",
     "#a333c8",
     "#eb87bf",
     "#f4d0b5",
