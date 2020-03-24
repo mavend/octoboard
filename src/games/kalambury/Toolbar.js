@@ -5,17 +5,14 @@ const Toolbar = ({ currentColor, onColorChange, onSizeChange, onClearAll, onUndo
   const eraserColor = "#FFFFFF";
   const colors = [
     "#1b1c1d",
-    "#767676",
     "#db2828",
-    "#f2711c",
-    "#fbbd08",
-    "#b5cc18",
+    "#ff8c21",
+    "#ffd52b",
     "#21ba45",
-    "#00b5ad",
     "#2185d0",
     "#6435c9",
     "#a333c8",
-    "#e03997",
+    "#eb87bf",
     "#f4d0b5",
     "#a5673f"
   ];
