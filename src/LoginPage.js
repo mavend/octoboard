@@ -15,6 +15,7 @@ const LoginPage = ({ open, playerName, onLogin }) => {
           <Header>Login with your name</Header>
           <Form onSubmit={handleLogin}>
             <Form.Input
+              autoFocus
               type="text"
               maxLength="24"
               placeholder="Name..."
