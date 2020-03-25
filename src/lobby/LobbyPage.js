@@ -4,6 +4,7 @@ import GameClient from "./GameClient";
 import GameLobby from "./GameLobby";
 import { useLobbyConnection } from "./lobby_connection";
 import { Container, Segment, Dimmer, Loader } from "semantic-ui-react";
+import { getUrlHash } from "../utils/url";
 
 const LobbyPage = ({ server, gameComponents, playerName }) => {
   const [playerCredentials, setPlayerCredentials] = useState();
@@ -28,8 +29,7 @@ const LobbyPage = ({ server, gameComponents, playerName }) => {
 
   // Load gameID from URL on the page load
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    setUrlGameParam(urlParams.get("gameID"));
+    setUrlGameParam(getUrlHash());
   }, [setUrlGameParam]);
 
   // Update credentials in localStorage
