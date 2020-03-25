@@ -8,15 +8,14 @@ function setupKalambury(ctx, setupData) {
   const G = {
     secret: {
       phrase: "",
-      startTime: new Date(),
       phrases: ctx.random.Shuffle([...proverbs, ...idioms, ...nounPhrases]),
     },
     actionsCount: 0,
+    startTime: new Date(),
     canChangePhrase: true,
     players: {},
     playersData: {},
     points: Array(ctx.numPlayers).fill(0),
-    drawing: [],
     actions: [],
     remainingSeconds: 120,
   };
@@ -66,7 +65,6 @@ function Guess(G, ctx, phrase) {
 function SetNewPhrase(G, ctx) {
   G.secret.phrase = G.secret.phrases.pop();
   G.players[ctx.currentPlayer].phrase = G.secret.phrase;
-  G.drawing = [];
 }
 
 function ChangePhrase(G, ctx) {
@@ -79,10 +77,6 @@ function ChangePhrase(G, ctx) {
   SetNewPhrase(G, ctx);
 }
 
-function UpdateDrawing(G, _ctx, lines) {
-  G.drawing = lines;
-}
-
 function Forfeit(G, ctx) {
   G.points[ctx.playerID] -= 1;
   LogAction(G, ctx, ctx.playerID, "forfeit", { previous: G.secret.phrase }, true);
@@ -91,7 +85,7 @@ function Forfeit(G, ctx) {
 
 function Ping(G, { playerID, phase }, playerData) {
   if (phase === "play") {
-    G.remainingSeconds = 120 - Math.floor((new Date() - G.secret.startTime) / 1000);
+    G.remainingSeconds = 120 - Math.floor((new Date() - Date.parse(G.startTime)) / 1000);
   }
   updatePlayersData(G, playerID, playerData);
 }
@@ -108,7 +102,7 @@ function updatePlayersData(G, playerID, playerData) {
     id: playerID,
   };
   Object.values(G.playersData).forEach((player) => {
-    player.isActive = new Date() - player.lastActivity < 5000;
+    player.isActive = new Date() - Date.parse(player.lastActivity) < 5000;
   });
 }
 
@@ -144,20 +138,26 @@ export const Kalambury = {
         stages: {
           manage: {
             moves: {
-              SendText,
+              SendText: {
+                move: SendText,
+                unsafe: true,
+              },
               StartGame,
               Ping: {
                 move: Ping,
-                client: false,
+                unsafe: true,
               },
             },
           },
           wait: {
             moves: {
-              SendText,
+              SendText: {
+                move: SendText,
+                unsafe: true,
+              },
               Ping: {
                 move: Ping,
-                client: false,
+                unsafe: true,
               },
             },
           },
@@ -167,7 +167,7 @@ export const Kalambury = {
     play: {
       turn: {
         onBegin: (G, ctx) => {
-          G.secret.startTime = new Date();
+          G.startTime = new Date();
           G.canChangePhrase = true;
           SetNewPhrase(G, ctx);
           G.remainingSeconds = 120;
@@ -195,14 +195,18 @@ export const Kalambury = {
         stages: {
           draw: {
             moves: {
-              UpdateDrawing,
+              UpdateDrawing: {
+                move: (_G, _ctx, lines) => {},
+                unsafe: true,
+                broadcast: true,
+              },
               ChangePhrase: {
                 move: ChangePhrase,
                 client: false,
               },
               Ping: {
                 move: Ping,
-                client: false,
+                unsafe: true,
               },
               Forfeit: {
                 move: Forfeit,
@@ -214,11 +218,12 @@ export const Kalambury = {
             moves: {
               Guess: {
                 move: Guess,
+                unsafe: true,
                 client: false,
               },
               Ping: {
                 move: Ping,
-                client: false,
+                unsafe: true,
               },
             },
           },

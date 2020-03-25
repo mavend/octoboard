@@ -1,1 +1,1 @@
-export const PAGE_TITLE = 'Corona Games'
+export const PAGE_TITLE = "Corona Games";

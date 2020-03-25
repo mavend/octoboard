@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import WaitingBoard from "./board/WaitingBoard";
 import GameBoard from "./board/GameBoard";
 
-const Board = ({ G, ctx, playerID, moves, gameMetadata }) => {
+const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
   const { players, actions, canChangePhrase } = G;
   const { activePlayers, phase } = ctx;
   const { Ping, ChangePhrase } = moves;
@@ -108,6 +108,7 @@ const Board = ({ G, ctx, playerID, moves, gameMetadata }) => {
                   setGuess,
                   canChangePhrase,
                   ChangePhrase,
+                  rawClient,
                 }}
               />
             ) : (

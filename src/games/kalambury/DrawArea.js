@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Drawing from "./Drawing";
 import Toolbar from "./Toolbar";
-import { useInterval } from "utils/IntervalHook";
 
-const DrawArea = ({ initialLines, remainingSeconds, onUpdate, onForfeit }) => {
-  const [lines, setLines] = useState(initialLines || []);
-  const [cacheLines, setCacheLines] = useState(initialLines || []);
+const DrawArea = ({ remainingSeconds, onForfeit, lines, setLines }) => {
   const [isDrawing, setIsDrawing] = useState(false);
   const [penColor, setPenColor] = useState("#1b1c1d");
   const [penSize, setPenSize] = useState(3);
@@ -15,25 +12,10 @@ const DrawArea = ({ initialLines, remainingSeconds, onUpdate, onForfeit }) => {
     return () => document.removeEventListener("mouseup", handleMouseUp);
   }, []);
 
-  useEffect(() => {
-    if (!initialLines || initialLines.length === 0) {
-      setLines([]);
-    }
-  }, [initialLines, setLines]);
-
-  const updateGameState = () => {
-    if (onUpdate && cacheLines !== lines) {
-      setCacheLines(lines);
-      onUpdate(lines);
-    }
-  };
-
   const addPointFromEvent = (event, addLine = false) => {
     const point = relativeCoordsForEvent(event);
     const newLines = [...lines];
-    if (addLine) {
-      newLines.push({ points: [], color: penColor, width: penSize });
-    }
+    if (addLine) newLines.push({ points: [], color: penColor, width: penSize });
     newLines[newLines.length - 1].points.push(point);
     setLines(newLines);
   };
@@ -62,16 +44,12 @@ const DrawArea = ({ initialLines, remainingSeconds, onUpdate, onForfeit }) => {
 
   const handleClearAll = () => {
     setLines([]);
-    if (onUpdate) onUpdate([]);
   };
 
   const handleUndo = () => {
     lines.pop();
-    setLines(lines);
-    if (onUpdate) onUpdate(lines);
+    setLines([...lines]);
   };
-
-  useInterval(updateGameState, 500);
 
   return (
     <div style={{ margin: "1rem 0" }}>
