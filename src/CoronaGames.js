@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import LobbyPage from "./lobby";
 import LoginPage from "./LoginPage";
 
-const CoronaGames = ({ lobbyServer, gameComponents }) => {
+const CoronaGames = ({ server, gameComponents }) => {
   const [playerName, setPlayerName] = useState(localStorage.getItem("playerName") || "");
 
   const handleLogin = (name) => {
@@ -14,11 +14,7 @@ const CoronaGames = ({ lobbyServer, gameComponents }) => {
   return (
     <div>
       {playerName ? (
-        <LobbyPage
-          lobbyServer={lobbyServer}
-          gameComponents={gameComponents}
-          playerName={playerName}
-        />
+        <LobbyPage lobbyServer={server} gameComponents={gameComponents} playerName={playerName} />
       ) : (
         <LoginPage open={true} playerName={playerName} onLogin={handleLogin} />
       )}

@@ -5,10 +5,7 @@ import CoronaGames from "./CoronaGames";
 const App = () => {
   return (
     <div>
-      <CoronaGames
-        lobbyServer="http://localhost:8000"
-        gameComponents={[KalamburyComponent]}
-      />
+      <CoronaGames server="http://localhost:8000" gameComponents={[KalamburyComponent]} />
     </div>
   );
 };

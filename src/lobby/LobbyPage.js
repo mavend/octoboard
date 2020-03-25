@@ -102,6 +102,7 @@ const LobbyPage = ({ lobbyServer, gameComponents, playerName }) => {
 
       {playerName && currentGame && currentGame.gameID ? (
         <GameClient
+          server={server}
           playerID={currentGame.playerID}
           gameID={currentGame.gameID}
           credentials={playerCredentials}

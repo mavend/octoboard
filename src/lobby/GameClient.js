@@ -5,7 +5,7 @@ import { Button, Icon, Container, Confirm } from "semantic-ui-react";
 import Loading from "../Loading";
 import { setUrlParam } from "../utils/url";
 
-const GameClient = ({ gameComponent, playerID, gameID, credentials, leaveGame }) => {
+const GameClient = ({ gameComponent, server, playerID, gameID, credentials, leaveGame }) => {
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const GameClient = ({ gameComponent, playerID, gameID, credentials, leaveGame })
     game: game,
     board: board,
     loading: Loading,
-    multiplayer: SocketIO({ server: "localhost:8000" }),
+    multiplayer: SocketIO({ server }),
     debug: false,
   });
 
