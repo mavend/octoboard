@@ -191,7 +191,7 @@ const GuessingBoard = ({
         icon: "chat",
         labelPosition: "right",
         color: "green",
-        onClick: sendGuess,
+        type: "submit",
       }}
       style={{
         height: "41px",
