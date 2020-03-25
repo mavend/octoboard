@@ -4,13 +4,15 @@ import Drawing from "../Drawing";
 import { useTranslation } from "react-i18next";
 
 const GuessingBoard = ({
-  G: { drawing, remainingSeconds },
+  G: { remainingSeconds },
   moves: { Guess },
+  rawClient,
   guess,
   setGuess,
   guessInputRef,
   previousUserGuesses,
   envokeLastAnswer,
+  lines,
 }) => {
   const [animateInput, setAnimateInput] = useState(true);
   const [inputLocked, setInputLocked] = useState(false);
@@ -61,7 +63,7 @@ const GuessingBoard = ({
     if (!guess) {
       return;
     }
-    if (lastGuess && lastGuess.time === guess.time) {
+    if (lastGuess && lastGuess.id === guess.id) {
       return;
     }
     setLastGuess(guess);
@@ -69,7 +71,7 @@ const GuessingBoard = ({
     setInputLocked(true);
     setTimeout(() => setInputLocked(false), 250);
     setAnimateInput((animateInput) => !animateInput);
-  }, [previousUserGuesses]);
+  }, [previousUserGuesses, lastGuess]);
 
   return (
     <>
@@ -87,7 +89,7 @@ const GuessingBoard = ({
           </Form.Field>
         </Transition>
       </Form>
-      <Drawing remainingSeconds={remainingSeconds} lines={drawing} />
+      <Drawing remainingSeconds={remainingSeconds} lines={lines} />
     </>
   );
 };

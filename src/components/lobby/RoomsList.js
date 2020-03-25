@@ -92,9 +92,9 @@ const RoomsListItem = ({ room: { gameID, players }, game, onJoin, user }) => {
               compact
               size="tiny"
               disabled={p.name !== user.email}
-              color={p.name === user.email ? "green" : "white"}
+              color={p.name === user.email ? "green" : null}
             >
-              <Icon name="user" color={p.name === user.email ? "white" : "grey"} />
+              <Icon name="user" color={p.name === user.email ? null : "grey"} />
               {p.name}
             </Button>
           ))}

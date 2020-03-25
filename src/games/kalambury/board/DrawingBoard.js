@@ -1,13 +1,15 @@
 import React from "react";
 import DrawArea from "../DrawArea";
 
-const DrawingBoard = ({ G: { drawing, remainingSeconds }, moves: { UpdateDrawing, Forfeit } }) => (
-  <DrawArea
-    initialLines={drawing}
-    remainingSeconds={remainingSeconds}
-    onUpdate={(lines) => UpdateDrawing(lines)}
-    onForfeit={() => Forfeit()}
-  />
-);
+const DrawingBoard = ({ G: { remainingSeconds }, moves: { Forfeit }, lines, setLines }) => {
+  return (
+    <DrawArea
+      remainingSeconds={remainingSeconds}
+      onForfeit={() => Forfeit()}
+      lines={lines}
+      setLines={setLines}
+    />
+  );
+};
 
 export default DrawingBoard;

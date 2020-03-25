@@ -27,14 +27,14 @@ const WaitingBoard = ({
     if (!message) {
       return;
     }
-    if (lastMessage && lastMessage.time === message.time) {
+    if (lastMessage && lastMessage.id === message.id) {
       return;
     }
     setLastMessage(message);
     setInputLocked(true);
     setTimeout(() => setInputLocked(false), 250);
     setAnimateInput((animateInput) => !animateInput);
-  }, [previousUserMessages]);
+  }, [previousUserMessages, lastMessage]);
 
   return (
     <>
