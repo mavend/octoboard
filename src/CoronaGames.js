@@ -9,7 +9,11 @@ const CoronaGames = ({ server, gameComponents }) => {
   return (
     <div>
       {user ? (
-        <LobbyPage server={server} gameComponents={gameComponents} playerName={playerName} />
+        <LobbyPage
+          server={server}
+          gameComponents={gameComponents}
+          playerName={user.uid}
+        />
       ) : (
         <LoginPage open={true} />
       )}
