@@ -5,7 +5,7 @@ import GameLobby from "./GameLobby";
 import { useLobbyConnection } from "./lobby_connection";
 import { Container, Segment, Dimmer, Loader } from "semantic-ui-react";
 
-const LobbyPage = ({ lobbyServer, gameComponents, playerName }) => {
+const LobbyPage = ({ server, gameComponents, playerName }) => {
   const [playerCredentials, setPlayerCredentials] = useState();
   const [currentGame, setCurrentGame] = useState();
   const [urlGameParam, setUrlGameParam] = useState();
@@ -20,7 +20,7 @@ const LobbyPage = ({ lobbyServer, gameComponents, playerName }) => {
     joinRoom,
     leaveGame,
   } = useLobbyConnection({
-    server: lobbyServer,
+    server,
     gameComponents,
     playerName,
     playerCredentials: localStorage.getItem("playerCredentials"),
