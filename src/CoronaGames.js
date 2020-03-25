@@ -1,22 +1,17 @@
-import React, { useState } from "react";
+import React, {useContext} from "react";
 import LobbyPage from "./lobby";
 import LoginPage from "./LoginPage";
+import {UserContext} from "./contexts/UserContext";
 
 const CoronaGames = ({ server, gameComponents }) => {
-  const [playerName, setPlayerName] = useState(localStorage.getItem("playerName") || "");
-
-  const handleLogin = (name) => {
-    name = [name, Math.random().toString(36).substr(2, 5)].join("-");
-    setPlayerName(name);
-    localStorage.setItem("playerName", name);
-  };
+  const { user } = useContext(UserContext);
 
   return (
     <div>
-      {playerName ? (
+      {user ? (
         <LobbyPage server={server} gameComponents={gameComponents} playerName={playerName} />
       ) : (
-        <LoginPage open={true} playerName={playerName} onLogin={handleLogin} />
+        <LoginPage open={true} />
       )}
     </div>
   );
