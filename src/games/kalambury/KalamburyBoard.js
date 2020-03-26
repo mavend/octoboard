@@ -17,7 +17,7 @@ import KalamburySidebar from "./KalamburySidebar";
 import { avatarForName } from "./utils/avatar";
 
 const KalamburyBoard = ({ G, ctx, playerID, moves, gameMetadata }) => {
-  const { players, guesses, canChangePhrase, remainingSeconds } = G;
+  const { players, actions, canChangePhrase, remainingSeconds } = G;
   const { activePlayers, phase } = ctx;
   const { Ping, ChangePhrase } = moves;
 
@@ -62,8 +62,10 @@ const KalamburyBoard = ({ G, ctx, playerID, moves, gameMetadata }) => {
     }
   };
 
-  const getUserGuesses = (guesses, _playerID) => {
-    return [...guesses].reverse().filter(({ playerID }) => playerID === _playerID);
+  const getUserActions = (actions, _playerID, actionType) => {
+    let allActions = [...actions].reverse().filter(({ playerID, action }) => playerID === _playerID);
+    if (actionType) { return allActions.filter(({ action }) => action === actionType); }
+    return allActions;
   };
 
   const envokeLastAnswer = lastGuess => {
@@ -124,15 +126,15 @@ const KalamburyBoard = ({ G, ctx, playerID, moves, gameMetadata }) => {
           <Grid.Column width="12">
             {header()}
             {hasGameStarted ? (
-              <GameBoard {...{G, ctx, moves, playerData, isDrawing, envokeLastAnswer, getUserGuesses, guesses, playerID, guessInputRef, guess, setGuess, remainingTime, canChangePhrase, ChangePhrase}} />
+              <GameBoard {...{G, ctx, moves, playerData, isDrawing, envokeLastAnswer, getUserActions, actions, playerID, guessInputRef, guess, setGuess, remainingTime, canChangePhrase, ChangePhrase}} />
             ) : (
-              <WaitingBoard previousUserMessages={getUserGuesses(guesses, playerID)} {...{moves, canManageGame, setGuess, guess}} />
+              <WaitingBoard previousUserMessages={getUserActions(actions, playerID, "message")} {...{moves, canManageGame, setGuess, guess}} />
             )}
           </Grid.Column>
           <Grid.Column width="4" style={{ marginTop: "19px" }}>
             <KalamburySidebar
               handleGuessClick={handleGuessClick}
-              getUserGuesses={getUserGuesses}
+              getUserActions={getUserActions}
               {...{ G, ctx, playerID, moves, gameMetadata }}
             />
           </Grid.Column>
@@ -144,8 +146,9 @@ const KalamburyBoard = ({ G, ctx, playerID, moves, gameMetadata }) => {
 
 const WaitingBoard = ({canManageGame, setGuess, guess, previousUserMessages, moves: { StartGame, SendText }}) => {
   const [inputLocked, setInputLocked] = useState(false);
-  const [lastMessage, setLastMessage] = useState();
   const [animateInput, setAnimateInput] = useState(true);
+  const [lastMessage, setLastMessage] = useState();
+
   const handleChange = e => {
     setGuess(e.target.value);
   };
@@ -159,14 +162,10 @@ const WaitingBoard = ({canManageGame, setGuess, guess, previousUserMessages, mov
     if (!message) {
       return;
     }
-    if (!lastMessage) {
-      setLastMessage(message);
+    if (lastMessage && lastMessage.time === message.time) {
       return;
     }
-    if (lastMessage.time === message.time) {
-      return;
-    }
-    setLastMessage(guess);
+    setLastMessage(message);
     setInputLocked(true);
     setTimeout(() => setInputLocked(false), 250);
     setAnimateInput(animateInput => !animateInput);
@@ -215,14 +214,14 @@ const WaitingBoard = ({canManageGame, setGuess, guess, previousUserMessages, mov
     </>
   )};
 
-const GameBoard = ({isDrawing, playerData, G, ctx, moves, envokeLastAnswer, getUserGuesses, guesses, playerID, guessInputRef, guess, setGuess, remainingTime, canChangePhrase, ChangePhrase}) => (
+const GameBoard = ({isDrawing, playerData, G, ctx, moves, envokeLastAnswer, getUserActions, actions, playerID, guessInputRef, guess, setGuess, remainingTime, canChangePhrase, ChangePhrase}) => (
   <>
     {isDrawing ? (
       <DrawingBoard playerData={playerData} {...{ G, ctx, moves }} />
     ) : (
       <GuessingBoard
         envokeLastAnswer={envokeLastAnswer}
-        previousUserGuesses={getUserGuesses(guesses, playerID)}
+        previousUserGuesses={getUserActions(actions, playerID, "guess")}
         playerID={playerID}
         guessInputRef={guessInputRef}
         guess={guess}
@@ -315,11 +314,7 @@ const GuessingBoard = ({
     if (!guess) {
       return;
     }
-    if (!lastGuess) {
-      setLastGuess(guess);
-      return;
-    }
-    if (lastGuess.time === guess.time) {
+    if (lastGuess && lastGuess.time === guess.time) {
       return;
     }
     setLastGuess(guess);
