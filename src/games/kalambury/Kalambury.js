@@ -80,7 +80,7 @@ function ChangePhrase(G, ctx) {
     playerID: ctx.playerID,
     action: "change",
     previous: G.secret.phrase,
-  })
+  });
   G.canChangePhrase = false;
   SetNewPhrase(G, ctx);
 }
@@ -96,12 +96,14 @@ function Forfeit(G, ctx) {
     playerID: ctx.playerID,
     action: "forfeit",
     previous: G.secret.phrase,
-  })
+  });
   ctx.events.endTurn();
 }
 
 function Ping(G, { playerID, phase }, playerData) {
-  if (phase === "play") { G.remainingSeconds = 120 - Math.floor((new Date() - G.secret.startTime) / 1000); }
+  if (phase === "play") {
+    G.remainingSeconds = 120 - Math.floor((new Date() - G.secret.startTime) / 1000);
+  }
   updatePlayersData(G, playerID, playerData);
 }
 
@@ -151,7 +153,7 @@ export const Kalambury = {
             time: Date.now(),
             playerID: ctx.currentPlayer,
             action: "manage",
-          })
+          });
           ctx.events.setActivePlayers({ currentPlayer: "manage", others: "wait" });
         },
         stages: {
@@ -161,16 +163,16 @@ export const Kalambury = {
               StartGame,
               Ping: {
                 move: Ping,
-                client: false
+                client: false,
               },
             },
           },
           wait: {
             moves: {
               SendText,
-              Ping: { 
+              Ping: {
                 move: Ping,
-                client: false
+                client: false,
               },
             },
           },
@@ -188,7 +190,7 @@ export const Kalambury = {
             time: Date.now(),
             playerID: ctx.currentPlayer,
             action: "draw",
-          })
+          });
           ctx.events.setActivePlayers({ currentPlayer: "draw", others: "guess" });
         },
         onEnd: (G, ctx) => {
@@ -198,7 +200,7 @@ export const Kalambury = {
               playerID: ctx.currentPlayer,
               action: "timeout",
               previous: G.secret.phrase,
-            })
+            });
             G.points[ctx.currentPlayer] -= 1;
           }
         },
@@ -246,7 +248,7 @@ export const Kalambury = {
           },
         },
       },
-    }
+    },
   },
 
   endIf: (G, ctx) => {

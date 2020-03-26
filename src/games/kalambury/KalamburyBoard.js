@@ -55,7 +55,7 @@ const KalamburyBoard = ({ G, ctx, playerID, moves, gameMetadata }) => {
     },
   };
 
-  const handleGuessClick = e => {
+  const handleGuessClick = (e) => {
     if (!isDrawing) {
       setGuess(e.target.textContent);
       guessInputRef.current.focus();
@@ -63,12 +63,16 @@ const KalamburyBoard = ({ G, ctx, playerID, moves, gameMetadata }) => {
   };
 
   const getUserActions = (actions, _playerID, actionType) => {
-    let allActions = [...actions].reverse().filter(({ playerID, action }) => playerID === _playerID);
-    if (actionType) { return allActions.filter(({ action }) => action === actionType); }
+    let allActions = [...actions]
+      .reverse()
+      .filter(({ playerID, action }) => playerID === _playerID);
+    if (actionType) {
+      return allActions.filter(({ action }) => action === actionType);
+    }
     return allActions;
   };
 
-  const envokeLastAnswer = lastGuess => {
+  const envokeLastAnswer = (lastGuess) => {
     if (!isDrawing) {
       setGuess(lastGuess);
       guessInputRef.current.inputRef.current.blur();
@@ -102,7 +106,7 @@ const KalamburyBoard = ({ G, ctx, playerID, moves, gameMetadata }) => {
         subHeaderText = "You can start the game anytime you want";
       } else {
         headerText = "Waiting for other players";
-        subHeaderText = "Lobby admin can start the game"; 
+        subHeaderText = "Lobby admin can start the game";
       }
     }
 
@@ -126,9 +130,30 @@ const KalamburyBoard = ({ G, ctx, playerID, moves, gameMetadata }) => {
           <Grid.Column width="12">
             {header()}
             {hasGameStarted ? (
-              <GameBoard {...{G, ctx, moves, playerData, isDrawing, envokeLastAnswer, getUserActions, actions, playerID, guessInputRef, guess, setGuess, remainingTime, canChangePhrase, ChangePhrase}} />
+              <GameBoard
+                {...{
+                  G,
+                  ctx,
+                  moves,
+                  playerData,
+                  isDrawing,
+                  envokeLastAnswer,
+                  getUserActions,
+                  actions,
+                  playerID,
+                  guessInputRef,
+                  guess,
+                  setGuess,
+                  remainingTime,
+                  canChangePhrase,
+                  ChangePhrase,
+                }}
+              />
             ) : (
-              <WaitingBoard previousUserMessages={getUserActions(actions, playerID, "message")} {...{moves, canManageGame, setGuess, guess}} />
+              <WaitingBoard
+                previousUserMessages={getUserActions(actions, playerID, "message")}
+                {...{ moves, canManageGame, setGuess, guess }}
+              />
             )}
           </Grid.Column>
           <Grid.Column width="4" style={{ marginTop: "19px" }}>
@@ -144,12 +169,18 @@ const KalamburyBoard = ({ G, ctx, playerID, moves, gameMetadata }) => {
   );
 };
 
-const WaitingBoard = ({canManageGame, setGuess, guess, previousUserMessages, moves: { StartGame, SendText }}) => {
+const WaitingBoard = ({
+  canManageGame,
+  setGuess,
+  guess,
+  previousUserMessages,
+  moves: { StartGame, SendText },
+}) => {
   const [inputLocked, setInputLocked] = useState(false);
   const [animateInput, setAnimateInput] = useState(true);
   const [lastMessage, setLastMessage] = useState();
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setGuess(e.target.value);
   };
   const sendGuess = () => {
@@ -168,17 +199,13 @@ const WaitingBoard = ({canManageGame, setGuess, guess, previousUserMessages, mov
     setLastMessage(message);
     setInputLocked(true);
     setTimeout(() => setInputLocked(false), 250);
-    setAnimateInput(animateInput => !animateInput);
+    setAnimateInput((animateInput) => !animateInput);
   }, [previousUserMessages]);
 
   return (
     <>
       <Form onSubmit={sendGuess}>
-        <Transition
-          animation={"pulse"}
-          duration={300}
-          visible={animateInput}
-        >
+        <Transition animation={"pulse"} duration={300} visible={animateInput}>
           <Form.Field>
             <Input
               fluid
@@ -201,20 +228,47 @@ const WaitingBoard = ({canManageGame, setGuess, guess, previousUserMessages, mov
           </Form.Field>
         </Transition>
       </Form>
-      <Segment style={{background: "transparent", widht: 800, height: 600, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+      <Segment
+        style={{
+          background: "transparent",
+          widht: 800,
+          height: 600,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         {canManageGame ? (
           <Button icon labelPosition="right" color="green" onClick={() => StartGame()}>
             Start game
             <Icon name="pencil" />
           </Button>
         ) : (
-          <Image src="/images/hugo-waiting.png" style={{width: 400, margin: "0 auto"}} />
+          <Image src="/images/hugo-waiting.png" style={{ width: 400, margin: "0 auto" }} />
         )}
       </Segment>
     </>
-  )};
+  );
+};
 
-const GameBoard = ({isDrawing, playerData, G, ctx, moves, envokeLastAnswer, getUserActions, actions, playerID, guessInputRef, guess, setGuess, remainingTime, canChangePhrase, ChangePhrase}) => (
+const GameBoard = ({
+  isDrawing,
+  playerData,
+  G,
+  ctx,
+  moves,
+  envokeLastAnswer,
+  getUserActions,
+  actions,
+  playerID,
+  guessInputRef,
+  guess,
+  setGuess,
+  remainingTime,
+  canChangePhrase,
+  ChangePhrase,
+}) => (
   <>
     {isDrawing ? (
       <DrawingBoard playerData={playerData} {...{ G, ctx, moves }} />
@@ -252,7 +306,7 @@ const DrawingBoard = ({
   <DrawArea
     initialLines={drawing}
     remainingSeconds={remainingSeconds}
-    onUpdate={lines => UpdateDrawing(lines)}
+    onUpdate={(lines) => UpdateDrawing(lines)}
     onForfeit={() => Forfeit()}
   />
 );
@@ -276,13 +330,13 @@ const GuessingBoard = ({
     setGuess("");
   };
 
-  const handleEvokingLastAnswer = e => {
+  const handleEvokingLastAnswer = (e) => {
     if (e.key === "ArrowUp" && previousUserGuesses.length > 0) {
       envokeLastAnswer(previousUserGuesses[0].phrase);
     }
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setGuess(e.target.value);
   };
 
@@ -321,7 +375,7 @@ const GuessingBoard = ({
     setLastSuccess(guess.success);
     setInputLocked(true);
     setTimeout(() => setInputLocked(false), 250);
-    setAnimateInput(animateInput => !animateInput);
+    setAnimateInput((animateInput) => !animateInput);
   }, [previousUserGuesses]);
 
   return (
