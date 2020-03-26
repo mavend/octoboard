@@ -2,11 +2,11 @@ import React from "react";
 import { Icon, Transition, Header, List, Label, Segment, Feed } from "semantic-ui-react";
 
 const KalamburySidebar = ({
-  G: { guesses, points, playersData },
+  G: { actions, points, playersData },
   ctx: { activePlayers, numPlayers },
   playerID,
   handleGuessClick,
-  getUserGuesses,
+  getUserActions,
 }) => (
   <>
     <Header as="h2" textAlign="center">
@@ -17,7 +17,7 @@ const KalamburySidebar = ({
         <PlayerEntry
           key={pid}
           points={points[pid]}
-          guesses={getUserGuesses(guesses, pid)}
+          actions={getUserActions(actions, pid)}
           isWinning={points[pid] === Math.max(...points)}
           isDrawing={activePlayers[pid] === "draw"}
           canManageGame={activePlayers[pid] === "manage"}
@@ -42,7 +42,7 @@ const PlayerEntry = ({
   empty,
   avatar,
   points,
-  guesses,
+  actions,
   isDrawing,
   canManageGame,
   isWinning,
@@ -64,6 +64,27 @@ const PlayerEntry = ({
     );
   }
 
+  const ActionComponent = (action) => {
+    switch(action.action) {
+      case "message":
+        return <ActionMessage {...{action}} />;
+      case "guess":
+        return <ActionGuess {...{action, handleGuessClick}} />;
+      case "change":
+        return <ActionChange {...{action}} />;
+      case "forfeit":
+        return <ActionForfeit {...{action}} />;
+      case "manage":
+        return <ActionManage {...{action}} />;
+      case "draw":
+        return <ActionDraw {...{action}} />;
+      case "timeout":
+        return <ActionTimeout {...{action}} />;
+      default:
+        return null;
+    }
+  }
+
   return (
     <Segment disabled={!isActive}>
       <Feed>
@@ -80,38 +101,18 @@ const PlayerEntry = ({
               <span> Points</span>
             </Feed.Content>
             <Feed.Extra text style={{ maxWidth: "230px", marginLeft: "-50px" }}>
-              {canManageGame ? (
-                <Label>
-                  <Icon name="chess king" />
-                  Can start game
-                </Label>
-              ) : (<></>)}
-              {isDrawing ? (
-                <Label>
-                  <Icon name="pencil" />
-                  Drawing...
-                </Label>
-              ) : (
-                <Transition.Group
-                  as={List}
-                  animation="fade left"
-                  duration={200}
-                  verticalAlign="middle"
-                >
-                  {guesses.slice(0, 3).map(({ time, phrase, success }, idx) => (
-                    <List.Item key={time} style={{ opacity: (3 - idx) / 3, marginRight: "8px" }}>
-                      <Label
-                        basic={!success}
-                        pointing="left"
-                        style={{ maxWidth: "100%", cursor: "pointer" }}
-                        onClick={handleGuessClick}
-                      >
-                        {phrase}
-                      </Label>
-                    </List.Item>
-                  ))}
-                </Transition.Group>
-              )}
+              <Transition.Group
+                as={List}
+                animation="fade left"
+                duration={200}
+                verticalAlign="middle"
+              >
+                {actions.slice(0, 3).map((action, idx) => (
+                  <List.Item key={action.time} style={{ opacity: (3 - idx) / 3, marginRight: "8px" }}>
+                    {ActionComponent(action)}
+                  </List.Item>
+                ))}
+              </Transition.Group>
             </Feed.Extra>
           </Feed.Content>
         </Feed.Event>
@@ -119,5 +120,80 @@ const PlayerEntry = ({
     </Segment>
   );
 };
+
+const ActionMessage = ({ action: {text} }) => (
+  <Label
+    basic
+    pointing="left"
+    color="blue"
+    style={{ maxWidth: "100%", marginLeft: 0 }}
+  >
+    <Icon name="chat" color="blue" />
+    {text}
+  </Label>
+);
+
+const ActionGuess = ({ action: {phrase, success}, handleGuessClick }) => (
+  <Label
+    basic
+    color={success ? "green" : "red"}
+    pointing="left"
+    style={{ maxWidth: "100%", marginLeft: 0, cursor: "pointer" }}
+    onClick={handleGuessClick}
+  >
+    {success ? (
+      <Icon name="check circle" color="green" />
+    ) : (
+      <Icon name="times circle" color="red" />
+    )}
+
+    {phrase}
+  </Label>
+);
+
+const ActionChange = ({ action: {previous} }) => (
+  <Label
+    style={{ maxWidth: "100%" }}
+  >
+    <Icon name="exchange" color="yellow" />
+    Changed phrase. Old one was "{previous}"
+  </Label>
+);
+
+const ActionForfeit = ({ action: {previous} }) => (
+  <Label
+    style={{ maxWidth: "100%" }}
+  >
+    <Icon name="flag" color="red" />
+    Gave up. The phrase was "{previous}"
+  </Label>
+);
+
+const ActionManage = () => (
+  <Label
+    style={{ maxWidth: "100%" }}
+  >
+    <Icon name="chess king" color="yellow" />
+    Can now manage game.
+  </Label>
+);
+
+const ActionDraw = () => (
+  <Label
+    style={{ maxWidth: "100%" }}
+  >
+    <Icon name="pencil" />
+    Is now drawing...
+  </Label>
+);
+
+const ActionTimeout = ({ action: {previous} }) => (
+  <Label
+    style={{ maxWidth: "100%" }}
+  >
+    <Icon name="clock outline" color="red" />
+    Ran out of time. Phrase was "{previous}"
+  </Label>
+);
 
 export default KalamburySidebar;

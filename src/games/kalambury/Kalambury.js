@@ -16,7 +16,7 @@ function setupKalambury(ctx, setupData) {
     playersData: {},
     points: Array(ctx.numPlayers).fill(0),
     drawing: [],
-    guesses: [],
+    actions: [],
     remainingSeconds: 120,
   };
 
@@ -35,11 +35,11 @@ function stripPhrase(phrase) {
 
 function SendText(G, ctx, text) {
   const { playerID } = ctx;
-  G.guesses.push({
+  G.actions.push({
     time: Date.now(),
     playerID,
-    phrase: text,
-    success: false,
+    action: "message",
+    text: text,
   });
 }
 
@@ -49,9 +49,10 @@ function Guess(G, ctx, phrase) {
     phrase = G.secret.phrase;
   } // DEBUG
   let success = stripPhrase(phrase).includes(stripPhrase(G.secret.phrase));
-  G.guesses.push({
+  G.actions.push({
     time: Date.now(),
     playerID,
+    action: "guess",
     phrase,
     success,
   });
@@ -74,6 +75,12 @@ function ChangePhrase(G, ctx) {
   if (!G.canChangePhrase) {
     return INVALID_MOVE;
   }
+  G.actions.push({
+    time: Date.now(),
+    playerID: ctx.playerID,
+    action: "change",
+    previous: G.secret.phrase,
+  })
   G.canChangePhrase = false;
   SetNewPhrase(G, ctx);
 }
@@ -84,6 +91,12 @@ function UpdateDrawing(G, _ctx, lines) {
 
 function Forfeit(G, ctx) {
   G.points[ctx.currentPlayer] -= 1;
+  G.actions.push({
+    time: Date.now(),
+    playerID: ctx.playerID,
+    action: "forfeit",
+    previous: G.secret.phrase,
+  })
   ctx.events.endTurn();
 }
 
@@ -134,6 +147,11 @@ export const Kalambury = {
       next: "play",
       turn: {
         onBegin: (G, ctx) => {
+          G.actions.push({
+            time: Date.now(),
+            playerID: ctx.currentPlayer,
+            action: "manage",
+          })
           ctx.events.setActivePlayers({ currentPlayer: "manage", others: "wait" });
         },
         stages: {
@@ -166,10 +184,21 @@ export const Kalambury = {
           G.canChangePhrase = true;
           SetNewPhrase(G, ctx);
           G.remainingSeconds = 120;
+          G.actions.push({
+            time: Date.now(),
+            playerID: ctx.currentPlayer,
+            action: "draw",
+          })
           ctx.events.setActivePlayers({ currentPlayer: "draw", others: "guess" });
         },
         onEnd: (G, ctx) => {
           if (G.remainingSeconds <= 0) {
+            G.actions.push({
+              time: Date.now(),
+              playerID: ctx.currentPlayer,
+              action: "timeout",
+              previous: G.secret.phrase,
+            })
             G.points[ctx.currentPlayer] -= 1;
           }
         },
