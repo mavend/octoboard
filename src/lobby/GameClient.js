@@ -3,7 +3,7 @@ import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
 import { Button, Icon, Container, Confirm } from "semantic-ui-react";
 import Loading from "../Loading";
-import { setUrlHash } from "../utils/url";
+import { setUrlHash, getUrlParam } from "../utils/url";
 
 const GameClient = ({ gameComponent, server, playerID, gameID, credentials, leaveGame }) => {
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -21,7 +21,7 @@ const GameClient = ({ gameComponent, server, playerID, gameID, credentials, leav
     board: board,
     loading: Loading,
     multiplayer: SocketIO({ server }),
-    debug: false,
+    debug: document.location.hostname === "localhost" && getUrlParam("debug") === "true",
   });
 
   return (

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
+  Image,
   Container,
+  Icon,
   Transition,
   Segment,
   Button,
@@ -15,8 +17,8 @@ import KalamburySidebar from "./KalamburySidebar";
 import { avatarForName } from "./utils/avatar";
 
 const KalamburyBoard = ({ G, ctx, playerID, moves, gameMetadata }) => {
-  const { players, guesses, canChangePhrase } = G;
-  const { activePlayers } = ctx;
+  const { players, guesses, canChangePhrase, remainingSeconds } = G;
+  const { activePlayers, phase } = ctx;
   const { Ping, ChangePhrase } = moves;
 
   const [guess, setGuess] = useState("");
@@ -24,6 +26,8 @@ const KalamburyBoard = ({ G, ctx, playerID, moves, gameMetadata }) => {
   const playerMetadata = gameMetadata[playerID] || {};
   const playerName = playerMetadata.name;
   const isDrawing = activePlayers[playerID] === "draw";
+  const hasGameStarted = phase === "play";
+  const canManageGame = activePlayers[playerID] === "manage";
 
   const guessInputRef = useRef();
 
@@ -71,16 +75,45 @@ const KalamburyBoard = ({ G, ctx, playerID, moves, gameMetadata }) => {
   };
 
   const remainingTime = () => {
-    let minutes = Math.floor(G.remainingSeconds / 60);
-    let seconds = G.remainingSeconds - minutes * 60;
+    let minutes = Math.floor(remainingSeconds / 60);
+    let seconds = remainingSeconds - minutes * 60;
     if (seconds < 10) {
       seconds = "0" + seconds;
     }
     return minutes + ":" + seconds;
   };
 
+  const header = () => {
+    let headerText = "";
+    let subHeaderText = "";
+    if (hasGameStarted) {
+      if (isDrawing) {
+        headerText = "You are drawing";
+        subHeaderText = playerData.phrase;
+      } else {
+        headerText = "You are guessing";
+        subHeaderText = "What's on the drawing?";
+      }
+    } else {
+      if (canManageGame) {
+        headerText = "Waiting for other players";
+        subHeaderText = "You can start the game anytime you want";
+      } else {
+        headerText = "Waiting for other players";
+        subHeaderText = "Lobby admin can start the game"; 
+      }
+    }
+
+    return (
+      <Header as="h2" textAlign="center">
+        {headerText}
+        <Header.Subheader>{subHeaderText}</Header.Subheader>
+      </Header>
+    );
+  };
+
   return (
-    <div>
+    <>
       <Container>
         <Header as="h1" textAlign="center" style={styles.mainHeader}>
           Kalambury
@@ -89,30 +122,11 @@ const KalamburyBoard = ({ G, ctx, playerID, moves, gameMetadata }) => {
       <Container style={styles.mainContent}>
         <Grid>
           <Grid.Column width="12">
-            {isDrawing ? (
-              <DrawingBoard playerData={playerData} {...{ G, ctx, moves }} />
+            {header()}
+            {hasGameStarted ? (
+              <GameBoard {...{G, ctx, moves, playerData, isDrawing, envokeLastAnswer, getUserGuesses, guesses, playerID, guessInputRef, guess, setGuess, remainingTime, canChangePhrase, ChangePhrase}} />
             ) : (
-              <GuessingBoard
-                envokeLastAnswer={envokeLastAnswer}
-                previousUserGuesses={getUserGuesses(guesses, playerID)}
-                playerID={playerID}
-                guessInputRef={guessInputRef}
-                guess={guess}
-                setGuess={setGuess}
-                {...{ G, ctx, moves }}
-              />
-            )}
-            <Header as="h3" textAlign="center" style={{ marginTop: 0 }}>
-              {remainingTime()}
-            </Header>
-            {isDrawing ? (
-              <Segment basic textAlign="center">
-                <Button color="yellow" disabled={!canChangePhrase} onClick={() => ChangePhrase()}>
-                  Get new phrase
-                </Button>
-              </Segment>
-            ) : (
-              <></>
+              <WaitingBoard previousUserMessages={getUserGuesses(guesses, playerID)} {...{moves, canManageGame, setGuess, guess}} />
             )}
           </Grid.Column>
           <Grid.Column width="4" style={{ marginTop: "19px" }}>
@@ -124,27 +138,124 @@ const KalamburyBoard = ({ G, ctx, playerID, moves, gameMetadata }) => {
           </Grid.Column>
         </Grid>
       </Container>
-    </div>
+    </>
   );
 };
+
+const WaitingBoard = ({canManageGame, setGuess, guess, previousUserMessages, moves: { StartGame, SendText }}) => {
+  const [inputLocked, setInputLocked] = useState(false);
+  const [lastMessage, setLastMessage] = useState();
+  const [animateInput, setAnimateInput] = useState(true);
+  const handleChange = e => {
+    setGuess(e.target.value);
+  };
+  const sendGuess = () => {
+    SendText(guess);
+    setGuess("");
+  };
+
+  useEffect(() => {
+    let message = previousUserMessages[0];
+    if (!message) {
+      return;
+    }
+    if (!lastMessage) {
+      setLastMessage(message);
+      return;
+    }
+    if (lastMessage.time === message.time) {
+      return;
+    }
+    setLastMessage(guess);
+    setInputLocked(true);
+    setTimeout(() => setInputLocked(false), 250);
+    setAnimateInput(animateInput => !animateInput);
+  }, [previousUserMessages]);
+
+  return (
+    <>
+      <Form onSubmit={sendGuess}>
+        <Transition
+          animation={"pulse"}
+          duration={300}
+          visible={animateInput}
+        >
+          <Form.Field>
+            <Input
+              fluid
+              autoFocus
+              readOnly={inputLocked}
+              placeholder="Talk to other players while waiting..."
+              value={guess}
+              onChange={handleChange}
+              action={{
+                content: "Send your messsage",
+                icon: "chat",
+                labelPosition: "right",
+                color: "blue",
+                type: "submit",
+              }}
+              style={{
+                height: "41px",
+              }}
+            />
+          </Form.Field>
+        </Transition>
+      </Form>
+      <Segment style={{background: "transparent", widht: 800, height: 600, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+        {canManageGame ? (
+          <Button icon labelPosition="right" color="green" onClick={() => StartGame()}>
+            Start game
+            <Icon name="pencil" />
+          </Button>
+        ) : (
+          <Image src="/images/hugo-waiting.png" style={{width: 400, margin: "0 auto"}} />
+        )}
+      </Segment>
+    </>
+  )};
+
+const GameBoard = ({isDrawing, playerData, G, ctx, moves, envokeLastAnswer, getUserGuesses, guesses, playerID, guessInputRef, guess, setGuess, remainingTime, canChangePhrase, ChangePhrase}) => (
+  <>
+    {isDrawing ? (
+      <DrawingBoard playerData={playerData} {...{ G, ctx, moves }} />
+    ) : (
+      <GuessingBoard
+        envokeLastAnswer={envokeLastAnswer}
+        previousUserGuesses={getUserGuesses(guesses, playerID)}
+        playerID={playerID}
+        guessInputRef={guessInputRef}
+        guess={guess}
+        setGuess={setGuess}
+        {...{ G, ctx, moves }}
+      />
+    )}
+    <Header as="h3" textAlign="center" style={{ marginTop: 0 }}>
+      {remainingTime()}
+    </Header>
+    {isDrawing ? (
+      <Segment basic textAlign="center">
+        <Button color="yellow" disabled={!canChangePhrase} onClick={() => ChangePhrase()}>
+          Get new phrase
+        </Button>
+      </Segment>
+    ) : (
+      <></>
+    )}
+  </>
+);
 
 const DrawingBoard = ({
   G: { drawing, remainingSeconds },
   moves: { UpdateDrawing, Forfeit },
   playerData: { phrase },
 }) => (
-  <>
-    <Header as="h2" textAlign="center">
-      You are drawing!
-      <Header.Subheader>{phrase}</Header.Subheader>
-    </Header>
-    <DrawArea
-      initialLines={drawing}
-      remainingSeconds={remainingSeconds}
-      onUpdate={lines => UpdateDrawing(lines)}
-      onForfeit={() => Forfeit()}
-    />
-  </>
+  <DrawArea
+    initialLines={drawing}
+    remainingSeconds={remainingSeconds}
+    onUpdate={lines => UpdateDrawing(lines)}
+    onForfeit={() => Forfeit()}
+  />
 );
 
 const GuessingBoard = ({
@@ -220,10 +331,6 @@ const GuessingBoard = ({
 
   return (
     <>
-      <Header as="h2" textAlign="center">
-        You are guessing!
-        <Header.Subheader>What's on the drawing?</Header.Subheader>
-      </Header>
       <Form onSubmit={sendGuess}>
         <Transition
           animation={lastSuccess ? "pulse" : "shake"}
