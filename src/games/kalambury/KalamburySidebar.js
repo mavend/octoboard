@@ -26,12 +26,11 @@ const KalamburySidebar = ({
           {...playersData[pid]}
         />
       ))}
-      {Array(numPlayers - Object.keys(playersData).length).fill(0).map((_, idx) => (
-        <PlayerEntry
-          key={"dummy"+idx}
-          empty={true}
-        />
-      ))}
+      {Array(numPlayers - Object.keys(playersData).length)
+        .fill(0)
+        .map((_, idx) => (
+          <PlayerEntry key={"dummy" + idx} empty={true} />
+        ))}
     </Segment.Group>
   </>
 );
@@ -65,25 +64,25 @@ const PlayerEntry = ({
   }
 
   const ActionComponent = (action) => {
-    switch(action.action) {
+    switch (action.action) {
       case "message":
-        return <ActionMessage {...{action}} />;
+        return <ActionMessage {...{ action }} />;
       case "guess":
-        return <ActionGuess {...{action, handleGuessClick}} />;
+        return <ActionGuess {...{ action, handleGuessClick }} />;
       case "change":
-        return <ActionChange {...{action}} />;
+        return <ActionChange {...{ action }} />;
       case "forfeit":
-        return <ActionForfeit {...{action}} />;
+        return <ActionForfeit {...{ action }} />;
       case "manage":
-        return <ActionManage {...{action}} />;
+        return <ActionManage {...{ action }} />;
       case "draw":
-        return <ActionDraw {...{action}} />;
+        return <ActionDraw {...{ action }} />;
       case "timeout":
-        return <ActionTimeout {...{action}} />;
+        return <ActionTimeout {...{ action }} />;
       default:
         return null;
     }
-  }
+  };
 
   return (
     <Segment disabled={!isActive}>
@@ -108,7 +107,10 @@ const PlayerEntry = ({
                 verticalAlign="middle"
               >
                 {actions.slice(0, 3).map((action, idx) => (
-                  <List.Item key={action.time} style={{ opacity: (3 - idx) / 3, marginRight: "8px" }}>
+                  <List.Item
+                    key={action.time}
+                    style={{ opacity: (3 - idx) / 3, marginRight: "8px" }}
+                  >
                     {ActionComponent(action)}
                   </List.Item>
                 ))}
@@ -121,19 +123,14 @@ const PlayerEntry = ({
   );
 };
 
-const ActionMessage = ({ action: {text} }) => (
-  <Label
-    basic
-    pointing="left"
-    color="blue"
-    style={{ maxWidth: "100%", marginLeft: 0 }}
-  >
+const ActionMessage = ({ action: { text } }) => (
+  <Label basic pointing="left" color="blue" style={{ maxWidth: "100%", marginLeft: 0 }}>
     <Icon name="chat" color="blue" />
     {text}
   </Label>
 );
 
-const ActionGuess = ({ action: {phrase, success}, handleGuessClick }) => (
+const ActionGuess = ({ action: { phrase, success }, handleGuessClick }) => (
   <Label
     basic
     color={success ? "green" : "red"}
@@ -151,46 +148,36 @@ const ActionGuess = ({ action: {phrase, success}, handleGuessClick }) => (
   </Label>
 );
 
-const ActionChange = ({ action: {previous} }) => (
-  <Label
-    style={{ maxWidth: "100%" }}
-  >
+const ActionChange = ({ action: { previous } }) => (
+  <Label style={{ maxWidth: "100%" }}>
     <Icon name="exchange" color="yellow" />
     Changed phrase. Old one was "{previous}"
   </Label>
 );
 
-const ActionForfeit = ({ action: {previous} }) => (
-  <Label
-    style={{ maxWidth: "100%" }}
-  >
+const ActionForfeit = ({ action: { previous } }) => (
+  <Label style={{ maxWidth: "100%" }}>
     <Icon name="flag" color="red" />
     Gave up. The phrase was "{previous}"
   </Label>
 );
 
 const ActionManage = () => (
-  <Label
-    style={{ maxWidth: "100%" }}
-  >
+  <Label style={{ maxWidth: "100%" }}>
     <Icon name="chess king" color="yellow" />
     Can now manage game.
   </Label>
 );
 
 const ActionDraw = () => (
-  <Label
-    style={{ maxWidth: "100%" }}
-  >
+  <Label style={{ maxWidth: "100%" }}>
     <Icon name="pencil" />
     Is now drawing...
   </Label>
 );
 
-const ActionTimeout = ({ action: {previous} }) => (
-  <Label
-    style={{ maxWidth: "100%" }}
-  >
+const ActionTimeout = ({ action: { previous } }) => (
+  <Label style={{ maxWidth: "100%" }}>
     <Icon name="clock outline" color="red" />
     Ran out of time. Phrase was "{previous}"
   </Label>
