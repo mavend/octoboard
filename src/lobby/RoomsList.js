@@ -73,8 +73,6 @@ const RoomsListItem = ({ room: { gameID, description, players }, game, onJoin })
             labelPosition="left"
             onClick={handleClick}
           />
-
-
         </Item.Header>
         <Item.Extra>
           {currentPlayers.map((p) => (<Button key={p.id} icon labelPosition="left" compact size="tiny" disabled><Icon name="user" color="grey" />{p.name}</Button>))}

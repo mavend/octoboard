@@ -3,7 +3,7 @@ import { Icon, Transition, Header, List, Label, Segment, Feed } from "semantic-u
 
 const KalamburySidebar = ({
   G: { guesses, points, playersData },
-  ctx: { activePlayers },
+  ctx: { activePlayers, numPlayers },
   playerID,
   handleGuessClick,
   getUserGuesses,
@@ -20,9 +20,16 @@ const KalamburySidebar = ({
           guesses={getUserGuesses(guesses, pid)}
           isWinning={points[pid] === Math.max(...points)}
           isDrawing={activePlayers[pid] === "draw"}
+          canManageGame={activePlayers[pid] === "manage"}
           isCurrentPlayer={pid === playerID}
           handleGuessClick={handleGuessClick}
           {...playersData[pid]}
+        />
+      ))}
+      {Array(numPlayers - Object.keys(playersData).length).fill(0).map((_, idx) => (
+        <PlayerEntry
+          key={"dummy"+idx}
+          empty={true}
         />
       ))}
     </Segment.Group>
@@ -32,15 +39,17 @@ const KalamburySidebar = ({
 const PlayerEntry = ({
   name,
   isActive,
+  empty,
   avatar,
   points,
   guesses,
   isDrawing,
+  canManageGame,
   isWinning,
   isCurrentPlayer,
   handleGuessClick,
 }) => {
-  if (!name) {
+  if (!name || empty) {
     return (
       <Segment disabled={true}>
         <Feed>
@@ -71,6 +80,12 @@ const PlayerEntry = ({
               <span> Points</span>
             </Feed.Content>
             <Feed.Extra text style={{ maxWidth: "230px", marginLeft: "-50px" }}>
+              {canManageGame ? (
+                <Label>
+                  <Icon name="chess king" />
+                  Can start game
+                </Label>
+              ) : (<></>)}
               {isDrawing ? (
                 <Label>
                   <Icon name="pencil" />
