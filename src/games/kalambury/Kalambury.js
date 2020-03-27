@@ -34,16 +34,18 @@ function stripPhrase(phrase) {
 }
 
 function LogAction(G, playerID, action, clear = false) {
-  if (clear) { G.actions = []; }
+  if (clear) {
+    G.actions = [];
+  }
   G.actions.push({
     time: Date.now(),
     playerID,
-    ...action
+    ...action,
   });
 }
 
 function SendText(G, ctx, text) {
-  LogAction(G, ctx.playerID, {action: "message", text: text});
+  LogAction(G, ctx.playerID, { action: "message", text: text });
 }
 
 function Guess(G, ctx, phrase) {
@@ -55,7 +57,7 @@ function Guess(G, ctx, phrase) {
     ctx.events.endTurn();
   }
 
-  LogAction(G, ctx.playerID, {action: "guess", phrase, success}, success);
+  LogAction(G, ctx.playerID, { action: "guess", phrase, success }, success);
 }
 
 function SetNewPhrase(G, ctx) {
@@ -69,7 +71,7 @@ function ChangePhrase(G, ctx) {
   if (!G.canChangePhrase) {
     return INVALID_MOVE;
   }
-  LogAction(G, ctx.playerID, {action: "change", previous: G.secret.phrase});
+  LogAction(G, ctx.playerID, { action: "change", previous: G.secret.phrase });
   G.canChangePhrase = false;
   SetNewPhrase(G, ctx);
 }
@@ -80,7 +82,7 @@ function UpdateDrawing(G, _ctx, lines) {
 
 function Forfeit(G, ctx) {
   G.points[ctx.playerID] -= 1;
-  LogAction(G, ctx.playerID, {action: "forfeit", previous: G.secret.phrase}, true);
+  LogAction(G, ctx.playerID, { action: "forfeit", previous: G.secret.phrase }, true);
   ctx.events.endTurn();
 }
 
@@ -133,7 +135,7 @@ export const Kalambury = {
       next: "play",
       turn: {
         onBegin: (G, ctx) => {
-          LogAction(G, ctx.currentPlayer, {action: "manage"});
+          LogAction(G, ctx.currentPlayer, { action: "manage" });
           ctx.events.setActivePlayers({ currentPlayer: "manage", others: "wait" });
         },
         stages: {
@@ -166,12 +168,12 @@ export const Kalambury = {
           G.canChangePhrase = true;
           SetNewPhrase(G, ctx);
           G.remainingSeconds = 120;
-          LogAction(G, ctx.currentPlayer, {action: "draw"});
+          LogAction(G, ctx.currentPlayer, { action: "draw" });
           ctx.events.setActivePlayers({ currentPlayer: "draw", others: "guess" });
         },
         onEnd: (G, ctx) => {
           if (G.remainingSeconds <= 0) {
-            LogAction(G, ctx.currentPlayer, {action: "timeout", previous: G.secret.phrase}, true);
+            LogAction(G, ctx.currentPlayer, { action: "timeout", previous: G.secret.phrase }, true);
             G.points[ctx.currentPlayer] -= 1;
           }
         },

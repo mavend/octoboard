@@ -1,10 +1,5 @@
 import React from "react";
-import { 
-  Container,
-  Header,
-  Icon,
-  Message,
-} from "semantic-ui-react";
+import { Container, Header, Icon, Message } from "semantic-ui-react";
 
 const Loading = ({ G, ctx }) => {
   const styles = {
@@ -18,8 +13,8 @@ const Loading = ({ G, ctx }) => {
     },
     footer: {
       marginTop: "20px",
-    }
-  }
+    },
+  };
 
   return (
     <div>
@@ -31,7 +26,7 @@ const Loading = ({ G, ctx }) => {
 
       <Container style={styles.mainContent}>
         <Message icon>
-          <Icon name='circle notched' loading />
+          <Icon name="circle notched" loading />
           <Message.Content>
             <Message.Header>Just one second</Message.Header>
             We are connecting you to the game lobby.
@@ -39,7 +34,7 @@ const Loading = ({ G, ctx }) => {
         </Message>
       </Container>
     </div>
-  )
-}
+  );
+};
 
 export default Loading;
