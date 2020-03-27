@@ -20,8 +20,8 @@ const CreateRoomForm = ({ games, onCreateRoom }) => {
   useEffect(() => {
     if (game) {
       const { minPlayers, maxPlayers } = game;
-      const range = [...Array(maxPlayers - minPlayers + 1).keys()].map(i => i + minPlayers);
-      setPlayersOptions(range.map(i => ({ key: i, value: i, text: i })));
+      const range = [...Array(maxPlayers - minPlayers + 1).keys()].map((i) => i + minPlayers);
+      setPlayersOptions(range.map((i) => ({ key: i, value: i, text: i })));
       setPlayers(range[0]);
     }
   }, [game, setPlayersOptions, setPlayers]);
@@ -41,7 +41,7 @@ const CreateRoomForm = ({ games, onCreateRoom }) => {
         label="Game"
         options={gamesOptions}
         value={game && game.name}
-        onChange={(_, { value }) => setGame(games.find(g => g.name === value))}
+        onChange={(_, { value }) => setGame(games.find((g) => g.name === value))}
       />
       <Form.Select
         label="Maximum number of players"

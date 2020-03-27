@@ -15,11 +15,14 @@ import DrawArea from "./DrawArea";
 import Drawing from "./Drawing";
 import KalamburySidebar from "./KalamburySidebar";
 import { avatarForName } from "./utils/avatar";
+import { timerFormat } from "./utils/time";
+import { useTranslation } from "react-i18next";
 
 const KalamburyBoard = ({ G, ctx, playerID, moves, gameMetadata }) => {
   const { players, actions, canChangePhrase, remainingSeconds } = G;
   const { activePlayers, phase } = ctx;
   const { Ping, ChangePhrase } = moves;
+  const { t, i18n } = useTranslation("kalambury");
 
   const [guess, setGuess] = useState("");
   const playerData = players[playerID];
@@ -80,55 +83,26 @@ const KalamburyBoard = ({ G, ctx, playerID, moves, gameMetadata }) => {
     }
   };
 
-  const remainingTime = () => {
-    let minutes = Math.floor(remainingSeconds / 60);
-    let seconds = remainingSeconds - minutes * 60;
-    if (seconds < 10) {
-      seconds = "0" + seconds;
-    }
-    return minutes + ":" + seconds;
-  };
-
-  const header = () => {
-    let headerText = "";
-    let subHeaderText = "";
-    if (hasGameStarted) {
-      if (isDrawing) {
-        headerText = "You are drawing";
-        subHeaderText = playerData.phrase;
-      } else {
-        headerText = "You are guessing";
-        subHeaderText = "What's on the drawing?";
-      }
-    } else {
-      if (canManageGame) {
-        headerText = "Waiting for other players";
-        subHeaderText = "You can start the game anytime you want";
-      } else {
-        headerText = "Waiting for other players";
-        subHeaderText = "Lobby admin can start the game";
-      }
-    }
-
-    return (
-      <Header as="h2" textAlign="center">
-        {headerText}
-        <Header.Subheader>{subHeaderText}</Header.Subheader>
-      </Header>
-    );
-  };
+  let header = (
+    <Header as="h2" textAlign="center">
+      {t(`header.${phase}`)}
+      <Header.Subheader>
+        {isDrawing ? playerData.phrase : t(`subheader.${phase}.${activePlayers[playerID]}`)}
+      </Header.Subheader>
+    </Header>
+  );
 
   return (
     <>
       <Container>
         <Header as="h1" textAlign="center" style={styles.mainHeader}>
-          Kalambury
+          {t("game.name")}
         </Header>
       </Container>
       <Container style={styles.mainContent}>
         <Grid>
           <Grid.Column width="12">
-            {header()}
+            {header}
             {hasGameStarted ? (
               <GameBoard
                 {...{
@@ -144,7 +118,6 @@ const KalamburyBoard = ({ G, ctx, playerID, moves, gameMetadata }) => {
                   guessInputRef,
                   guess,
                   setGuess,
-                  remainingTime,
                   canChangePhrase,
                   ChangePhrase,
                 }}
@@ -265,7 +238,6 @@ const GameBoard = ({
   guessInputRef,
   guess,
   setGuess,
-  remainingTime,
   canChangePhrase,
   ChangePhrase,
 }) => (
@@ -284,7 +256,7 @@ const GameBoard = ({
       />
     )}
     <Header as="h3" textAlign="center" style={{ marginTop: 0 }}>
-      {remainingTime()}
+      {timerFormat(G.remainingSeconds)}
     </Header>
     {isDrawing ? (
       <Segment basic textAlign="center">

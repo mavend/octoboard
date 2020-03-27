@@ -1,0 +1,23 @@
+{
+  "game": {
+    "name": "Kalambury"
+  },
+  "tools": {
+    "undo": "Remove last line",
+    "clear": "Clear drawing",
+    "forfeit": "Give up :("
+  },
+  "header": {
+    "wait": "Waiting for other players",
+    "play": "You are drawing"
+  },
+  "subheader": {
+    "wait": {
+      "manage": "You can start the game anytime you want",
+      "wait": "Lobby admin can start the game"
+    },
+    "play": {
+      "guess": "What's on the drawing?"
+    }
+  }
+}
