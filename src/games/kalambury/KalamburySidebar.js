@@ -109,7 +109,7 @@ const PlayerEntry = ({
                 {actions.slice(0, 3).map((action, idx) => (
                   <List.Item
                     key={action.time}
-                    style={{ opacity: (3 - idx) / 3, marginRight: "8px" }}
+                    style={{ opacity: ((3 - idx) * 0.5 / 3) + 0.5, marginRight: "8px" }}
                   >
                     {ActionComponent(action)}
                   </List.Item>
@@ -132,14 +132,14 @@ const ActionMessage = ({ action: { text } }) => (
 
 const ActionGuess = ({ action: { phrase, success }, handleGuessClick }) => (
   <Label
-    basic
+    basic={!success}
     color={success ? "green" : "red"}
     pointing="left"
     style={{ maxWidth: "100%", marginLeft: 0, cursor: "pointer" }}
     onClick={handleGuessClick}
   >
     {success ? (
-      <Icon name="check circle" color="green" />
+      <Icon name="check circle" />
     ) : (
       <Icon name="times circle" color="red" />
     )}
@@ -149,15 +149,15 @@ const ActionGuess = ({ action: { phrase, success }, handleGuessClick }) => (
 );
 
 const ActionChange = ({ action: { previous } }) => (
-  <Label style={{ maxWidth: "100%" }}>
-    <Icon name="exchange" color="yellow" />
+  <Label color="yellow" style={{ maxWidth: "100%" }}>
+    <Icon name="exchange" />
     Changed phrase. Old one was "{previous}"
   </Label>
 );
 
 const ActionForfeit = ({ action: { previous } }) => (
-  <Label style={{ maxWidth: "100%" }}>
-    <Icon name="flag" color="red" />
+  <Label color="red" style={{ maxWidth: "100%" }}>
+    <Icon name="flag" />
     Gave up. The phrase was "{previous}"
   </Label>
 );
@@ -177,8 +177,8 @@ const ActionDraw = () => (
 );
 
 const ActionTimeout = ({ action: { previous } }) => (
-  <Label style={{ maxWidth: "100%" }}>
-    <Icon name="clock outline" color="red" />
+  <Label color="red" style={{ maxWidth: "100%" }}>
+    <Icon name="clock outline" />
     Ran out of time. Phrase was "{previous}"
   </Label>
 );

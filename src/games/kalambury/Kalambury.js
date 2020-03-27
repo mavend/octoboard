@@ -33,35 +33,29 @@ function stripPhrase(phrase) {
   return removeAccents(phrase).toLowerCase().replace(/\W/g, "");
 }
 
-function SendText(G, ctx, text) {
-  const { playerID } = ctx;
+function LogAction(G, playerID, action, clear = false) {
+  if (clear) { G.actions = []; }
   G.actions.push({
     time: Date.now(),
     playerID,
-    action: "message",
-    text: text,
+    ...action
   });
 }
 
+function SendText(G, ctx, text) {
+  LogAction(G, ctx.playerID, {action: "message", text: text});
+}
+
 function Guess(G, ctx, phrase) {
-  const { playerID, currentPlayer } = ctx;
-  if (!phrase) {
-    phrase = G.secret.phrase;
-  } // DEBUG
   let success = stripPhrase(phrase).includes(stripPhrase(G.secret.phrase));
-  G.actions.push({
-    time: Date.now(),
-    playerID,
-    action: "guess",
-    phrase,
-    success,
-  });
 
   if (success) {
-    G.points[playerID] += 1;
-    G.points[currentPlayer] += 1;
+    G.points[ctx.playerID] += 1;
+    G.points[ctx.currentPlayer] += 1;
     ctx.events.endTurn();
   }
+
+  LogAction(G, ctx.playerID, {action: "guess", phrase, success}, success);
 }
 
 function SetNewPhrase(G, ctx) {
@@ -75,12 +69,7 @@ function ChangePhrase(G, ctx) {
   if (!G.canChangePhrase) {
     return INVALID_MOVE;
   }
-  G.actions.push({
-    time: Date.now(),
-    playerID: ctx.playerID,
-    action: "change",
-    previous: G.secret.phrase,
-  });
+  LogAction(G, ctx.playerID, {action: "change", previous: G.secret.phrase});
   G.canChangePhrase = false;
   SetNewPhrase(G, ctx);
 }
@@ -90,13 +79,8 @@ function UpdateDrawing(G, _ctx, lines) {
 }
 
 function Forfeit(G, ctx) {
-  G.points[ctx.currentPlayer] -= 1;
-  G.actions.push({
-    time: Date.now(),
-    playerID: ctx.playerID,
-    action: "forfeit",
-    previous: G.secret.phrase,
-  });
+  G.points[ctx.playerID] -= 1;
+  LogAction(G, ctx.playerID, {action: "forfeit", previous: G.secret.phrase}, true);
   ctx.events.endTurn();
 }
 
@@ -149,11 +133,7 @@ export const Kalambury = {
       next: "play",
       turn: {
         onBegin: (G, ctx) => {
-          G.actions.push({
-            time: Date.now(),
-            playerID: ctx.currentPlayer,
-            action: "manage",
-          });
+          LogAction(G, ctx.currentPlayer, {action: "manage"});
           ctx.events.setActivePlayers({ currentPlayer: "manage", others: "wait" });
         },
         stages: {
@@ -186,21 +166,12 @@ export const Kalambury = {
           G.canChangePhrase = true;
           SetNewPhrase(G, ctx);
           G.remainingSeconds = 120;
-          G.actions.push({
-            time: Date.now(),
-            playerID: ctx.currentPlayer,
-            action: "draw",
-          });
+          LogAction(G, ctx.currentPlayer, {action: "draw"});
           ctx.events.setActivePlayers({ currentPlayer: "draw", others: "guess" });
         },
         onEnd: (G, ctx) => {
           if (G.remainingSeconds <= 0) {
-            G.actions.push({
-              time: Date.now(),
-              playerID: ctx.currentPlayer,
-              action: "timeout",
-              previous: G.secret.phrase,
-            });
+            LogAction(G, ctx.currentPlayer, {action: "timeout", previous: G.secret.phrase}, true);
             G.points[ctx.currentPlayer] -= 1;
           }
         },
