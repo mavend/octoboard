@@ -1,42 +1,9 @@
 import React from "react";
-import { Icon, Transition, Header, List, Label, Segment, Feed } from "semantic-ui-react";
-import SidebarAction from "./SidebarAction";
+import { Icon, Segment, Feed, Transition, List } from "semantic-ui-react";
+import Action from "./Action";
+import { useTranslation } from "react-i18next";
 
-const KalamburySidebar = ({
-  G: { actions, points, playersData },
-  ctx: { activePlayers, numPlayers },
-  playerID,
-  handleGuessClick,
-  getUserActions,
-}) => (
-  <>
-    <Header as="h2" textAlign="center">
-      Players
-    </Header>
-    <Segment.Group>
-      {Object.keys(playersData).map((pid) => (
-        <PlayerEntry
-          key={pid}
-          points={points[pid]}
-          actions={getUserActions(actions, pid)}
-          isWinning={points[pid] === Math.max(...points)}
-          isDrawing={activePlayers[pid] === "draw"}
-          canManageGame={activePlayers[pid] === "manage"}
-          isCurrentPlayer={pid === playerID}
-          handleGuessClick={handleGuessClick}
-          {...playersData[pid]}
-        />
-      ))}
-      {Array(numPlayers - Object.keys(playersData).length)
-        .fill(0)
-        .map((_, idx) => (
-          <PlayerEntry key={"dummy" + idx} empty={true} />
-        ))}
-    </Segment.Group>
-  </>
-);
-
-const PlayerEntry = ({
+const Player = ({
   name,
   isActive,
   empty,
@@ -47,6 +14,8 @@ const PlayerEntry = ({
   isCurrentPlayer,
   handleGuessClick,
 }) => {
+  const { t } = useTranslation("kalambury");
+
   if (!name || empty) {
     return (
       <Segment disabled={true}>
@@ -54,7 +23,7 @@ const PlayerEntry = ({
           <Feed.Event>
             <Feed.Label image={"/images/avatar-empty.jpg"} />
             <Feed.Content>
-              <Feed.Date>Waiting for player...</Feed.Date>
+              <Feed.Date>{t("sidebar.player.waiting")}</Feed.Date>
             </Feed.Content>
           </Feed.Event>
         </Feed>
@@ -69,13 +38,13 @@ const PlayerEntry = ({
           <Feed.Label image={avatar || "/images/avatar-empty.jpg"} />
           <Feed.Content>
             <Feed.Date>
-              {name} {isCurrentPlayer && <span>(You)</span>}{" "}
-              {!isActive && <span>(Disconnected)</span>}
+              {name} {isCurrentPlayer && <span>({t("sidebar.player.current")})</span>}{" "}
+              {!isActive && <span>({t("sidebar.player.disconnected")})</span>}
             </Feed.Date>
             <Feed.Content>
               <Icon name="trophy" color={isWinning ? "yellow" : "grey"} />
               {points}
-              <span> Points</span>
+              <span> {t("sidebar.player.points")}</span>
             </Feed.Content>
             <Feed.Extra text style={{ maxWidth: "230px", marginLeft: "-50px" }}>
               <Transition.Group
@@ -89,7 +58,7 @@ const PlayerEntry = ({
                     key={action.time}
                     style={{ opacity: ((3 - idx) * 0.5) / 3 + 0.5, marginRight: "8px" }}
                   >
-                    <SidebarAction action={action} handleGuessClick={handleGuessClick} />
+                    <Action action={action} handleGuessClick={handleGuessClick} />
                   </List.Item>
                 ))}
               </Transition.Group>
@@ -101,4 +70,4 @@ const PlayerEntry = ({
   );
 };
 
-export default KalamburySidebar;
+export default Player;

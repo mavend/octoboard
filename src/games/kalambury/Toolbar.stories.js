@@ -6,7 +6,7 @@ import Toolbar from "./Toolbar";
 
 export default {
   component: Toolbar,
-  title: "Kalambury/Toolbar",
+  title: "Kalambury/DrawArea/Toolbar",
   excludeStories: /.*Data$/,
 };
 
@@ -33,6 +33,7 @@ export const Default = () => (
         "#eb87bf",
         "#f4d0b5",
         "#a5673f",
+        "#FFFFFF",
       ],
       "#1b1c1d"
     )}

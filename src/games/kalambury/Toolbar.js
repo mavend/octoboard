@@ -11,7 +11,7 @@ const Toolbar = ({
   onForfeit,
   canUndo,
 }) => {
-  const { t, i18n } = useTranslation("kalambury");
+  const { t } = useTranslation("kalambury");
   const eraserColor = "#FFFFFF";
   const colors = [
     "#1b1c1d",
