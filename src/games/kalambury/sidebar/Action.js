@@ -1,7 +1,9 @@
 import React from "react";
-import { Icon, Transition, Header, List, Label, Segment, Feed } from "semantic-ui-react";
+import { Icon, Label } from "semantic-ui-react";
+import { useTranslation } from "react-i18next";
 
-const SidebarAction = ({ action, handleGuessClick }) => {
+const Action = ({ action, handleGuessClick }) => {
+  const { t } = useTranslation("kalambury");
   const ActionType = {
     message: ActionMessage,
     guess: ActionGuess,
@@ -11,7 +13,7 @@ const SidebarAction = ({ action, handleGuessClick }) => {
     draw: ActionDraw,
     timeout: ActionTimeout,
   }[action.action];
-  return <ActionType action={action} handleGuessClick={handleGuessClick} />;
+  return <ActionType action={action} handleGuessClick={handleGuessClick} t={t} />;
 };
 
 const ActionMessage = ({ action: { text } }) => (
@@ -30,44 +32,43 @@ const ActionGuess = ({ action: { phrase, success }, handleGuessClick }) => (
     onClick={handleGuessClick}
   >
     {success ? <Icon name="check circle" /> : <Icon name="times circle" color="red" />}
-
     {phrase}
   </Label>
 );
 
-const ActionChange = ({ action: { previous } }) => (
+const ActionChange = ({ action: { previous }, t }) => (
   <Label color="yellow" style={{ maxWidth: "100%" }}>
     <Icon name="exchange" />
-    Changed phrase. Old one was "{previous}"
+    {t("sidebar.action.change", { phrase: previous })}
   </Label>
 );
 
-const ActionForfeit = ({ action: { previous } }) => (
+const ActionForfeit = ({ action: { previous }, t }) => (
   <Label color="red" style={{ maxWidth: "100%" }}>
     <Icon name="flag" />
-    Gave up. The phrase was "{previous}"
+    {t("sidebar.action.forfeit", { phrase: previous })}
   </Label>
 );
 
-const ActionManage = () => (
+const ActionManage = ({ t }) => (
   <Label style={{ maxWidth: "100%" }}>
     <Icon name="chess king" color="yellow" />
-    Can now manage game.
+    {t("sidebar.action.manage")}
   </Label>
 );
 
-const ActionDraw = () => (
+const ActionDraw = ({ t }) => (
   <Label style={{ maxWidth: "100%" }}>
     <Icon name="pencil" />
-    Is now drawing...
+    {t("sidebar.action.draw")}
   </Label>
 );
 
-const ActionTimeout = ({ action: { previous } }) => (
+const ActionTimeout = ({ action: { previous }, t }) => (
   <Label color="red" style={{ maxWidth: "100%" }}>
     <Icon name="clock outline" />
-    Ran out of time. Phrase was "{previous}"
+    {t("sidebar.action.timeout", { phrase: previous })}
   </Label>
 );
 
-export default SidebarAction;
+export default Action;
