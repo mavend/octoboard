@@ -1,5 +1,6 @@
 import { PlayerView, INVALID_MOVE } from "boardgame.io/core";
-import phrases from "./data/phrases/pl/proverbs.json";
+import proverbs from "./data/phrases/pl/proverbs.json";
+import idioms from "./data/phrases/pl/idioms.json";
 import removeAccents from "remove-accents";
 
 function setupKalambury(ctx, setupData) {
@@ -7,7 +8,7 @@ function setupKalambury(ctx, setupData) {
     secret: {
       phrase: "",
       startTime: new Date(),
-      phrases: ctx.random.Shuffle(phrases.slice()),
+      phrases: ctx.random.Shuffle([...proverbs, ...idioms]),
     },
     canChangePhrase: true,
     players: {},
