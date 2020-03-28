@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import LobbyPage from "./lobby";
+import GameLobby from "./lobby/GameLobby";
 import LoginPage from "./LoginPage";
 import { KalamburyComponent } from "./games/Games";
 
-const CoronaGames = ({ server, gameComponents}) => {
+const CoronaGames = ({ server, gameComponents }) => {
   const [playerName, setPlayerName] = useState(localStorage.getItem("playerName") || "");
 
   const handleLogin = (name) => {
@@ -14,13 +14,13 @@ const CoronaGames = ({ server, gameComponents}) => {
 
   return (
     <>
-    <div>
-      {playerName ? (
-        <LobbyPage server={'http://localhost:8000'} gameComponents={[KalamburyComponent]} playerName={playerName} />
-      ) : (
-        <LoginPage open={true} playerName={playerName} onLogin={handleLogin} />
-      )}
-    </div>
+      <div>
+        {playerName ? (
+          <GameLobby gameComponents={gameComponents} />
+        ) : (
+          <LoginPage open={true} playerName={playerName} onLogin={handleLogin} />
+        )}
+      </div>
     </>
   );
 };

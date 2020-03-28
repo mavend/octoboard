@@ -1,9 +1,61 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { isEqual } from "lodash";
 import { Container, Header, Image, Segment, Grid, Dimmer, Loader } from "semantic-ui-react";
 import RoomsList from "./RoomsList";
 import CreateRoomForm from "./CreateRoomForm";
+import { roomsUrl, joinRoomUrl } from "../api";
 
-const GameLobby = ({ loading, rooms, gameComponents, joinRoom, createRoom }) => {
+const GameLobby = ({ gameComponents }) => {
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState(true);
+  const [rooms, setRooms] = useState([]);
+
+  const playerName = localStorage.getItem("playerName");
+  const games = gameComponents.map((g) => g.game);
+
+  const fetchRooms = useCallback(() => {
+    const urls = games.map((game) => roomsUrl(game.name));
+    Promise.all(urls.map((url) => fetch(url).then((r) => r.json())))
+      .then((responses) => {
+        const rooms = responses
+          .map((res, idx) =>
+            res.rooms.map((room) => {
+              return { ...room, gameName: games[idx].name };
+            })
+          )
+          .flat();
+        setRooms((currentRooms) => (isEqual(rooms, currentRooms) ? currentRooms : rooms));
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  }, [games, setRooms, setLoading, setError]);
+
+  const handleJoinRoom = (gameName, gameID, freeSpotId) => {
+    fetch(joinRoomUrl(gameName, gameID), {
+      method: "POST",
+      body: JSON.stringify({
+        playerID: freeSpotId,
+        playerName: playerName,
+      }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log("playerCredentials", json.playerCredentials);
+        localStorage.setItem("playerCredentials", json.playerCredentials);
+        fetchRooms();
+      });
+  };
+
+  useEffect(() => {
+    fetchRooms();
+    const interval = setInterval(fetchRooms, 2000);
+    return () => clearInterval(interval);
+  }, [fetchRooms]);
+
   const styles = {
     mainImage: {
       width: "300px",
@@ -15,7 +67,6 @@ const GameLobby = ({ loading, rooms, gameComponents, joinRoom, createRoom }) => 
     },
     noRoomImage: { margin: "0 auto" },
   };
-  const games = gameComponents.map((g) => g.game);
 
   return (
     <div>
@@ -26,6 +77,13 @@ const GameLobby = ({ loading, rooms, gameComponents, joinRoom, createRoom }) => 
           <Header.Subheader>Games in the time of plague</Header.Subheader>
         </Header>
       </Container>
+      {error && (
+        <Container>
+          <Segment inverted color="red">
+            {error}
+          </Segment>
+        </Container>
+      )}
       <Container>
         <Grid>
           <Grid.Column width="12">
@@ -35,7 +93,12 @@ const GameLobby = ({ loading, rooms, gameComponents, joinRoom, createRoom }) => 
               </Header>
               <div>
                 {rooms.length > 0 ? (
-                  <RoomsList rooms={rooms} games={games} onJoinRoom={joinRoom} />
+                  <RoomsList
+                    rooms={rooms}
+                    games={games}
+                    onJoinRoom={handleJoinRoom}
+                    playerName={playerName}
+                  />
                 ) : (
                   <>
                     <Header as="h4" textAlign="center" color="grey">
@@ -57,7 +120,7 @@ const GameLobby = ({ loading, rooms, gameComponents, joinRoom, createRoom }) => 
               <Header as="h3" textAlign="center">
                 Create room
               </Header>
-              <CreateRoomForm games={games} onCreateRoom={createRoom} />
+              <CreateRoomForm games={games} />
             </Segment>
           </Grid.Column>
         </Grid>

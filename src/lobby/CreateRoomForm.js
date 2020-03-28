@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form } from "semantic-ui-react";
+import { createGameUrl } from "../api";
 
-const CreateRoomForm = ({ games, onCreateRoom }) => {
+const CreateRoomForm = ({ games }) => {
   const [game, setGame] = useState();
   const [players, setPlayers] = useState();
   const [playersOptions, setPlayersOptions] = useState([]);
@@ -28,14 +29,22 @@ const CreateRoomForm = ({ games, onCreateRoom }) => {
 
   const handleCreate = () => {
     if (game && players) {
-      onCreateRoom(game, players);
+      fetch(createGameUrl(game.name), {
+        method: "POST",
+        body: JSON.stringify({
+          numPlayers: players,
+        }),
+        headers: { "Content-Type": "application/json" },
+      }).then(() => {
+        console.log("Game created!");
+      });
     } else {
       alert("Not valid!");
     }
   };
 
   return (
-    <Form>
+    <Form onSubmit={handleCreate}>
       <Form.Select
         fluid
         label="Game"
@@ -49,7 +58,7 @@ const CreateRoomForm = ({ games, onCreateRoom }) => {
         value={players}
         onChange={(_, { value }) => setPlayers(value)}
       />
-      <Button fluid color="green" onClick={handleCreate}>
+      <Button fluid color="green" type="submit">
         Create
       </Button>
     </Form>
