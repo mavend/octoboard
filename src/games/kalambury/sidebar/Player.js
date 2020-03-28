@@ -55,7 +55,7 @@ const Player = ({
               >
                 {actions.slice(0, 3).map((action, idx) => (
                   <List.Item
-                    key={action.time}
+                    key={action.id}
                     style={{ opacity: ((3 - idx) * 0.5) / 3 + 0.5, marginRight: "8px" }}
                   >
                     <Action action={action} handleGuessClick={handleGuessClick} />

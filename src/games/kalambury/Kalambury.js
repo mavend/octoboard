@@ -2,6 +2,14 @@ import { PlayerView, INVALID_MOVE } from "boardgame.io/core";
 import phrases from "./data/phrases/pl/proverbs.json";
 import removeAccents from "remove-accents";
 
+function uuidv4(ctx) {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = (ctx.random.Number() * 16) | 0,
+      v = c == "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
 function setupKalambury(ctx, setupData) {
   const G = {
     secret: {
@@ -31,19 +39,21 @@ function stripPhrase(phrase) {
   return removeAccents(phrase).toLowerCase().replace(/\W/g, "");
 }
 
-function LogAction(G, playerID, action, clear = false) {
+function LogAction(G, ctx, playerID, action, params = {}, clear = false) {
   if (clear) {
     G.actions = [];
   }
   G.actions.push({
     time: Date.now(),
+    id: uuidv4(ctx),
     playerID,
-    ...action,
+    action,
+    ...params,
   });
 }
 
 function SendText(G, ctx, text) {
-  LogAction(G, ctx.playerID, { action: "message", text: text });
+  LogAction(G, ctx, ctx.playerID, "message", { text: text });
 }
 
 function Guess(G, ctx, phrase) {
@@ -55,7 +65,7 @@ function Guess(G, ctx, phrase) {
     ctx.events.endTurn();
   }
 
-  LogAction(G, ctx.playerID, { action: "guess", phrase, success }, success);
+  LogAction(G, ctx, ctx.playerID, "guess", { phrase, success }, success);
 }
 
 function SetNewPhrase(G, ctx) {
@@ -69,7 +79,7 @@ function ChangePhrase(G, ctx) {
   if (!G.canChangePhrase) {
     return INVALID_MOVE;
   }
-  LogAction(G, ctx.playerID, { action: "change", previous: G.secret.phrase });
+  LogAction(G, ctx, ctx.playerID, "change", { previous: G.secret.phrase });
   G.canChangePhrase = false;
   SetNewPhrase(G, ctx);
 }
@@ -80,7 +90,7 @@ function UpdateDrawing(G, _ctx, lines) {
 
 function Forfeit(G, ctx) {
   G.points[ctx.playerID] -= 1;
-  LogAction(G, ctx.playerID, { action: "forfeit", previous: G.secret.phrase }, true);
+  LogAction(G, ctx, ctx.playerID, "forfeit", { previous: G.secret.phrase }, true);
   ctx.events.endTurn();
 }
 
@@ -133,7 +143,7 @@ export const Kalambury = {
       next: "play",
       turn: {
         onBegin: (G, ctx) => {
-          LogAction(G, ctx.currentPlayer, { action: "manage" });
+          LogAction(G, ctx, ctx.currentPlayer, "manage");
           ctx.events.setActivePlayers({ currentPlayer: "manage", others: "wait" });
         },
         stages: {
@@ -166,12 +176,12 @@ export const Kalambury = {
           G.canChangePhrase = true;
           SetNewPhrase(G, ctx);
           G.remainingSeconds = 120;
-          LogAction(G, ctx.currentPlayer, { action: "draw" });
+          LogAction(G, ctx, ctx.currentPlayer, "draw");
           ctx.events.setActivePlayers({ currentPlayer: "draw", others: "guess" });
         },
         onEnd: (G, ctx) => {
           if (G.remainingSeconds <= 0) {
-            LogAction(G, ctx.currentPlayer, { action: "timeout", previous: G.secret.phrase }, true);
+            LogAction(G, ctx, ctx.currentPlayer, "timeout", { previous: G.secret.phrase }, true);
             G.points[ctx.currentPlayer] -= 1;
           }
         },
