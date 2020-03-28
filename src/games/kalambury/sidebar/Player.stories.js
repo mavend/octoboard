@@ -20,8 +20,8 @@ export const Default = () => (
     avatar={text("Avatar URL", "https://api.adorable.io/avatars/128/Mieczysław-Czosnek.png")}
     points={number("Points", 12)}
     actions={object("Actions array", [
-      { action: "guess", phrase: "Baba z wozu?" },
-      { action: "manage" },
+      { action: "guess", id: "123", phrase: "Baba z wozu?" },
+      { action: "manage", id: "456" },
     ])}
     isWinning={boolean("Is player winning?", true)}
     isCurrentPlayer={boolean("Are you this player?", true)}

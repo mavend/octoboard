@@ -32,7 +32,7 @@ export const Default = () => (
     handleGuessClick={action("handleGuessClick")}
     getUserActions={() => {
       action("getUserActions");
-      return [{ action: "message", text: "Hello" }];
+      return [{ action: "message", id: "123", text: "Hello" }];
     }}
   />
 );
