@@ -10,6 +10,17 @@ const DrawArea = ({ initialLines, remainingSeconds, onUpdate, onForfeit }) => {
   const [penColor, setPenColor] = useState("#1b1c1d");
   const [penSize, setPenSize] = useState(3);
 
+  useEffect(() => {
+    document.addEventListener("mouseup", handleMouseUp);
+    return () => document.removeEventListener("mouseup", handleMouseUp);
+  }, []);
+
+  useEffect(() => {
+    if (!initialLines || initialLines.length === 0) {
+      setLines([]);
+    }
+  }, [initialLines, setLines]);
+
   const updateGameState = () => {
     if (onUpdate && cacheLines !== lines) {
       setCacheLines(lines);
@@ -59,11 +70,6 @@ const DrawArea = ({ initialLines, remainingSeconds, onUpdate, onForfeit }) => {
     setLines(lines);
     if (onUpdate) onUpdate(lines);
   };
-
-  useEffect(() => {
-    document.addEventListener("mouseup", handleMouseUp);
-    return () => document.removeEventListener("mouseup", handleMouseUp);
-  }, []);
 
   useInterval(updateGameState, 500);
 

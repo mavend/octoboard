@@ -1,11 +1,7 @@
 import React from "react";
 import DrawArea from "../DrawArea";
 
-const DrawingBoard = ({
-  G: { drawing, remainingSeconds },
-  moves: { UpdateDrawing, Forfeit },
-  playerData: { phrase },
-}) => (
+const DrawingBoard = ({ G: { drawing, remainingSeconds }, moves: { UpdateDrawing, Forfeit } }) => (
   <DrawArea
     initialLines={drawing}
     remainingSeconds={remainingSeconds}
