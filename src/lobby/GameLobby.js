@@ -1,14 +1,18 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useHistory } from "react-router-dom";
 import { isEqual } from "lodash";
 import { Container, Header, Image, Segment, Grid, Dimmer, Loader } from "semantic-ui-react";
 import RoomsList from "./RoomsList";
 import CreateRoomForm from "./CreateRoomForm";
 import { roomsUrl, joinRoomUrl } from "../api";
+import { gameComponents } from "../games/Games";
+import { routes } from "../config/routes";
 
-const GameLobby = ({ gameComponents }) => {
+const GameLobby = () => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
   const [rooms, setRooms] = useState([]);
+  const history = useHistory();
 
   const playerName = localStorage.getItem("playerName");
   const games = gameComponents.map((g) => g.game);
@@ -44,9 +48,8 @@ const GameLobby = ({ gameComponents }) => {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log("playerCredentials", json.playerCredentials);
         localStorage.setItem("playerCredentials", json.playerCredentials);
-        fetchRooms();
+        history.push(routes.game(gameName, gameID));
       });
   };
 
