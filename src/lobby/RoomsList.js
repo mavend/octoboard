@@ -12,9 +12,9 @@ const RoomsList = ({ rooms, games, style, onJoinRoom }) => {
     setPagesCount(Math.ceil(rooms.length / perPage));
   }, [rooms]);
 
-  const handlePageChange = (e, {activePage}) => {
+  const handlePageChange = (e, { activePage }) => {
     setPageNum(activePage);
-  }
+  };
 
   return (
     <div style={style}>
@@ -59,8 +59,13 @@ const RoomsListItem = ({ room: { gameID, description, players }, game, onJoin })
     <Item>
       <Item.Image avatar size="tiny" src={game.image} />
       <Item.Content>
-        <Item.Header style={{ display: "block" }}>{game.name} <Label as="span" style={{ marginLeft: "1rem" }}>#<Label.Detail>{gameID}</Label.Detail></Label>
-          <Button floated="right"
+        <Item.Header style={{ display: "block" }}>
+          {game.name}{" "}
+          <Label as="span" style={{ marginLeft: "1rem" }}>
+            #<Label.Detail>{gameID}</Label.Detail>
+          </Label>
+          <Button
+            floated="right"
             content={isFull ? "Full" : "Join"}
             color={isFull ? "grey" : "green"}
             label={{
@@ -73,12 +78,21 @@ const RoomsListItem = ({ room: { gameID, description, players }, game, onJoin })
             labelPosition="left"
             onClick={handleClick}
           />
-
-
         </Item.Header>
         <Item.Extra>
-          {currentPlayers.map((p) => (<Button key={p.id} icon labelPosition="left" compact size="tiny" disabled><Icon name="user" color="grey" />{p.name}</Button>))}
-          {Array(maxPlayers - currentPlayers.length).fill(0).map((_, idx) => (<Button key={"dummy" + idx} basic icon compact size="tiny" disabled><Icon name="user outline" color="grey" /></Button>))}
+          {currentPlayers.map((p) => (
+            <Button key={p.id} icon labelPosition="left" compact size="tiny" disabled>
+              <Icon name="user" color="grey" />
+              {p.name}
+            </Button>
+          ))}
+          {Array(maxPlayers - currentPlayers.length)
+            .fill(0)
+            .map((_, idx) => (
+              <Button key={"dummy" + idx} basic icon compact size="tiny" disabled>
+                <Icon name="user outline" color="grey" />
+              </Button>
+            ))}
         </Item.Extra>
       </Item.Content>
     </Item>

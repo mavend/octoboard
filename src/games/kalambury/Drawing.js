@@ -34,7 +34,13 @@ const Drawing = ({ lines, remainingSeconds, ...props }) => {
 };
 
 const DrawingLine = ({ line: { points, color, width } }) => (
-  <path fill="none" stroke={color} strokeWidth={width} d={smooth_path(points, 0.12)} />
+  <path
+    fill="none"
+    stroke={color}
+    strokeWidth={width}
+    strokeLinecap="round"
+    d={smooth_path(points, 0.12)}
+  />
 );
 
 export default Drawing;

@@ -11,12 +11,13 @@ function setupKalambury(ctx, setupData) {
       startTime: new Date(),
       phrases: ctx.random.Shuffle([...proverbs, ...idioms, ...nounPhrases]),
     },
+    actionsCount: 0,
     canChangePhrase: true,
     players: {},
     playersData: {},
     points: Array(ctx.numPlayers).fill(0),
     drawing: [],
-    guesses: [],
+    actions: [],
     remainingSeconds: 120,
   };
 
@@ -33,24 +34,33 @@ function stripPhrase(phrase) {
   return removeAccents(phrase).toLowerCase().replace(/\W/g, "");
 }
 
-function Guess(G, ctx, phrase) {
-  const { playerID, currentPlayer } = ctx;
-  if (!phrase) {
-    phrase = G.secret.phrase;
-  } // DEBUG
-  let success = stripPhrase(phrase).includes(stripPhrase(G.secret.phrase));
-  G.guesses.push({
+function LogAction(G, ctx, playerID, action, params = {}, clear = false) {
+  if (clear) {
+    G.actions = [];
+  }
+  G.actions.push({
     time: Date.now(),
+    id: G.actionsCount++,
     playerID,
-    phrase,
-    success,
+    action,
+    ...params,
   });
+}
+
+function SendText(G, ctx, text) {
+  LogAction(G, ctx, ctx.playerID, "message", { text: text });
+}
+
+function Guess(G, ctx, phrase) {
+  let success = stripPhrase(phrase).includes(stripPhrase(G.secret.phrase));
 
   if (success) {
-    G.points[playerID] += 1;
-    G.points[currentPlayer] += 1;
+    G.points[ctx.playerID] += 1;
+    G.points[ctx.currentPlayer] += 1;
     ctx.events.endTurn();
   }
+
+  LogAction(G, ctx, ctx.playerID, "guess", { phrase, success }, success);
 }
 
 function SetNewPhrase(G, ctx) {
@@ -64,6 +74,7 @@ function ChangePhrase(G, ctx) {
   if (!G.canChangePhrase) {
     return INVALID_MOVE;
   }
+  LogAction(G, ctx, ctx.playerID, "change", { previous: G.secret.phrase });
   G.canChangePhrase = false;
   SetNewPhrase(G, ctx);
 }
@@ -73,13 +84,20 @@ function UpdateDrawing(G, _ctx, lines) {
 }
 
 function Forfeit(G, ctx) {
-  G.points[ctx.currentPlayer] -= 1;
+  G.points[ctx.playerID] -= 1;
+  LogAction(G, ctx, ctx.playerID, "forfeit", { previous: G.secret.phrase }, true);
   ctx.events.endTurn();
 }
 
-function Ping(G, { playerID }, playerData) {
-  G.remainingSeconds = 120 - Math.floor((new Date() - G.secret.startTime) / 1000);
+function Ping(G, { playerID, phase }, playerData) {
+  if (phase === "play") {
+    G.remainingSeconds = 120 - Math.floor((new Date() - G.secret.startTime) / 1000);
+  }
   updatePlayersData(G, playerID, playerData);
+}
+
+function StartGame(G, ctx) {
+  ctx.events.setPhase("play");
 }
 
 function updatePlayersData(G, playerID, playerData) {
@@ -114,58 +132,95 @@ export const Kalambury = {
   seed: "test",
   setup: setupKalambury,
 
-  turn: {
-    onBegin: (G, ctx) => {
-      G.secret.startTime = new Date();
-      G.canChangePhrase = true;
-      SetNewPhrase(G, ctx);
-      G.remainingSeconds = 120;
-      ctx.events.setActivePlayers({ currentPlayer: "draw", others: "guess" });
-    },
-    onEnd: (G, ctx) => {
-      if (G.remainingSeconds <= 0) {
-        G.points[ctx.currentPlayer] -= 1;
-      }
-    },
-    endIf: (G, _ctx) => G.remainingSeconds <= 0,
-    order: {
-      first: () => 0,
-      next: (G, ctx) => {
-        const activePlayersIdxs = Object.keys(G.playersData).filter(
-          (pid) => G.playersData[pid].isActive
-        );
-        const nextActivePlayerIdx =
-          (activePlayersIdxs.indexOf(ctx.currentPlayer) + 1) % activePlayersIdxs.length;
-        return parseInt(activePlayersIdxs[nextActivePlayerIdx]);
-      },
-    },
-    stages: {
-      draw: {
-        moves: {
-          UpdateDrawing,
-          ChangePhrase: {
-            move: ChangePhrase,
-            client: false,
+  phases: {
+    wait: {
+      start: true,
+      next: "play",
+      turn: {
+        onBegin: (G, ctx) => {
+          LogAction(G, ctx, ctx.currentPlayer, "manage");
+          ctx.events.setActivePlayers({ currentPlayer: "manage", others: "wait" });
+        },
+        stages: {
+          manage: {
+            moves: {
+              SendText,
+              StartGame,
+              Ping: {
+                move: Ping,
+                client: false,
+              },
+            },
           },
-          Ping: {
-            move: Ping,
-            client: false,
-          },
-          Forfeit: {
-            move: Forfeit,
-            client: false,
+          wait: {
+            moves: {
+              SendText,
+              Ping: {
+                move: Ping,
+                client: false,
+              },
+            },
           },
         },
       },
-      guess: {
-        moves: {
-          Guess: {
-            move: Guess,
-            client: false,
+    },
+    play: {
+      turn: {
+        onBegin: (G, ctx) => {
+          G.secret.startTime = new Date();
+          G.canChangePhrase = true;
+          SetNewPhrase(G, ctx);
+          G.remainingSeconds = 120;
+          LogAction(G, ctx, ctx.currentPlayer, "draw");
+          ctx.events.setActivePlayers({ currentPlayer: "draw", others: "guess" });
+        },
+        onEnd: (G, ctx) => {
+          if (G.remainingSeconds <= 0) {
+            LogAction(G, ctx, ctx.currentPlayer, "timeout", { previous: G.secret.phrase }, true);
+            G.points[ctx.currentPlayer] -= 1;
+          }
+        },
+        endIf: (G, _ctx) => G.remainingSeconds <= 0,
+        order: {
+          first: () => 0,
+          next: (G, ctx) => {
+            const activePlayersIdxs = Object.keys(G.playersData).filter(
+              (pid) => G.playersData[pid].isActive
+            );
+            const nextActivePlayerIdx =
+              (activePlayersIdxs.indexOf(ctx.currentPlayer) + 1) % activePlayersIdxs.length;
+            return parseInt(activePlayersIdxs[nextActivePlayerIdx]);
           },
-          Ping: {
-            move: Ping,
-            client: false,
+        },
+        stages: {
+          draw: {
+            moves: {
+              UpdateDrawing,
+              ChangePhrase: {
+                move: ChangePhrase,
+                client: false,
+              },
+              Ping: {
+                move: Ping,
+                client: false,
+              },
+              Forfeit: {
+                move: Forfeit,
+                client: false,
+              },
+            },
+          },
+          guess: {
+            moves: {
+              Guess: {
+                move: Guess,
+                client: false,
+              },
+              Ping: {
+                move: Ping,
+                client: false,
+              },
+            },
           },
         },
       },

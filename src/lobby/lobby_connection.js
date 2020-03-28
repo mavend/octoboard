@@ -58,7 +58,7 @@ class _LobbyConnectionImpl {
 
   _findPlayer(playerName) {
     for (let inst of this.rooms) {
-      if (inst.players.some(player => player.name === playerName)) return inst;
+      if (inst.players.some((player) => player.name === playerName)) return inst;
     }
   }
 
@@ -178,8 +178,8 @@ function useLobbyConnection({ server, gameComponents, playerName, playerCredenti
         await connection.refresh();
         const { rooms: newRooms, playerCredentials: newCredentials } = connection;
 
-        setRooms(rooms => (isEqual(newRooms, rooms) ? rooms : newRooms));
-        setCredentials(credentials =>
+        setRooms((rooms) => (isEqual(newRooms, rooms) ? rooms : newRooms));
+        setCredentials((credentials) =>
           credentials === newCredentials ? credentials : newCredentials
         );
         setError(null);

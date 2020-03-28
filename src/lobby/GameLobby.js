@@ -15,7 +15,7 @@ const GameLobby = ({ loading, rooms, gameComponents, joinRoom, createRoom }) => 
     },
     noRoomImage: { margin: "0 auto" },
   };
-  const games = gameComponents.map(g => g.game);
+  const games = gameComponents.map((g) => g.game);
 
   return (
     <div>

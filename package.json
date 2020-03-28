@@ -9,20 +9,28 @@
     "boardgame.io": "^0.38.1",
     "esm": "^3.2.25",
     "firebase-admin": "^8.10.0",
+    "i18next": "^19.3.4",
+    "i18next-browser-languagedetector": "^4.0.2",
+    "i18next-xhr-backend": "^3.2.2",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "mongodb": "^3.5.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-i18next": "^11.3.4",
     "react-scripts": "3.4.1",
     "remove-accents": "^0.4.2",
+    "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prettier": "prettier --write .",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,6 +48,13 @@
     ]
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^5.3.17",
+    "@storybook/addon-knobs": "^5.3.17",
+    "@storybook/addon-storysource": "^5.3.17",
+    "@storybook/addon-viewport": "^5.3.17",
+    "@storybook/addons": "^5.3.17",
+    "@storybook/preset-create-react-app": "^2.1.1",
+    "@storybook/react": "^5.3.17",
     "prettier": "^2.0.1"
   }
 }
