@@ -1,12 +1,26 @@
 import React from "react";
-import { KalamburyComponent } from "./games/Games";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { PAGE_TITLE } from './config/constants';
+import { ROUTES } from './config/routes';
 import CoronaGames from "./CoronaGames";
+import LobbyPage from "./lobby";
+import LoginPage from "./LoginPage";
 
 const App = () => {
   return (
-    <div>
-      <CoronaGames server="http://localhost:8000" gameComponents={[KalamburyComponent]} />
-    </div>
+    <>
+    <HelmetProvider>
+      <Helmet titleTemplate={PAGE_TITLE} defaultTitle={PAGE_TITLE} />
+    </HelmetProvider>
+    <Router>
+      <Switch>
+        <Route exact path={ROUTES.HOME} component={CoronaGames} />
+        <Route exact path={ROUTES.LOBBY} component={LobbyPage} />
+        <Route exact path={ROUTES.LOGIN} component={LoginPage} />
+      </Switch>
+    </Router>
+    </>
   );
 };
 
