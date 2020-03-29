@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Item, Button, Pagination, Label, Icon } from "semantic-ui-react";
 import { paginate } from "utils/paginate";
+import { useTranslation } from "react-i18next";
 
 const RoomsList = ({ rooms, games, style, onJoinRoom, user }) => {
   const [pagesCount, setPagesCount] = useState(1);
@@ -43,6 +44,8 @@ const RoomsList = ({ rooms, games, style, onJoinRoom, user }) => {
 };
 
 const RoomsListItem = ({ room: { gameID, players }, game, onJoin, user }) => {
+  const { t } = useTranslation("lobby");
+
   if (!game) return null;
 
   const maxPlayers = players.length;
@@ -67,7 +70,7 @@ const RoomsListItem = ({ room: { gameID, players }, game, onJoin, user }) => {
           </Label>
           <Button
             floated="right"
-            content={isFull ? "Full" : "Join"}
+            content={isFull ? t("list.game.full") : t("list.game.join")}
             color={isFull ? "grey" : "green"}
             label={{
               basic: true,

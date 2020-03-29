@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Header, Icon, Message } from "semantic-ui-react";
+import { useTranslation } from "react-i18next";
 
 const Loading = ({ G, ctx }) => {
   const styles = {
@@ -15,6 +16,7 @@ const Loading = ({ G, ctx }) => {
       marginTop: "20px",
     },
   };
+  const { t } = useTranslation("lobby");
 
   return (
     <div>
@@ -28,8 +30,8 @@ const Loading = ({ G, ctx }) => {
         <Message icon>
           <Icon name="circle notched" loading />
           <Message.Content>
-            <Message.Header>Just one second</Message.Header>
-            We are connecting you to the game lobby.
+            <Message.Header>{t("loading.header")}</Message.Header>
+            {t("loading.subheader")}
           </Message.Content>
         </Message>
       </Container>

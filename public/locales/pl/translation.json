@@ -1,0 +1,24 @@
+{
+  "user": {
+    "change_password": "Zmień hasło",
+    "logout": "Wyloguj"
+  },
+  "login": {
+    "title": "Logowanie",
+    "prompt": "Zaloguj się na swoje konto",
+    "actions": {
+      "login": "Zaloguj",
+      "register": "Załóż konto"
+    }
+  },
+  "register": {
+    "title": "Zakładanie konta",
+    "prompt": "Wypełnij poniższy formularz",
+    "form": {
+      "email": "Email",
+      "password": "Hasło",
+      "confirm_passwor": "Potwierdzenie hasła",
+      "submit": "Załóż konto"
+    }
+  }
+}

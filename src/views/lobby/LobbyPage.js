@@ -9,12 +9,15 @@ import { UserContext } from "contexts/UserContext";
 import RoomsList from "components/lobby/RoomsList";
 import CreateRoomForm from "components/lobby/CreateRoomForm";
 import UserMenu from "components/user/UserMenu";
+import { useTranslation } from "react-i18next";
+import { PAGE_TITLE } from "../config/constants";
 
 const LobbyPage = () => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
   const [rooms, setRooms] = useState([]);
   const history = useHistory();
+  const { t } = useTranslation("lobby");
 
   const { user } = useContext(UserContext);
   const games = gameComponents.map((g) => g.game);
@@ -63,8 +66,8 @@ const LobbyPage = () => {
         <Container>
           <Image style={styles.mainImage} src="/images/game-hugo.png" />
           <Header as="h1" textAlign="center" style={styles.mainHeader}>
-            Corona Games
-            <Header.Subheader>Games in the time of plague</Header.Subheader>
+            {PAGE_TITLE}
+            <Header.Subheader>{t("general.motto")}</Header.Subheader>
           </Header>
         </Container>
         {error && (
@@ -79,7 +82,7 @@ const LobbyPage = () => {
             <Grid.Column width="12">
               <Segment>
                 <Header as="h3" textAlign="center">
-                  Available rooms
+                  {t("list.title")}
                 </Header>
                 <div>
                   {rooms.length > 0 ? (
@@ -92,14 +95,14 @@ const LobbyPage = () => {
                   ) : (
                     <>
                       <Header as="h4" textAlign="center" color="grey">
-                        No rooms available at the moment
+                        {t("list.empty")}
                       </Header>
                       <Image style={styles.noRoomImage} src="/images/hugo-out.png" size="medium" />
                     </>
                   )}
                   {loading && (
                     <Dimmer active inverted>
-                      <Loader inverted content="Loading rooms" />
+                      <Loader inverted content={t("list.loading")} />
                     </Dimmer>
                   )}
                 </div>
@@ -108,7 +111,7 @@ const LobbyPage = () => {
             <Grid.Column width="4">
               <Segment>
                 <Header as="h3" textAlign="center">
-                  Create room
+                  {t("create.title")}
                 </Header>
                 <CreateRoomForm games={games} />
               </Segment>

@@ -23,6 +23,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-
 serviceAccountKey.json
 .env
+
+.DS_Store

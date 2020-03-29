@@ -10,6 +10,7 @@ import { gameComponents } from "games";
 import { UserContext } from "contexts/UserContext";
 import { getUrlParam } from "utils/url";
 import { apiRequests } from "services/API";
+import { useTranslation } from "react-i18next";
 
 const GamePage = () => {
   const [error, setError] = useState();
@@ -17,6 +18,7 @@ const GamePage = () => {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const { gameID, gameName } = useParams();
   const history = useHistory();
+  const { t } = useTranslation("lobby");
 
   const { user } = useContext(UserContext);
   const credentials = localStorage.getItem("playerCredentials");
@@ -32,7 +34,7 @@ const GamePage = () => {
           console.log("Found player", player);
           setPlayerID(player.id.toString());
         } else {
-          setError("Player not in a game");
+          setError(t("errors.not_in_game"));
         }
       })
       .catch((e) => {
@@ -75,7 +77,7 @@ const GamePage = () => {
           <Container style={{ marginTop: "20px" }}>
             <Button color="red" onClick={() => setConfirmOpen(true)}>
               <Icon name="close" />
-              Leave game
+              {t("game.leave")}
             </Button>
             <Confirm
               open={confirmOpen}
