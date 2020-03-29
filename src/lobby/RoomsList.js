@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Item, Button, Pagination, Label, Icon } from "semantic-ui-react";
 import { paginate } from "../utils/paginate";
 
-const RoomsList = ({ rooms, games, style, onJoinRoom }) => {
+const RoomsList = ({ rooms, games, style, onJoinRoom, user }) => {
   const [pagesCount, setPagesCount] = useState(1);
   const [pageNum, setPageNum] = useState(1);
 
@@ -25,6 +25,7 @@ const RoomsList = ({ rooms, games, style, onJoinRoom }) => {
             room={room}
             game={games.find((g) => g.name === room.gameName)}
             onJoin={onJoinRoom}
+            user={user}
           />
         ))}
       </Item.Group>
@@ -41,7 +42,7 @@ const RoomsList = ({ rooms, games, style, onJoinRoom }) => {
   );
 };
 
-const RoomsListItem = ({ room: { gameID, description, players }, game, onJoin }) => {
+const RoomsListItem = ({ room: { gameID, players }, game, onJoin, user }) => {
   if (!game) return null;
 
   const maxPlayers = players.length;
@@ -81,9 +82,17 @@ const RoomsListItem = ({ room: { gameID, description, players }, game, onJoin })
         </Item.Header>
         <Item.Extra>
           {currentPlayers.map((p) => (
-            <Button key={p.id} icon labelPosition="left" compact size="tiny" disabled>
-              <Icon name="user" color="grey" />
-              {p.name}
+            <Button
+              key={p.id}
+              icon
+              labelPosition="left"
+              compact
+              size="tiny"
+              disabled={p.name !== user.email}
+              color={p.name === user.email ? "green" : "white"}
+            >
+              <Icon name="user" color={p.name === user.email ? "white" : "grey"} />
+                {p.name}
             </Button>
           ))}
           {Array(maxPlayers - currentPlayers.length)
