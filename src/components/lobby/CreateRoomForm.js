@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 const CreateRoomForm = ({ games, onCreate, disabled, loading }) => {
   const [game, setGame] = useState();
   const [players, setPlayers] = useState();
+  const [privateRoom, setPrivateRoom] = useState(true);
   const [playersOptions, setPlayersOptions] = useState([]);
   const { t } = useTranslation("lobby");
 
@@ -29,7 +30,7 @@ const CreateRoomForm = ({ games, onCreate, disabled, loading }) => {
   }, [game, setPlayersOptions, setPlayers]);
 
   return (
-    <Form onSubmit={() => onCreate(game.name, players)} loading={loading}>
+    <Form onSubmit={() => onCreate(game.name, players, { private: privateRoom })} loading={loading}>
       <Form.Select
         fluid
         label={t("create.game_type")}
@@ -42,6 +43,12 @@ const CreateRoomForm = ({ games, onCreate, disabled, loading }) => {
         options={playersOptions}
         value={players}
         onChange={(_, { value }) => setPlayers(value)}
+      />
+      <Form.Checkbox
+        toggle
+        label={t(`create.private.${privateRoom}`)}
+        checked={privateRoom}
+        onChange={(_, { checked }) => setPrivateRoom(checked)}
       />
       <Button fluid color="green" type="submit" disabled={disabled}>
         {t("create.button")}

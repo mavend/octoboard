@@ -10,6 +10,7 @@ function setupKalambury(ctx, setupData) {
       phrase: "",
       phrases: ctx.random.Shuffle([...proverbs, ...idioms, ...nounPhrases]),
     },
+    privateRoom: setupData && setupData.private,
     actionsCount: 0,
     startTime: new Date(),
     canChangePhrase: true,

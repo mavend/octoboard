@@ -18,11 +18,12 @@ export const apiRequests = {
     const response = await fetch(roomUrl(gameName, gameID));
     return await response.json();
   },
-  createRoom: async (gameName, numPlayers) => {
+  createRoom: async (gameName, numPlayers, setupData) => {
     const response = await fetch(createGameUrl(gameName), {
       method: "POST",
       body: JSON.stringify({
         numPlayers,
+        setupData,
       }),
       headers: { "Content-Type": "application/json" },
     });

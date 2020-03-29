@@ -21,10 +21,17 @@
     "title": "Stwórz pokój",
     "game_type": "Gra",
     "max_players": "Maksymalna liczba graczy",
-    "button": "Stwórz"
+    "button": "Stwórz",
+    "private": {
+      "true": "Pokój prywatny 🙈",
+      "false": "Pokój publiczny 🐵"
+    }
   },
   "game": {
-    "leave": "Opuść pokój"
+    "leave": "Opuść pokój",
+    "private": "Pokój prywatny",
+    "public": "Pokój publiczny",
+    "players": "Lista graczy"
   },
   "errors": {
     "no_game": "Nie ma takiej gry",

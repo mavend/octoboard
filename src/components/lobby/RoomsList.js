@@ -58,7 +58,14 @@ const RoomsList = ({ rooms, games, onJoinRoom, currentRoom }) => {
   );
 };
 
-const RoomsListItem = ({ room, room: { gameID, players }, game, onJoin, current, disabled }) => {
+const RoomsListItem = ({
+  room,
+  room: { gameID, players, setupData },
+  game,
+  onJoin,
+  current,
+  disabled,
+}) => {
   const { t } = useTranslation("lobby");
   const user = useUser();
 
@@ -91,6 +98,17 @@ const RoomsListItem = ({ room, room: { gameID, players }, game, onJoin, current,
           {current && (
             <Label as="span" style={{ marginLeft: "1rem" }} color="green">
               {t("list.game.your_game")}
+            </Label>
+          )}
+          {setupData && setupData.private ? (
+            <Label as="span" style={{ marginLeft: "1rem" }} color="grey">
+              <Icon name="lock" />
+              <Label.Detail>{t("game.private")}</Label.Detail>
+            </Label>
+          ) : (
+            <Label as="span" style={{ marginLeft: "1rem" }}>
+              <Icon name="open lock" />
+              <Label.Detail>{t("game.public")}</Label.Detail>
             </Label>
           )}
           <Button

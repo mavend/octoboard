@@ -21,10 +21,17 @@
     "title": "Create room",
     "game_type": "Game",
     "max_players": "Maximum number of players",
-    "button": "Create"
+    "button": "Create",
+    "private": {
+      "true": "Private room 🙈",
+      "false": "Public room 🐵"
+    }
   },
   "game": {
-    "leave": "Leave room"
+    "leave": "Leave room",
+    "private": "Private",
+    "public": "Public",
+    "players": "Players"
   },
   "errors": {
     "no_game": "Game not found",

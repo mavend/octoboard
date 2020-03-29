@@ -26,6 +26,7 @@ export const Default = () => (
       },
       points: [10, 3],
       actions: [],
+      privateRoom: boolean("Private", true),
     }}
     ctx={{ activePlayers: ["draw", "guess"], numPlayers: 4 }}
     playerID={1}

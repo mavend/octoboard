@@ -91,7 +91,7 @@ const lines = [
 
 export const Default = () => (
   <DrawArea
-    initialLines={lines}
+    lines={lines}
     remainingSeconds={number("Remaining seconds", 100, {
       range: true,
       min: 0,

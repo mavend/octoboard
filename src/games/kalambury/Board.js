@@ -117,7 +117,7 @@ const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
               />
             )}
           </Grid.Column>
-          <Grid.Column width="4" style={{ marginTop: "19px" }}>
+          <Grid.Column width="4">
             <Sidebar
               handleGuessClick={handleGuessClick}
               getUserActions={getUserActions}

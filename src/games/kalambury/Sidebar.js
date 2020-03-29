@@ -1,19 +1,34 @@
 import React from "react";
-import { Header, Segment } from "semantic-ui-react";
+import { Header, Segment, Icon, Label } from "semantic-ui-react";
 import Player from "./sidebar/Player";
+import { withTranslation } from "react-i18next";
 
 const Sidebar = ({
-  G: { actions, points, playersData },
+  G: { actions, points, playersData, privateRoom },
   ctx: { activePlayers, numPlayers },
   playerID,
   handleGuessClick,
   getUserActions,
+  t,
 }) => (
   <>
     <Header as="h2" textAlign="center">
-      Players
+      {t("game.players")}
+      <Header.Subheader>
+        {privateRoom ? (
+          <Label as="span" size="small" color="grey">
+            <Icon name="lock" />
+            <Label.Detail>{t("game.private")}</Label.Detail>
+          </Label>
+        ) : (
+          <Label as="span" size="small">
+            <Icon name="open lock" />
+            <Label.Detail>{t("game.public")}</Label.Detail>
+          </Label>
+        )}
+      </Header.Subheader>
     </Header>
-    <Segment.Group>
+    <Segment.Group style={{ marginTop: "-5px" }}>
       {Object.keys(playersData).map((pid) => (
         <Player
           key={pid}
@@ -36,4 +51,4 @@ const Sidebar = ({
   </>
 );
 
-export default Sidebar;
+export default withTranslation("lobby")(Sidebar);
