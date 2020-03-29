@@ -10,7 +10,7 @@ import RoomsList from "components/lobby/RoomsList";
 import CreateRoomForm from "components/lobby/CreateRoomForm";
 import UserMenu from "components/user/UserMenu";
 import { useTranslation } from "react-i18next";
-import { PAGE_TITLE } from "../config/constants";
+import { PAGE_TITLE } from "config/constants";
 
 const LobbyPage = () => {
   const [error, setError] = useState();
