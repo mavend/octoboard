@@ -2,10 +2,12 @@ import React, { useContext, useState } from "react";
 import { Sidebar, Image, Segment, Menu, Icon } from "semantic-ui-react";
 import { UserContext } from "contexts/UserContext";
 import { avatarForName } from "games/kalambury/utils/avatar";
+import { useTranslation } from "react-i18next";
 
 const UserMenu = ({ children }) => {
   const { user, logout } = useContext(UserContext);
   const [visible, setVisible] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <>
@@ -27,11 +29,11 @@ const UserMenu = ({ children }) => {
           </Menu.Item>
           <Menu.Item as="a">
             <Icon name="exchange" />
-            Change Password
+            {t("user.change_password")}
           </Menu.Item>
           <Menu.Item as="a" onClick={logout}>
             <Icon name="log out" />
-            Log Out
+            {t("user.logout")}
           </Menu.Item>
         </Sidebar>
         <Sidebar.Pusher>

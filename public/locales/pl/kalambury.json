@@ -1,0 +1,58 @@
+{
+  "game": {
+    "name": "Kalambury"
+  },
+  "tools": {
+    "undo": "Usuń ostatnią linię",
+    "clear": "Wyczyść rysunek",
+    "forfeit": "Poddaj się :("
+  },
+  "header": {
+    "wait": "Oczekiwanie na innych graczy",
+    "play": "Narysuj podane hasło"
+  },
+  "subheader": {
+    "wait": {
+      "manage": "Możesz rozpocząć grę w dowolnym momencie",
+      "wait": "Administrator pokoju może rozpocząć grę"
+    },
+    "play": {
+      "guess": "Co jest na rysunku?"
+    }
+  },
+  "board": {
+    "game": {
+      "new_phrase": "Wymień hasło"
+    },
+    "guess": {
+      "input": {
+        "placeholder": "Rysunek przedstawia...",
+        "action": "Zgaduj"
+      }
+    },
+    "wait": {
+      "input": {
+        "placeholder": "Porozmawiaj z innymi graczami...",
+        "action": "Wyślij"
+      },
+      "actions": {
+        "start": "Rozpocznij grę"
+      }
+    }
+  },
+  "sidebar": {
+    "player": {
+      "waiting": "Oczekiwanie na gracza...",
+      "current": "Ty",
+      "disconnected": "Połączenie przerwane",
+      "points": "Punkty: {{points}}"
+    },
+    "action": {
+      "change": "Zmiana hasła. Porzednie hasło to: {{phrase}}",
+      "forfeit": "Runda poddana. Hasło to: {{phrase}}",
+      "manage": "Administrator pokoju",
+      "draw": "Rysuje...",
+      "timeout": "Koniec czasu. Hasło to: {{phrase}}"
+    }
+  }
+}

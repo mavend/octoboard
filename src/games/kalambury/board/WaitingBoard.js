@@ -75,7 +75,7 @@ const WaitingBoard = ({
       >
         {canManageGame ? (
           <Button icon labelPosition="right" color="green" onClick={() => StartGame()}>
-            Start game
+            {t("board.wait.actions.start")}
             <Icon name="pencil" />
           </Button>
         ) : (

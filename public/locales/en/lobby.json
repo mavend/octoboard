@@ -1,1 +1,30 @@
-{}
+{
+  "general": {
+    "motto": "Games in the time of plague"
+  },
+  "loading": {
+    "header": "Just one second",
+    "subheader": "We are connecting you to the game lobby."
+  },
+  "list": {
+    "title": "Available rooms",
+    "empty": "No rooms available at the moment",
+    "loading": "Loading rooms",
+    "game": {
+      "full": "Full",
+      "join": "Join"
+    }
+  },
+  "create": {
+    "title": "Create room",
+    "game_type": "Game",
+    "max_players": "Maximum number of players",
+    "button": "Create"
+  },
+  "game": {
+    "leave": "Leave room"
+  },
+  "errors": {
+    "not_in_game": "Player not in a game"
+  }
+}

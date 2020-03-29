@@ -3,11 +3,13 @@ import { Modal, Form, Image, Header, Button, Message, Icon } from "semantic-ui-r
 import { UserContext } from "contexts/UserContext";
 import { Link } from "react-router-dom";
 import { routes } from "config/routes";
+import { useTranslation } from "react-i18next";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const { t } = useTranslation();
 
   const { login, googleLogin } = useContext(UserContext);
 
@@ -25,7 +27,7 @@ const LoginPage = () => {
 
   return (
     <Modal open={true}>
-      <Modal.Header>Login</Modal.Header>
+      <Modal.Header>{t("login.title")}</Modal.Header>
       <Modal.Content image>
         <Image wrapped size="medium" src="/images/game-hugo.png" />
         <Modal.Description>
@@ -38,7 +40,7 @@ const LoginPage = () => {
               autoComplete="username"
               maxLength="24"
               placeholder="Email"
-              name="Email"
+              name={t("register.form.email")}
               value={email}
               onChange={(_, { value }) => setEmail(value)}
             />
@@ -46,16 +48,16 @@ const LoginPage = () => {
               placeholder="Password"
               type="password"
               autoComplete="current-password"
-              name="Password"
+              name={t("register.form.password")}
               value={password}
               onChange={(_, { value }) => setPassword(value)}
             />
             <Form.Group>
-              <Form.Button content="Login" />
+              <Form.Button content={t("login.actions.login")} />
             </Form.Group>
           </Form>
           <Link to={routes.register()}>
-            <Button content="Register" />
+            <Button content={t("login.actions.register")} />
           </Link>
           <Button onClick={googleLogin}>
             <Icon name={"google"} />

@@ -1,12 +1,14 @@
 import React, { useContext, useState } from "react";
 import { Modal, Form, Image, Header, Message, Button, Icon } from "semantic-ui-react";
 import { UserContext } from "contexts/UserContext";
+import { useTranslation } from "react-i18next";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [error, setError] = useState(null);
+  const { t } = useTranslation();
 
   const { register, googleLogin } = useContext(UserContext);
 
@@ -34,11 +36,11 @@ const RegisterPage = () => {
 
   return (
     <Modal open={true}>
-      <Modal.Header>Register</Modal.Header>
+      <Modal.Header>{t("register.title")}</Modal.Header>
       <Modal.Content image>
         <Image wrapped size="medium" src="/images/game-hugo.png" />
         <Modal.Description>
-          <Header>Login with your name</Header>
+          <Header>{t("register.prompt")}</Header>
           <Form onSubmit={handleRegister} error={!!error}>
             <Message error content={error} />
             <Form.Input
@@ -47,14 +49,14 @@ const RegisterPage = () => {
               autoComplete="username"
               maxLength="24"
               placeholder="Email"
-              name="Email"
+              name={t("register.form.email")}
               value={email}
               onChange={(_, { value }) => setEmail(value)}
             />
             <Form.Input
               placeholder="Password"
               type="password"
-              name="Password"
+              name={t("register.form.password")}
               autoComplete="new-password"
               value={password}
               onChange={(_, { value }) => setPassword(value)}
@@ -63,12 +65,12 @@ const RegisterPage = () => {
               placeholder="Repeat password"
               type="password"
               autoComplete="new-password"
-              name="Repeat password"
+              name={t("register.form.confirm_password")}
               value={password2}
               onChange={(_, { value }) => setPassword2(value)}
             />
             <Form.Group>
-              <Form.Button content="Register" />
+              <Form.Button content={t("register.form.submit")} />
             </Form.Group>
           </Form>
           <Button onClick={googleLogin}>

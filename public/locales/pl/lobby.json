@@ -1,0 +1,30 @@
+{
+  "general": {
+    "motto": "Gry na czas kwarantanny"
+  },
+  "loading": {
+    "header": "Momencik",
+    "subheader": "Trwa łączenie z serwerem gry."
+  },
+  "list": {
+    "title": "Dostępne pokoje",
+    "empty": "W tym momencie żadne pokoje nie są dostępne",
+    "loading": "Wczytywanie listy pokoi",
+    "game": {
+      "full": "Pełny",
+      "join": "Dołącz"
+    }
+  },
+  "create": {
+    "title": "Stwórz pokój",
+    "game_type": "Gra",
+    "max_players": "Maksymalna liczba graczy",
+    "button": "Stwórz"
+  },
+  "game": {
+    "leave": "Opuść pokój"
+  },
+  "errors": {
+    "not_in_game": "Gracz nie jest w wybranym pokoju"
+  }
+}
