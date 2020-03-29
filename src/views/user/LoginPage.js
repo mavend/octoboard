@@ -61,7 +61,10 @@ const LoginPage = () => {
               <Form.Button content={t("login.actions.login")} />
             </Form.Group>
           </Form>
-          <Link to={routes.register()}>
+          <Link to={{
+                pathname: routes.register(),
+                state: { from: location.state },
+              }}>
             <Button content={t("login.actions.register")} />
           </Link>
           <Button onClick={() => handleLogin(googleLogin)}>
