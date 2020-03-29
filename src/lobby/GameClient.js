@@ -10,7 +10,6 @@ import { gameComponents } from "../games/Games";
 import {UserContext} from "../contexts/UserContext";
 
 const GameClient = () => {
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
   const [playerID, setPlayerID] = useState();
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -58,7 +57,7 @@ const GameClient = () => {
     board: board,
     loading: Loading,
     multiplayer: SocketIO({ server: API_ROOT }),
-    debug: false,
+    debug: document.location.hostname === "localhost" && getUrlParam("debug") === "true",
   });
 
   return (
