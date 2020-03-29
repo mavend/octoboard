@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Item, Button, Pagination, Label, Icon } from "semantic-ui-react";
-import { paginate } from "../utils/paginate";
+import { paginate } from "utils/paginate";
 
 const RoomsList = ({ rooms, games, style, onJoinRoom, user }) => {
   const [pagesCount, setPagesCount] = useState(1);
@@ -92,7 +92,7 @@ const RoomsListItem = ({ room: { gameID, players }, game, onJoin, user }) => {
               color={p.name === user.email ? "green" : "white"}
             >
               <Icon name="user" color={p.name === user.email ? "white" : "grey"} />
-                {p.name}
+              {p.name}
             </Button>
           ))}
           {Array(maxPlayers - currentPlayers.length)

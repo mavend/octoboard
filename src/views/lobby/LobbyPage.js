@@ -1,35 +1,28 @@
-import React, {useState, useEffect, useCallback, useContext} from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { isEqual } from "lodash";
-import {Container, Header, Image, Segment, Grid, Dimmer, Loader, Sidebar} from "semantic-ui-react";
-import RoomsList from "./RoomsList";
-import CreateRoomForm from "./CreateRoomForm";
-import { roomsUrl, joinRoomUrl } from "../api";
-import { gameComponents } from "../games/Games";
-import { routes } from "../config/routes";
-import {UserContext} from "../contexts/UserContext";
-import UserMenu from "../components/user/UserMenu";
+import { Container, Header, Image, Segment, Grid, Dimmer, Loader } from "semantic-ui-react";
+import { routes } from "config/routes";
+import { gameComponents } from "games";
+import { apiRequests } from "services/API";
+import { UserContext } from "contexts/UserContext";
+import RoomsList from "components/lobby/RoomsList";
+import CreateRoomForm from "components/lobby/CreateRoomForm";
+import UserMenu from "components/user/UserMenu";
 
-const GameLobby = () => {
+const LobbyPage = () => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
   const [rooms, setRooms] = useState([]);
   const history = useHistory();
 
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const games = gameComponents.map((g) => g.game);
 
   const fetchRooms = useCallback(() => {
-    const urls = games.map((game) => roomsUrl(game.name));
-    Promise.all(urls.map((url) => fetch(url).then((r) => r.json())))
-      .then((responses) => {
-        const rooms = responses
-          .map((res, idx) =>
-            res.rooms.map((room) => {
-              return { ...room, gameName: games[idx].name };
-            })
-          )
-          .flat();
+    apiRequests
+      .fetchRooms(games)
+      .then((rooms) => {
         setRooms((currentRooms) => (isEqual(rooms, currentRooms) ? currentRooms : rooms));
         setLoading(false);
       })
@@ -40,19 +33,10 @@ const GameLobby = () => {
   }, [games, setRooms, setLoading, setError]);
 
   const handleJoinRoom = (gameName, gameID, freeSpotId) => {
-    fetch(joinRoomUrl(gameName, gameID), {
-      method: "POST",
-      body: JSON.stringify({
-        playerID: freeSpotId,
-        playerName: user.email,
-      }),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        localStorage.setItem("playerCredentials", json.playerCredentials);
-        history.push(routes.game(gameName, gameID));
-      });
+    apiRequests.joinRoom(gameName, gameID, freeSpotId, user.email).then((response) => {
+      localStorage.setItem("playerCredentials", response.playerCredentials);
+      history.push(routes.game(gameName, gameID));
+    });
   };
 
   useEffect(() => {
@@ -75,7 +59,7 @@ const GameLobby = () => {
 
   return (
     <UserMenu>
-      <div style={{minHeight: "100vh"}}>
+      <div style={{ minHeight: "100vh" }}>
         <Container>
           <Image style={styles.mainImage} src="/images/game-hugo.png" />
           <Header as="h1" textAlign="center" style={styles.mainHeader}>
@@ -86,7 +70,7 @@ const GameLobby = () => {
         {error && (
           <Container>
             <Segment inverted color="red">
-              <div>{ error }</div>
+              <div>{error}</div>
             </Segment>
           </Container>
         )}
@@ -136,4 +120,4 @@ const GameLobby = () => {
   );
 };
 
-export default GameLobby;
+export default LobbyPage;

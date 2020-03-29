@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form } from "semantic-ui-react";
-import { createGameUrl } from "../api";
+import { apiRequests } from "services/API";
 
 const CreateRoomForm = ({ games }) => {
   const [game, setGame] = useState();
@@ -29,13 +29,7 @@ const CreateRoomForm = ({ games }) => {
 
   const handleCreate = () => {
     if (game && players) {
-      fetch(createGameUrl(game.name), {
-        method: "POST",
-        body: JSON.stringify({
-          numPlayers: players,
-        }),
-        headers: { "Content-Type": "application/json" },
-      }).then(() => {
+      apiRequests.createRoom(game.name, players).then(() => {
         console.log("Game created!");
       });
     } else {

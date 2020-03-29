@@ -1,30 +1,31 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
 import { Button, Icon, Container, Confirm, Segment } from "semantic-ui-react";
-import Loading from "../Loading";
-import { API_ROOT, leaveGameUrl, roomUrl } from "../api";
-import { routes } from "../config/routes";
-import { gameComponents } from "../games/Games";
-import {UserContext} from "../contexts/UserContext";
-import {getUrlParam} from "../utils/url";
+import Loading from "components/game/Loading";
+import { API_ROOT } from "config/api";
+import { routes } from "config/routes";
+import { gameComponents } from "games";
+import { UserContext } from "contexts/UserContext";
+import { getUrlParam } from "utils/url";
+import { apiRequests } from "services/API";
 
-const GameClient = () => {
+const GamePage = () => {
   const [error, setError] = useState();
   const [playerID, setPlayerID] = useState();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const { gameID, gameName } = useParams();
   const history = useHistory();
 
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const credentials = localStorage.getItem("playerCredentials");
 
   const { game, board } = gameComponents.find((gc) => gc.game.name === gameName);
 
   useEffect(() => {
-    fetch(roomUrl(gameName, gameID))
-      .then((response) => response.json())
+    apiRequests
+      .fetchRoom(game.name, gameID)
       .then((json) => {
         const player = json.players.find((player) => player.name === user.email);
         if (player) {
@@ -40,17 +41,15 @@ const GameClient = () => {
   }, []);
 
   const handleLeave = () => {
-    fetch(leaveGameUrl(game.name, gameID), {
-      method: "POST",
-      body: JSON.stringify({
-        playerID: playerID,
-        credentials: credentials,
-      }),
-      headers: { "Content-Type": "application/json" },
-    }).then(() => {
-      console.log("Game left!");
-      history.push(routes.lobby());
-    });
+    apiRequests
+      .leaveGame(game.name, gameID, playerID, credentials)
+      .then(() => {
+        console.log("Game left!");
+        history.push(routes.lobby());
+      })
+      .catch((e) => {
+        setError(e.message);
+      });
   };
 
   const NewGameCLient = Client({
@@ -90,4 +89,4 @@ const GameClient = () => {
   );
 };
 
-export default GameClient;
+export default GamePage;

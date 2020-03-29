@@ -1,5 +1,4 @@
 export const routes = {
-  root: () => "/",
   lobby: () => "/",
   login: () => "/login",
   register: () => "/register",
