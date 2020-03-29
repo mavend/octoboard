@@ -2,9 +2,9 @@ import React, { useState, useEffect, useCallback, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { isEqual } from "lodash";
 import { Container, Header, Image, Segment, Grid, Dimmer, Loader } from "semantic-ui-react";
-import { roomsUrl, joinRoomUrl } from "config/api";
 import { routes } from "config/routes";
 import { gameComponents } from "games";
+import { apiRequests } from "services/API";
 import { UserContext } from "contexts/UserContext";
 import RoomsList from "components/lobby/RoomsList";
 import CreateRoomForm from "components/lobby/CreateRoomForm";
@@ -20,16 +20,9 @@ const LobbyPage = () => {
   const games = gameComponents.map((g) => g.game);
 
   const fetchRooms = useCallback(() => {
-    const urls = games.map((game) => roomsUrl(game.name));
-    Promise.all(urls.map((url) => fetch(url).then((r) => r.json())))
-      .then((responses) => {
-        const rooms = responses
-          .map((res, idx) =>
-            res.rooms.map((room) => {
-              return { ...room, gameName: games[idx].name };
-            })
-          )
-          .flat();
+    apiRequests
+      .fetchRooms(games)
+      .then((rooms) => {
         setRooms((currentRooms) => (isEqual(rooms, currentRooms) ? currentRooms : rooms));
         setLoading(false);
       })
@@ -40,19 +33,10 @@ const LobbyPage = () => {
   }, [games, setRooms, setLoading, setError]);
 
   const handleJoinRoom = (gameName, gameID, freeSpotId) => {
-    fetch(joinRoomUrl(gameName, gameID), {
-      method: "POST",
-      body: JSON.stringify({
-        playerID: freeSpotId,
-        playerName: user.email,
-      }),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        localStorage.setItem("playerCredentials", json.playerCredentials);
-        history.push(routes.game(gameName, gameID));
-      });
+    apiRequests.joinRoom(gameName, gameID, freeSpotId, user.email).then((response) => {
+      localStorage.setItem("playerCredentials", response.playerCredentials);
+      history.push(routes.game(gameName, gameID));
+    });
   };
 
   useEffect(() => {

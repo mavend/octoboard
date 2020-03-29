@@ -4,11 +4,12 @@ import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
 import { Button, Icon, Container, Confirm, Segment } from "semantic-ui-react";
 import Loading from "components/game/Loading";
-import { API_ROOT, leaveGameUrl, roomUrl } from "config/api";
+import { API_ROOT } from "config/api";
 import { routes } from "config/routes";
 import { gameComponents } from "games";
 import { UserContext } from "contexts/UserContext";
 import { getUrlParam } from "utils/url";
+import { apiRequests } from "services/API";
 
 const GamePage = () => {
   const [error, setError] = useState();
@@ -23,8 +24,8 @@ const GamePage = () => {
   const { game, board } = gameComponents.find((gc) => gc.game.name === gameName);
 
   useEffect(() => {
-    fetch(roomUrl(gameName, gameID))
-      .then((response) => response.json())
+    apiRequests
+      .fetchRoom(game.name, gameID)
       .then((json) => {
         const player = json.players.find((player) => player.name === user.email);
         if (player) {
@@ -40,17 +41,15 @@ const GamePage = () => {
   }, []);
 
   const handleLeave = () => {
-    fetch(leaveGameUrl(game.name, gameID), {
-      method: "POST",
-      body: JSON.stringify({
-        playerID: playerID,
-        credentials: credentials,
-      }),
-      headers: { "Content-Type": "application/json" },
-    }).then(() => {
-      console.log("Game left!");
-      history.push(routes.lobby());
-    });
+    apiRequests
+      .leaveGame(game.name, gameID, playerID, credentials)
+      .then(() => {
+        console.log("Game left!");
+        history.push(routes.lobby());
+      })
+      .catch((e) => {
+        setError(e.message);
+      });
   };
 
   const NewGameCLient = Client({

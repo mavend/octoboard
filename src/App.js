@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { Router, Switch } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { PAGE_TITLE } from "./config/constants";
 import { routes } from "./config/routes";
