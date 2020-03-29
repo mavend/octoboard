@@ -33,3 +33,9 @@ code {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+
+.confetti {
+  position: absolute !important;
+  top: 100%;
+  left: 50%;
+}
