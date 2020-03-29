@@ -14,3 +14,4 @@ Setting `debug=true` in URL query will show debug overlay.
 
 ## Note
 This project uses the [boardgame.io](https://boardgame.io) framework which is open source game engine for turn-based games.
+Licensed under [GNU AGPLv3](https://choosealicense.com/licenses/agpl-3.0/).
