@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { isEqual } from "lodash";
 import { Container, Header, Image, Segment, Grid, Dimmer, Loader } from "semantic-ui-react";
@@ -7,6 +7,8 @@ import CreateRoomForm from "./CreateRoomForm";
 import { roomsUrl, joinRoomUrl } from "../api";
 import { gameComponents } from "../games/Games";
 import { routes } from "../config/routes";
+import { UserContext } from "../contexts/UserContext";
+import UserMenu from "../components/user/UserMenu";
 
 const LobbyPage = () => {
   const [error, setError] = useState();
@@ -14,7 +16,7 @@ const LobbyPage = () => {
   const [rooms, setRooms] = useState([]);
   const history = useHistory();
 
-  const playerName = localStorage.getItem("playerName");
+  const { user } = useContext(UserContext);
   const games = gameComponents.map((g) => g.game);
 
   const fetchRooms = useCallback(() => {
@@ -31,8 +33,8 @@ const LobbyPage = () => {
         setRooms((currentRooms) => (isEqual(rooms, currentRooms) ? currentRooms : rooms));
         setLoading(false);
       })
-      .catch((error) => {
-        setError(error);
+      .catch((e) => {
+        setError(e.message);
         setLoading(false);
       });
   }, [games, setRooms, setLoading, setError]);
@@ -42,7 +44,7 @@ const LobbyPage = () => {
       method: "POST",
       body: JSON.stringify({
         playerID: freeSpotId,
-        playerName: playerName,
+        playerName: user.email,
       }),
       headers: { "Content-Type": "application/json" },
     })
@@ -72,64 +74,66 @@ const LobbyPage = () => {
   };
 
   return (
-    <div>
-      <Container>
-        <Image style={styles.mainImage} src="/images/game-hugo.png" />
-        <Header as="h1" textAlign="center" style={styles.mainHeader}>
-          Corona Games
-          <Header.Subheader>Games in the time of plague</Header.Subheader>
-        </Header>
-      </Container>
-      {error && (
+    <UserMenu>
+      <div style={{ minHeight: "100vh" }}>
         <Container>
-          <Segment inverted color="red">
-            {error}
-          </Segment>
+          <Image style={styles.mainImage} src="/images/game-hugo.png" />
+          <Header as="h1" textAlign="center" style={styles.mainHeader}>
+            Corona Games
+            <Header.Subheader>Games in the time of plague</Header.Subheader>
+          </Header>
         </Container>
-      )}
-      <Container>
-        <Grid>
-          <Grid.Column width="12">
-            <Segment>
-              <Header as="h3" textAlign="center">
-                Available rooms
-              </Header>
-              <div>
-                {rooms.length > 0 ? (
-                  <RoomsList
-                    rooms={rooms}
-                    games={games}
-                    onJoinRoom={handleJoinRoom}
-                    playerName={playerName}
-                  />
-                ) : (
-                  <>
-                    <Header as="h4" textAlign="center" color="grey">
-                      No rooms available at the moment
-                    </Header>
-                    <Image style={styles.noRoomImage} src="/images/hugo-out.png" size="medium" />
-                  </>
-                )}
-                {loading && (
-                  <Dimmer active inverted>
-                    <Loader inverted content="Loading rooms" />
-                  </Dimmer>
-                )}
-              </div>
+        {error && (
+          <Container>
+            <Segment inverted color="red">
+              <div>{error}</div>
             </Segment>
-          </Grid.Column>
-          <Grid.Column width="4">
-            <Segment>
-              <Header as="h3" textAlign="center">
-                Create room
-              </Header>
-              <CreateRoomForm games={games} />
-            </Segment>
-          </Grid.Column>
-        </Grid>
-      </Container>
-    </div>
+          </Container>
+        )}
+        <Container>
+          <Grid>
+            <Grid.Column width="12">
+              <Segment>
+                <Header as="h3" textAlign="center">
+                  Available rooms
+                </Header>
+                <div>
+                  {rooms.length > 0 ? (
+                    <RoomsList
+                      rooms={rooms}
+                      games={games}
+                      onJoinRoom={handleJoinRoom}
+                      user={user}
+                    />
+                  ) : (
+                    <>
+                      <Header as="h4" textAlign="center" color="grey">
+                        No rooms available at the moment
+                      </Header>
+                      <Image style={styles.noRoomImage} src="/images/hugo-out.png" size="medium" />
+                    </>
+                  )}
+                  {loading && (
+                    <Dimmer active inverted>
+                      <Loader inverted content="Loading rooms" />
+                    </Dimmer>
+                  )}
+                </div>
+              </Segment>
+            </Grid.Column>
+            <Grid.Column width="4">
+              <Segment>
+                <Header as="h3" textAlign="center">
+                  Create room
+                </Header>
+                <CreateRoomForm games={games} />
+              </Segment>
+            </Grid.Column>
+          </Grid>
+        </Container>
+      </div>
+    </UserMenu>
   );
 };
 
-export default GameLobby;
+export default LobbyPage;

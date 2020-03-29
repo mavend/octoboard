@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
@@ -7,17 +7,18 @@ import Loading from "../Loading";
 import { API_ROOT, leaveGameUrl, roomUrl } from "../api";
 import { routes } from "../config/routes";
 import { gameComponents } from "../games/Games";
+import { UserContext } from "../contexts/UserContext";
+import { getUrlParam } from "../utils/url";
 
-const GameClient = () => {
-  const [loading, setLoading] = useState(false);
+const GamePage = () => {
   const [error, setError] = useState();
   const [playerID, setPlayerID] = useState();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const { gameID, gameName } = useParams();
   const history = useHistory();
 
+  const { user } = useContext(UserContext);
   const credentials = localStorage.getItem("playerCredentials");
-  const playerName = localStorage.getItem("playerName");
 
   const { game, board } = gameComponents.find((gc) => gc.game.name === gameName);
 
@@ -25,7 +26,7 @@ const GameClient = () => {
     fetch(roomUrl(gameName, gameID))
       .then((response) => response.json())
       .then((json) => {
-        const player = json.players.find((player) => player.name === playerName);
+        const player = json.players.find((player) => player.name === user.email);
         if (player) {
           console.log("Found player", player);
           setPlayerID(player.id.toString());
@@ -33,7 +34,9 @@ const GameClient = () => {
           setError("Player not in a game");
         }
       })
-      .catch((error) => setError(error));
+      .catch((e) => {
+        setError(e.message);
+      });
   }, []);
 
   const handleLeave = () => {
@@ -55,7 +58,7 @@ const GameClient = () => {
     board: board,
     loading: Loading,
     multiplayer: SocketIO({ server: API_ROOT }),
-    debug: false,
+    debug: document.location.hostname === "localhost" && getUrlParam("debug") === "true",
   });
 
   return (
@@ -87,4 +90,4 @@ const GameClient = () => {
   );
 };
 
-export default GameClient;
+export default GamePage;

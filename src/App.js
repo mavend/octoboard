@@ -1,26 +1,43 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { PAGE_TITLE } from "./config/constants";
 import { routes } from "./config/routes";
-import LobbyPage from "./lobby/LobbyPage";
+
 import GamePage from "./games/GamePage";
-import LoginPage from "./LoginPage";
+import LobbyPage from "./lobby/LobbyPage";
+import LoginPage from "./views/user/LoginPage";
+import RegisterPage from "./views/user/RegisterPage";
 import history from "./config/history";
+
+import { UserContextProvider } from "./contexts/UserContext";
+import { PrivateRoute } from "./utils/router/Private";
+import { NotLoggedInRoute } from "./utils/router/NotLoggedInRoute";
 
 const App = () => {
   return (
     <>
-      <HelmetProvider>
-        <Helmet titleTemplate={PAGE_TITLE} defaultTitle={PAGE_TITLE} />
-      </HelmetProvider>
-      <Router history={history}>
-        <Switch>
-          <Route exact path={routes.login()} component={LoginPage} />
-          <Route exact path={routes.lobby()} component={LobbyPage} />
-          <Route path={routes.game()} component={GamePage} />
-        </Switch>
-      </Router>
+      <UserContextProvider>
+        <HelmetProvider>
+          <Helmet titleTemplate={PAGE_TITLE} defaultTitle={PAGE_TITLE} />
+        </HelmetProvider>
+        <Router history={history}>
+          <Switch>
+            <NotLoggedInRoute exact path={routes.login()}>
+              <LoginPage />
+            </NotLoggedInRoute>
+            <NotLoggedInRoute exact path={routes.register()}>
+              <RegisterPage />
+            </NotLoggedInRoute>
+            <PrivateRoute exact path={routes.lobby()}>
+              <LobbyPage />
+            </PrivateRoute>
+            <PrivateRoute path={routes.game()}>
+              <GamePage />
+            </PrivateRoute>
+          </Switch>
+        </Router>
+      </UserContextProvider>
     </>
   );
 };
