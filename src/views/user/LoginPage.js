@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useLocation, useHistory } from "react-router-dom";
 import { Modal, Form, Image, Header, Button, Message, Icon } from "semantic-ui-react";
 import { UserContext } from "contexts/UserContext";
 import { Link } from "react-router-dom";
@@ -9,13 +10,17 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const { t } = useTranslation();
+  const { t } = useTranslation();  
+  const history = useHistory();
+  const location = useLocation();
 
   const { login, googleLogin } = useContext(UserContext);
 
-  const handleLogin = async () => {
+  const handleLogin = async (loginFunc) => {
     try {
-      await login(email, password);
+      await loginFunc(email, password);
+      const { from } = location.state || { from: { pathname: "/" } };
+      history.replace(from);
     } catch (e) {
       const knownErrors = ["auth/invalid-email", "auth/wrong-password"];
 
@@ -32,7 +37,7 @@ const LoginPage = () => {
         <Image wrapped size="medium" src="/images/game-hugo.png" />
         <Modal.Description>
           <Header>Login with your name</Header>
-          <Form onSubmit={handleLogin} error={!!error}>
+          <Form onSubmit={() => handleLogin(login)} error={!!error}>
             <Message error content={error} />
             <Form.Input
               autoFocus
@@ -59,7 +64,7 @@ const LoginPage = () => {
           <Link to={routes.register()}>
             <Button content={t("login.actions.register")} />
           </Link>
-          <Button onClick={googleLogin}>
+          <Button onClick={() => handleLogin(googleLogin)}>
             <Icon name={"google"} />
           </Button>
         </Modal.Description>
