@@ -42,12 +42,13 @@
       "waiting": "Waiting for player...",
       "current": "You",
       "disconnected": "Disconnected",
-      "points": "Points"
+      "points": "{{points}} Point",
+      "points_plural": "{{points}} Points"
     },
     "action": {
       "change": "Changed phrase. Old one was {{phrase}}",
       "forfeit": "Gave up. The phrase was {{phrase}}",
-      "manage": "Can now manage game.",
+      "manage": "Can now manage game",
       "draw": "Is now drawing...",
       "timeout": "Ran out of time. Phrase was {{phrase}}"
     }

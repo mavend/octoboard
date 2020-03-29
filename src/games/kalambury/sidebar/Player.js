@@ -43,8 +43,7 @@ const Player = ({
             </Feed.Date>
             <Feed.Content>
               <Icon name="trophy" color={isWinning ? "yellow" : "grey"} />
-              {points}
-              <span> {t("sidebar.player.points")}</span>
+              {t("sidebar.player.points", { points: points })}
             </Feed.Content>
             <Feed.Extra text style={{ maxWidth: "230px", marginLeft: "-50px" }}>
               <Transition.Group
