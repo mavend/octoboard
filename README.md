@@ -10,7 +10,7 @@ Run react dev server with `npm start`.
 
 Run game server with: `node -r esm src/server.js`.
 
-Configure player id with query param `id=some_player_id` (default is `0`).
+Setting `debug=true` in URL query will show debug overlay. 
 
 ## Note
 This project uses the [boardgame.io](https://boardgame.io) framework which is open source game engine for turn-based games.
