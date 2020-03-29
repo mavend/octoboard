@@ -1,58 +1,58 @@
 {
-  "game": {
-    "name": "Kalambury"
-  },
-  "tools": {
-    "undo": "Usuń ostatnią linię",
-    "clear": "Wyczyść rysunek",
-    "forfeit": "Poddaj się :("
-  },
-  "header": {
-    "wait": "Oczekiwanie na innych graczy",
-    "play": "Narysuj podane hasło"
-  },
-  "subheader": {
-    "wait": {
-      "manage": "Możesz rozpocząć grę w dowolnym momencie",
-      "wait": "Administrator pokoju może rozpocząć grę"
-    },
-    "play": {
-      "guess": "Co jest na rysunku?"
-    }
-  },
   "board": {
     "game": {
-      "new_phrase": "Wymień hasło"
+      "new_phrase": "Wymie\u0144 has\u0142o"
     },
     "guess": {
       "input": {
-        "placeholder": "Rysunek przedstawia...",
-        "action": "Zgaduj"
+        "action": "Zgaduj",
+        "placeholder": "Rysunek przedstawia..."
       }
     },
     "wait": {
-      "input": {
-        "placeholder": "Porozmawiaj z innymi graczami...",
-        "action": "Wyślij"
-      },
       "actions": {
-        "start": "Rozpocznij grę"
+        "start": "Rozpocznij gr\u0119"
+      },
+      "input": {
+        "action": "Wy\u015blij",
+        "placeholder": "Porozmawiaj z innymi graczami..."
       }
     }
   },
+  "game": {
+    "name": "Kalambury"
+  },
+  "header": {
+    "play": "Narysuj podane has\u0142o",
+    "wait": "Oczekiwanie na innych graczy"
+  },
   "sidebar": {
-    "player": {
-      "waiting": "Oczekiwanie na gracza...",
-      "current": "Ty",
-      "disconnected": "Połączenie przerwane",
-      "points": "Punkty: {{points}}"
-    },
     "action": {
-      "change": "Zmiana hasła. Porzednie hasło to: {{phrase}}",
-      "forfeit": "Runda poddana. Hasło to: {{phrase}}",
-      "manage": "Administrator pokoju",
+      "change": "Zmiana has\u0142a. Porzednie has\u0142o to: {{phrase}}",
       "draw": "Rysuje...",
-      "timeout": "Koniec czasu. Hasło to: {{phrase}}"
+      "forfeit": "Runda poddana. Has\u0142o to: {{phrase}}",
+      "manage": "Administrator pokoju",
+      "timeout": "Koniec czasu. Has\u0142o to: {{phrase}}"
+    },
+    "player": {
+      "current": "Ty",
+      "disconnected": "Po\u0142\u0105czenie przerwane",
+      "points": "Punkty: {{points}}",
+      "waiting": "Oczekiwanie na gracza..."
     }
+  },
+  "subheader": {
+    "play": {
+      "guess": "Co jest na rysunku?"
+    },
+    "wait": {
+      "manage": "Mo\u017cesz rozpocz\u0105\u0107 gr\u0119 w dowolnym momencie",
+      "wait": "Administrator pokoju mo\u017ce rozpocz\u0105\u0107 gr\u0119"
+    }
+  },
+  "tools": {
+    "clear": "Wyczy\u015b\u0107 rysunek",
+    "forfeit": "Poddaj si\u0119 :(",
+    "undo": "Usu\u0144 ostatni\u0105 lini\u0119"
   }
 }

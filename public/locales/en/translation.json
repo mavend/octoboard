@@ -1,24 +1,24 @@
 {
-  "user": {
-    "change_password": "Change password",
-    "logout": "Log Out"
-  },
   "login": {
-    "title": "Login",
-    "prompt": "Login with your name",
     "actions": {
       "login": "Login",
       "register": "Sign Up"
-    }
+    },
+    "prompt": "Login with your name",
+    "title": "Login"
   },
   "register": {
-    "title": "Sign Up",
-    "prompt": "Fill the form to create new account",
     "form": {
+      "confirm_passwor": "Password Confirmation",
       "email": "Email",
       "password": "Password",
-      "confirm_passwor": "Password Confirmation",
       "submit": "Create Account"
-    }
+    },
+    "prompt": "Fill the form to create new account",
+    "title": "Sign Up"
+  },
+  "user": {
+    "change_password": "Change password",
+    "logout": "Log Out"
   }
 }

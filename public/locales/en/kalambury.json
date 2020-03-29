@@ -1,59 +1,59 @@
 {
-  "game": {
-    "name": "Kalambury"
-  },
-  "tools": {
-    "undo": "Remove last line",
-    "clear": "Clear drawing",
-    "forfeit": "Give up :("
-  },
-  "header": {
-    "wait": "Waiting for other players",
-    "play": "You are drawing"
-  },
-  "subheader": {
-    "wait": {
-      "manage": "You can start the game anytime you want",
-      "wait": "Lobby admin can start the game"
-    },
-    "play": {
-      "guess": "What's on the drawing?"
-    }
-  },
   "board": {
     "game": {
       "new_phrase": "Get new phrase"
     },
     "guess": {
       "input": {
-        "placeholder": "The drawing shows...",
-        "action": "Send your guess"
+        "action": "Send your guess",
+        "placeholder": "The drawing shows..."
       }
     },
     "wait": {
-      "input": {
-        "placeholder": "Talk to other players while waiting...",
-        "action": "Send your messsage"
-      },
       "actions": {
         "start": "Start game"
+      },
+      "input": {
+        "action": "Send your messsage",
+        "placeholder": "Talk to other players while waiting..."
       }
     }
   },
+  "game": {
+    "name": "Kalambury"
+  },
+  "header": {
+    "play": "You are drawing",
+    "wait": "Waiting for other players"
+  },
   "sidebar": {
+    "action": {
+      "change": "Changed phrase. Old one was {{phrase}}",
+      "draw": "Is now drawing...",
+      "forfeit": "Gave up. The phrase was {{phrase}}",
+      "manage": "Can now manage game",
+      "timeout": "Ran out of time. Phrase was {{phrase}}"
+    },
     "player": {
-      "waiting": "Waiting for player...",
       "current": "You",
       "disconnected": "Disconnected",
       "points": "{{points}} Point",
-      "points_plural": "{{points}} Points"
-    },
-    "action": {
-      "change": "Changed phrase. Old one was {{phrase}}",
-      "forfeit": "Gave up. The phrase was {{phrase}}",
-      "manage": "Can now manage game",
-      "draw": "Is now drawing...",
-      "timeout": "Ran out of time. Phrase was {{phrase}}"
+      "points_plural": "{{points}} Points",
+      "waiting": "Waiting for player..."
     }
+  },
+  "subheader": {
+    "play": {
+      "guess": "What's on the drawing?"
+    },
+    "wait": {
+      "manage": "You can start the game anytime you want",
+      "wait": "Lobby admin can start the game"
+    }
+  },
+  "tools": {
+    "clear": "Clear drawing",
+    "forfeit": "Give up :(",
+    "undo": "Remove last line"
   }
 }

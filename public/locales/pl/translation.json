@@ -1,24 +1,24 @@
 {
-  "user": {
-    "change_password": "Zmień hasło",
-    "logout": "Wyloguj"
-  },
   "login": {
-    "title": "Logowanie",
-    "prompt": "Zaloguj się na swoje konto",
     "actions": {
       "login": "Zaloguj",
-      "register": "Załóż konto"
-    }
+      "register": "Za\u0142\u00f3\u017c konto"
+    },
+    "prompt": "Zaloguj si\u0119 na swoje konto",
+    "title": "Logowanie"
   },
   "register": {
-    "title": "Zakładanie konta",
-    "prompt": "Wypełnij poniższy formularz",
     "form": {
+      "confirm_passwor": "Potwierdzenie has\u0142a",
       "email": "Email",
-      "password": "Hasło",
-      "confirm_passwor": "Potwierdzenie hasła",
-      "submit": "Załóż konto"
-    }
+      "password": "Has\u0142o",
+      "submit": "Za\u0142\u00f3\u017c konto"
+    },
+    "prompt": "Wype\u0142nij poni\u017cszy formularz",
+    "title": "Zak\u0142adanie konta"
+  },
+  "user": {
+    "change_password": "Zmie\u0144 has\u0142o",
+    "logout": "Wyloguj"
   }
 }
