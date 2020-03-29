@@ -1,22 +1,17 @@
 import { PlayerView, INVALID_MOVE } from "boardgame.io/core";
-import phrases from "./data/phrases/pl/proverbs.json";
+import proverbs from "./data/phrases/pl/proverbs.json";
+import idioms from "./data/phrases/pl/idioms.json";
+import nounPhrases from "./data/phrases/pl/noun_phrases.json";
 import removeAccents from "remove-accents";
-
-function uuidv4(ctx) {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-    var r = (ctx.random.Number() * 16) | 0,
-      v = c === "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-}
 
 function setupKalambury(ctx, setupData) {
   const G = {
     secret: {
       phrase: "",
       startTime: new Date(),
-      phrases: ctx.random.Shuffle(phrases.slice()),
+      phrases: ctx.random.Shuffle([...proverbs, ...idioms, ...nounPhrases]),
     },
+    actionsCount: 0,
     canChangePhrase: true,
     players: {},
     playersData: {},
@@ -45,7 +40,7 @@ function LogAction(G, ctx, playerID, action, params = {}, clear = false) {
   }
   G.actions.push({
     time: Date.now(),
-    id: uuidv4(ctx),
+    id: G.actionsCount++,
     playerID,
     action,
     ...params,
