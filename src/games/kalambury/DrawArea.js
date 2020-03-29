@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Drawing from "./Drawing";
 import Toolbar from "./Toolbar";
-import { useInterval } from "../../hooks/IntervalHook";
+import { useInterval } from "utils/IntervalHook";
 
 const DrawArea = ({ initialLines, remainingSeconds, onUpdate, onForfeit }) => {
   const [lines, setLines] = useState(initialLines || []);

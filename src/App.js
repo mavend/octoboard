@@ -3,12 +3,12 @@ import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { PAGE_TITLE } from "./config/constants";
 import { routes } from "./config/routes";
+import history from "./config/history";
 
-import GamePage from "./games/GamePage";
-import LobbyPage from "./lobby/LobbyPage";
+import GamePage from "./views/game/GamePage";
+import LobbyPage from "./views/lobby/LobbyPage";
 import LoginPage from "./views/user/LoginPage";
 import RegisterPage from "./views/user/RegisterPage";
-import history from "./config/history";
 
 import { UserContextProvider } from "./contexts/UserContext";
 import { PrivateRoute } from "./utils/router/Private";

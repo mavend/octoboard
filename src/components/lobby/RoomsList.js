@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Item, Button, Pagination, Label, Icon } from "semantic-ui-react";
-import { paginate } from "../utils/paginate";
+import { paginate } from "utils/paginate";
 
 const RoomsList = ({ rooms, games, style, onJoinRoom, user }) => {
   const [pagesCount, setPagesCount] = useState(1);

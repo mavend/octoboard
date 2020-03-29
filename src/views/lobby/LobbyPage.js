@@ -2,13 +2,13 @@ import React, { useState, useEffect, useCallback, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { isEqual } from "lodash";
 import { Container, Header, Image, Segment, Grid, Dimmer, Loader } from "semantic-ui-react";
-import RoomsList from "./RoomsList";
-import CreateRoomForm from "./CreateRoomForm";
-import { roomsUrl, joinRoomUrl } from "../api";
-import { gameComponents } from "../games/Games";
-import { routes } from "../config/routes";
-import { UserContext } from "../contexts/UserContext";
-import UserMenu from "../components/user/UserMenu";
+import { roomsUrl, joinRoomUrl } from "config/api";
+import { routes } from "config/routes";
+import { gameComponents } from "games";
+import { UserContext } from "contexts/UserContext";
+import RoomsList from "components/lobby/RoomsList";
+import CreateRoomForm from "components/lobby/CreateRoomForm";
+import UserMenu from "components/user/UserMenu";
 
 const LobbyPage = () => {
   const [error, setError] = useState();

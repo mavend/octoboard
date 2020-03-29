@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form } from "semantic-ui-react";
-import { createGameUrl } from "../api";
+import { createGameUrl } from "config/api";
 
 const CreateRoomForm = ({ games }) => {
   const [game, setGame] = useState();

@@ -3,12 +3,12 @@ import { useParams, useHistory } from "react-router-dom";
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
 import { Button, Icon, Container, Confirm, Segment } from "semantic-ui-react";
-import Loading from "../Loading";
-import { API_ROOT, leaveGameUrl, roomUrl } from "../api";
-import { routes } from "../config/routes";
-import { gameComponents } from "../games/Games";
-import { UserContext } from "../contexts/UserContext";
-import { getUrlParam } from "../utils/url";
+import Loading from "components/game/Loading";
+import { API_ROOT, leaveGameUrl, roomUrl } from "config/api";
+import { routes } from "config/routes";
+import { gameComponents } from "games";
+import { UserContext } from "contexts/UserContext";
+import { getUrlParam } from "utils/url";
 
 const GamePage = () => {
   const [error, setError] = useState();
