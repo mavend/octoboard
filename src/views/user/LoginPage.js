@@ -1,8 +1,10 @@
 import React, {useContext, useState} from "react";
 import {Modal, Form, Image, Header, Button, Message, Icon} from "semantic-ui-react";
-import {UserContext} from "./contexts/UserContext";
+import {UserContext} from "../../contexts/UserContext";
+import {Link} from "react-router-dom";
+import {routes} from "../../config/routes";
 
-const LoginPage = ({ open }) => {
+const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -25,13 +27,13 @@ const LoginPage = ({ open }) => {
   };
 
   return (
-    <Modal open={open}>
+    <Modal open={true}>
       <Modal.Header>Login</Modal.Header>
       <Modal.Content image>
         <Image wrapped size="medium" src="/images/game-hugo.png" />
         <Modal.Description>
           <Header>Login with your name</Header>
-            <Form onSubmit={handleLogin} error={error}>
+            <Form onSubmit={handleLogin} error={!!error}>
                 <Message
                     error
                     content={error}
@@ -39,6 +41,7 @@ const LoginPage = ({ open }) => {
                 <Form.Input
                     autoFocus
                     type="email"
+                    autoComplete="username"
                     maxLength="24"
                     placeholder='Email'
                     name='Email'
@@ -48,6 +51,7 @@ const LoginPage = ({ open }) => {
                 <Form.Input
                     placeholder='Password'
                     type="password"
+                    autoComplete="current-password"
                     name='Password'
                     value={password}
                     onChange={(_, {value}) => setPassword(value)}
@@ -56,7 +60,9 @@ const LoginPage = ({ open }) => {
                     <Form.Button content='Login' />
                 </Form.Group>
             </Form>
-            <Button content='Register'/>
+            <Link to={routes.register()}>
+              <Button content='Register'/>
+            </Link>
             <Button onClick={googleLogin}>
                 <Icon name={"google"}/>
             </Button>

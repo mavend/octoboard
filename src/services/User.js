@@ -49,12 +49,8 @@ export class UserClient {
     }
 
     async register(email, password) {
-        try {
-            await FirebaseClient.auth().createUserWithEmailAndPassword(email, password);
-            return await this.login(email, password);
-        } catch(error) {
-            return error;
-        }
+        await FirebaseClient.auth().createUserWithEmailAndPassword(email, password);
+        return await this.login(email, password);
     }
 
     async changePassword(password) {

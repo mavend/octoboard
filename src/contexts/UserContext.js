@@ -36,7 +36,6 @@ export const UserContextProvider = ({ children }) => {
                 googleLogin: userClient.googleLogin,
                 logout: userClient.logout,
                 register: userClient.register,
-                updateProfile: userClient.updateProfile,
                 changePassword: userClient.changePassword,
                 sendResetPasswordLink: userClient.sendResetPasswordLink,
             }}

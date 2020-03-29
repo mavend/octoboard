@@ -1,27 +1,43 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { createBrowserHistory } from "history";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { PAGE_TITLE } from "./config/constants";
 import { routes } from "./config/routes";
+
 import GameLobby from "./lobby/GameLobby";
 import GameClient from "./lobby/GameClient";
-import LoginPage from "./LoginPage";
+import LoginPage from "./views/user/LoginPage";
+import RegisterPage from "./views/user/RegisterPage";
 import history from "./config/history";
+
+import {UserContextProvider} from "./contexts/UserContext";
+import {PrivateRoute} from "./utils/router/Private";
+import {NotLoggedInRoute} from "./utils/router/NotLoggedInRoute";
 
 const App = () => {
   return (
     <>
-      <HelmetProvider>
-        <Helmet titleTemplate={PAGE_TITLE} defaultTitle={PAGE_TITLE} />
-      </HelmetProvider>
-      <Router history={history}>
-        <Switch>
-          <Route exact path={routes.login()} component={LoginPage} />
-          <Route exact path={routes.lobby()} component={GameLobby} />
-          <Route path={routes.game()} component={GameClient} />
-        </Switch>
-      </Router>
+      <UserContextProvider>
+        <HelmetProvider>
+          <Helmet titleTemplate={PAGE_TITLE} defaultTitle={PAGE_TITLE} />
+        </HelmetProvider>
+        <Router history={history}>
+          <Switch>
+            <NotLoggedInRoute exact path={routes.login()}>
+              <LoginPage/>
+            </NotLoggedInRoute>
+            <NotLoggedInRoute exact path={routes.register()}>
+              <RegisterPage/>
+            </NotLoggedInRoute>
+            <PrivateRoute exact path={routes.lobby()}>
+              <GameLobby/>
+            </PrivateRoute>
+            <PrivateRoute path={routes.game()}>
+              <GameClient/>
+            </PrivateRoute>
+          </Switch>
+        </Router>
+      </UserContextProvider>
     </>
   );
 };
