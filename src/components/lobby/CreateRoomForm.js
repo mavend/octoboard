@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form } from "semantic-ui-react";
-import { apiRequests } from "services/API";
 import { useTranslation } from "react-i18next";
 
-const CreateRoomForm = ({ games }) => {
+const CreateRoomForm = ({ games, onCreate, userInGame, loading }) => {
   const [game, setGame] = useState();
   const [players, setPlayers] = useState();
   const [playersOptions, setPlayersOptions] = useState([]);
@@ -29,18 +28,8 @@ const CreateRoomForm = ({ games }) => {
     }
   }, [game, setPlayersOptions, setPlayers]);
 
-  const handleCreate = () => {
-    if (game && players) {
-      apiRequests.createRoom(game.name, players).then(() => {
-        console.log("Game created!");
-      });
-    } else {
-      alert("Not valid!");
-    }
-  };
-
   return (
-    <Form onSubmit={handleCreate}>
+    <Form onSubmit={() => onCreate(game.name, players)}>
       <Form.Select
         fluid
         label={t("create.game_type")}
@@ -54,7 +43,7 @@ const CreateRoomForm = ({ games }) => {
         value={players}
         onChange={(_, { value }) => setPlayers(value)}
       />
-      <Button fluid color="green" type="submit">
+      <Button fluid color="green" type="submit" disabled={userInGame || loading}>
         {t("create.button")}
       </Button>
     </Form>

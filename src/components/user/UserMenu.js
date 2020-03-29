@@ -39,11 +39,7 @@ const UserMenu = ({ children }) => {
         <Sidebar.Pusher>
           <Segment
             floated="right"
-            onClick={() => {
-              {
-                setVisible(!visible);
-              }
-            }}
+            onClick={() => setVisible(!visible)}
           >
             <Image avatar bordered src={avatarForName(user.email)} />
             <span>{user.email}</span>

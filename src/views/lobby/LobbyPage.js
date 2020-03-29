@@ -16,6 +16,7 @@ const LobbyPage = () => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
   const [rooms, setRooms] = useState([]);
+  const [userGameID, setUserGameID] = useState();
   const history = useHistory();
   const { t } = useTranslation("lobby");
 
@@ -26,20 +27,37 @@ const LobbyPage = () => {
     apiRequests
       .fetchRooms(games)
       .then((rooms) => {
-        setRooms((currentRooms) => (isEqual(rooms, currentRooms) ? currentRooms : rooms));
+        setRooms((currentRooms) => (isEqual(rooms, currentRooms) ? currentRooms : rooms));        
+        const room = rooms.find((r) => r.players.find(p => p.name === user.email));
+        room && setUserGameID(room.gameID)
         setLoading(false);
+        setError();
       })
       .catch((e) => {
         setError(e.message);
         setLoading(false);
       });
-  }, [games, setRooms, setLoading, setError]);
+  }, [games, setRooms, setLoading, user, setError, setUserGameID]);
 
   const handleJoinRoom = (gameName, gameID, freeSpotId) => {
-    apiRequests.joinRoom(gameName, gameID, freeSpotId, user.email).then((response) => {
-      localStorage.setItem("playerCredentials", response.playerCredentials);
-      history.push(routes.game(gameName, gameID));
-    });
+    if(!userGameID) {
+      apiRequests.joinRoom(gameName, gameID, freeSpotId, user.email).then((response) => {
+        setUserGameID(gameID);
+        localStorage.setItem("playerCredentials", response.playerCredentials);
+        history.push(routes.game(gameName, gameID));
+      });
+    }
+  };
+
+  const handleCreate = (gameName, players) => {
+    if (gameName && players) {
+      setLoading(true);
+      apiRequests.createRoom(gameName, players).then(({ gameID }) => {
+        handleJoinRoom(gameName, gameID, "0");
+      });
+    } else {
+      alert("Not valid!");
+    }
   };
 
   useEffect(() => {
@@ -91,6 +109,7 @@ const LobbyPage = () => {
                       games={games}
                       onJoinRoom={handleJoinRoom}
                       user={user}
+                      userGameID={userGameID}
                     />
                   ) : (
                     <>
@@ -113,7 +132,7 @@ const LobbyPage = () => {
                 <Header as="h3" textAlign="center">
                   {t("create.title")}
                 </Header>
-                <CreateRoomForm games={games} />
+                <CreateRoomForm loading={loading} games={games} userInGame={!!userGameID} onCreate={handleCreate} />
               </Segment>
             </Grid.Column>
           </Grid>

@@ -16,12 +16,12 @@ const GamePage = () => {
   const [error, setError] = useState();
   const [playerID, setPlayerID] = useState();
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [credentials, setCredentials] = useState(localStorage.getItem("playerCredentials"));
   const { gameID, gameName } = useParams();
   const history = useHistory();
   const { t } = useTranslation("lobby");
 
   const { user } = useContext(UserContext);
-  const credentials = localStorage.getItem("playerCredentials");
 
   const { game, board } = gameComponents.find((gc) => gc.game.name === gameName);
 
@@ -31,10 +31,19 @@ const GamePage = () => {
       .then((json) => {
         const player = json.players.find((player) => player.name === user.email);
         if (player) {
-          console.log("Found player", player);
           setPlayerID(player.id.toString());
         } else {
-          setError(t("errors.not_in_game"));
+          const freeSpot = json.players.find(p => !p.name);
+          if (freeSpot) {
+            const freeSpotID = freeSpot.id.toString();
+            apiRequests.joinRoom(game.name, gameID, freeSpotID, user.email).then((response) => {
+              setPlayerID(freeSpotID);
+              localStorage.setItem("playerCredentials", response.playerCredentials);
+              setCredentials(response.playerCredentials);
+            });
+          } else {
+            setError(t("errors.not_in_game"));
+          }
         }
       })
       .catch((e) => {

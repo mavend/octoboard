@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { routes } from "config/routes";
 import { Item, Button, Pagination, Label, Icon } from "semantic-ui-react";
 import { paginate } from "utils/paginate";
 import { useTranslation } from "react-i18next";
 
-const RoomsList = ({ rooms, games, style, onJoinRoom, user }) => {
+const RoomsList = ({ rooms, games, style, onJoinRoom, user, userGameID }) => {
   const [pagesCount, setPagesCount] = useState(1);
   const [pageNum, setPageNum] = useState(1);
 
@@ -27,6 +29,8 @@ const RoomsList = ({ rooms, games, style, onJoinRoom, user }) => {
             game={games.find((g) => g.name === room.gameName)}
             onJoin={onJoinRoom}
             user={user}
+            userInGame={!!userGameID}
+            currentGame={userGameID === room.gameID}
           />
         ))}
       </Item.Group>
@@ -43,21 +47,31 @@ const RoomsList = ({ rooms, games, style, onJoinRoom, user }) => {
   );
 };
 
-const RoomsListItem = ({ room: { gameID, players }, game, onJoin, user }) => {
+const RoomsListItem = ({ room: { gameID, players }, game, onJoin, user, userInGame, currentGame }) => {
   const { t } = useTranslation("lobby");
+  const history = useHistory();
 
   if (!game) return null;
 
   const maxPlayers = players.length;
   const currentPlayers = players.filter((p) => p.name);
   const isFull = currentPlayers.length === maxPlayers;
+  const canJoin = !isFull && (!userInGame || currentGame);
 
   const handleClick = () => {
-    if (!isFull) {
+    if (currentGame) {
+      history.push(routes.game(game.name, gameID));
+    } else if (canJoin) {
       const freeSpotId = players.find((p) => !p.name).id;
       onJoin(game.name, gameID, freeSpotId);
     }
   };
+
+  const buttonLabel = () => {
+    if (currentGame) return t("list.game.play");
+    if (isFull) return t("list.game.full");
+    return t("list.game.join");
+  }
 
   return (
     <Item>
@@ -70,8 +84,8 @@ const RoomsListItem = ({ room: { gameID, players }, game, onJoin, user }) => {
           </Label>
           <Button
             floated="right"
-            content={isFull ? t("list.game.full") : t("list.game.join")}
-            color={isFull ? "grey" : "green"}
+            content={buttonLabel()}
+            color={canJoin ? "green" : "grey"}
             label={{
               basic: true,
               pointing: "right",
