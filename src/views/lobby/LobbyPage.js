@@ -28,13 +28,14 @@ const LobbyPage = () => {
     apiRequests
       .fetchRooms(games)
       .then((rooms) => {
-        setRooms((currentRooms) => (isEqual(rooms, currentRooms) ? currentRooms : rooms));
         const room = rooms.find((r) => r.players.find((p) => p.name === user.email));
         if (room) {
           setCurrentRoom((currentRoom) => (isEqual(currentRoom, room) ? currentRoom : room));
         } else {
           setCurrentRoom();
         }
+        rooms = rooms.filter((room) => room.setupData && !room.setupData.private);
+        setRooms((currentRooms) => (isEqual(rooms, currentRooms) ? currentRooms : rooms));
         setLoading(false);
       })
       .catch((e) => {
@@ -56,10 +57,10 @@ const LobbyPage = () => {
     }
   };
 
-  const handleCreate = (gameName, players) => {
+  const handleCreate = (gameName, players, gameOptions) => {
     if (!currentRoom && gameName && players) {
       setLoading(true);
-      apiRequests.createRoom(gameName, players).then(({ gameID }) => {
+      apiRequests.createRoom(gameName, players, gameOptions).then(({ gameID }) => {
         history.push(routes.game(gameName, gameID));
         setLoading(false);
       });
@@ -129,7 +130,7 @@ const LobbyPage = () => {
                   {t("list.title")}
                 </Header>
                 <div>
-                  {rooms.length > 0 ? (
+                  {rooms.length > 0 || currentRoom ? (
                     <RoomsList
                       rooms={rooms}
                       games={games}
