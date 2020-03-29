@@ -8,7 +8,7 @@ import { roomsUrl, joinRoomUrl } from "../api";
 import { gameComponents } from "../games/Games";
 import { routes } from "../config/routes";
 
-const GameLobby = () => {
+const LobbyPage = () => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
   const [rooms, setRooms] = useState([]);
