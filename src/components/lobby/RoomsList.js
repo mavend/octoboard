@@ -5,7 +5,7 @@ import { Item, Button, Pagination, Label, Icon } from "semantic-ui-react";
 import { paginate } from "utils/paginate";
 import { useTranslation } from "react-i18next";
 
-const RoomsList = ({ rooms, games, style, onJoinRoom, currentRoom }) => {
+const RoomsList = ({ rooms, games, onJoinRoom, currentRoom }) => {
   const [pagesCount, setPagesCount] = useState(1);
   const [pageNum, setPageNum] = useState(1);
   const [filteredRooms, setFilteredRooms] = useState(rooms);
@@ -26,7 +26,7 @@ const RoomsList = ({ rooms, games, style, onJoinRoom, currentRoom }) => {
   };
 
   return (
-    <div style={style}>
+    <div>
       <Item.Group divided relaxed="very" size="big">
         {currentRoom && (
           <RoomsListItem
