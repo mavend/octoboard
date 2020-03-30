@@ -44,7 +44,7 @@ const GameBoard = ({
   useEffect(() => {
     setLastSuccess(lastUserGuess.success);
     return () => setLastSuccess(false); // Do cleanup of state 
-  },[lastUserGuess.id]);
+  },[lastUserGuess.id, lastUserGuess.success]);
 
   useEffect(() => {
     const broadcastHandler = (gameID, data) => {
