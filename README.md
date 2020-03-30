@@ -1,4 +1,5 @@
 ![Corona-games](https://github.com/mavend/corona-games/workflows/Corona-games/badge.svg)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/866fc714-bea9-443b-920b-3d50c022710e/deploy-status)](https://app.netlify.com/sites/corona-games/deploys)
 
 # Corona games
 
