@@ -1,4 +1,4 @@
-![Corona-games](https://github.com/mavend/corona-games/workflows/Corona-games/badge.svg?branch=add-github-actions)
+![Corona-games](https://github.com/mavend/corona-games/workflows/Corona-games/badge.svg)
 
 # Corona games
 
