@@ -1,9 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Segment, Button, Header } from "semantic-ui-react";
-import { timerFormat } from "../utils/time";
+import Confetti from 'react-dom-confetti';
 import { withTranslation } from "react-i18next";
+import { timerFormat } from "../utils/time";
 import DrawingBoard from "./DrawingBoard";
 import GuessingBoard from "./GuessingBoard";
+import { COLORS } from "config/constants"
+
+const confettiConfig = {
+  angle: 90,
+  spread: "54",
+  startVelocity: "56",
+  elementCount: "55",
+  dragFriction: "0.07",
+  duration: "2390",
+  stagger: 0,
+  width: "10px",
+  height: "43px",
+  colors: COLORS.sort((a, b) => Math.random()).slice(0, 5)
+};
 
 const GameBoard = ({
   isDrawing,
@@ -24,6 +39,13 @@ const GameBoard = ({
   rawClient,
 }) => {
   const [lines, setLines] = useState([]);
+  const [lastSuccess, setLastSuccess] = useState(false);
+  const lastUserGuess = getUserActions(actions, playerID, "guess")[0] || { id: null, success: false }
+
+  useEffect(() => {
+    setLastSuccess(lastUserGuess.success);
+    return () => setLastSuccess(false); // Do cleanup of state 
+  },[lastUserGuess.id, lastUserGuess.success]);
 
   useEffect(() => {
     const broadcastHandler = (gameID, data) => {
@@ -74,6 +96,7 @@ const GameBoard = ({
           </Button>
         </Segment>
       )}
+      <Confetti active={lastSuccess} config={confettiConfig} className="confetti"/>
     </>
   );
 };
