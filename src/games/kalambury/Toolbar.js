@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon, Menu, Popup } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
-import { COLORS } from "config/constants"
+import { COLORS } from "config/constants";
 
 const Toolbar = ({
   currentColor,

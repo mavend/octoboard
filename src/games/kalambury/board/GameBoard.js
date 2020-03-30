@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Segment, Button, Header } from "semantic-ui-react";
-import Confetti from 'react-dom-confetti';
+import Confetti from "react-dom-confetti";
 import { withTranslation } from "react-i18next";
 import { timerFormat } from "../utils/time";
 import DrawingBoard from "./DrawingBoard";
 import GuessingBoard from "./GuessingBoard";
-import { COLORS } from "config/constants"
+import { COLORS } from "config/constants";
 
 const confettiConfig = {
   angle: 90,
@@ -17,7 +17,7 @@ const confettiConfig = {
   stagger: 0,
   width: "10px",
   height: "43px",
-  colors: COLORS.sort((a, b) => Math.random()).slice(0, 5)
+  colors: COLORS.sort((a, b) => Math.random()).slice(0, 5),
 };
 
 const GameBoard = ({
@@ -40,12 +40,15 @@ const GameBoard = ({
 }) => {
   const [lines, setLines] = useState([]);
   const [lastSuccess, setLastSuccess] = useState(false);
-  const lastUserGuess = getUserActions(actions, playerID, "guess")[0] || { id: null, success: false }
+  const lastUserGuess = getUserActions(actions, playerID, "guess")[0] || {
+    id: null,
+    success: false,
+  };
 
   useEffect(() => {
     setLastSuccess(lastUserGuess.success);
-    return () => setLastSuccess(false); // Do cleanup of state 
-  },[lastUserGuess.id, lastUserGuess.success]);
+    return () => setLastSuccess(false); // Do cleanup of state
+  }, [lastUserGuess.id, lastUserGuess.success]);
 
   useEffect(() => {
     const broadcastHandler = (gameID, data) => {
@@ -59,7 +62,8 @@ const GameBoard = ({
       rawClient.transport.socket.on("broadcast", broadcastHandler);
     }
     return () => {
-      rawClient.transport.socket.off("broadcast", broadcastHandler);
+      if (rawClient.transport.socket)
+        rawClient.transport.socket.removeListener("broadcast", broadcastHandler);
     };
   }, [isDrawing, rawClient.transport.socket]);
 
@@ -96,7 +100,7 @@ const GameBoard = ({
           </Button>
         </Segment>
       )}
-      <Confetti active={lastSuccess} config={confettiConfig} className="confetti"/>
+      <Confetti active={lastSuccess} config={confettiConfig} className="confetti" />
     </>
   );
 };
