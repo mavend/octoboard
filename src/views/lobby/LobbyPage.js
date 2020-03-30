@@ -43,9 +43,9 @@ const LobbyPage = () => {
       });
   }, [games, setRooms, setLoading, user, setError, setCurrentRoom]);
 
-  const handleJoinRoom = ({ gameName, gameID, players }) => {
+  const handleJoinRoom = ({ gameName, gameID, players, playerID }) => {
     if (!currentRoom) {
-      const freeSpotId = players.find((p) => !p.name).id;
+      const freeSpotId = playerID || players.find((p) => !p.name).id;
       apiRequests.joinRoom(gameName, gameID, freeSpotId, user.email).then((response) => {
         setCurrentRoom(gameID);
         localStorage.setItem("playerCredentials", response.playerCredentials);
@@ -60,7 +60,7 @@ const LobbyPage = () => {
     if (gameName && players) {
       setLoading(true);
       apiRequests.createRoom(gameName, players).then(({ gameID }) => {
-        handleJoinRoom(gameName, gameID, "0");
+        handleJoinRoom({ gameName, gameID, playerID: "0" });
       });
     } else {
       alert("Not valid!");
