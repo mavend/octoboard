@@ -5,7 +5,7 @@ import { withTranslation } from "react-i18next";
 import { timerFormat } from "../utils/time";
 import DrawingBoard from "./DrawingBoard";
 import GuessingBoard from "./GuessingBoard";
-import { COLORS } from "../../../config/constants"
+import { COLORS } from "config/constants"
 
 const confettiConfig = {
   angle: 90,
