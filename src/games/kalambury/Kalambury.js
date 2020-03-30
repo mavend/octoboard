@@ -123,7 +123,7 @@ export const Kalambury = {
   minPlayers: 2,
   maxPlayers: 10,
 
-  seed: "test",
+  seed: process.env.NODE_ENV === "production" ? undefined : "test",
   setup: setupKalambury,
 
   phases: {
