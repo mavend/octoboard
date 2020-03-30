@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useLocation, useHistory } from "react-router-dom";
 import { Modal, Form, Image, Header, Message, Button, Icon } from "semantic-ui-react";
 import { UserContext } from "contexts/UserContext";
 import { useTranslation } from "react-i18next";
