@@ -7,17 +7,22 @@
     "title": "Logowanie",
     "prompt": "Zaloguj się na swoje konto",
     "actions": {
+      "guest_login": "Wejdź do gry",
       "login": "Zaloguj",
       "register": "Załóż konto"
     }
+  },
+  "guest": {
+    "prompt": "Wpadaj do nas"
   },
   "register": {
     "title": "Zakładanie konta",
     "prompt": "Wypełnij poniższy formularz",
     "form": {
+      "nickname": "Ksywka",
       "email": "Email",
       "password": "Hasło",
-      "confirm_passwor": "Potwierdzenie hasła",
+      "confirm_password": "Potwierdzenie hasła",
       "submit": "Załóż konto"
     }
   },

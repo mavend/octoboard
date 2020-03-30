@@ -7,17 +7,22 @@
     "title": "Login",
     "prompt": "Login with your name",
     "actions": {
+      "guest_login": "Enter the Game",
       "login": "Login",
       "register": "Sign Up"
     }
+  },
+  "guest": {
+    "prompt": "Come and play"
   },
   "register": {
     "title": "Sign Up",
     "prompt": "Fill the form to create new account",
     "form": {
+      "nickname": "Nickname",
       "email": "Email",
       "password": "Password",
-      "confirm_passwor": "Password Confirmation",
+      "confirm_password": "Password Confirmation",
       "submit": "Create Account"
     }
   },

@@ -10,6 +10,7 @@ import { PrivateRoute } from "utils/router/Private";
 import { NotLoggedInRoute } from "utils/router/NotLoggedInRoute";
 import { ErrorBoundary } from "services/Airbrake";
 
+import AnonymousLoginPage from "views/user/AnonymousLogin";
 import GamePage from "views/game/GamePage";
 import LobbyPage from "views/lobby/LobbyPage";
 import LoginPage from "views/user/LoginPage";
@@ -25,15 +26,18 @@ const App = () => {
           </HelmetProvider>
           <Router history={history}>
             <Switch>
-              <NotLoggedInRoute exact path={routes.login()}>
+              <PrivateRoute exact path={routes.lobby()}>
+              <LobbyPage />
+            </PrivateRoute>
+            <NotLoggedInRoute exact path={routes.login()}>
                 <LoginPage />
+              </NotLoggedInRoute>
+              <NotLoggedInRoute exact path={routes.login_guest()}>
+                <AnonymousLoginPage />
               </NotLoggedInRoute>
               <NotLoggedInRoute exact path={routes.register()}>
                 <RegisterPage />
               </NotLoggedInRoute>
-              <PrivateRoute exact path={routes.lobby()}>
-                <LobbyPage />
-              </PrivateRoute>
               <PrivateRoute path={routes.game()}>
                 <GamePage />
               </PrivateRoute>
