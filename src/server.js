@@ -4,4 +4,4 @@ const { Server } = require("boardgame.io/server");
 const server = Server({
   games: [Kalambury],
 });
-server.run(8000);
+server.run(process.env.PORT || 8000);
