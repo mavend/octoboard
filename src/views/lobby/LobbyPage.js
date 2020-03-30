@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { isEqual } from "lodash";
-import { Container, Header, Image, Segment, Grid, Dimmer, Loader } from "semantic-ui-react";
+import { Container, Header, Image, Segment, Grid, Dimmer, Loader, Label } from "semantic-ui-react";
 import { routes } from "config/routes";
 import { gameComponents } from "games";
 import { apiRequests } from "services/API";
@@ -18,6 +18,7 @@ const LobbyPage = () => {
   const [rooms, setRooms] = useState([]);
   const [currentRoom, setCurrentRoom] = useState();
   const history = useHistory();
+  const location = useLocation();
   const { t } = useTranslation("lobby");
 
   const user = useUser();
@@ -35,7 +36,6 @@ const LobbyPage = () => {
           setCurrentRoom();
         }
         setLoading(false);
-        setError();
       })
       .catch((e) => {
         setError(e.message);
@@ -69,6 +69,14 @@ const LobbyPage = () => {
   };
 
   useEffect(() => {
+    const { state } = location;
+    if (state && state.error) {
+      setError(state.error);
+      history.replace({ state: { ...state, error: null } });
+    }
+  }, [location, history, setError]);
+
+  useEffect(() => {
     fetchRooms();
     const interval = setInterval(fetchRooms, 2000);
     return () => clearInterval(interval);
@@ -84,6 +92,9 @@ const LobbyPage = () => {
       marginBottom: "40px",
     },
     noRoomImage: { margin: "0 auto" },
+    error: {
+      marginBottom: "10px",
+    },
   };
 
   return (
@@ -97,9 +108,16 @@ const LobbyPage = () => {
           </Header>
         </Container>
         {error && (
-          <Container>
+          <Container style={styles.error}>
             <Segment inverted color="red">
               <div>{error}</div>
+              <Label
+                as="a"
+                attached="top right"
+                icon="close"
+                color="red"
+                onClick={() => setError()}
+              />
             </Segment>
           </Container>
         )}

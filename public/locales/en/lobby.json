@@ -27,8 +27,9 @@
     "leave": "Leave room"
   },
   "errors": {
-    "not_in_game": "Player not in a game",
+    "no_game": "Game not found",
+    "not_in_game": "You are not in a game",
     "no_space": "No space left in this room",
-    "already_in_game": "Player is currently in another game"
+    "already_in_game": "You are currently in another game"
   }
 }

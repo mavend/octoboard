@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Redirect } from "react-router-dom";
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
-import { Button, Icon, Container, Confirm, Segment } from "semantic-ui-react";
+import { Button, Icon, Container, Confirm } from "semantic-ui-react";
 import Loading from "components/game/Loading";
 import { API_ROOT } from "config/api";
 import { routes } from "config/routes";
@@ -30,11 +30,17 @@ const GamePage = () => {
       .fetchRooms([game])
       .then((rooms) => {
         const room = rooms.find((room) => room.gameID === gameID);
+        if (!room) {
+          setError(t("errors.no_game"));
+          return;
+        }
+
         const player = room.players.find((player) => player.name === user.email);
         if (player) {
           setPlayerID(player.id.toString());
           return;
         }
+
         const currentRoom = rooms.find((room) =>
           room.players.find((player) => player.name === user.email)
         );
@@ -83,13 +89,7 @@ const GamePage = () => {
 
   return (
     <>
-      {error && (
-        <Container>
-          <Segment inverted color="red">
-            {error}
-          </Segment>
-        </Container>
-      )}
+      {error && <Redirect pass to={{ pathname: routes.lobby(), state: { error: error } }} />}
       {gameName && gameID && playerID && (
         <>
           <NewGameCLient playerID={playerID} gameID={gameID} credentials={credentials} />
