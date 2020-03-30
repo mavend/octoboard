@@ -13,7 +13,8 @@
     "game": {
       "full": "Pełny",
       "join": "Dołącz",
-      "play": "Graj"
+      "play": "Graj",
+      "your_game": "Twoja gra"
     }
   },
   "create": {

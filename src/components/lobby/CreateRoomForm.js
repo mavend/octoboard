@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Form } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 
-const CreateRoomForm = ({ games, onCreate, userInGame, loading }) => {
+const CreateRoomForm = ({ games, onCreate, disabled, loading }) => {
   const [game, setGame] = useState();
   const [players, setPlayers] = useState();
   const [playersOptions, setPlayersOptions] = useState([]);
@@ -43,7 +43,7 @@ const CreateRoomForm = ({ games, onCreate, userInGame, loading }) => {
         value={players}
         onChange={(_, { value }) => setPlayers(value)}
       />
-      <Button fluid color="green" type="submit" disabled={userInGame || loading}>
+      <Button fluid color="green" type="submit" disabled={disabled || loading}>
         {t("create.button")}
       </Button>
     </Form>

@@ -5,15 +5,21 @@ import { Item, Button, Pagination, Label, Icon } from "semantic-ui-react";
 import { paginate } from "utils/paginate";
 import { useTranslation } from "react-i18next";
 
-const RoomsList = ({ rooms, games, style, onJoinRoom, user, userGameID }) => {
+const RoomsList = ({ rooms, games, style, onJoinRoom, currentRoom }) => {
   const [pagesCount, setPagesCount] = useState(1);
   const [pageNum, setPageNum] = useState(1);
+  const [filteredRooms, setFilteredRooms] = useState(rooms);
 
   const perPage = 6;
 
   useEffect(() => {
-    setPagesCount(Math.ceil(rooms.length / perPage));
-  }, [rooms]);
+    let filteredRooms = rooms;
+    if (currentRoom) {
+      filteredRooms = rooms.filter((room) => room.gameID !== currentRoom.gameID);
+    }
+    setFilteredRooms(filteredRooms);
+    setPagesCount(Math.ceil(filteredRooms.length / perPage));
+  }, [rooms, currentRoom, setFilteredRooms]);
 
   const handlePageChange = (e, { activePage }) => {
     setPageNum(activePage);
@@ -22,15 +28,21 @@ const RoomsList = ({ rooms, games, style, onJoinRoom, user, userGameID }) => {
   return (
     <div style={style}>
       <Item.Group divided relaxed="very" size="big">
-        {paginate(rooms, perPage, pageNum).map((room) => (
+        {currentRoom && (
+          <RoomsListItem
+            room={currentRoom}
+            game={games.find((g) => g.name === currentRoom.gameName)}
+            onJoin={onJoinRoom}
+            current
+          />
+        )}
+        {paginate(filteredRooms, perPage, pageNum).map((room) => (
           <RoomsListItem
             key={room.gameID}
             room={room}
             game={games.find((g) => g.name === room.gameName)}
             onJoin={onJoinRoom}
-            user={user}
-            userInGame={!!userGameID}
-            currentGame={userGameID === room.gameID}
+            disabled={!!currentRoom}
           />
         ))}
       </Item.Group>
@@ -47,7 +59,7 @@ const RoomsList = ({ rooms, games, style, onJoinRoom, user, userGameID }) => {
   );
 };
 
-const RoomsListItem = ({ room: { gameID, players }, game, onJoin, user, userInGame, currentGame }) => {
+const RoomsListItem = ({ room: { gameID, players }, game, onJoin, current, disabled }) => {
   const { t } = useTranslation("lobby");
   const history = useHistory();
 
@@ -56,22 +68,24 @@ const RoomsListItem = ({ room: { gameID, players }, game, onJoin, user, userInGa
   const maxPlayers = players.length;
   const currentPlayers = players.filter((p) => p.name);
   const isFull = currentPlayers.length === maxPlayers;
-  const canJoin = !isFull && (!userInGame || currentGame);
+  const canJoin = !disabled && (!isFull || current);
 
   const handleClick = () => {
-    if (currentGame) {
+    if (!canJoin) return;
+
+    if (current) {
       history.push(routes.game(game.name, gameID));
-    } else if (canJoin) {
+    } else {
       const freeSpotId = players.find((p) => !p.name).id;
       onJoin(game.name, gameID, freeSpotId);
     }
   };
 
   const buttonLabel = () => {
-    if (currentGame) return t("list.game.play");
+    if (current) return t("list.game.play");
     if (isFull) return t("list.game.full");
     return t("list.game.join");
-  }
+  };
 
   return (
     <Item>
@@ -82,6 +96,11 @@ const RoomsListItem = ({ room: { gameID, players }, game, onJoin, user, userInGa
           <Label as="span" style={{ marginLeft: "1rem" }}>
             #<Label.Detail>{gameID}</Label.Detail>
           </Label>
+          {current && (
+            <Label as="span" style={{ marginLeft: "1rem" }} color="green">
+              {t("list.game.your_game")}
+            </Label>
+          )}
           <Button
             floated="right"
             content={buttonLabel()}
@@ -99,16 +118,8 @@ const RoomsListItem = ({ room: { gameID, players }, game, onJoin, user, userInGa
         </Item.Header>
         <Item.Extra>
           {currentPlayers.map((p) => (
-            <Button
-              key={p.id}
-              icon
-              labelPosition="left"
-              compact
-              size="tiny"
-              disabled={p.name !== user.email}
-              color={p.name === user.email ? "green" : null}
-            >
-              <Icon name="user" color={p.name === user.email ? null : "grey"} />
+            <Button key={p.id} icon labelPosition="left" compact size="tiny">
+              <Icon name="user" color="grey" />
               {p.name}
             </Button>
           ))}

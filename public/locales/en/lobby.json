@@ -13,7 +13,8 @@
     "game": {
       "full": "Full",
       "join": "Join",
-      "play": "Play"
+      "play": "Play",
+      "your_game": "Your game"
     }
   },
   "create": {

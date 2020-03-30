@@ -33,7 +33,7 @@ const GamePage = () => {
         if (player) {
           setPlayerID(player.id.toString());
         } else {
-          const freeSpot = json.players.find(p => !p.name);
+          const freeSpot = json.players.find((p) => !p.name);
           if (freeSpot) {
             const freeSpotID = freeSpot.id.toString();
             apiRequests.joinRoom(game.name, gameID, freeSpotID, user.email).then((response) => {

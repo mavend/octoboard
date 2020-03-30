@@ -10,7 +10,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const { t } = useTranslation();  
+  const { t } = useTranslation();
   const history = useHistory();
   const location = useLocation();
 
@@ -61,10 +61,12 @@ const LoginPage = () => {
               <Form.Button content={t("login.actions.login")} />
             </Form.Group>
           </Form>
-          <Link to={{
-                pathname: routes.register(),
-                state: { from: location.state },
-              }}>
+          <Link
+            to={{
+              pathname: routes.register(),
+              state: { from: location.state },
+            }}
+          >
             <Button content={t("login.actions.register")} />
           </Link>
           <Button onClick={() => handleLogin(googleLogin)}>
