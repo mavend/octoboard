@@ -12,7 +12,9 @@
     "loading": "Loading rooms",
     "game": {
       "full": "Full",
-      "join": "Join"
+      "join": "Join",
+      "play": "Play",
+      "your_game": "Your game"
     }
   },
   "create": {
@@ -25,6 +27,9 @@
     "leave": "Leave room"
   },
   "errors": {
-    "not_in_game": "Player not in a game"
+    "no_game": "Game not found",
+    "not_in_game": "You are not in a game",
+    "no_space": "No space left in this room",
+    "already_in_game": "You are currently in another game"
   }
 }

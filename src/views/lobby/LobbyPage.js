@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useCallback, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect, useCallback } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import { isEqual } from "lodash";
-import { Container, Header, Image, Segment, Grid, Dimmer, Loader } from "semantic-ui-react";
+import { Container, Header, Image, Segment, Grid, Dimmer, Loader, Label } from "semantic-ui-react";
 import { routes } from "config/routes";
 import { gameComponents } from "games";
 import { apiRequests } from "services/API";
-import { UserContext } from "contexts/UserContext";
+import { useUser } from "contexts/UserContext";
 import RoomsList from "components/lobby/RoomsList";
 import CreateRoomForm from "components/lobby/CreateRoomForm";
 import UserMenu from "components/user/UserMenu";
@@ -16,10 +16,12 @@ const LobbyPage = () => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
   const [rooms, setRooms] = useState([]);
+  const [currentRoom, setCurrentRoom] = useState();
   const history = useHistory();
+  const location = useLocation();
   const { t } = useTranslation("lobby");
 
-  const { user } = useContext(UserContext);
+  const user = useUser();
   const games = gameComponents.map((g) => g.game);
 
   const fetchRooms = useCallback(() => {
@@ -27,20 +29,52 @@ const LobbyPage = () => {
       .fetchRooms(games)
       .then((rooms) => {
         setRooms((currentRooms) => (isEqual(rooms, currentRooms) ? currentRooms : rooms));
+        const room = rooms.find((r) => r.players.find((p) => p.name === user.email));
+        if (room) {
+          setCurrentRoom((currentRoom) => (isEqual(currentRoom, room) ? currentRoom : room));
+        } else {
+          setCurrentRoom();
+        }
         setLoading(false);
       })
       .catch((e) => {
         setError(e.message);
         setLoading(false);
       });
-  }, [games, setRooms, setLoading, setError]);
+  }, [games, setRooms, setLoading, user, setError, setCurrentRoom]);
 
-  const handleJoinRoom = (gameName, gameID, freeSpotId) => {
-    apiRequests.joinRoom(gameName, gameID, freeSpotId, user.email).then((response) => {
-      localStorage.setItem("playerCredentials", response.playerCredentials);
+  const handleJoinRoom = ({ gameName, gameID, players, playerID }) => {
+    if (!currentRoom) {
+      const freeSpotId = playerID || players.find((p) => !p.name).id;
+      apiRequests.joinRoom(gameName, gameID, freeSpotId, user.email).then((response) => {
+        setCurrentRoom(gameID);
+        localStorage.setItem("playerCredentials", response.playerCredentials);
+        history.push(routes.game(gameName, gameID));
+      });
+    } else {
       history.push(routes.game(gameName, gameID));
-    });
+    }
   };
+
+  const handleCreate = (gameName, players) => {
+    if (!currentRoom && gameName && players) {
+      setLoading(true);
+      apiRequests.createRoom(gameName, players).then(({ gameID }) => {
+        history.push(routes.game(gameName, gameID));
+        setLoading(false);
+      });
+    } else {
+      alert("Not valid!");
+    }
+  };
+
+  useEffect(() => {
+    const { state } = location;
+    if (state && state.error) {
+      setError(state.error);
+      history.replace({ state: { ...state, error: null } });
+    }
+  }, [location, history, setError]);
 
   useEffect(() => {
     fetchRooms();
@@ -58,6 +92,9 @@ const LobbyPage = () => {
       marginBottom: "40px",
     },
     noRoomImage: { margin: "0 auto" },
+    error: {
+      marginBottom: "10px",
+    },
   };
 
   return (
@@ -71,9 +108,16 @@ const LobbyPage = () => {
           </Header>
         </Container>
         {error && (
-          <Container>
+          <Container style={styles.error}>
             <Segment inverted color="red">
               <div>{error}</div>
+              <Label
+                as="a"
+                attached="top right"
+                icon="close"
+                color="red"
+                onClick={() => setError()}
+              />
             </Segment>
           </Container>
         )}
@@ -89,8 +133,8 @@ const LobbyPage = () => {
                     <RoomsList
                       rooms={rooms}
                       games={games}
+                      currentRoom={currentRoom}
                       onJoinRoom={handleJoinRoom}
-                      user={user}
                     />
                   ) : (
                     <>
@@ -113,7 +157,12 @@ const LobbyPage = () => {
                 <Header as="h3" textAlign="center">
                   {t("create.title")}
                 </Header>
-                <CreateRoomForm games={games} />
+                <CreateRoomForm
+                  loading={loading}
+                  games={games}
+                  onCreate={handleCreate}
+                  disabled={!!currentRoom}
+                />
               </Segment>
             </Grid.Column>
           </Grid>

@@ -22,14 +22,13 @@ const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
 
   const guessInputRef = useRef();
 
-  const pingPlayersData = () => {
-    Ping({
-      name: playerName,
-      avatar: avatarForName(playerName),
-    });
-  };
-
   useEffect(() => {
+    const pingPlayersData = () => {
+      Ping({
+        name: playerName,
+        avatar: avatarForName(playerName),
+      });
+    };
     pingPlayersData();
     let interval = setInterval(pingPlayersData, 1000);
     return () => clearInterval(interval);

@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useLocation, useHistory } from "react-router-dom";
 import { Modal, Form, Image, Header, Message, Button, Icon } from "semantic-ui-react";
 import { UserContext } from "contexts/UserContext";
 import { useTranslation } from "react-i18next";
@@ -9,18 +10,21 @@ const RegisterPage = () => {
   const [password2, setPassword2] = useState("");
   const [error, setError] = useState(null);
   const { t } = useTranslation();
+  const history = useHistory();
+  const location = useLocation();
 
   const { register, googleLogin } = useContext(UserContext);
 
   const handleRegister = async () => {
     try {
       if (password !== password2) {
-        throw {
-          code: "auth/password-mismatch",
-          message: "Password mismatch",
-        };
+        const error = new Error("Password mismatch");
+        error.code = "auth/password-mismatch";
+        throw error;
       }
       await register(email, password);
+      const { from } = location.state || { from: { pathname: "/" } };
+      history.replace(from);
     } catch (e) {
       const knownErrors = [
         "auth/password-mismatch",
