@@ -21,7 +21,7 @@ const GuessingBoard = ({
   const { t } = useTranslation("kalambury");
 
   const sendGuess = () => {
-    Guess(guess);
+    if (guess) Guess(guess);
     setGuess("");
   };
 

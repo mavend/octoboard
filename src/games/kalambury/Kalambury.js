@@ -48,10 +48,13 @@ function LogAction(G, ctx, playerID, action, params = {}, clear = false) {
 }
 
 function SendText(G, ctx, text) {
+  if (!stripPhrase(text)) return;
   LogAction(G, ctx, ctx.playerID, "message", { text: text });
 }
 
 function Guess(G, ctx, phrase) {
+  if (!stripPhrase(phrase)) return;
+
   let success = stripPhrase(phrase).includes(stripPhrase(G.secret.phrase));
 
   if (success) {

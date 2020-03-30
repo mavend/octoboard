@@ -18,7 +18,7 @@ const WaitingBoard = ({
     setGuess(e.target.value);
   };
   const sendGuess = () => {
-    SendText(guess);
+    if (guess) SendText(guess);
     setGuess("");
   };
 
