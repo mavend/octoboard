@@ -27,6 +27,8 @@
     "leave": "Opuść pokój"
   },
   "errors": {
-    "not_in_game": "Gracz nie jest w wybranym pokoju"
+    "not_in_game": "Gracz nie jest w wybranym pokoju",
+    "no_space": "Brak miejsca w tym pokoju",
+    "already_in_game": "Gracz jest aktualnie w trakcie innej gry"
   }
 }

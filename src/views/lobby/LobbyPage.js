@@ -57,10 +57,11 @@ const LobbyPage = () => {
   };
 
   const handleCreate = (gameName, players) => {
-    if (gameName && players) {
+    if (!currentRoom && gameName && players) {
       setLoading(true);
       apiRequests.createRoom(gameName, players).then(({ gameID }) => {
-        handleJoinRoom({ gameName, gameID, playerID: "0" });
+        history.push(routes.game(gameName, gameID));
+        setLoading(false);
       });
     } else {
       alert("Not valid!");

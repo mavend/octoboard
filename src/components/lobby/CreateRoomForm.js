@@ -29,7 +29,7 @@ const CreateRoomForm = ({ games, onCreate, disabled, loading }) => {
   }, [game, setPlayersOptions, setPlayers]);
 
   return (
-    <Form onSubmit={() => onCreate(game.name, players)}>
+    <Form onSubmit={() => onCreate(game.name, players)} loading={loading}>
       <Form.Select
         fluid
         label={t("create.game_type")}
@@ -43,7 +43,7 @@ const CreateRoomForm = ({ games, onCreate, disabled, loading }) => {
         value={players}
         onChange={(_, { value }) => setPlayers(value)}
       />
-      <Button fluid color="green" type="submit" disabled={disabled || loading}>
+      <Button fluid color="green" type="submit" disabled={disabled}>
         {t("create.button")}
       </Button>
     </Form>

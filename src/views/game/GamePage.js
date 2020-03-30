@@ -27,24 +27,34 @@ const GamePage = () => {
 
   useEffect(() => {
     apiRequests
-      .fetchRoom(game.name, gameID)
-      .then((json) => {
-        const player = json.players.find((player) => player.name === user.email);
+      .fetchRooms([game])
+      .then((rooms) => {
+        const room = rooms.find((room) => room.gameID === gameID);
+        const player = room.players.find((player) => player.name === user.email);
         if (player) {
           setPlayerID(player.id.toString());
-        } else {
-          const freeSpot = json.players.find((p) => !p.name);
-          if (freeSpot) {
-            const freeSpotID = freeSpot.id.toString();
-            apiRequests.joinRoom(game.name, gameID, freeSpotID, user.email).then((response) => {
-              setPlayerID(freeSpotID);
-              localStorage.setItem("playerCredentials", response.playerCredentials);
-              setCredentials(response.playerCredentials);
-            });
-          } else {
-            setError(t("errors.not_in_game"));
-          }
+          return;
         }
+        const currentRoom = rooms.find((room) =>
+          room.players.find((player) => player.name === user.email)
+        );
+        if (currentRoom) {
+          setError(t("errors.already_in_game"));
+          return;
+        }
+
+        const freeSpot = room.players.find((p) => !p.name);
+        if (!freeSpot) {
+          setError(t("errors.no_space"));
+          return;
+        }
+
+        const freeSpotID = freeSpot.id.toString();
+        apiRequests.joinRoom(game.name, gameID, freeSpotID, user.email).then((response) => {
+          setPlayerID(freeSpotID);
+          localStorage.setItem("playerCredentials", response.playerCredentials);
+          setCredentials(response.playerCredentials);
+        });
       })
       .catch((e) => {
         setError(e.message);
