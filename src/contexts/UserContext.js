@@ -1,4 +1,4 @@
-import React, { createContext, useState, useMemo, useCallback } from "react";
+import React, { createContext, useState, useMemo, useCallback, useContext } from "react";
 
 import { UserClient } from "../services/User";
 
@@ -41,4 +41,9 @@ export const UserContextProvider = ({ children }) => {
       {children}
     </UserContext.Provider>
   );
+};
+
+export const useUser = () => {
+  const { user } = useContext(UserContext);
+  return user;
 };

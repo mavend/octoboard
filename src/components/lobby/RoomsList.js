@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { routes } from "config/routes";
 import { Item, Button, Pagination, Label, Icon } from "semantic-ui-react";
+import { useUser } from "contexts/UserContext";
 import { paginate } from "utils/paginate";
 import { useTranslation } from "react-i18next";
 
@@ -59,9 +58,9 @@ const RoomsList = ({ rooms, games, onJoinRoom, currentRoom }) => {
   );
 };
 
-const RoomsListItem = ({ room: { gameID, players }, game, onJoin, current, disabled }) => {
+const RoomsListItem = ({ room, room: { gameID, players }, game, onJoin, current, disabled }) => {
   const { t } = useTranslation("lobby");
-  const history = useHistory();
+  const user = useUser();
 
   if (!game) return null;
 
@@ -71,14 +70,7 @@ const RoomsListItem = ({ room: { gameID, players }, game, onJoin, current, disab
   const canJoin = !disabled && (!isFull || current);
 
   const handleClick = () => {
-    if (!canJoin) return;
-
-    if (current) {
-      history.push(routes.game(game.name, gameID));
-    } else {
-      const freeSpotId = players.find((p) => !p.name).id;
-      onJoin(game.name, gameID, freeSpotId);
-    }
+    if (canJoin) onJoin(room);
   };
 
   const buttonLabel = () => {
@@ -118,8 +110,15 @@ const RoomsListItem = ({ room: { gameID, players }, game, onJoin, current, disab
         </Item.Header>
         <Item.Extra>
           {currentPlayers.map((p) => (
-            <Button key={p.id} icon labelPosition="left" compact size="tiny">
-              <Icon name="user" color="grey" />
+            <Button
+              key={p.id}
+              icon
+              labelPosition="left"
+              compact
+              size="tiny"
+              color={user.email === p.name ? "green" : null}
+            >
+              <Icon name="user" color={user.email === p.name ? null : "grey"} />
               {p.name}
             </Button>
           ))}

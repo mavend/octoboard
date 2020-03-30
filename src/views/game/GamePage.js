@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
@@ -7,7 +7,7 @@ import Loading from "components/game/Loading";
 import { API_ROOT } from "config/api";
 import { routes } from "config/routes";
 import { gameComponents } from "games";
-import { UserContext } from "contexts/UserContext";
+import { useUser } from "contexts/UserContext";
 import { getUrlParam } from "utils/url";
 import { apiRequests } from "services/API";
 import { useTranslation } from "react-i18next";
@@ -21,7 +21,7 @@ const GamePage = () => {
   const history = useHistory();
   const { t } = useTranslation("lobby");
 
-  const { user } = useContext(UserContext);
+  const user = useUser();
 
   const { game, board } = gameComponents.find((gc) => gc.game.name === gameName);
 
@@ -49,7 +49,7 @@ const GamePage = () => {
       .catch((e) => {
         setError(e.message);
       });
-  }, []);
+  }, [game, gameID, t, user]);
 
   const handleLeave = () => {
     apiRequests

@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useCallback, useContext } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { isEqual } from "lodash";
 import { Container, Header, Image, Segment, Grid, Dimmer, Loader } from "semantic-ui-react";
 import { routes } from "config/routes";
 import { gameComponents } from "games";
 import { apiRequests } from "services/API";
-import { UserContext } from "contexts/UserContext";
+import { useUser } from "contexts/UserContext";
 import RoomsList from "components/lobby/RoomsList";
 import CreateRoomForm from "components/lobby/CreateRoomForm";
 import UserMenu from "components/user/UserMenu";
@@ -20,7 +20,7 @@ const LobbyPage = () => {
   const history = useHistory();
   const { t } = useTranslation("lobby");
 
-  const { user } = useContext(UserContext);
+  const user = useUser();
   const games = gameComponents.map((g) => g.game);
 
   const fetchRooms = useCallback(() => {
@@ -43,13 +43,16 @@ const LobbyPage = () => {
       });
   }, [games, setRooms, setLoading, user, setError, setCurrentRoom]);
 
-  const handleJoinRoom = (gameName, gameID, freeSpotId) => {
+  const handleJoinRoom = ({ gameName, gameID, players }) => {
     if (!currentRoom) {
+      const freeSpotId = players.find((p) => !p.name).id;
       apiRequests.joinRoom(gameName, gameID, freeSpotId, user.email).then((response) => {
         setCurrentRoom(gameID);
         localStorage.setItem("playerCredentials", response.playerCredentials);
         history.push(routes.game(gameName, gameID));
       });
+    } else {
+      history.push(routes.game(gameName, gameID));
     }
   };
 

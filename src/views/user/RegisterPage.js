@@ -18,10 +18,9 @@ const RegisterPage = () => {
   const handleRegister = async () => {
     try {
       if (password !== password2) {
-        throw {
-          code: "auth/password-mismatch",
-          message: "Password mismatch",
-        };
+        const error = new Error("Password mismatch");
+        error.code = "auth/password-mismatch";
+        throw error;
       }
       await register(email, password);
       const { from } = location.state || { from: { pathname: "/" } };
