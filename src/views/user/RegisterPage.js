@@ -9,6 +9,8 @@ const RegisterPage = () => {
   const [password2, setPassword2] = useState("");
   const [error, setError] = useState(null);
   const { t } = useTranslation();
+  const history = useHistory();
+  const location = useLocation();
 
   const { register, googleLogin } = useContext(UserContext);
 
@@ -21,6 +23,8 @@ const RegisterPage = () => {
         };
       }
       await register(email, password);
+      const { from } = location.state || { from: { pathname: "/" } };
+      history.replace(from);
     } catch (e) {
       const knownErrors = [
         "auth/password-mismatch",
