@@ -85,7 +85,7 @@ const RoomsListItem = ({ room, room: { gameID, players }, game, onJoin, current,
       <Item.Content>
         <Item.Header style={{ display: "block" }}>
           {game.name}{" "}
-          <Label as="span" style={{ marginLeft: "1rem" }}>
+          <Label as="span" style={{ marginLeft: "1rem" }} color={current ? "green" : null}>
             #<Label.Detail>{gameID}</Label.Detail>
           </Label>
           {current && (
