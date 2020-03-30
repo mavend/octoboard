@@ -1,3 +1,5 @@
+![Corona-games](https://github.com/mavend/corona-games/workflows/Corona-games/badge.svg?branch=add-github-actions)
+
 # Corona games
 
 This is a collection of games that may help you and your friends kill the boredom of COVID19 quarantine.
