@@ -1,6 +1,7 @@
 import React from "react";
 import { Icon, Menu, Popup } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
+import { COLORS } from "../../config/constants"
 
 const Toolbar = ({
   currentColor,
@@ -13,18 +14,7 @@ const Toolbar = ({
 }) => {
   const { t } = useTranslation("kalambury");
   const eraserColor = "#FFFFFF";
-  const colors = [
-    "#1b1c1d",
-    "#db2828",
-    "#ff8c21",
-    "#ffd52b",
-    "#21ba45",
-    "#2185d0",
-    "#a333c8",
-    "#eb87bf",
-    "#f4d0b5",
-    "#a5673f",
-  ];
+  const colors = COLORS;
 
   const onClickColor = (color) => {
     onColorChange(color);

@@ -5,6 +5,7 @@ import { withTranslation } from "react-i18next";
 import { timerFormat } from "../utils/time";
 import DrawingBoard from "./DrawingBoard";
 import GuessingBoard from "./GuessingBoard";
+import { COLORS } from "../../../config/constants"
 
 const confettiConfig = {
   angle: 90,
@@ -16,7 +17,7 @@ const confettiConfig = {
   stagger: 0,
   width: "10px",
   height: "43px",
-  colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"]
+  colors: COLORS.sort((a, b) => Math.random()).slice(0, 5)
 };
 
 const GameBoard = ({
