@@ -12,8 +12,7 @@
     "loading": "Loading rooms",
     "game": {
       "full": "Full",
-      "join": "Join",
-      "play": "Play"
+      "join": "Join"
     }
   },
   "create": {

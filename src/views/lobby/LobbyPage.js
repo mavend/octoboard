@@ -27,9 +27,11 @@ const LobbyPage = () => {
     apiRequests
       .fetchRooms(games)
       .then((rooms) => {
-        setRooms((currentRooms) => (isEqual(rooms, currentRooms) ? currentRooms : rooms));        
-        const room = rooms.find((r) => r.players.find(p => p.name === user.email));
-        room && setUserGameID(room.gameID)
+        setRooms((currentRooms) => (isEqual(rooms, currentRooms) ? currentRooms : rooms));
+        const room = rooms.find((r) => r.players.find((p) => p.name === user.email));
+        if (room) {
+          history.push(routes.game(room.gameName, room.gameID));
+        }
         setLoading(false);
         setError();
       })
@@ -40,7 +42,7 @@ const LobbyPage = () => {
   }, [games, setRooms, setLoading, user, setError, setUserGameID]);
 
   const handleJoinRoom = (gameName, gameID, freeSpotId) => {
-    if(!userGameID) {
+    if (!userGameID) {
       apiRequests.joinRoom(gameName, gameID, freeSpotId, user.email).then((response) => {
         setUserGameID(gameID);
         localStorage.setItem("playerCredentials", response.playerCredentials);
@@ -132,7 +134,12 @@ const LobbyPage = () => {
                 <Header as="h3" textAlign="center">
                   {t("create.title")}
                 </Header>
-                <CreateRoomForm loading={loading} games={games} userInGame={!!userGameID} onCreate={handleCreate} />
+                <CreateRoomForm
+                  loading={loading}
+                  games={games}
+                  userInGame={!!userGameID}
+                  onCreate={handleCreate}
+                />
               </Segment>
             </Grid.Column>
           </Grid>

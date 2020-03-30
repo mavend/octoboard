@@ -12,8 +12,7 @@
     "loading": "Wczytywanie listy pokoi",
     "game": {
       "full": "Pełny",
-      "join": "Dołącz",
-      "play": "Graj"
+      "join": "Dołącz"
     }
   },
   "create": {

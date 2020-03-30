@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { routes } from "config/routes";
 import { Item, Button, Pagination, Label, Icon } from "semantic-ui-react";
 import { paginate } from "utils/paginate";
 import { useTranslation } from "react-i18next";
 
-const RoomsList = ({ rooms, games, style, onJoinRoom, user, userGameID }) => {
+const RoomsList = ({ rooms, games, style, onJoinRoom, user }) => {
   const [pagesCount, setPagesCount] = useState(1);
   const [pageNum, setPageNum] = useState(1);
 
@@ -29,8 +27,6 @@ const RoomsList = ({ rooms, games, style, onJoinRoom, user, userGameID }) => {
             game={games.find((g) => g.name === room.gameName)}
             onJoin={onJoinRoom}
             user={user}
-            userInGame={!!userGameID}
-            currentGame={userGameID === room.gameID}
           />
         ))}
       </Item.Group>
@@ -47,31 +43,21 @@ const RoomsList = ({ rooms, games, style, onJoinRoom, user, userGameID }) => {
   );
 };
 
-const RoomsListItem = ({ room: { gameID, players }, game, onJoin, user, userInGame, currentGame }) => {
+const RoomsListItem = ({ room: { gameID, players }, game, onJoin, user }) => {
   const { t } = useTranslation("lobby");
-  const history = useHistory();
 
   if (!game) return null;
 
   const maxPlayers = players.length;
   const currentPlayers = players.filter((p) => p.name);
   const isFull = currentPlayers.length === maxPlayers;
-  const canJoin = !isFull && (!userInGame || currentGame);
 
   const handleClick = () => {
-    if (currentGame) {
-      history.push(routes.game(game.name, gameID));
-    } else if (canJoin) {
+    if (!isFull) {
       const freeSpotId = players.find((p) => !p.name).id;
       onJoin(game.name, gameID, freeSpotId);
     }
   };
-
-  const buttonLabel = () => {
-    if (currentGame) return t("list.game.play");
-    if (isFull) return t("list.game.full");
-    return t("list.game.join");
-  }
 
   return (
     <Item>
@@ -84,8 +70,8 @@ const RoomsListItem = ({ room: { gameID, players }, game, onJoin, user, userInGa
           </Label>
           <Button
             floated="right"
-            content={buttonLabel()}
-            color={canJoin ? "green" : "grey"}
+            content={isFull ? t("list.game.full") : t("list.game.join")}
+            color={isFull ? "grey" : "green"}
             label={{
               basic: true,
               pointing: "right",
@@ -108,7 +94,7 @@ const RoomsListItem = ({ room: { gameID, players }, game, onJoin, user, userInGa
               disabled={p.name !== user.email}
               color={p.name === user.email ? "green" : null}
             >
-              <Icon name="user" color={p.name === user.email ? null : "grey"} />
+              <Icon name="user" color={p.name === user.email ? "white" : "grey"} />
               {p.name}
             </Button>
           ))}
