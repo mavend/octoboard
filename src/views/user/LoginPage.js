@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import {useHistory} from "react-router-dom";
 import { Modal, Form, Image, Header, Message} from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 
@@ -12,13 +13,13 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
   const { t } = useTranslation();
-  const history = useHistory();
-  const formValid = email.length > 0 && password.length > 0;
-
   const { logIn } = useContext(UserContext);
-  const handleLoginFunc = handleAuthorization(() => logIn(email, password), setError, setIsLoading, history);
+  const history = useHistory();
 
+  const formValid = email.length > 0 && password.length > 0;
+  const handleLoginFunc = handleAuthorization(() => logIn(email, password), setError, setIsLoading, history);
 
   return (
     <Layout>

@@ -12,11 +12,14 @@ const AnonymousLoginPage = () => {
   const [nickname, setNickname] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const history = useHistory();
 
   const { t } = useTranslation();
   const { logInAnonymously } = useContext(UserContext);
+  const history = useHistory();
+
+  const formValid = nickname.length > 0;
   const handleLoginFunc = handleAuthorization(() => logInAnonymously(nickname), setError, setIsLoading, history);
+
   return (
     <Modal open={true}>
       <Modal.Header>{t("guest.prompt")}</Modal.Header>
@@ -35,7 +38,11 @@ const AnonymousLoginPage = () => {
               onChange={(_, { value }) => setNickname(value)}
             />
             <Form.Group>
-              <Form.Button content={t("login.actions.guest_login")} />
+              <Form.Button
+                disabled={!formValid}
+                color="green"
+                content={t("login.actions.guest_login")}
+              />
             </Form.Group>
           </Form>
           <OtherLoginOptions setError={setError} setLoading={setIsLoading}/>

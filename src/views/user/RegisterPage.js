@@ -15,12 +15,12 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
   const { t } = useTranslation();
-  const history = useHistory();
-  const formValid = email.length > 0 && password.length > 0;
-
   const { register } = useContext(UserContext);
+  const history = useHistory();
 
+  const formValid = nickname.length > 0 && email.length > 0 && password.length > 0;
   const handleRegisterFunc = handleAuthorization(() => register(nickname, email, password), setError, setIsLoading, history);
 
   return (
