@@ -1,6 +1,6 @@
 import React, { createContext, useState, useMemo, useCallback, useContext } from "react";
 
-import { UserClient } from "../services/User";
+import { UserClient } from "services/User";
 
 const defaultContext = {
   user: null,
