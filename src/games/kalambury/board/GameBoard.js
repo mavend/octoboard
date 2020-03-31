@@ -71,6 +71,11 @@ const GameBoard = ({
     if (isDrawing) moves.UpdateDrawing(lines);
   }, [isDrawing, moves, lines]);
 
+  const handleChangePhrase = () => {
+    ChangePhrase();
+    setLines([]);
+  };
+
   return (
     <>
       {isDrawing ? (
@@ -91,11 +96,7 @@ const GameBoard = ({
       </Header>
       {isDrawing && (
         <Segment basic textAlign="center">
-          <Button
-            color="yellow"
-            disabled={!canChangePhrase}
-            onClick={() => setLines([]) && ChangePhrase()}
-          >
+          <Button color="yellow" disabled={!canChangePhrase} onClick={handleChangePhrase}>
             {t("board.game.new_phrase")}
           </Button>
         </Segment>
