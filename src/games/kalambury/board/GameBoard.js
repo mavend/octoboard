@@ -60,6 +60,7 @@ const GameBoard = ({
     if (isDrawing) {
       setLines([]);
     } else {
+      if (!rawClient.transport.socket) return; // TODO: we should show some error here
       rawClient.transport.socket.on("broadcast", broadcastHandler);
     }
     return () => {
@@ -92,7 +93,7 @@ const GameBoard = ({
           {...{ G, ctx, moves, rawClient, lines }}
         />
       )}
-      <Header as="h3" textAlign="center" style={{ marginTop: 0 }}>
+      <Header as="h3" attached="bottom" textAlign="center">
         {timerFormat(G.remainingSeconds)}
       </Header>
       {isDrawing && (
