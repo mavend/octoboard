@@ -4,14 +4,14 @@ import { UserContext } from "contexts/UserContext";
 import { avatarForName } from "games/kalambury/utils/avatar";
 import { useTranslation } from "react-i18next";
 
-const UserMenu = ({ children }) => {
+const UserMenu = ({ style, children }) => {
   const { user, logout } = useContext(UserContext);
   const [visible, setVisible] = useState(false);
   const { t } = useTranslation();
 
   return (
     <>
-      <Sidebar.Pushable as={Segment}>
+      <Sidebar.Pushable style={style}>
         <Sidebar
           as={Menu}
           animation="overlay"
@@ -21,7 +21,7 @@ const UserMenu = ({ children }) => {
           vertical
           visible={visible}
           width="thin"
-          style={{ minHeight: "100hv" }}
+          style={{ width: "180px" }}
         >
           <Menu.Item as={"div"}>
             <Icon name="user" />

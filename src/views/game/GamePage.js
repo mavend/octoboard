@@ -3,7 +3,7 @@ import { useParams, useHistory, Redirect } from "react-router-dom";
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
 import { Button, Icon, Container, Confirm } from "semantic-ui-react";
-import Loading from "components/game/Loading";
+
 import { API_ROOT } from "config/api";
 import { routes } from "config/routes";
 import { gameComponents } from "games";
@@ -11,6 +11,9 @@ import { useUser } from "contexts/UserContext";
 import { getUrlParam } from "utils/url";
 import { apiRequests } from "services/API";
 import { useTranslation } from "react-i18next";
+
+import Loading from "components/game/Loading";
+import Layout from "components/layout/Layout";
 
 const GamePage = () => {
   const [error, setError] = useState();
@@ -102,7 +105,7 @@ const GamePage = () => {
   });
 
   return (
-    <>
+    <Layout>
       {error && <Redirect pass to={{ pathname: routes.lobby(), state: { error: error } }} />}
       {gameName && gameID && playerID && (
         <>
@@ -120,7 +123,7 @@ const GamePage = () => {
           </Container>
         </>
       )}
-    </>
+    </Layout>
   );
 };
 
