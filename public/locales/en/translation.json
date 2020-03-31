@@ -20,5 +20,9 @@
       "confirm_passwor": "Password Confirmation",
       "submit": "Create Account"
     }
+  },
+  "footer": {
+    "github": "We are on GitHub",
+    "graphics": "Graphics from"
   }
 }
