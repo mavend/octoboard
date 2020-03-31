@@ -26,6 +26,31 @@ const GamePage = () => {
   const { game, board } = gameComponents.find((gc) => gc.game.name === gameName);
 
   useEffect(() => {
+    const joinFreeSeat = (room, maxRetries = 3) => {
+      const freeSeat = room.players.find((p) => !p.name);
+      if (!freeSeat || maxRetries === 0) {
+        setError(t("errors.no_space"));
+        return;
+      }
+
+      const freeSeatID = freeSeat.id.toString();
+      apiRequests
+        .joinRoom(game.name, gameID, freeSeatID, user.email)
+        .then((response) => {
+          setPlayerID(freeSeatID);
+          localStorage.setItem("playerCredentials", response.playerCredentials);
+          setCredentials(response.playerCredentials);
+        })
+        .catch((e) => {
+          if (e.message.match(/^Player.*not available$/)) {
+            console.warn(e.message, "Retrying...");
+            joinFreeSeat(room, maxRetries - 1);
+          } else {
+            setError(e.message);
+          }
+        });
+    };
+
     apiRequests
       .fetchRooms([game])
       .then((rooms) => {
@@ -49,18 +74,7 @@ const GamePage = () => {
           return;
         }
 
-        const freeSpot = room.players.find((p) => !p.name);
-        if (!freeSpot) {
-          setError(t("errors.no_space"));
-          return;
-        }
-
-        const freeSpotID = freeSpot.id.toString();
-        apiRequests.joinRoom(game.name, gameID, freeSpotID, user.email).then((response) => {
-          setPlayerID(freeSpotID);
-          localStorage.setItem("playerCredentials", response.playerCredentials);
-          setCredentials(response.playerCredentials);
-        });
+        joinFreeSeat(room);
       })
       .catch((e) => {
         setError(e.message);
