@@ -16,12 +16,12 @@ const Sidebar = ({
       {t("game.players")}
       <Header.Subheader>
         {privateRoom ? (
-          <Label as="span" size="small" color="grey">
+          <Label style={{ marginLeft: 0 }} as="span" size="small" color="grey">
             <Icon name="lock" />
             <Label.Detail>{t("game.private")}</Label.Detail>
           </Label>
         ) : (
-          <Label as="span" size="small">
+          <Label style={{ marginLeft: 0 }} as="span" size="small">
             <Icon name="open lock" />
             <Label.Detail>{t("game.public")}</Label.Detail>
           </Label>

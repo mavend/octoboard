@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Segment, Container, Header, Grid } from "semantic-ui-react";
+import { Responsive, Segment, Container, Header, Grid } from "semantic-ui-react";
 import Sidebar from "./Sidebar";
 import { avatarForName } from "./utils/avatar";
 import { useTranslation } from "react-i18next";
 import WaitingBoard from "./board/WaitingBoard";
 import GameBoard from "./board/GameBoard";
+import { DESKTOP_MIN_WIDTH, MOBILE_MAX_WIDTH } from "config/constants";
 
 const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
   const { players, actions, canChangePhrase } = G;
@@ -75,44 +76,90 @@ const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
           {t("game.name")}
         </Header>
       </Segment>
-      <Grid stackable>
+      <Responsive as={Grid} minWidth={DESKTOP_MIN_WIDTH}>
         <Grid.Column width="12">
-          {header}
-          {hasGameStarted ? (
-            <GameBoard
-              {...{
-                G,
-                ctx,
-                moves,
-                playerData,
-                isDrawing,
-                envokeLastAnswer,
-                getUserActions,
-                actions,
-                playerID,
-                guessInputRef,
-                guess,
-                setGuess,
-                canChangePhrase,
-                ChangePhrase,
-                rawClient,
-              }}
-            />
-          ) : (
-            <WaitingBoard
-              previousUserMessages={getUserActions(actions, playerID, "message")}
-              {...{ moves, canManageGame, setGuess, guess }}
-            />
-          )}
+          <Grid.Row>
+            {header}
+            {hasGameStarted ? (
+              <GameBoard
+                {...{
+                  G,
+                  ctx,
+                  moves,
+                  playerData,
+                  isDrawing,
+                  envokeLastAnswer,
+                  getUserActions,
+                  actions,
+                  playerID,
+                  guessInputRef,
+                  guess,
+                  setGuess,
+                  canChangePhrase,
+                  ChangePhrase,
+                  rawClient,
+                }}
+              />
+            ) : (
+              <WaitingBoard
+                previousUserMessages={getUserActions(actions, playerID, "message")}
+                {...{ moves, canManageGame, setGuess, guess }}
+              />
+            )}
+          </Grid.Row>
         </Grid.Column>
         <Grid.Column width="4">
-          <Sidebar
-            handleGuessClick={handleGuessClick}
-            getUserActions={getUserActions}
-            {...{ G, ctx, playerID, moves, gameMetadata }}
-          />
+          <Grid.Row>
+            <Sidebar
+              handleGuessClick={handleGuessClick}
+              getUserActions={getUserActions}
+              {...{ G, ctx, playerID, moves, gameMetadata }}
+            />
+          </Grid.Row>
         </Grid.Column>
-      </Grid>
+      </Responsive>
+      <Responsive as={Grid} maxWidth={MOBILE_MAX_WIDTH}>
+        <Grid.Row>
+          <Grid.Column>
+            {header}
+            {hasGameStarted ? (
+              <GameBoard
+                {...{
+                  G,
+                  ctx,
+                  moves,
+                  playerData,
+                  isDrawing,
+                  envokeLastAnswer,
+                  getUserActions,
+                  actions,
+                  playerID,
+                  guessInputRef,
+                  guess,
+                  setGuess,
+                  canChangePhrase,
+                  ChangePhrase,
+                  rawClient,
+                }}
+              />
+            ) : (
+              <WaitingBoard
+                previousUserMessages={getUserActions(actions, playerID, "message")}
+                {...{ moves, canManageGame, setGuess, guess }}
+              />
+            )}
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <Sidebar
+              handleGuessClick={handleGuessClick}
+              getUserActions={getUserActions}
+              {...{ G, ctx, playerID, moves, gameMetadata }}
+            />
+          </Grid.Column>
+        </Grid.Row>
+      </Responsive>
     </Container>
   );
 };

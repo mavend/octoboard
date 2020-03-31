@@ -1,12 +1,17 @@
 import React from "react";
 import { Segment, Progress } from "semantic-ui-react";
 import smooth_path from "./utils/smooth_path";
+import { MOBILE_MAX_WIDTH } from "config/constants";
 
-const Drawing = ({ lines, remainingSeconds, ...props }) => {
+const Drawing = ({ lines, remainingSeconds, drawable, ...props }) => {
   const styles = {
-    wrapper: {
-      padding: 0,
-    },
+    wrapper: drawable
+      ? {
+          padding: 0,
+          cursor: "crosshair",
+          touchAction: "none",
+        }
+      : { padding: 0 },
     svg: {
       width: "100%",
       height: "100%",
@@ -22,7 +27,7 @@ const Drawing = ({ lines, remainingSeconds, ...props }) => {
   });
 
   return (
-    <Segment style={styles.wrapper}>
+    <Segment style={styles.wrapper} attached="top">
       <svg style={styles.svg} viewBox={`0 0 ${vbWidth} ${vbHeight}`} {...props}>
         {lines.map((line, id) => (
           <DrawingLine key={id} line={scaleToViewBox(line)} viewBoxWidth />
@@ -37,7 +42,7 @@ const DrawingLine = ({ line: { points, color, width } }) => (
   <path
     fill="none"
     stroke={color}
-    strokeWidth={width}
+    strokeWidth={window.innerWidth <= MOBILE_MAX_WIDTH && width < 10 ? width * 2 : width}
     strokeLinecap="round"
     d={smooth_path(points, 0.12)}
   />

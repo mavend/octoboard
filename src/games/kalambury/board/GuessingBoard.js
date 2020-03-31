@@ -74,7 +74,7 @@ const GuessingBoard = ({
   }, [previousUserGuesses, lastGuess]);
 
   return (
-    <>
+    <div>
       <Form onSubmit={sendGuess}>
         <Transition
           animation={lastSuccess ? "pulse" : "shake"}
@@ -90,7 +90,7 @@ const GuessingBoard = ({
         </Transition>
       </Form>
       <Drawing remainingSeconds={remainingSeconds} lines={lines} />
-    </>
+    </div>
   );
 };
 
