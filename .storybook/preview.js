@@ -6,6 +6,4 @@ import "../src/i18n";
 import "semantic-ui-css/semantic.min.css";
 import "../src/index.css";
 
-addDecorator((story) => <div style={{ padding: "20px" }}>{story()}</div>);
-
 addDecorator(withKnobs);

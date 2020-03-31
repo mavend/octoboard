@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Container, Header, Grid } from "semantic-ui-react";
+import { Segment, Container, Header, Grid } from "semantic-ui-react";
 import Sidebar from "./Sidebar";
 import { avatarForName } from "./utils/avatar";
 import { useTranslation } from "react-i18next";
@@ -33,17 +33,6 @@ const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
     let interval = setInterval(pingPlayersData, 1000);
     return () => clearInterval(interval);
   }, [Ping, playerName]);
-
-  const styles = {
-    mainHeader: {
-      marginTop: "20px",
-      marginBottom: "40px",
-    },
-    mainContent: {
-      marginLeft: "auto",
-      marginRight: "auto",
-    },
-  };
 
   const handleGuessClick = (e) => {
     if (!isDrawing) {
@@ -80,53 +69,51 @@ const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
   );
 
   return (
-    <>
-      <Container>
-        <Header as="h1" textAlign="center" style={styles.mainHeader}>
+    <Container>
+      <Segment basic>
+        <Header as="h1" textAlign="center">
           {t("game.name")}
         </Header>
-      </Container>
-      <Container style={styles.mainContent}>
-        <Grid>
-          <Grid.Column width="12">
-            {header}
-            {hasGameStarted ? (
-              <GameBoard
-                {...{
-                  G,
-                  ctx,
-                  moves,
-                  playerData,
-                  isDrawing,
-                  envokeLastAnswer,
-                  getUserActions,
-                  actions,
-                  playerID,
-                  guessInputRef,
-                  guess,
-                  setGuess,
-                  canChangePhrase,
-                  ChangePhrase,
-                  rawClient,
-                }}
-              />
-            ) : (
-              <WaitingBoard
-                previousUserMessages={getUserActions(actions, playerID, "message")}
-                {...{ moves, canManageGame, setGuess, guess }}
-              />
-            )}
-          </Grid.Column>
-          <Grid.Column width="4">
-            <Sidebar
-              handleGuessClick={handleGuessClick}
-              getUserActions={getUserActions}
-              {...{ G, ctx, playerID, moves, gameMetadata }}
+      </Segment>
+      <Grid stackable>
+        <Grid.Column width="12">
+          {header}
+          {hasGameStarted ? (
+            <GameBoard
+              {...{
+                G,
+                ctx,
+                moves,
+                playerData,
+                isDrawing,
+                envokeLastAnswer,
+                getUserActions,
+                actions,
+                playerID,
+                guessInputRef,
+                guess,
+                setGuess,
+                canChangePhrase,
+                ChangePhrase,
+                rawClient,
+              }}
             />
-          </Grid.Column>
-        </Grid>
-      </Container>
-    </>
+          ) : (
+            <WaitingBoard
+              previousUserMessages={getUserActions(actions, playerID, "message")}
+              {...{ moves, canManageGame, setGuess, guess }}
+            />
+          )}
+        </Grid.Column>
+        <Grid.Column width="4">
+          <Sidebar
+            handleGuessClick={handleGuessClick}
+            getUserActions={getUserActions}
+            {...{ G, ctx, playerID, moves, gameMetadata }}
+          />
+        </Grid.Column>
+      </Grid>
+    </Container>
   );
 };
 

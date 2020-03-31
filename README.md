@@ -16,6 +16,8 @@ Run game server with: `node -r esm src/server.js`.
 
 Setting `debug=true` in URL query will show debug overlay.
 
+We also have some storybooks. See them with `npm run storybook`.
+
 ## Note
 
 This project uses the [boardgame.io](https://boardgame.io) framework which is open source game engine for turn-based games.
