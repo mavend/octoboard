@@ -11,6 +11,7 @@
     "esm": "^3.2.25",
     "firebase": "^7.12.0",
     "firebase-admin": "^8.10.0",
+    "husky": "^4.2.3",
     "i18next": "^19.3.4",
     "i18next-browser-languagedetector": "^4.0.2",
     "i18next-xhr-backend": "^3.2.2",
@@ -34,6 +35,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "prettier --write .",
+    "prettier-check": "prettier --check .",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
   },
@@ -61,5 +63,10 @@
     "@storybook/preset-create-react-app": "^2.1.1",
     "@storybook/react": "^5.3.17",
     "prettier": "^2.0.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run prettier"
+    }
   }
 }

@@ -7,12 +7,22 @@ on:
     branches: [master]
 
 jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "13.8.0"
+      - run: npm install
+      - run: npm run prettier-check
+
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '13.8.0'
+          node-version: "13.8.0"
       - run: npm install
       - run: npm run build --if-present
