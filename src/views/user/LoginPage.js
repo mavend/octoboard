@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Modal, Form, Image, Header, Button, Message, Icon } from "semantic-ui-react";
 import { UserContext } from "contexts/UserContext";
 import { Link } from "react-router-dom";
@@ -12,16 +12,14 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const { t } = useTranslation();
-  const history = useHistory();
   const location = useLocation();
+  const formValid = email.length > 0 && password.length > 0;
 
   const { login, googleLogin } = useContext(UserContext);
 
-  const handleLogin = async (loginFunc) => {
+  const handleLogin = async () => {
     try {
-      await loginFunc(email, password);
-      const { from } = location.state || { from: { pathname: "/" } };
-      history.replace(from);
+      await login(email, password);
     } catch (e) {
       const knownErrors = ["auth/invalid-email", "auth/wrong-password"];
 
@@ -39,13 +37,12 @@ const LoginPage = () => {
           <Image wrapped size="medium" src="/images/game-hugo.png" />
           <Modal.Description>
             <Header>Login with your name</Header>
-            <Form onSubmit={() => handleLogin(login)} error={!!error}>
+            <Form onSubmit={handleLogin} error={!!error}>
               <Message error content={error} />
               <Form.Input
                 autoFocus
                 type="email"
-                autoComplete="username"
-                maxLength="24"
+                autoComplete="email"
                 placeholder="Email"
                 name={t("register.form.email")}
                 value={email}
@@ -60,19 +57,23 @@ const LoginPage = () => {
                 onChange={(_, { value }) => setPassword(value)}
               />
               <Form.Group>
-                <Form.Button content={t("login.actions.login")} />
+                <Form.Button
+                  disabled={!formValid}
+                  color="green"
+                  content={t("login.actions.login")}
+                />
               </Form.Group>
             </Form>
             <Link
               to={{
                 pathname: routes.register(),
-                state: { from: location.state },
+                state: location.state,
               }}
             >
               <Button content={t("login.actions.register")} />
             </Link>
-            <Button onClick={() => handleLogin(googleLogin)}>
-              <Icon name={"google"} />
+            <Button onClick={googleLogin}>
+              <Icon name="google" />
             </Button>
           </Modal.Description>
         </Modal.Content>
