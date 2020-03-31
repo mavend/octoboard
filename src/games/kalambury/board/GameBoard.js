@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Segment, Button, Header } from "semantic-ui-react";
 import Confetti from "react-dom-confetti";
+import { shuffle } from "lodash";
 import { withTranslation } from "react-i18next";
 import { timerFormat } from "../utils/time";
 import DrawingBoard from "./DrawingBoard";
@@ -17,7 +18,7 @@ const confettiConfig = {
   stagger: 0,
   width: "10px",
   height: "43px",
-  colors: COLORS.sort((a, b) => Math.random()).slice(0, 5),
+  colors: shuffle(COLORS).slice(0, 5),
 };
 
 const GameBoard = ({
