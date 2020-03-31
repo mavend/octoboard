@@ -29,6 +29,11 @@ const GamePage = () => {
   const { game, board } = gameComponents.find((gc) => gc.game.name === gameName);
 
   useEffect(() => {
+    // When useEffects reloads we need to stop all
+    // promises from executing by changing cancalled to true
+    // TODO: wrap in usePromise custom hook
+    let cancelled = false;
+
     const joinFreeSeat = (room, maxRetries = 3) => {
       const freeSeat = room.players.find((p) => !p.name);
       if (!freeSeat || maxRetries === 0) {
@@ -40,11 +45,13 @@ const GamePage = () => {
       apiRequests
         .joinRoom(game.name, gameID, freeSeatID, user.email)
         .then((response) => {
+          if (cancelled) return;
           setPlayerID(freeSeatID);
           localStorage.setItem("playerCredentials", response.playerCredentials);
           setCredentials(response.playerCredentials);
         })
         .catch((e) => {
+          if (cancelled) return;
           if (e.message.match(/^Player.*not available$/)) {
             console.warn(e.message, "Retrying...");
             joinFreeSeat(room, maxRetries - 1);
@@ -57,6 +64,7 @@ const GamePage = () => {
     apiRequests
       .fetchRooms([game])
       .then((rooms) => {
+        if (cancelled) return;
         const room = rooms.find((room) => room.gameID === gameID);
         if (!room) {
           setError(t("errors.no_game"));
@@ -80,9 +88,14 @@ const GamePage = () => {
         joinFreeSeat(room);
       })
       .catch((e) => {
+        if (cancelled) return;
         setError(e.message);
       });
-  }, [game, gameID, t, user]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [game, gameID, t, user.email]);
 
   const handleLeave = () => {
     apiRequests

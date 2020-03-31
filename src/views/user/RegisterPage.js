@@ -1,18 +1,19 @@
 import React, { useContext, useState } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Modal, Form, Image, Header, Message, Button, Icon } from "semantic-ui-react";
+import { routes } from "config/routes";
 import { UserContext } from "contexts/UserContext";
 import { useTranslation } from "react-i18next";
 import Layout from "components/layout/Layout";
 
 const RegisterPage = () => {
+  const { t } = useTranslation();
+  const location = useLocation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [error, setError] = useState(null);
-  const { t } = useTranslation();
-  const history = useHistory();
-  const location = useLocation();
+  const formValid = email.length > 0 && password.length > 0 && password === password2;
 
   const { register, googleLogin } = useContext(UserContext);
 
@@ -24,8 +25,6 @@ const RegisterPage = () => {
         throw error;
       }
       await register(email, password);
-      const { from } = location.state || { from: { pathname: "/" } };
-      history.replace(from);
     } catch (e) {
       const knownErrors = [
         "auth/password-mismatch",
@@ -52,8 +51,7 @@ const RegisterPage = () => {
               <Form.Input
                 autoFocus
                 type="email"
-                autoComplete="username"
-                maxLength="24"
+                autoComplete="email"
                 placeholder="Email"
                 name={t("register.form.email")}
                 value={email}
@@ -76,11 +74,23 @@ const RegisterPage = () => {
                 onChange={(_, { value }) => setPassword2(value)}
               />
               <Form.Group>
-                <Form.Button content={t("register.form.submit")} />
+                <Form.Button
+                  disabled={!formValid}
+                  color="green"
+                  content={t("register.form.submit")}
+                />
               </Form.Group>
             </Form>
+            <Link
+              to={{
+                pathname: routes.login(),
+                state: location && location.state,
+              }}
+            >
+              <Button content={t("login.actions.login")} />
+            </Link>
             <Button onClick={googleLogin}>
-              <Icon name={"google"} />
+              <Icon name="google" />
             </Button>
           </Modal.Description>
         </Modal.Content>
