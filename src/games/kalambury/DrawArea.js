@@ -9,7 +9,11 @@ const DrawArea = ({ remainingSeconds, onForfeit, lines, setLines }) => {
 
   useEffect(() => {
     document.addEventListener("mouseup", handleMouseUp);
-    return () => document.removeEventListener("mouseup", handleMouseUp);
+    document.addEventListener("touchend", handleMouseUp);
+    return () => {
+      document.removeEventListener("mouseup", handleMouseUp);
+      document.removeEventListener("touchend", handleMouseUp);
+    };
   }, []);
 
   const addPointFromEvent = (event, addLine = false) => {
@@ -20,13 +24,17 @@ const DrawArea = ({ remainingSeconds, onForfeit, lines, setLines }) => {
     setLines(newLines);
   };
 
-  const relativeCoordsForEvent = ({ currentTarget, clientX, clientY }) => {
+  const relativeCoordsForEvent = ({ currentTarget, clientX, clientY, touches }) => {
+    if (touches && touches.length > 0) {
+      clientX = touches[0].clientX;
+      clientY = touches[0].clientY;
+    }
     const { left, top, width, height } = currentTarget.getBoundingClientRect();
     return [(clientX - left) / width, (clientY - top) / height];
   };
 
   const handleMouseDown = (e) => {
-    if (e.nativeEvent.which === 1) {
+    if (e.nativeEvent.which === 1 || e.nativeEvent instanceof TouchEvent) {
       setIsDrawing(true);
       addPointFromEvent(e, true);
     }
@@ -62,12 +70,14 @@ const DrawArea = ({ remainingSeconds, onForfeit, lines, setLines }) => {
         onForfeit={onForfeit}
         canUndo={lines.length > 0}
       />
-      <div style={{ cursor: "crosshair" }}>
+      <div style={{ cursor: "crosshair", touchAction: "none" }}>
         <Drawing
           lines={lines}
           remainingSeconds={remainingSeconds}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
+          onTouchStart={handleMouseDown}
+          onTouchMove={handleMouseMove}
         />
       </div>
     </div>
