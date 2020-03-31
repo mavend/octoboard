@@ -20,7 +20,7 @@ const Player = ({
   const { getNickName } = useContext(UserContext);
   const { data: nickname } = useQuery(["user-nickname", name], (key, id) => getNickName(id));
 
-  if (!nickname || empty) {
+  if (!name || empty) {
     return (
       <Segment disabled={true}>
         <Feed>
