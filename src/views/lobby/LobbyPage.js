@@ -47,11 +47,14 @@ const LobbyPage = () => {
   const handleJoinRoom = ({ gameName, gameID, players, playerID }) => {
     if (!currentRoom) {
       const freeSpotId = playerID || players.find((p) => !p.name).id;
-      apiRequests.joinRoom(gameName, gameID, freeSpotId, user.email).then((response) => {
-        setCurrentRoom(gameID);
-        localStorage.setItem("playerCredentials", response.playerCredentials);
-        history.push(routes.game(gameName, gameID));
-      });
+      apiRequests
+        .joinRoom(gameName, gameID, freeSpotId, user.email)
+        .then((response) => {
+          setCurrentRoom(gameID);
+          localStorage.setItem("playerCredentials", response.playerCredentials);
+          history.push(routes.game(gameName, gameID));
+        })
+        .catch((e) => setError(e.message));
     } else {
       history.push(routes.game(gameName, gameID));
     }
@@ -60,10 +63,13 @@ const LobbyPage = () => {
   const handleCreate = (gameName, players, gameOptions) => {
     if (!currentRoom && gameName && players) {
       setLoading(true);
-      apiRequests.createRoom(gameName, players, gameOptions).then(({ gameID }) => {
-        history.push(routes.game(gameName, gameID));
-        setLoading(false);
-      });
+      apiRequests
+        .createRoom(gameName, players, gameOptions)
+        .then(({ gameID }) => {
+          history.push(routes.game(gameName, gameID));
+          setLoading(false);
+        })
+        .catch((e) => setError(e.message));
     } else {
       alert("Not valid!");
     }
