@@ -45,9 +45,9 @@ const GamePage = () => {
       apiRequests
         .joinRoom(game.name, gameID, freeSeatID, user.email)
         .then((response) => {
+          localStorage.setItem("playerCredentials", response.playerCredentials);
           if (cancelled) return;
           setPlayerID(freeSeatID);
-          localStorage.setItem("playerCredentials", response.playerCredentials);
           setCredentials(response.playerCredentials);
         })
         .catch((e) => {
