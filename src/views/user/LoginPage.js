@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import {useHistory} from "react-router-dom";
-import { Modal, Form, Image, Header, Message} from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
+import { Modal, Form, Image, Header, Message } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 
 import { UserContext } from "contexts/UserContext";
@@ -19,7 +19,12 @@ const LoginPage = () => {
   const history = useHistory();
 
   const formValid = email.length > 0 && password.length > 0;
-  const handleLoginFunc = handleAuthorization(() => logIn(email, password), setError, setIsLoading, history);
+  const handleLoginFunc = handleAuthorization(
+    () => logIn(email, password),
+    setError,
+    setIsLoading,
+    history
+  );
 
   return (
     <Layout>
@@ -57,7 +62,7 @@ const LoginPage = () => {
                 />
               </Form.Group>
             </Form>
-            <OtherLoginOptions setError={setError} setLoading={setIsLoading}/>
+            <OtherLoginOptions setError={setError} setLoading={setIsLoading} />
           </Modal.Description>
         </Modal.Content>
       </Modal>

@@ -60,13 +60,49 @@ const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
     }
   };
 
-  let header = (
-    <Header as="h2" textAlign="center">
-      {t(`header.${phase}`)}
-      <Header.Subheader>
-        {isDrawing ? playerData.phrase : t(`subheader.${phase}.${activePlayers[playerID]}`)}
-      </Header.Subheader>
-    </Header>
+  let GameContent = () => (
+    <>
+      <Header as="h2" textAlign="center">
+        {t(`header.${phase}`)}
+        <Header.Subheader>
+          {isDrawing ? playerData.phrase : t(`subheader.${phase}.${activePlayers[playerID]}`)}
+        </Header.Subheader>
+      </Header>
+      {hasGameStarted ? (
+        <GameBoard
+          {...{
+            G,
+            ctx,
+            moves,
+            playerData,
+            isDrawing,
+            envokeLastAnswer,
+            getUserActions,
+            actions,
+            playerID,
+            guessInputRef,
+            guess,
+            setGuess,
+            canChangePhrase,
+            ChangePhrase,
+            rawClient,
+          }}
+        />
+      ) : (
+        <WaitingBoard
+          previousUserMessages={getUserActions(actions, playerID, "message")}
+          {...{ moves, canManageGame, setGuess, guess }}
+        />
+      )}
+    </>
+  );
+
+  const SidebarContent = () => (
+    <Sidebar
+      handleGuessClick={handleGuessClick}
+      getUserActions={getUserActions}
+      {...{ G, ctx, playerID, moves, gameMetadata }}
+    />
   );
 
   return (
@@ -79,84 +115,24 @@ const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
       <Responsive as={Grid} minWidth={DESKTOP_MIN_WIDTH}>
         <Grid.Column width="12">
           <Grid.Row>
-            {header}
-            {hasGameStarted ? (
-              <GameBoard
-                {...{
-                  G,
-                  ctx,
-                  moves,
-                  playerData,
-                  isDrawing,
-                  envokeLastAnswer,
-                  getUserActions,
-                  actions,
-                  playerID,
-                  guessInputRef,
-                  guess,
-                  setGuess,
-                  canChangePhrase,
-                  ChangePhrase,
-                  rawClient,
-                }}
-              />
-            ) : (
-              <WaitingBoard
-                previousUserMessages={getUserActions(actions, playerID, "message")}
-                {...{ moves, canManageGame, setGuess, guess }}
-              />
-            )}
+            <GameContent />
           </Grid.Row>
         </Grid.Column>
         <Grid.Column width="4">
           <Grid.Row>
-            <Sidebar
-              handleGuessClick={handleGuessClick}
-              getUserActions={getUserActions}
-              {...{ G, ctx, playerID, moves, gameMetadata }}
-            />
+            <SidebarContent />
           </Grid.Row>
         </Grid.Column>
       </Responsive>
       <Responsive as={Grid} maxWidth={MOBILE_MAX_WIDTH}>
         <Grid.Row>
           <Grid.Column>
-            {header}
-            {hasGameStarted ? (
-              <GameBoard
-                {...{
-                  G,
-                  ctx,
-                  moves,
-                  playerData,
-                  isDrawing,
-                  envokeLastAnswer,
-                  getUserActions,
-                  actions,
-                  playerID,
-                  guessInputRef,
-                  guess,
-                  setGuess,
-                  canChangePhrase,
-                  ChangePhrase,
-                  rawClient,
-                }}
-              />
-            ) : (
-              <WaitingBoard
-                previousUserMessages={getUserActions(actions, playerID, "message")}
-                {...{ moves, canManageGame, setGuess, guess }}
-              />
-            )}
+            <GameContent />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
           <Grid.Column>
-            <Sidebar
-              handleGuessClick={handleGuessClick}
-              getUserActions={getUserActions}
-              {...{ G, ctx, playerID, moves, gameMetadata }}
-            />
+            <SidebarContent />
           </Grid.Column>
         </Grid.Row>
       </Responsive>
