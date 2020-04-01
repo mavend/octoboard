@@ -6,13 +6,13 @@ import { useTranslation } from "react-i18next";
 import GoogleLoginOption from "./GoogleLogin";
 
 const OtherLoginOptions = ({ setError, setLoading }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("credentials");
   let location = useLocation();
 
   const links = [
-    { link: routes.login(), icon: "sign-in", text: t("login.actions.login") },
-    { link: routes.register(), icon: "signup", text: t("login.actions.register") },
-    { link: routes.login_guest(), icon: "user secret", text: t("login.actions.guest_login") },
+    { link: routes.login(), icon: "sign-in", text: t("actions.login") },
+    { link: routes.register(), icon: "signup", text: t("actions.register") },
+    { link: routes.login_guest(), icon: "user secret", text: t("actions.guest_login") },
   ];
 
   return (
