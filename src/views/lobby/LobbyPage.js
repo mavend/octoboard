@@ -1,18 +1,17 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { isEqual } from "lodash";
-import { Container, Header, Image, Segment, Grid, Dimmer, Loader, Label } from "semantic-ui-react";
 
+import { useTranslation } from "react-i18next";
+import { Container, Header, Image, Segment, Label } from "semantic-ui-react";
 import { routes } from "config/routes";
 import { gameComponents } from "games";
 import { apiRequests } from "services/API";
 import { useUser } from "contexts/UserContext";
-import { useTranslation } from "react-i18next";
 import { PAGE_TITLE } from "config/constants";
 
 import Layout from "components/layout/Layout";
-import RoomsList from "components/lobby/RoomsList";
-import CreateRoomForm from "components/lobby/CreateRoomForm";
+import Lobby from "components/lobby/Lobby";
 
 const LobbyPage = () => {
   const [error, setError] = useState();
@@ -25,6 +24,20 @@ const LobbyPage = () => {
 
   const user = useUser();
   const games = gameComponents.map((g) => g.game);
+
+  const styles = {
+    mainImage: {
+      width: "300px",
+      margin: "30px auto 0",
+    },
+    mainHeader: {
+      marginTop: "20px",
+      marginBottom: "40px",
+    },
+    error: {
+      marginBottom: "10px",
+    },
+  };
 
   const fetchRooms = useCallback(() => {
     apiRequests
@@ -91,21 +104,6 @@ const LobbyPage = () => {
     return () => clearInterval(interval);
   }, [fetchRooms]);
 
-  const styles = {
-    mainImage: {
-      width: "300px",
-      margin: "30px auto 0",
-    },
-    mainHeader: {
-      marginTop: "20px",
-      marginBottom: "40px",
-    },
-    noRoomImage: { margin: "0 auto" },
-    error: {
-      marginBottom: "10px",
-    },
-  };
-
   return (
     <Layout userMenu>
       <Container>
@@ -129,52 +127,16 @@ const LobbyPage = () => {
           </Segment>
         </Container>
       )}
-      <Container>
-        <Grid>
-          <Grid.Column width="12">
-            <Segment>
-              <Header as="h3" textAlign="center">
-                {t("list.title")}
-              </Header>
-              <div>
-                {rooms.length > 0 || currentRoom ? (
-                  <RoomsList
-                    rooms={rooms}
-                    games={games}
-                    currentRoom={currentRoom}
-                    onJoinRoom={handleJoinRoom}
-                  />
-                ) : (
-                  <>
-                    <Header as="h4" textAlign="center" color="grey">
-                      {t("list.empty")}
-                    </Header>
-                    <Image style={styles.noRoomImage} src="/images/hugo-out.png" size="medium" />
-                  </>
-                )}
-                {loading && (
-                  <Dimmer active inverted>
-                    <Loader inverted content={t("list.loading")} />
-                  </Dimmer>
-                )}
-              </div>
-            </Segment>
-          </Grid.Column>
-          <Grid.Column width="4">
-            <Segment>
-              <Header as="h3" textAlign="center">
-                {t("create.title")}
-              </Header>
-              <CreateRoomForm
-                loading={loading}
-                games={games}
-                onCreate={handleCreate}
-                disabled={!!currentRoom}
-              />
-            </Segment>
-          </Grid.Column>
-        </Grid>
-      </Container>
+      <Lobby
+        error={error}
+        setError={setError}
+        rooms={rooms}
+        currentRoom={currentRoom}
+        games={games}
+        handleJoinRoom={handleJoinRoom}
+        handleCreate={handleCreate}
+        loading={loading}
+      />
     </Layout>
   );
 };

@@ -65,7 +65,8 @@
     "@storybook/addons": "^5.3.18",
     "@storybook/preset-create-react-app": "^2.1.1",
     "@storybook/react": "^5.3.18",
-    "prettier": "^2.0.2"
+    "prettier": "^2.0.2",
+    "storybook-react-router": "^1.0.8"
   },
   "husky": {
     "hooks": {

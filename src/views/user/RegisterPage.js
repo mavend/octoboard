@@ -8,7 +8,6 @@ import Layout from "components/layout/Layout";
 import OtherLoginOptions from "components/user/LoginRedirections";
 import handleAuthorization from "utils/user/handleAuthorization";
 
-
 const RegisterPage = () => {
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
@@ -21,7 +20,12 @@ const RegisterPage = () => {
   const history = useHistory();
 
   const formValid = nickname.length > 0 && email.length > 0 && password.length > 0;
-  const handleRegisterFunc = handleAuthorization(() => register(nickname, email, password), setError, setIsLoading, history);
+  const handleRegisterFunc = handleAuthorization(
+    () => register(nickname, email, password),
+    setError,
+    setIsLoading,
+    history
+  );
 
   return (
     <Layout>
@@ -65,7 +69,7 @@ const RegisterPage = () => {
                 />
               </Form.Group>
             </Form>
-            <OtherLoginOptions setError={setError} setLoading={setIsLoading}/>
+            <OtherLoginOptions setError={setError} setLoading={setIsLoading} />
           </Modal.Description>
         </Modal.Content>
       </Modal>

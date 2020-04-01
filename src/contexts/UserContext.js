@@ -3,7 +3,7 @@ import React, { createContext, useCallback, useContext, useMemo, useState } from
 import { UserClient } from "services/User";
 
 const defaultContext = {
-  user: null,
+  user: { name: "", email: "" },
 };
 
 export const UserContext = createContext(defaultContext);
