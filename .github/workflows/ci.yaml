@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: "13.8.0"
       - run: npm install
-      - run: npm run prettier-check
+      - run: npm run prettier-ci
 
   build:
     runs-on: ubuntu-latest
