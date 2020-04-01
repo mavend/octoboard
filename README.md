@@ -1,5 +1,6 @@
 ![Corona-games](https://github.com/mavend/corona-games/workflows/Corona-games/badge.svg)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/866fc714-bea9-443b-920b-3d50c022710e/deploy-status)](https://app.netlify.com/sites/corona-games/deploys)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 # Corona games
 
@@ -14,8 +15,6 @@ Run react dev server with `npm start`.
 Run game server with: `node -r esm src/server.js`.
 
 Setting `debug=true` in URL query will show debug overlay.
-
-Run `npm run prettier` before commiting your changes 🙌
 
 ## Note
 
