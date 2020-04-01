@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Item, Button, Pagination, Label, Icon } from "semantic-ui-react";
-import { useUser, UserContext } from "contexts/UserContext";
+import { UserContext } from "contexts/UserContext";
 import { paginate } from "utils/paginate";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
@@ -68,7 +68,6 @@ const RoomsListItem = ({
   disabled,
 }) => {
   const { t } = useTranslation("lobby");
-  const user = useUser();
 
   if (!game) return null;
 

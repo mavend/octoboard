@@ -7,10 +7,15 @@
     "title": "Logowanie",
     "prompt": "Zaloguj się na swoje konto",
     "actions": {
-      "guest_login": "Wejdź do gry",
+      "guest_login": "Wejdź jako gość",
       "login": "Zaloguj",
       "register": "Załóż konto"
     }
+  },
+  "change_password": {
+    "title": "Zmień hasło",
+    "prompt": "Zmień swoje hasło",
+    "success": "Hasło zmienione"
   },
   "guest": {
     "prompt": "Wpadaj do nas"

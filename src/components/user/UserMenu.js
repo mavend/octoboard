@@ -4,6 +4,8 @@ import { UserContext } from "contexts/UserContext";
 import { avatarForName } from "games/kalambury/utils/avatar";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
+import { routes } from "../../config/routes";
 
 const UserMenu = ({ style, children }) => {
   const { user, logout, getNickName } = useContext(UserContext);
@@ -29,10 +31,12 @@ const UserMenu = ({ style, children }) => {
             <Icon name="user" />
             {nickname}
           </Menu.Item>
-          <Menu.Item as="a">
-            <Icon name="exchange" />
-            {t("user.change_password")}
-          </Menu.Item>
+          {!user.isAnonymous ? (
+            <Menu.Item as={Link} to={routes.change_password()}>
+              <Icon name="exchange" />
+              {t("user.change_password")}
+            </Menu.Item>
+          ) : null}
           <Menu.Item as="a" onClick={logout}>
             <Icon name="log out" />
             {t("user.logout")}

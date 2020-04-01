@@ -7,10 +7,15 @@
     "title": "Login",
     "prompt": "Login with your name",
     "actions": {
-      "guest_login": "Enter the Game",
+      "guest_login": "Enter as guest",
       "login": "Login",
       "register": "Sign Up"
     }
+  },
+  "change_password": {
+    "title": "Change password",
+    "prompt": "Change your password",
+    "success": "Password changed"
   },
   "guest": {
     "prompt": "Come and play"

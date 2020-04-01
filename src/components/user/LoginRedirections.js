@@ -1,41 +1,42 @@
-import {Link, useLocation} from "react-router-dom";
-import {routes} from "../../config/routes";
-import {Button, Divider, Icon} from "semantic-ui-react";
+import { Link, useLocation } from "react-router-dom";
+import { routes } from "../../config/routes";
+import { Button, Divider, Icon } from "semantic-ui-react";
 import React from "react";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 import GoogleLoginOption from "./GoogleLogin";
 
-
-const OtherLoginOptions = ({setError, setLoading}) => {
+const OtherLoginOptions = ({ setError, setLoading }) => {
   const { t } = useTranslation();
   let location = useLocation();
 
   const links = [
-    {link: routes.login(), icon: "sign-in", text: t("login.actions.login"), },
-    {link: routes.register(), icon: "signup", text: t("login.actions.register")},
-    {link: routes.login_guest(), icon: "user secret", text: t("login.actions.guest_login")}
+    { link: routes.login(), icon: "sign-in", text: t("login.actions.login") },
+    { link: routes.register(), icon: "signup", text: t("login.actions.register") },
+    { link: routes.login_guest(), icon: "user secret", text: t("login.actions.guest_login") },
   ];
 
   return (
     <>
-      <Divider/>
+      <Divider />
       {links.map((link) => {
         if (link.link !== location.pathname)
-          return <OtherLoginOption link={link} key={link.link}/>
+          return <OtherLoginOption link={link} key={link.link} />;
+        return null;
       })}
-      <GoogleLoginOption setError={setError} setLoading={setLoading}/>
+      <GoogleLoginOption setError={setError} setLoading={setLoading} />
     </>
   );
 };
 
-
-const OtherLoginOption = ({link }) => {
+const OtherLoginOption = ({ link }) => {
   const location = useLocation();
   return (
-    <Link to={{
-      pathname: link.link,
-      state: location.state,
-    }}>
+    <Link
+      to={{
+        pathname: link.link,
+        state: location.state,
+      }}
+    >
       <Button>
         <Icon name={link.icon} />
         <span> {link.text}</span>
