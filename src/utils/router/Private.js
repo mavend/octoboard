@@ -15,7 +15,7 @@ export function PrivateRoute({ children, ...rest }) {
           return (
             <Redirect
               to={{
-                pathname: routes.login(),
+                pathname: routes.login_guest(),
                 state: { from: location },
               }}
             />

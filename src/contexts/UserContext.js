@@ -1,4 +1,4 @@
-import React, { createContext, useState, useMemo, useCallback, useContext } from "react";
+import React, { createContext, useCallback, useContext, useMemo, useState } from "react";
 
 import { UserClient } from "services/User";
 
@@ -18,8 +18,7 @@ export const UserContextProvider = ({ children }) => {
   }, []);
 
   const userClient = useMemo(() => {
-    const client = new UserClient(updater);
-    return client;
+    return new UserClient(updater);
   }, [updater]);
 
   if (isLoading) {
@@ -30,8 +29,10 @@ export const UserContextProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         user,
-        login: userClient.login,
-        googleLogin: userClient.googleLogin,
+        logIn: userClient.logIn,
+        logInAnonymously: userClient.logInAnonymously,
+        LogInGoogle: userClient.logInGoogle,
+        getNickName: userClient.getNickName,
         logout: userClient.logout,
         register: userClient.register,
         changePassword: userClient.changePassword,

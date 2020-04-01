@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Item, Button, Pagination, Label, Icon } from "semantic-ui-react";
-import { useUser } from "contexts/UserContext";
+import { UserContext } from "contexts/UserContext";
 import { paginate } from "utils/paginate";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "react-query";
 
 const RoomsList = ({ rooms, games, onJoinRoom, currentRoom }) => {
   const [pagesCount, setPagesCount] = useState(1);
@@ -67,7 +68,6 @@ const RoomsListItem = ({
   disabled,
 }) => {
   const { t } = useTranslation("lobby");
-  const user = useUser();
 
   if (!game) return null;
 
@@ -128,17 +128,7 @@ const RoomsListItem = ({
         </Item.Header>
         <Item.Extra>
           {currentPlayers.map((p) => (
-            <Button
-              key={p.id}
-              icon
-              labelPosition="left"
-              compact
-              size="tiny"
-              color={user.email === p.name ? "green" : null}
-            >
-              <Icon name="user" color={user.email === p.name ? null : "grey"} />
-              {p.name}
-            </Button>
+            <RoomsPlayerListItem player={p} key={p.id} />
           ))}
           {Array(maxPlayers - currentPlayers.length)
             .fill(0)
@@ -150,6 +140,23 @@ const RoomsListItem = ({
         </Item.Extra>
       </Item.Content>
     </Item>
+  );
+};
+
+const RoomsPlayerListItem = ({ player }) => {
+  const { user, getNickName } = useContext(UserContext);
+  const { data: nickname } = useQuery(["user-nickname", player.name], (key, id) => getNickName(id));
+  return (
+    <Button
+      icon
+      labelPosition="left"
+      compact
+      size="tiny"
+      color={user.uid === player.name ? "green" : null}
+    >
+      <Icon name="user" color={user.uid === player.name ? null : "grey"} />
+      {nickname ? nickname : player.name}
+    </Button>
   );
 };
 

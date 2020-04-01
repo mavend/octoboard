@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Icon, Segment, Feed, Transition, List } from "semantic-ui-react";
 import Action from "./Action";
 import { useTranslation } from "react-i18next";
+import { UserContext } from "contexts/UserContext";
+import { useQuery } from "react-query";
 
 const Player = ({
   name,
@@ -15,7 +17,8 @@ const Player = ({
   handleGuessClick,
 }) => {
   const { t } = useTranslation("kalambury");
-
+  const { getNickName } = useContext(UserContext);
+  const { data: nickname } = useQuery(["user-nickname", name], (key, id) => getNickName(id));
   if (!name || empty) {
     return (
       <Segment disabled={true}>
@@ -38,7 +41,7 @@ const Player = ({
           <Feed.Label image={avatar || "/images/avatar-empty.jpg"} />
           <Feed.Content>
             <Feed.Date>
-              {name} {isCurrentPlayer && <span>({t("sidebar.player.current")})</span>}{" "}
+              {nickname} {isCurrentPlayer && <span>({t("sidebar.player.current")})</span>}{" "}
               {!isActive && <span>({t("sidebar.player.disconnected")})</span>}
             </Feed.Date>
             <Feed.Content>

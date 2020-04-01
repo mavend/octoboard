@@ -43,7 +43,7 @@ const GamePage = () => {
 
       const freeSeatID = freeSeat.id.toString();
       apiRequests
-        .joinRoom(game.name, gameID, freeSeatID, user.email)
+        .joinRoom(game.name, gameID, freeSeatID, user.uid)
         .then((response) => {
           localStorage.setItem("playerCredentials", response.playerCredentials);
           if (cancelled) return;
@@ -71,14 +71,14 @@ const GamePage = () => {
           return;
         }
 
-        const player = room.players.find((player) => player.name === user.email);
+        const player = room.players.find((player) => player.name === user.uid);
         if (player) {
           setPlayerID(player.id.toString());
           return;
         }
 
         const currentRoom = rooms.find((room) =>
-          room.players.find((player) => player.name === user.email)
+          room.players.find((player) => player.name === user.uid)
         );
         if (currentRoom) {
           setError(t("errors.already_in_game"));
@@ -95,7 +95,7 @@ const GamePage = () => {
     return () => {
       cancelled = true;
     };
-  }, [game, gameID, t, user.email]);
+  }, [game, gameID, t, user.uid]);
 
   const handleLeave = () => {
     apiRequests

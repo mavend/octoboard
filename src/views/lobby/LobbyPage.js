@@ -30,7 +30,7 @@ const LobbyPage = () => {
     apiRequests
       .fetchRooms(games)
       .then((rooms) => {
-        const room = rooms.find((r) => r.players.find((p) => p.name === user.email));
+        const room = rooms.find((r) => r.players.find((p) => p.name === user.uid));
         if (room) {
           setCurrentRoom((currentRoom) => (isEqual(currentRoom, room) ? currentRoom : room));
         } else {
@@ -50,7 +50,7 @@ const LobbyPage = () => {
     if (!currentRoom) {
       const freeSpotId = playerID || players.find((p) => !p.name).id;
       apiRequests
-        .joinRoom(gameName, gameID, freeSpotId, user.email)
+        .joinRoom(gameName, gameID, freeSpotId, user.uid)
         .then((response) => {
           setCurrentRoom(gameID);
           localStorage.setItem("playerCredentials", response.playerCredentials);

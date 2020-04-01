@@ -1,33 +1,25 @@
 import React, { useContext, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { Modal, Form, Image, Header, Button, Message, Icon } from "semantic-ui-react";
-import { UserContext } from "contexts/UserContext";
-import { Link } from "react-router-dom";
-import { routes } from "config/routes";
+import {useHistory} from "react-router-dom";
+import { Modal, Form, Image, Header, Message} from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
+
+import { UserContext } from "contexts/UserContext";
 import Layout from "components/layout/Layout";
+import OtherLoginOptions from "components/user/LoginRedirections";
+import handleAuthorization from "utils/user/handleAuthorization";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
   const { t } = useTranslation();
-  const location = useLocation();
+  const { logIn } = useContext(UserContext);
+  const history = useHistory();
+
   const formValid = email.length > 0 && password.length > 0;
-
-  const { login, googleLogin } = useContext(UserContext);
-
-  const handleLogin = async () => {
-    try {
-      await login(email, password);
-    } catch (e) {
-      const knownErrors = ["auth/invalid-email", "auth/wrong-password"];
-
-      if (knownErrors.indexOf(e.code) >= 0) {
-        setError(e.message);
-      }
-    }
-  };
+  const handleLoginFunc = handleAuthorization(() => logIn(email, password), setError, setIsLoading, history);
 
   return (
     <Layout>
@@ -36,20 +28,21 @@ const LoginPage = () => {
         <Modal.Content image>
           <Image wrapped size="medium" src="/images/game-hugo.png" />
           <Modal.Description>
-            <Header>Login with your name</Header>
-            <Form onSubmit={handleLogin} error={!!error}>
+            <Header>{t("login.prompt")}</Header>
+            <Form onSubmit={handleLoginFunc} loading={isLoading} error={!!error}>
               <Message error content={error} />
               <Form.Input
                 autoFocus
                 type="email"
-                autoComplete="email"
-                placeholder="Email"
+                autoComplete="username"
+                maxLength="24"
+                placeholder={t("register.form.email")}
                 name={t("register.form.email")}
                 value={email}
                 onChange={(_, { value }) => setEmail(value)}
               />
               <Form.Input
-                placeholder="Password"
+                placeholder={t("register.form.password")}
                 type="password"
                 autoComplete="current-password"
                 name={t("register.form.password")}
@@ -64,17 +57,7 @@ const LoginPage = () => {
                 />
               </Form.Group>
             </Form>
-            <Link
-              to={{
-                pathname: routes.register(),
-                state: location.state,
-              }}
-            >
-              <Button content={t("login.actions.register")} />
-            </Link>
-            <Button onClick={googleLogin}>
-              <Icon name="google" />
-            </Button>
+            <OtherLoginOptions setError={setError} setLoading={setIsLoading}/>
           </Modal.Description>
         </Modal.Content>
       </Modal>

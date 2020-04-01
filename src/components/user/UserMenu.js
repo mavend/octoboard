@@ -3,9 +3,13 @@ import { Sidebar, Image, Segment, Menu, Icon } from "semantic-ui-react";
 import { UserContext } from "contexts/UserContext";
 import { avatarForName } from "games/kalambury/utils/avatar";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
+import { routes } from "../../config/routes";
 
 const UserMenu = ({ style, children }) => {
-  const { user, logout } = useContext(UserContext);
+  const { user, logout, getNickName } = useContext(UserContext);
+  const { data: nickname } = useQuery(["user-nickname", user.uid], (key, id) => getNickName(id));
   const [visible, setVisible] = useState(false);
   const { t } = useTranslation();
 
@@ -25,12 +29,14 @@ const UserMenu = ({ style, children }) => {
         >
           <Menu.Item as={"div"}>
             <Icon name="user" />
-            {user.email}
+            {nickname}
           </Menu.Item>
-          <Menu.Item as="a">
-            <Icon name="exchange" />
-            {t("user.change_password")}
-          </Menu.Item>
+          {!user.isAnonymous ? (
+            <Menu.Item as={Link} to={routes.change_password()}>
+              <Icon name="exchange" />
+              {t("user.change_password")}
+            </Menu.Item>
+          ) : null}
           <Menu.Item as="a" onClick={logout}>
             <Icon name="log out" />
             {t("user.logout")}
@@ -38,8 +44,8 @@ const UserMenu = ({ style, children }) => {
         </Sidebar>
         <Sidebar.Pusher>
           <Segment floated="right" onClick={() => setVisible(!visible)}>
-            <Image avatar bordered src={avatarForName(user.email)} />
-            <span>{user.email}</span>
+            <Image avatar bordered src={avatarForName(user.uid)} />
+            <span>{nickname}</span>
           </Segment>
 
           {children}

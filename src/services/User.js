@@ -7,13 +7,24 @@ export class UserClient {
       updater(this.user);
     };
 
-    this.login = this.login.bind(this);
-    this.googleLogin = this.googleLogin.bind(this);
+    this.logIn = this.logIn.bind(this);
+    this.logInGoogle = this.logInGoogle.bind(this);
+    this.logInAnonymously = this.logInAnonymously.bind(this);
     this.logout = this.logout.bind(this);
+    this.register = this.register.bind(this);
+    this.getNickName = this.getNickName.bind(this);
+    this.setNickName = this.setNickName.bind(this);
+    this.getUserDBRef = this.getUserDBRef.bind(this);
     this.init();
   }
 
-  async login(email, password) {
+  async logInAnonymously(nickname) {
+    const response = await FirebaseClient.auth().signInAnonymously();
+    this.user = response.user;
+    await this.setNickName(nickname);
+  }
+
+  async logIn(email, password) {
     const response = await FirebaseClient.auth().signInWithEmailAndPassword(email, password);
     if (response.user) {
       this.user = response.user;
@@ -23,7 +34,7 @@ export class UserClient {
     }
   }
 
-  async googleLogin() {
+  async logInGoogle() {
     const provider = new FirebaseClient.auth.GoogleAuthProvider();
     provider.addScope("email");
     provider.addScope("profile");
@@ -32,9 +43,11 @@ export class UserClient {
     const response = await FirebaseClient.auth().signInWithPopup(provider);
     if (response.user) {
       this.user = response.user;
+      await this.setNickName(this.user.displayName);
     } else {
       throw new Error("No user in response");
     }
+    return this.user;
   }
 
   async logout() {
@@ -48,9 +61,25 @@ export class UserClient {
     }
   }
 
-  async register(email, password) {
-    await FirebaseClient.auth().createUserWithEmailAndPassword(email, password);
-    return await this.login(email, password);
+  async setNickName(nickname) {
+    await this.getUserDBRef().set({
+      nickname: nickname,
+    });
+  }
+
+  async getNickName(uid) {
+    const result = await this.getUserDBRef(uid).get();
+    if (result.exists && result.data()) {
+      return result.data().nickname;
+    } else {
+      return "Guest";
+    }
+  }
+
+  async register(nickname, email, password) {
+    const response = await FirebaseClient.auth().createUserWithEmailAndPassword(email, password);
+    await this.setNickName(nickname);
+    return response;
   }
 
   async changePassword(password) {
@@ -69,19 +98,25 @@ export class UserClient {
     FirebaseClient.auth().onAuthStateChanged(async (user) => {
       if (user) {
         this.user = user;
+        this.getUserDBRef().onSnapshot((doc) => {
+          const userData = doc.data();
+          if (userData) {
+            this.user.nickname = doc.data().nickname;
+            this.updateUser();
+          }
+        });
         this.updateUser();
       } else {
         this.logout();
       }
     });
+  }
 
-    FirebaseClient.auth().onIdTokenChanged(async (user) => {
-      if (user) {
-        this.user = user;
-        this.updateUser();
-      } else {
-        this.logout();
-      }
-    });
+  getUserDBRef(uid) {
+    let user_uid = this.user.uid;
+    if (uid) {
+      user_uid = uid;
+    }
+    return FirebaseClient.firestore().collection("users").doc(user_uid);
   }
 }
