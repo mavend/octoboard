@@ -30,8 +30,12 @@ const OtherLoginOptions = ({setError, setLoading}) => {
 
 
 const OtherLoginOption = ({link }) => {
+  const location = useLocation();
   return (
-    <Link to={link.link}>
+    <Link to={{
+      pathname: link.link,
+      state: location.state,
+    }}>
       <Button>
         <Icon name={link.icon} />
         <span> {link.text}</span>

@@ -19,7 +19,6 @@ const Player = ({
   const { t } = useTranslation("kalambury");
   const { getNickName } = useContext(UserContext);
   const { data: nickname } = useQuery(["user-nickname", name], (key, id) => getNickName(id));
-
   if (!name || empty) {
     return (
       <Segment disabled={true}>

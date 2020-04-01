@@ -19,7 +19,7 @@
     "title": "Zakładanie konta",
     "prompt": "Wypełnij poniższy formularz",
     "form": {
-      "nickname": "Ksywka",
+      "nickname": "Nazwa użytkownika",
       "email": "Email",
       "password": "Hasło",
       "confirm_password": "Potwierdzenie hasła",
