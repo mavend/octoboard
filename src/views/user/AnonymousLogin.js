@@ -1,10 +1,9 @@
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Modal, Form, Image, Header, Message } from "semantic-ui-react";
-import { useTranslation } from "react-i18next";
 
 import { UserContext } from "contexts/UserContext";
-import OtherLoginOptions from "components/user/LoginRedirections";
+import CredentialsLayout from "components/layout/CredentialsLayout";
+import GuestForm from "components/user/forms/GuestForm";
 import handleAuthorization from "utils/user/handleAuthorization";
 
 const AnonymousLoginPage = () => {
@@ -12,7 +11,6 @@ const AnonymousLoginPage = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { t } = useTranslation();
   const { logInAnonymously } = useContext(UserContext);
   const history = useHistory();
 
@@ -25,34 +23,22 @@ const AnonymousLoginPage = () => {
   );
 
   return (
-    <Modal open={true}>
-      <Modal.Header>{t("guest.prompt")}</Modal.Header>
-      <Modal.Content image>
-        <Image wrapped size="medium" src="/images/game-hugo.png" />
-        <Modal.Description>
-          <Header>{t("login.actions.guest_login")}</Header>
-          <Form onSubmit={handleLoginFunc} loading={isLoading} error={!!error}>
-            <Message error content={error} />
-            <Form.Input
-              autoFocus
-              maxLength="24"
-              placeholder={t("register.form.nickname")}
-              name={t("register.form.nickname")}
-              value={nickname}
-              onChange={(_, { value }) => setNickname(value)}
-            />
-            <Form.Group>
-              <Form.Button
-                disabled={!formValid}
-                color="green"
-                content={t("login.actions.guest_login")}
-              />
-            </Form.Group>
-          </Form>
-          <OtherLoginOptions setError={setError} setLoading={setIsLoading} />
-        </Modal.Description>
-      </Modal.Content>
-    </Modal>
+    <CredentialsLayout
+      withLoginOptions
+      action="guest"
+      {...{
+        setError,
+        setIsLoading,
+        handleLoginFunc,
+        isLoading,
+        error,
+        nickname,
+        setNickname,
+        formValid,
+      }}
+    >
+      <GuestForm />
+    </CredentialsLayout>
   );
 };
 

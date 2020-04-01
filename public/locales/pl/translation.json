@@ -3,34 +3,6 @@
     "change_password": "Zmień hasło",
     "logout": "Wyloguj"
   },
-  "login": {
-    "title": "Logowanie",
-    "prompt": "Zaloguj się na swoje konto",
-    "actions": {
-      "guest_login": "Wejdź jako gość",
-      "login": "Zaloguj",
-      "register": "Załóż konto"
-    }
-  },
-  "change_password": {
-    "title": "Zmień hasło",
-    "prompt": "Zmień swoje hasło",
-    "success": "Hasło zmienione"
-  },
-  "guest": {
-    "prompt": "Wpadaj do nas"
-  },
-  "register": {
-    "title": "Zakładanie konta",
-    "prompt": "Wypełnij poniższy formularz",
-    "form": {
-      "nickname": "Nazwa użytkownika",
-      "email": "Email",
-      "password": "Hasło",
-      "confirm_password": "Potwierdzenie hasła",
-      "submit": "Załóż konto"
-    }
-  },
   "footer": {
     "github": "Jesteśmy na GitHubie",
     "graphics": "Grafiki od"

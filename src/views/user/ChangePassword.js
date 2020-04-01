@@ -1,11 +1,11 @@
 import { useHistory } from "react-router-dom";
 import React, { useContext, useState } from "react";
-import { Modal, Form, Image, Header, Message } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 
 import { UserContext } from "contexts/UserContext";
-import Layout from "components/layout/Layout";
 import { routes } from "../../config/routes";
+import CredentialsLayout from "components/layout/CredentialsLayout";
+import ChangePasswordForm from "components/user/forms/ChangePasswordForm";
 
 const ChangePassword = () => {
   const [newPassword, setNewPassword] = useState("");
@@ -13,7 +13,7 @@ const ChangePassword = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("credentials");
   const { changePassword } = useContext(UserContext);
   const history = useHistory();
 
@@ -31,48 +31,30 @@ const ChangePassword = () => {
     setSuccess(t("change_password.success"));
   };
 
+  const modalOptions = {
+    closeIcon: true,
+    onClose: () => history.push(routes.lobby()),
+  };
+
   return (
-    <Layout>
-      <Modal
-        open={true}
-        closeIcon
-        onClose={() => {
-          history.push(routes.lobby());
-        }}
-      >
-        <Modal.Header>{t("change_password.title")}</Modal.Header>
-        <Modal.Content image>
-          <Image wrapped size="medium" src="/images/game-hugo.png" />
-          <Modal.Description>
-            <Header>{t("change_password.title")}</Header>
-            <Form
-              onSubmit={handleChangePassword}
-              loading={isLoading}
-              error={!!error}
-              success={!!success}
-            >
-              <Message error content={error} />
-              <Message success content={success} />
-              <Form.Input
-                placeholder={t("register.form.password")}
-                type="password"
-                autoComplete="current-password"
-                name={t("register.form.password")}
-                value={newPassword}
-                onChange={(_, { value }) => setNewPassword(value)}
-              />
-              <Form.Group>
-                <Form.Button
-                  disabled={!formValid}
-                  color="green"
-                  content={t("change_password.prompt")}
-                />
-              </Form.Group>
-            </Form>
-          </Modal.Description>
-        </Modal.Content>
-      </Modal>
-    </Layout>
+    <CredentialsLayout
+      action="change_password"
+      {...{
+        modalOptions,
+        history,
+        setError,
+        setIsLoading,
+        isLoading,
+        error,
+        handleChangePassword,
+        success,
+        newPassword,
+        setNewPassword,
+        formValid,
+      }}
+    >
+      <ChangePasswordForm />
+    </CredentialsLayout>
   );
 };
 

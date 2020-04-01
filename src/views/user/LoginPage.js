@@ -1,12 +1,10 @@
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Modal, Form, Image, Header, Message } from "semantic-ui-react";
-import { useTranslation } from "react-i18next";
 
 import { UserContext } from "contexts/UserContext";
-import Layout from "components/layout/Layout";
-import OtherLoginOptions from "components/user/LoginRedirections";
 import handleAuthorization from "utils/user/handleAuthorization";
+import CredentialsLayout from "components/layout/CredentialsLayout";
+import LoginForm from "components/user/forms/LoginForm";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -14,7 +12,6 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const { t } = useTranslation();
   const { logIn } = useContext(UserContext);
   const history = useHistory();
 
@@ -27,46 +24,24 @@ const LoginPage = () => {
   );
 
   return (
-    <Layout>
-      <Modal open={true}>
-        <Modal.Header>{t("login.title")}</Modal.Header>
-        <Modal.Content image>
-          <Image wrapped size="medium" src="/images/game-hugo.png" />
-          <Modal.Description>
-            <Header>{t("login.prompt")}</Header>
-            <Form onSubmit={handleLoginFunc} loading={isLoading} error={!!error}>
-              <Message error content={error} />
-              <Form.Input
-                autoFocus
-                type="email"
-                autoComplete="username"
-                maxLength="24"
-                placeholder={t("register.form.email")}
-                name={t("register.form.email")}
-                value={email}
-                onChange={(_, { value }) => setEmail(value)}
-              />
-              <Form.Input
-                placeholder={t("register.form.password")}
-                type="password"
-                autoComplete="current-password"
-                name={t("register.form.password")}
-                value={password}
-                onChange={(_, { value }) => setPassword(value)}
-              />
-              <Form.Group>
-                <Form.Button
-                  disabled={!formValid}
-                  color="green"
-                  content={t("login.actions.login")}
-                />
-              </Form.Group>
-            </Form>
-            <OtherLoginOptions setError={setError} setLoading={setIsLoading} />
-          </Modal.Description>
-        </Modal.Content>
-      </Modal>
-    </Layout>
+    <CredentialsLayout
+      withLoginOptions
+      action="login"
+      {...{
+        setError,
+        setIsLoading,
+        handleLoginFunc,
+        isLoading,
+        error,
+        email,
+        setEmail,
+        password,
+        setPassword,
+        formValid,
+      }}
+    >
+      <LoginForm />
+    </CredentialsLayout>
   );
 };
 
