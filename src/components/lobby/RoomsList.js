@@ -4,7 +4,6 @@ import { UserContext } from "contexts/UserContext";
 import { paginate } from "utils/paginate";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
-import { DESKTOP_MIN_WIDTH, MOBILE_MAX_WIDTH } from "config/constants";
 
 const RoomsList = ({ rooms, games, onJoinRoom, currentRoom }) => {
   const [pagesCount, setPagesCount] = useState(1);
@@ -150,27 +149,27 @@ const RoomsListItem = ({
         avatar
         size="tiny"
         src={game.image}
-        minWidth={DESKTOP_MIN_WIDTH}
+        minWidth={Responsive.onlyComputer.minWidth}
       />
       <Item.Content>
         <Item.Header style={{ display: "block" }}>
           {game.name}
-          <Responsive as={"span"} minWidth={DESKTOP_MIN_WIDTH}>
+          <Responsive as={"span"} minWidth={Responsive.onlyComputer.minWidth}>
             <RoomLabels detailed labelsStyle={{ marginLeft: "1rem" }} />
             <JoinGameButton floated="right" />
           </Responsive>
-          <Responsive as={"span"} maxWidth={MOBILE_MAX_WIDTH}>
+          <Responsive as={"span"} maxWidth={Responsive.onlyTablet.maxWidth}>
             <JoinGameButton style={{ marginLeft: "1rem" }} size="small" />
           </Responsive>
         </Item.Header>
-        <Responsive as={Item.Description} maxWidth={MOBILE_MAX_WIDTH}>
+        <Responsive as={Item.Description} maxWidth={Responsive.onlyTablet.maxWidth}>
           <RoomLabels />
         </Responsive>
         <Item.Extra>
-          <Responsive as={"span"} minWidth={DESKTOP_MIN_WIDTH}>
+          <Responsive as={"span"} minWidth={Responsive.onlyComputer.minWidth}>
             <RoomMembers detailed />
           </Responsive>
-          <Responsive as={"span"} maxWidth={MOBILE_MAX_WIDTH}>
+          <Responsive as={"span"} maxWidth={Responsive.onlyTablet.maxWidth}>
             <RoomMembers />
           </Responsive>
         </Item.Extra>

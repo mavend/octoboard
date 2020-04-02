@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
   Container,
   Header,
@@ -10,10 +9,7 @@ import {
   Loader,
   Responsive,
 } from "semantic-ui-react";
-
-import { DESKTOP_MIN_WIDTH, MOBILE_MAX_WIDTH } from "config/constants";
 import { useTranslation } from "react-i18next";
-
 import RoomsList from "components/lobby/RoomsList";
 import CreateRoomForm from "components/lobby/CreateRoomForm";
 
@@ -79,7 +75,7 @@ const Lobby = ({
 
   return (
     <Container>
-      <Responsive as={Grid} minWidth={DESKTOP_MIN_WIDTH}>
+      <Responsive as={Grid} minWidth={Responsive.onlyComputer.minWidth}>
         <Grid.Column width="12">
           <RoomsListSegment />
         </Grid.Column>
@@ -87,7 +83,7 @@ const Lobby = ({
           <CreateRoomSegment />
         </Grid.Column>
       </Responsive>
-      <Responsive as={Grid} maxWidth={MOBILE_MAX_WIDTH}>
+      <Responsive as={Grid} maxWidth={Responsive.onlyTablet.maxWidth}>
         {!currentRoom && (
           <Grid.Row>
             <Grid.Column>

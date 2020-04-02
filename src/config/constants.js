@@ -11,5 +11,3 @@ export const COLORS = [
   "#f4d0b5",
   "#a5673f",
 ];
-export const DESKTOP_MIN_WIDTH = 992;
-export const MOBILE_MAX_WIDTH = DESKTOP_MIN_WIDTH - 1;

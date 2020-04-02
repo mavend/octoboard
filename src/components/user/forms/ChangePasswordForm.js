@@ -16,10 +16,12 @@ const ChangePasswordForm = ({
     <Message error content={error} />
     <Message success content={success} />
     <Form.Input
+      autoFocus
       placeholder={t("form.password")}
+      label={t("form.new_password")}
       type="password"
-      autoComplete="current-password"
-      name={t("form.password")}
+      autoComplete="new-password"
+      name={t("form.new_password")}
       value={newPassword}
       onChange={(_, { value }) => setNewPassword(value)}
     />

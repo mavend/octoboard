@@ -6,6 +6,8 @@ import handleAuthorization from "utils/user/handleAuthorization";
 import CredentialsLayout from "components/layout/CredentialsLayout";
 import LoginForm from "components/user/forms/LoginForm";
 
+import OtherLoginOptions from "components/user/LoginRedirections";
+
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,23 +26,20 @@ const LoginPage = () => {
   );
 
   return (
-    <CredentialsLayout
-      withLoginOptions
-      action="login"
-      {...{
-        setError,
-        setIsLoading,
-        handleLoginFunc,
-        isLoading,
-        error,
-        email,
-        setEmail,
-        password,
-        setPassword,
-        formValid,
-      }}
-    >
-      <LoginForm />
+    <CredentialsLayout action="login">
+      <LoginForm
+        {...{
+          handleLoginFunc,
+          isLoading,
+          error,
+          email,
+          setEmail,
+          password,
+          setPassword,
+          formValid,
+        }}
+      />
+      <OtherLoginOptions setError={setError} setLoading={setIsLoading} />
     </CredentialsLayout>
   );
 };

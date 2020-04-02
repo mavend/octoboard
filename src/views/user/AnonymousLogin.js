@@ -6,6 +6,8 @@ import CredentialsLayout from "components/layout/CredentialsLayout";
 import GuestForm from "components/user/forms/GuestForm";
 import handleAuthorization from "utils/user/handleAuthorization";
 
+import OtherLoginOptions from "components/user/LoginRedirections";
+
 const AnonymousLoginPage = () => {
   const [nickname, setNickname] = useState("");
   const [error, setError] = useState(null);
@@ -23,21 +25,18 @@ const AnonymousLoginPage = () => {
   );
 
   return (
-    <CredentialsLayout
-      withLoginOptions
-      action="guest"
-      {...{
-        setError,
-        setIsLoading,
-        handleLoginFunc,
-        isLoading,
-        error,
-        nickname,
-        setNickname,
-        formValid,
-      }}
-    >
-      <GuestForm />
+    <CredentialsLayout action="guest">
+      <GuestForm
+        {...{
+          handleLoginFunc,
+          isLoading,
+          error,
+          nickname,
+          setNickname,
+          formValid,
+        }}
+      />
+      <OtherLoginOptions setError={setError} setLoading={setIsLoading} />
     </CredentialsLayout>
   );
 };

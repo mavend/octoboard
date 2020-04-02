@@ -17,6 +17,7 @@ const LoginForm = ({
     <Message error content={error} />
     <Form.Input
       autoFocus
+      label={t("form.email")}
       type="email"
       autoComplete="username"
       maxLength="24"
@@ -26,6 +27,7 @@ const LoginForm = ({
       onChange={(_, { value }) => setEmail(value)}
     />
     <Form.Input
+      label={t("form.password")}
       placeholder={t("form.password")}
       type="password"
       autoComplete="current-password"
