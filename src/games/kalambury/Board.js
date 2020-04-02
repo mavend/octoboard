@@ -5,7 +5,6 @@ import { avatarForName } from "./utils/avatar";
 import { useTranslation } from "react-i18next";
 import WaitingBoard from "./board/WaitingBoard";
 import GameBoard from "./board/GameBoard";
-import { DESKTOP_MIN_WIDTH, MOBILE_MAX_WIDTH } from "config/constants";
 
 const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
   const { players, actions, canChangePhrase } = G;
@@ -112,7 +111,7 @@ const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
           {t("game.name")}
         </Header>
       </Segment>
-      <Responsive as={Grid} minWidth={DESKTOP_MIN_WIDTH}>
+      <Responsive as={Grid} minWidth={Responsive.onlyComputer.minWidth}>
         <Grid.Column width="12">
           <Grid.Row>
             <GameContent />
@@ -124,7 +123,7 @@ const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
           </Grid.Row>
         </Grid.Column>
       </Responsive>
-      <Responsive as={Grid} maxWidth={MOBILE_MAX_WIDTH}>
+      <Responsive as={Grid} maxWidth={Responsive.onlyTablet.maxWidth}>
         <Grid.Row>
           <Grid.Column>
             <GameContent />

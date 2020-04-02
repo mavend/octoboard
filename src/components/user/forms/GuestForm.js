@@ -8,6 +8,7 @@ const GuestForm = ({ t, handleLoginFunc, isLoading, error, nickname, setNickname
     <Form.Input
       autoFocus
       maxLength="24"
+      label={t("form.nickname")}
       placeholder={t("form.nickname")}
       name={t("form.nickname")}
       value={nickname}

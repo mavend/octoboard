@@ -6,6 +6,8 @@ import CredentialsLayout from "components/layout/CredentialsLayout";
 import RegisterForm from "components/user/forms/RegisterForm";
 import handleAuthorization from "utils/user/handleAuthorization";
 
+import OtherLoginOptions from "components/user/LoginRedirections";
+
 const RegisterPage = () => {
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
@@ -25,25 +27,22 @@ const RegisterPage = () => {
   );
 
   return (
-    <CredentialsLayout
-      withLoginOptions
-      action="register"
-      {...{
-        setError,
-        setIsLoading,
-        handleRegisterFunc,
-        isLoading,
-        error,
-        nickname,
-        setNickname,
-        email,
-        setEmail,
-        password,
-        setPassword,
-        formValid,
-      }}
-    >
-      <RegisterForm />
+    <CredentialsLayout action="register">
+      <RegisterForm
+        {...{
+          handleRegisterFunc,
+          isLoading,
+          error,
+          nickname,
+          setNickname,
+          email,
+          setEmail,
+          password,
+          setPassword,
+          formValid,
+        }}
+      />
+      <OtherLoginOptions setError={setError} setLoading={setIsLoading} />
     </CredentialsLayout>
   );
 };

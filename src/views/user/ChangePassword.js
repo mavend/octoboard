@@ -37,23 +37,18 @@ const ChangePassword = () => {
   };
 
   return (
-    <CredentialsLayout
-      action="change_password"
-      {...{
-        modalOptions,
-        history,
-        setError,
-        setIsLoading,
-        isLoading,
-        error,
-        handleChangePassword,
-        success,
-        newPassword,
-        setNewPassword,
-        formValid,
-      }}
-    >
-      <ChangePasswordForm />
+    <CredentialsLayout action="change_password" modalOptions={modalOptions}>
+      <ChangePasswordForm
+        {...{
+          handleChangePassword,
+          isLoading,
+          error,
+          success,
+          newPassword,
+          setNewPassword,
+          formValid,
+        }}
+      />
     </CredentialsLayout>
   );
 };

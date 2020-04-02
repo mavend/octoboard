@@ -1,7 +1,6 @@
 import React from "react";
-import { Segment, Progress } from "semantic-ui-react";
+import { Segment, Progress, Responsive } from "semantic-ui-react";
 import smooth_path from "./utils/smooth_path";
-import { MOBILE_MAX_WIDTH } from "config/constants";
 
 const Drawing = ({ lines, remainingSeconds, drawable, ...props }) => {
   const styles = {
@@ -42,7 +41,9 @@ const DrawingLine = ({ line: { points, color, width } }) => (
   <path
     fill="none"
     stroke={color}
-    strokeWidth={window.innerWidth <= MOBILE_MAX_WIDTH && width < 10 ? width * 2 : width}
+    strokeWidth={
+      window.innerWidth <= Responsive.onlyTablet.maxWidth && width < 10 ? width * 2 : width
+    }
     strokeLinecap="round"
     d={smooth_path(points, 0.12)}
   />
