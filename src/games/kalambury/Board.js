@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Container, Header, Grid } from "semantic-ui-react";
 import Sidebar from "./Sidebar";
-import { avatarForName } from "./utils/avatar";
 import { useTranslation } from "react-i18next";
 import WaitingBoard from "./board/WaitingBoard";
 import GameBoard from "./board/GameBoard";
@@ -14,8 +13,6 @@ const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
 
   const [guess, setGuess] = useState("");
   const playerData = players[playerID];
-  const playerMetadata = gameMetadata[playerID] || {};
-  const playerName = playerMetadata.name;
   const isDrawing = activePlayers[playerID] === "draw";
   const hasGameStarted = phase === "play";
   const canManageGame = activePlayers[playerID] === "manage";
@@ -23,16 +20,21 @@ const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
   const guessInputRef = useRef();
 
   useEffect(() => {
-    const pingPlayersData = () => {
-      Ping({
-        name: playerName,
-        avatar: avatarForName(playerName),
-      });
-    };
-    pingPlayersData();
-    let interval = setInterval(pingPlayersData, 1000);
+    // resync after connection to broadcast updated gameMetadata
+    if (rawClient) {
+      const {
+        transport: { socket, gameID, playerID, numPlayers },
+      } = rawClient;
+      const timeout = setTimeout(() => socket.emit("sync", gameID, playerID, numPlayers), 500);
+      return () => clearTimeout(timeout);
+    }
+  }, [rawClient]);
+
+  useEffect(() => {
+    Ping();
+    let interval = setInterval(Ping, 1000);
     return () => clearInterval(interval);
-  }, [Ping, playerName]);
+  }, [Ping]);
 
   const styles = {
     mainHeader: {
@@ -53,9 +55,7 @@ const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
   };
 
   const getUserActions = (actions, _playerID, actionType) => {
-    let allActions = [...actions]
-      .reverse()
-      .filter(({ playerID, action }) => playerID === _playerID);
+    let allActions = [...actions].reverse().filter(({ playerID }) => playerID === _playerID);
     if (actionType) {
       return allActions.filter(({ action }) => action === actionType);
     }

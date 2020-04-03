@@ -1,12 +1,11 @@
-import React, { useContext, useState } from "react";
-import {useHistory} from "react-router-dom";
-import {Modal, Form, Image, Header, Message } from "semantic-ui-react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { Modal, Form, Image, Header, Message } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 
-import { UserContext } from "contexts/UserContext";
+import AuthProvider from "services/Auth";
 import OtherLoginOptions from "components/user/LoginRedirections";
 import handleAuthorization from "utils/user/handleAuthorization";
-
 
 const AnonymousLoginPage = () => {
   const [nickname, setNickname] = useState("");
@@ -14,11 +13,15 @@ const AnonymousLoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { t } = useTranslation();
-  const { logInAnonymously } = useContext(UserContext);
   const history = useHistory();
 
   const formValid = nickname.length > 0;
-  const handleLoginFunc = handleAuthorization(() => logInAnonymously(nickname), setError, setIsLoading, history);
+  const handleLoginFunc = handleAuthorization(
+    () => AuthProvider.logInAnonymously(nickname),
+    setError,
+    setIsLoading,
+    history
+  );
 
   return (
     <Modal open={true}>
@@ -45,7 +48,7 @@ const AnonymousLoginPage = () => {
               />
             </Form.Group>
           </Form>
-          <OtherLoginOptions setError={setError} setLoading={setIsLoading}/>
+          <OtherLoginOptions setError={setError} setLoading={setIsLoading} />
         </Modal.Description>
       </Modal.Content>
     </Modal>

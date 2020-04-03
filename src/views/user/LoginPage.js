@@ -1,9 +1,9 @@
-import React, { useContext, useState } from "react";
-import {useHistory} from "react-router-dom";
-import { Modal, Form, Image, Header, Message} from "semantic-ui-react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { Modal, Form, Image, Header, Message } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
+import AuthProvider from "services/Auth";
 
-import { UserContext } from "contexts/UserContext";
 import Layout from "components/layout/Layout";
 import OtherLoginOptions from "components/user/LoginRedirections";
 import handleAuthorization from "utils/user/handleAuthorization";
@@ -15,11 +15,15 @@ const LoginPage = () => {
   const [error, setError] = useState(null);
 
   const { t } = useTranslation();
-  const { logIn } = useContext(UserContext);
   const history = useHistory();
 
   const formValid = email.length > 0 && password.length > 0;
-  const handleLoginFunc = handleAuthorization(() => logIn(email, password), setError, setIsLoading, history);
+  const handleLoginFunc = handleAuthorization(
+    () => AuthProvider.logIn(email, password),
+    setError,
+    setIsLoading,
+    history
+  );
 
   return (
     <Layout>
@@ -57,7 +61,7 @@ const LoginPage = () => {
                 />
               </Form.Group>
             </Form>
-            <OtherLoginOptions setError={setError} setLoading={setIsLoading}/>
+            <OtherLoginOptions setError={setError} setLoading={setIsLoading} />
           </Modal.Description>
         </Modal.Content>
       </Modal>

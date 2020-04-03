@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Item, Button, Pagination, Label, Icon } from "semantic-ui-react";
-import { UserContext } from "contexts/UserContext";
+import { useUser, useProfiles } from "contexts/UserContext";
 import { paginate } from "utils/paginate";
 import { useTranslation } from "react-i18next";
-import { useQuery } from "react-query";
 
 const RoomsList = ({ rooms, games, onJoinRoom, currentRoom }) => {
   const [pagesCount, setPagesCount] = useState(1);
@@ -143,19 +142,15 @@ const RoomsListItem = ({
   );
 };
 
-const RoomsPlayerListItem = ({ player }) => {
-  const { user, getNickName } = useContext(UserContext);
-  const { data: nickname } = useQuery(["user-nickname", player.name], (key, id) => getNickName(id));
+const RoomsPlayerListItem = ({ player: { name } }) => {
+  const { uid } = useUser();
+  const profiles = useProfiles();
+  const profile = profiles.get(name);
+
   return (
-    <Button
-      icon
-      labelPosition="left"
-      compact
-      size="tiny"
-      color={user.uid === player.name ? "green" : null}
-    >
-      <Icon name="user" color={user.uid === player.name ? null : "grey"} />
-      {nickname ? nickname : player.name}
+    <Button icon labelPosition="left" compact size="tiny" color={uid === name ? "green" : null}>
+      <Icon name="user" color={uid === name ? null : "grey"} />
+      {profile.displayName}
     </Button>
   );
 };

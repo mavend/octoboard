@@ -5,7 +5,7 @@ import { PAGE_TITLE } from "config/constants";
 import { routes } from "config/routes";
 import history from "config/history";
 
-import { UserContextProvider } from "contexts/UserContext";
+import { UserProvider } from "contexts/UserContext";
 import { PrivateRoute } from "utils/router/Private";
 import { NotLoggedInRoute } from "utils/router/NotLoggedInRoute";
 import { ErrorBoundary } from "services/Airbrake";
@@ -21,7 +21,7 @@ const App = () => {
   return (
     <>
       <ErrorBoundary>
-        <UserContextProvider>
+        <UserProvider>
           <HelmetProvider>
             <Helmet titleTemplate={PAGE_TITLE} defaultTitle={PAGE_TITLE} />
           </HelmetProvider>
@@ -47,7 +47,7 @@ const App = () => {
               </PrivateRoute>
             </Switch>
           </Router>
-        </UserContextProvider>
+        </UserProvider>
       </ErrorBoundary>
     </>
   );

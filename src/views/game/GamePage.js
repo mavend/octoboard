@@ -9,6 +9,7 @@ import { routes } from "config/routes";
 import { gameComponents } from "games";
 import { useUser } from "contexts/UserContext";
 import { getUrlParam } from "utils/url";
+import DataStore from "services/DataStore";
 import { apiRequests } from "services/API";
 import { useTranslation } from "react-i18next";
 
@@ -33,6 +34,7 @@ const GamePage = () => {
     // promises from executing by changing cancalled to true
     // TODO: wrap in usePromise custom hook
     let cancelled = false;
+    if (!(game && gameID && user.uid)) return;
 
     const joinFreeSeat = (room, maxRetries = 3) => {
       const freeSeat = room.players.find((p) => !p.name);
@@ -65,6 +67,10 @@ const GamePage = () => {
       .fetchRooms([game])
       .then((rooms) => {
         if (cancelled) return;
+
+        const localCredentials = localStorage.getItem("playerCredentials");
+        setCredentials(localCredentials);
+
         const room = rooms.find((room) => room.gameID === gameID);
         if (!room) {
           setError(t("errors.no_game"));
@@ -72,7 +78,7 @@ const GamePage = () => {
         }
 
         const player = room.players.find((player) => player.name === user.uid);
-        if (player) {
+        if (player && localCredentials) {
           setPlayerID(player.id.toString());
           return;
         }
@@ -100,8 +106,8 @@ const GamePage = () => {
   const handleLeave = () => {
     apiRequests
       .leaveGame(game.name, gameID, playerID, credentials)
-      .then(() => {
-        console.log("Game left!");
+      .then(async () => {
+        await DataStore.deleteCredentials(user.uid, gameID);
         history.push(routes.lobby());
       })
       .catch((e) => {
@@ -109,7 +115,7 @@ const GamePage = () => {
       });
   };
 
-  const NewGameCLient = Client({
+  const NewGameClient = Client({
     game: game,
     board: board,
     loading: Loading,
@@ -122,7 +128,7 @@ const GamePage = () => {
       {error && <Redirect pass to={{ pathname: routes.lobby(), state: { error: error } }} />}
       {gameName && gameID && playerID && (
         <>
-          <NewGameCLient playerID={playerID} gameID={gameID} credentials={credentials} />
+          <NewGameClient playerID={playerID} gameID={gameID} credentials={credentials} />
           <Container style={{ marginTop: "20px" }}>
             <Button color="red" onClick={() => setConfirmOpen(true)}>
               <Icon name="close" />
