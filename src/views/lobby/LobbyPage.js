@@ -5,6 +5,7 @@ import { Container, Header, Image, Segment, Grid, Dimmer, Loader, Label } from "
 
 import { routes } from "config/routes";
 import { gameComponents } from "games";
+import DataStore from "services/DataStore";
 import { apiRequests } from "services/API";
 import { useUser } from "contexts/UserContext";
 import { useTranslation } from "react-i18next";
@@ -51,10 +52,10 @@ const LobbyPage = () => {
       const freeSpotId = playerID || players.find((p) => !p.name).id;
       apiRequests
         .joinRoom(gameName, gameID, freeSpotId, user.uid)
-        .then((response) => {
-          setCurrentRoom(gameID);
-          localStorage.setItem("playerCredentials", response.playerCredentials);
+        .then(async (response) => {
+          await DataStore.addCredentials(user.uid, gameID, response.playerCredentials);
           history.push(routes.game(gameName, gameID));
+          setCurrentRoom(gameID);
         })
         .catch((e) => setError(e.message));
     } else {
@@ -62,13 +63,13 @@ const LobbyPage = () => {
     }
   };
 
-  const handleCreate = (gameName, players, gameOptions) => {
-    if (!currentRoom && gameName && players) {
+  const handleCreate = (gameName, numPlayers, gameOptions) => {
+    if (!currentRoom && gameName && numPlayers) {
       setLoading(true);
       apiRequests
-        .createRoom(gameName, players, gameOptions)
+        .createRoom(gameName, numPlayers, gameOptions)
         .then(({ gameID }) => {
-          history.push(routes.game(gameName, gameID));
+          handleJoinRoom({ gameName, gameID, playerID: "0" });
           setLoading(false);
         })
         .catch((e) => setError(e.message));
@@ -80,10 +81,10 @@ const LobbyPage = () => {
   useEffect(() => {
     const { state } = location;
     if (state && state.error) {
-      setError(state.error);
+      setError(t(state.error));
       history.replace({ state: { ...state, error: null } });
     }
-  }, [location, history, setError]);
+  }, [location, history, setError, t]);
 
   useEffect(() => {
     fetchRooms();

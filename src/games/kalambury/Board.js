@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Container, Header, Grid } from "semantic-ui-react";
-import Sidebar from "./Sidebar";
 import { useTranslation } from "react-i18next";
+import { Container, Header, Grid } from "semantic-ui-react";
+import { filter, reverse } from "lodash";
+import Sidebar from "./Sidebar";
 import WaitingBoard from "./board/WaitingBoard";
 import GameBoard from "./board/GameBoard";
 
@@ -54,10 +55,10 @@ const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
     }
   };
 
-  const getUserActions = (actions, _playerID, actionType) => {
-    let allActions = [...actions].reverse().filter(({ playerID }) => playerID === _playerID);
+  const getUserActions = (actions, playerID, actionType) => {
+    let allActions = reverse(filter(actions, { playerID: playerID.toString() }));
     if (actionType) {
-      return allActions.filter(({ action }) => action === actionType);
+      return filter(allActions, { action: actionType });
     }
     return allActions;
   };

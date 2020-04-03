@@ -2,9 +2,10 @@ import FirebaseClient from "./Firebase";
 import DataStore from "./DataStore";
 import { avatarForName } from "utils/avatar";
 
-async function updateProfile(user, { displayName }) {
+async function initUserProfile(user, { displayName }) {
   const photoURL = avatarForName(user.uid);
   await DataStore.updateProfile(user.uid, { displayName, photoURL });
+  await DataStore.setCredentials(user.uid, {});
   await user.updateProfile({ displayName, photoURL });
 }
 
@@ -14,7 +15,7 @@ const AuthProvider = {
   logInAnonymously: async (displayName) => {
     const { user } = await FirebaseAuth.signInAnonymously();
     if (!user) throw new Error("No user in response");
-    await updateProfile(user, { displayName });
+    await initUserProfile(user, { displayName });
     return user;
   },
   logIn: async (email, password) => {
@@ -31,13 +32,13 @@ const AuthProvider = {
     const { user } = await FirebaseAuth.signInWithPopup(provider);
     if (!user) throw new Error("No user in response");
     const { displayName } = user;
-    await updateProfile(user, { displayName });
+    await initUserProfile(user, { displayName });
     return user;
   },
   register: async (displayName, email, password) => {
     const { user } = await FirebaseAuth.createUserWithEmailAndPassword(email, password);
     if (!user) throw new Error("No user in response");
-    await updateProfile(user, { displayName });
+    await initUserProfile(user, { displayName });
     return user;
   },
   logout: async () => {

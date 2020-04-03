@@ -12,7 +12,7 @@ export const profilesMap = (profiles = []) => new MapWithDefault(profiles, defau
 const defaultContext = {
   user: null,
   profiles: profilesMap(),
-  credentials: {},
+  credentials: null,
 };
 
 export const UserContext = createContext(defaultContext);
@@ -21,7 +21,7 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [profiles, setProfiles] = useState(profilesMap());
-  const [credentials, setCredentials] = useState({});
+  const [credentials, setCredentials] = useState();
 
   useEffect(() => {
     const unsubscribe = AuthProvider.onAuthChange((user) => {
@@ -32,15 +32,21 @@ export const UserProvider = ({ children }) => {
   }, [profiles, setUser, setLoading]);
 
   useEffect(() => {
-    const unsubProfiles = DataStore.subscribeProfiles((profiles) => {
+    const unsubscribe = DataStore.subscribeProfiles((profiles) => {
       setProfiles(profilesMap(profiles));
     });
-    const unsubCredentials = DataStore.subscribeCredentials(setCredentials);
-    return () => {
-      unsubProfiles();
-      unsubCredentials();
-    };
-  }, [setProfiles, setCredentials]);
+    return () => unsubscribe();
+  }, [setProfiles]);
+
+  useEffect(() => {
+    if (user) {
+      const unsubscribe = DataStore.subscribeCredentials(user.uid, (cred) => {
+        console.log("New cred", cred);
+        setCredentials(cred);
+      });
+      return () => unsubscribe();
+    }
+  }, [user, setCredentials]);
 
   if (loading) {
     return <div className="loading" />;
@@ -67,4 +73,9 @@ export const useUser = () => {
 export const useProfiles = () => {
   const { profiles } = useContext(UserContext);
   return profiles;
+};
+
+export const useCredentials = () => {
+  const { credentials } = useContext(UserContext);
+  return credentials;
 };

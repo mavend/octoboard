@@ -16,13 +16,14 @@ const DataStore = {
   // Game credentials
   credentials: DB.collection("game_credentials"),
   fetchCredentials: async (uid) => await DataStore.credentials.doc(uid).get(),
-  setCredentials: async (credentials = {}) => await DataStore.credentials.set(credentials),
+  setCredentials: async (uid, credentials = {}) =>
+    await DataStore.credentials.doc(uid).set(credentials),
   addCredentials: async (uid, gameID, credentials) =>
     await DataStore.credentials.doc(uid).update({ [gameID]: credentials }),
   deleteCredentials: async (uid, gameID) =>
     await DataStore.credentials.doc(uid).update({ [gameID]: null }),
   subscribeCredentials: (uid, callback) => {
-    return DataStore.profiles.doc(uid).onSnapshot((doc) => callback(doc.data()));
+    return DataStore.credentials.doc(uid).onSnapshot((doc) => callback(doc.data()));
   },
 };
 

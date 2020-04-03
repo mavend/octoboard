@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useHistory, Redirect } from "react-router-dom";
+import { Button, Icon, Container, Confirm } from "semantic-ui-react";
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
-import { Button, Icon, Container, Confirm } from "semantic-ui-react";
+import { intersection, pickBy, identity, find, some, keys, map } from "lodash";
 
 import { API_ROOT } from "config/api";
 import { routes } from "config/routes";
 import { gameComponents } from "games";
-import { useUser } from "contexts/UserContext";
+import { useUser, useCredentials } from "contexts/UserContext";
 import { getUrlParam } from "utils/url";
 import DataStore from "services/DataStore";
 import { apiRequests } from "services/API";
@@ -17,95 +18,94 @@ import Loading from "components/game/Loading";
 import Layout from "components/layout/Layout";
 
 const GamePage = () => {
+  const history = useHistory();
+  const { gameID, gameName } = useParams();
+  const { t } = useTranslation("lobby");
+
   const [error, setError] = useState();
   const [playerID, setPlayerID] = useState();
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const [credentials, setCredentials] = useState(localStorage.getItem("playerCredentials"));
-  const { gameID, gameName } = useParams();
-  const history = useHistory();
-  const { t } = useTranslation("lobby");
 
   const user = useUser();
+  const credentials = useCredentials();
+  const gameCredentials = credentials && credentials[gameID];
 
   const { game, board } = gameComponents.find((gc) => gc.game.name === gameName);
 
-  useEffect(() => {
-    // When useEffects reloads we need to stop all
-    // promises from executing by changing cancalled to true
-    // TODO: wrap in usePromise custom hook
-    let cancelled = false;
-    if (!(game && gameID && user.uid)) return;
+  const fetchPlayerID = useCallback(() => {
+    apiRequests
+      .fetchRoom(gameName, gameID)
+      .then((room) => {
+        const player = room.players.find((player) => player.name === user.uid);
+        setPlayerID(player.id.toString());
+      })
+      .catch(() => {
+        setError("errors.no_game");
+      });
+  }, [gameName, gameID, user, setPlayerID, setError]);
 
-    const joinFreeSeat = (room, maxRetries = 3) => {
-      const freeSeat = room.players.find((p) => !p.name);
-      if (!freeSeat || maxRetries === 0) {
-        setError(t("errors.no_space"));
-        return;
-      }
-
-      const freeSeatID = freeSeat.id.toString();
-      apiRequests
-        .joinRoom(game.name, gameID, freeSeatID, user.uid)
-        .then((response) => {
-          localStorage.setItem("playerCredentials", response.playerCredentials);
-          if (cancelled) return;
-          setPlayerID(freeSeatID);
-          setCredentials(response.playerCredentials);
-        })
-        .catch((e) => {
-          if (cancelled) return;
-          if (e.message.match(/^Player.*not available$/)) {
-            console.warn(e.message, "Retrying...");
-            joinFreeSeat(room, maxRetries - 1);
-          } else {
-            setError(e.message);
-          }
-        });
-    };
-
+  const detectCurrentGames = useCallback(() => {
+    const currentCredentials = pickBy(credentials, identity);
     apiRequests
       .fetchRooms([game])
       .then((rooms) => {
-        if (cancelled) return;
-
-        const localCredentials = localStorage.getItem("playerCredentials");
-        setCredentials(localCredentials);
-
-        const room = rooms.find((room) => room.gameID === gameID);
-        if (!room) {
-          setError(t("errors.no_game"));
-          return;
+        const roomsWithUser = rooms.filter((room) => find(room.players, { name: user.uid }));
+        const currenRooms = intersection(keys(currentCredentials), map(roomsWithUser, "gameID"));
+        if (currenRooms.length > 0) {
+          setError("errors.already_in_game");
+        } else {
+          DataStore.setCredentials({});
         }
-
-        const player = room.players.find((player) => player.name === user.uid);
-        if (player && localCredentials) {
-          setPlayerID(player.id.toString());
-          return;
-        }
-
-        const currentRoom = rooms.find((room) =>
-          room.players.find((player) => player.name === user.uid)
-        );
-        if (currentRoom) {
-          setError(t("errors.already_in_game"));
-          return;
-        }
-
-        joinFreeSeat(room);
       })
       .catch((e) => {
-        if (cancelled) return;
         setError(e.message);
       });
+  }, [credentials, game, user, setError]);
 
-    return () => {
-      cancelled = true;
-    };
-  }, [game, gameID, t, user.uid]);
+  const joinGame = useCallback(() => {
+    let freeSeat;
+    apiRequests
+      .fetchRoom(gameName, gameID)
+      .then((room) => {
+        freeSeat = room.players.find((p) => !p.name);
+        if (!freeSeat) throw new Error("errors.no_space");
+        return apiRequests.joinRoom(gameName, gameID, freeSeat.id.toString(), user.uid);
+      })
+      .then(async ({ playerCredentials }) => {
+        setPlayerID(freeSeat.id.toString());
+        await DataStore.addCredentials(user.uid, gameID, playerCredentials);
+      })
+      .catch((e) => {
+        setError(e.message || "errors.no_space");
+      });
+  }, [gameName, gameID, user, setPlayerID, setError]);
+
+  useEffect(() => {
+    if (playerID || !gameName || !gameID || !user || !credentials) return;
+
+    if (gameCredentials) {
+      fetchPlayerID();
+    } else if (some(credentials, identity)) {
+      detectCurrentGames();
+    } else {
+      joinGame();
+    }
+  }, [
+    playerID,
+    gameName,
+    gameID,
+    user,
+    credentials,
+    gameCredentials,
+    setPlayerID,
+    fetchPlayerID,
+    detectCurrentGames,
+    joinGame,
+  ]);
 
   const handleLeave = () => {
     apiRequests
-      .leaveGame(game.name, gameID, playerID, credentials)
+      .leaveGame(game.name, gameID, playerID, gameCredentials)
       .then(async () => {
         await DataStore.deleteCredentials(user.uid, gameID);
         history.push(routes.lobby());
@@ -126,9 +126,9 @@ const GamePage = () => {
   return (
     <Layout>
       {error && <Redirect pass to={{ pathname: routes.lobby(), state: { error: error } }} />}
-      {gameName && gameID && playerID && (
+      {gameName && gameID && playerID && gameCredentials && (
         <>
-          <NewGameClient playerID={playerID} gameID={gameID} credentials={credentials} />
+          <NewGameClient playerID={playerID} gameID={gameID} credentials={gameCredentials} />
           <Container style={{ marginTop: "20px" }}>
             <Button color="red" onClick={() => setConfirmOpen(true)}>
               <Icon name="close" />
