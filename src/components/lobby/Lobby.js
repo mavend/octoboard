@@ -29,7 +29,7 @@ const Lobby = ({
     noRoomImage: { margin: "0 auto" },
   };
 
-  const CreateRoomSegment = () => (
+  const createRoomSegment = () => (
     <Segment>
       <Header as="h3" textAlign="center">
         {t("create.title")}
@@ -43,7 +43,7 @@ const Lobby = ({
     </Segment>
   );
 
-  const RoomsListSegment = () => (
+  const roomsListSegment = () => (
     <Segment>
       <Header as="h3" textAlign="center">
         {t("list.title")}
@@ -76,25 +76,17 @@ const Lobby = ({
   return (
     <Container>
       <Responsive as={Grid} minWidth={Responsive.onlyComputer.minWidth}>
-        <Grid.Column width="12">
-          <RoomsListSegment />
-        </Grid.Column>
-        <Grid.Column width="4">
-          <CreateRoomSegment />
-        </Grid.Column>
+        <Grid.Column width="12">{roomsListSegment()}</Grid.Column>
+        <Grid.Column width="4">{createRoomSegment()}</Grid.Column>
       </Responsive>
       <Responsive as={Grid} maxWidth={Responsive.onlyTablet.maxWidth}>
         {!currentRoom && (
           <Grid.Row>
-            <Grid.Column>
-              <CreateRoomSegment />
-            </Grid.Column>
+            <Grid.Column>{createRoomSegment()}</Grid.Column>
           </Grid.Row>
         )}
         <Grid.Row>
-          <Grid.Column>
-            <RoomsListSegment />
-          </Grid.Column>
+          <Grid.Column>{roomsListSegment()}</Grid.Column>
         </Grid.Row>
       </Responsive>
     </Container>

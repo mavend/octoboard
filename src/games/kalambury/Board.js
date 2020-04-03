@@ -59,7 +59,7 @@ const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
     }
   };
 
-  let GameContent = () => (
+  let gameContent = () => (
     <>
       <Header as="h2" textAlign="center">
         {t(`header.${phase}`)}
@@ -96,7 +96,7 @@ const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
     </>
   );
 
-  const SidebarContent = () => (
+  const sidebarContent = () => (
     <Sidebar
       handleGuessClick={handleGuessClick}
       getUserActions={getUserActions}
@@ -113,26 +113,18 @@ const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
       </Segment>
       <Responsive as={Grid} minWidth={Responsive.onlyComputer.minWidth}>
         <Grid.Column width="12">
-          <Grid.Row>
-            <GameContent />
-          </Grid.Row>
+          <Grid.Row>{gameContent()}</Grid.Row>
         </Grid.Column>
         <Grid.Column width="4">
-          <Grid.Row>
-            <SidebarContent />
-          </Grid.Row>
+          <Grid.Row>{sidebarContent()}</Grid.Row>
         </Grid.Column>
       </Responsive>
       <Responsive as={Grid} maxWidth={Responsive.onlyTablet.maxWidth}>
         <Grid.Row>
-          <Grid.Column>
-            <GameContent />
-          </Grid.Column>
+          <Grid.Column>{gameContent()}</Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column>
-            <SidebarContent />
-          </Grid.Column>
+          <Grid.Column>{sidebarContent()}</Grid.Column>
         </Grid.Row>
       </Responsive>
     </Container>
