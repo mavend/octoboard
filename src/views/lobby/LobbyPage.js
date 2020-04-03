@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { isEqual } from "lodash";
+import { useQuery } from "react-query";
+import { isEqual, filter, find } from "lodash";
 import { Container, Header, Image, Segment, Grid, Dimmer, Loader, Label } from "semantic-ui-react";
 
 import { routes } from "config/routes";
@@ -17,35 +18,45 @@ import CreateRoomForm from "components/lobby/CreateRoomForm";
 
 const LobbyPage = () => {
   const [error, setError] = useState();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [rooms, setRooms] = useState([]);
   const [currentRoom, setCurrentRoom] = useState();
   const history = useHistory();
   const location = useLocation();
   const { t } = useTranslation("lobby");
-
-  const user = useUser();
   const games = gameComponents.map((g) => g.game);
 
-  const fetchRooms = useCallback(() => {
-    apiRequests
-      .fetchRooms(games)
-      .then((rooms) => {
-        const room = rooms.find((r) => r.players.find((p) => p.name === user.uid));
-        if (room) {
-          setCurrentRoom((currentRoom) => (isEqual(currentRoom, room) ? currentRoom : room));
-        } else {
-          setCurrentRoom();
-        }
-        rooms = rooms.filter((room) => room.setupData && !room.setupData.private);
-        setRooms((currentRooms) => (isEqual(rooms, currentRooms) ? currentRooms : rooms));
-        setLoading(false);
-      })
-      .catch((e) => {
-        setError(e.message);
-        setLoading(false);
-      });
-  }, [games, setRooms, setLoading, user, setError, setCurrentRoom]);
+  const user = useUser();
+  const { data: roomsData, error: roomsError, status, isFetching } = useQuery(
+    "rooms",
+    () => apiRequests.fetchRooms(games),
+    { refetchInterval: 1000 }
+  );
+
+  useEffect(() => {
+    if (isFetching) return;
+    if (status === "error") {
+      setError(roomsError);
+    } else {
+      const newRooms = filter(roomsData, { setupData: { private: false } });
+      const room = roomsData.find((r) => find(r.players, { name: user.uid }));
+      if (room) {
+        setCurrentRoom((currentRoom) => (isEqual(currentRoom, room) ? currentRoom : room));
+      } else {
+        setCurrentRoom();
+      }
+      setRooms((rooms) => (isEqual(rooms, newRooms) ? rooms : newRooms));
+    }
+    setLoading(false);
+  }, [user.uid, roomsData, roomsError, status, isFetching]);
+
+  useEffect(() => {
+    const { state } = location;
+    if (state && state.error) {
+      setError(t(state.error));
+      history.replace({ state: { ...state, error: null } });
+    }
+  }, [location, history, setError, t]);
 
   const handleJoinRoom = ({ gameName, gameID, players, playerID }) => {
     if (!currentRoom) {
@@ -54,8 +65,8 @@ const LobbyPage = () => {
         .joinRoom(gameName, gameID, freeSpotId, user.uid)
         .then(async (response) => {
           await DataStore.addCredentials(user.uid, gameID, response.playerCredentials);
+          setLoading(false);
           history.push(routes.game(gameName, gameID));
-          setCurrentRoom(gameID);
         })
         .catch((e) => setError(e.message));
     } else {
@@ -70,27 +81,12 @@ const LobbyPage = () => {
         .createRoom(gameName, numPlayers, gameOptions)
         .then(({ gameID }) => {
           handleJoinRoom({ gameName, gameID, playerID: "0" });
-          setLoading(false);
         })
         .catch((e) => setError(e.message));
     } else {
       alert("Not valid!");
     }
   };
-
-  useEffect(() => {
-    const { state } = location;
-    if (state && state.error) {
-      setError(t(state.error));
-      history.replace({ state: { ...state, error: null } });
-    }
-  }, [location, history, setError, t]);
-
-  useEffect(() => {
-    fetchRooms();
-    const interval = setInterval(fetchRooms, 2000);
-    return () => clearInterval(interval);
-  }, [fetchRooms]);
 
   const styles = {
     mainImage: {

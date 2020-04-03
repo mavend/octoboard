@@ -41,7 +41,6 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     if (user) {
       const unsubscribe = DataStore.subscribeCredentials(user.uid, (cred) => {
-        console.log("New cred", cred);
         setCredentials(cred);
       });
       return () => unsubscribe();
