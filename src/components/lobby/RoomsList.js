@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Item, Button, Pagination, Label, Icon } from "semantic-ui-react";
+import { Item, Button, Pagination, Label, Icon, Responsive } from "semantic-ui-react";
 import { useUser, useProfiles } from "contexts/UserContext";
 import { paginate } from "utils/paginate";
 import { useTranslation } from "react-i18next";
@@ -85,72 +85,113 @@ const RoomsListItem = ({
     return t("list.game.join");
   };
 
+  const JoinGameButton = (props) => (
+    <Button
+      {...props}
+      content={buttonLabel()}
+      color={canJoin ? "green" : "grey"}
+      label={{
+        basic: true,
+        pointing: "right",
+        content: `${currentPlayers.length}/${maxPlayers}`,
+        icon: "male",
+        color: isFull ? "red" : null,
+      }}
+      labelPosition="left"
+      onClick={handleClick}
+    />
+  );
+
+  const RoomLabels = ({ labelsStyle, detailed }) => (
+    <>
+      <Label as="span" style={labelsStyle} color={current ? "green" : null}>
+        #<Label.Detail>{gameID}</Label.Detail>
+      </Label>
+      {current && (
+        <Label as="span" style={labelsStyle} color="green">
+          {t("list.game.your_game")}
+        </Label>
+      )}
+      {setupData && setupData.private ? (
+        <Label as="span" style={labelsStyle} color="grey">
+          <Icon name="lock" />
+          {detailed && <Label.Detail>{t("game.private")}</Label.Detail>}
+        </Label>
+      ) : (
+        <Label as="span" style={labelsStyle}>
+          <Icon name="open lock" />
+          {detailed && <Label.Detail>{t("game.public")}</Label.Detail>}
+        </Label>
+      )}
+    </>
+  );
+
+  const RoomMembers = ({ detailed }) => (
+    <>
+      {currentPlayers.map((p) => (
+        <RoomsPlayerListItem player={p} key={p.id} detailed={detailed} />
+      ))}
+      {Array(maxPlayers - currentPlayers.length)
+        .fill(0)
+        .map((_, idx) => (
+          <Button key={"dummy" + idx} basic icon compact size="tiny" disabled>
+            <Icon name="user outline" color="grey" />
+          </Button>
+        ))}
+    </>
+  );
+
   return (
     <Item>
-      <Item.Image avatar size="tiny" src={game.image} />
+      <Responsive
+        as={Item.Image}
+        avatar
+        size="tiny"
+        src={game.image}
+        minWidth={Responsive.onlyComputer.minWidth}
+      />
       <Item.Content>
         <Item.Header style={{ display: "block" }}>
-          {game.name}{" "}
-          <Label as="span" style={{ marginLeft: "1rem" }} color={current ? "green" : null}>
-            #<Label.Detail>{gameID}</Label.Detail>
-          </Label>
-          {current && (
-            <Label as="span" style={{ marginLeft: "1rem" }} color="green">
-              {t("list.game.your_game")}
-            </Label>
-          )}
-          {setupData && setupData.private ? (
-            <Label as="span" style={{ marginLeft: "1rem" }} color="grey">
-              <Icon name="lock" />
-              <Label.Detail>{t("game.private")}</Label.Detail>
-            </Label>
-          ) : (
-            <Label as="span" style={{ marginLeft: "1rem" }}>
-              <Icon name="open lock" />
-              <Label.Detail>{t("game.public")}</Label.Detail>
-            </Label>
-          )}
-          <Button
-            floated="right"
-            content={buttonLabel()}
-            color={canJoin ? "green" : "grey"}
-            label={{
-              basic: true,
-              pointing: "right",
-              content: `${currentPlayers.length}/${maxPlayers}`,
-              icon: "male",
-              color: isFull ? "red" : null,
-            }}
-            labelPosition="left"
-            onClick={handleClick}
-          />
+          {game.name}
+          <Responsive as={"span"} minWidth={Responsive.onlyComputer.minWidth}>
+            <RoomLabels detailed labelsStyle={{ marginLeft: "1rem" }} />
+            <JoinGameButton floated="right" />
+          </Responsive>
+          <Responsive as={"span"} maxWidth={Responsive.onlyTablet.maxWidth}>
+            <JoinGameButton style={{ marginLeft: "1rem" }} size="small" />
+          </Responsive>
         </Item.Header>
+        <Responsive as={Item.Description} maxWidth={Responsive.onlyTablet.maxWidth}>
+          <RoomLabels />
+        </Responsive>
         <Item.Extra>
-          {currentPlayers.map((p) => (
-            <RoomsPlayerListItem player={p} key={p.id} />
-          ))}
-          {Array(maxPlayers - currentPlayers.length)
-            .fill(0)
-            .map((_, idx) => (
-              <Button key={"dummy" + idx} basic icon compact size="tiny" disabled>
-                <Icon name="user outline" color="grey" />
-              </Button>
-            ))}
+          <Responsive as={"span"} minWidth={Responsive.onlyComputer.minWidth}>
+            <RoomMembers detailed />
+          </Responsive>
+          <Responsive as={"span"} maxWidth={Responsive.onlyTablet.maxWidth}>
+            <RoomMembers />
+          </Responsive>
         </Item.Extra>
       </Item.Content>
     </Item>
   );
 };
 
-const RoomsPlayerListItem = ({ player: { name } }) => {
+const RoomsPlayerListItem = ({ player: { name }, detailed }) => {
   const { uid } = useUser();
   const profiles = useProfiles();
   const profile = profiles.get(name);
 
   return (
-    <Button icon labelPosition="left" compact size="tiny" color={uid === name ? "green" : null}>
+    <Button
+      icon
+      labelPosition={detailed && "left"}
+      compact
+      size="tiny"
+      color={uid === name ? "green" : null}
+    >
       <Icon name="user" color={uid === name ? null : "grey"} />
-      {profile.displayName}
+      {detailed && profile.displayName}
     </Button>
   );
 };

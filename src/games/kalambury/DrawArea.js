@@ -60,7 +60,7 @@ const DrawArea = ({ remainingSeconds, onForfeit, lines, setLines }) => {
   };
 
   return (
-    <div style={{ margin: "1rem 0" }}>
+    <div>
       <Toolbar
         currentColor={penColor}
         onColorChange={setPenColor}
@@ -70,16 +70,15 @@ const DrawArea = ({ remainingSeconds, onForfeit, lines, setLines }) => {
         onForfeit={onForfeit}
         canUndo={lines.length > 0}
       />
-      <div style={{ cursor: "crosshair", touchAction: "none" }}>
-        <Drawing
-          lines={lines}
-          remainingSeconds={remainingSeconds}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onTouchStart={handleMouseDown}
-          onTouchMove={handleMouseMove}
-        />
-      </div>
+      <Drawing
+        lines={lines}
+        remainingSeconds={remainingSeconds}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onTouchStart={handleMouseDown}
+        onTouchMove={handleMouseMove}
+        drawable={true}
+      />
     </div>
   );
 };
