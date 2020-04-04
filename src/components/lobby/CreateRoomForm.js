@@ -39,6 +39,7 @@ const CreateRoomForm = ({ games, onCreate, disabled, loading }) => {
         onChange={(_, { value }) => setGame(games.find((g) => g.name === value))}
       />
       <Form.Select
+        fluid
         label={t("create.max_players")}
         options={playersOptions}
         value={players}
