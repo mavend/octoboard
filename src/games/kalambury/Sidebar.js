@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Header, Segment, Icon, Label } from "semantic-ui-react";
+import { useProfiles } from "contexts/UserContext";
 import Player from "./sidebar/Player";
 
 const Sidebar = ({
@@ -12,6 +13,7 @@ const Sidebar = ({
   gameMetadata,
 }) => {
   const { t } = useTranslation("lobby");
+  const profiles = useProfiles();
 
   return (
     <>
@@ -32,10 +34,10 @@ const Sidebar = ({
         </Header.Subheader>
       </Header>
       <Segment.Group style={{ marginTop: "-5px" }}>
-        {gameMetadata.map(({ id, name }) => (
+        {gameMetadata.map(({ id, name: uid }) => (
           <Player
             key={id}
-            uid={name}
+            uid={uid}
             points={points[id]}
             actions={getUserActions(actions, id)}
             isWinning={points[id] === Math.max(...points)}
@@ -43,6 +45,7 @@ const Sidebar = ({
             canManageGame={activePlayers[id] === "manage"}
             isCurrentPlayer={id === playerID}
             handleGuessClick={handleGuessClick}
+            profile={profiles.get(uid)}
             {...playersData[id]}
           />
         ))}

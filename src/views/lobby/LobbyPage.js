@@ -17,7 +17,7 @@ import Lobby from "components/lobby/Lobby";
 
 const LobbyPage = () => {
   const [error, setError] = useState();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [rooms, setRooms] = useState([]);
   const [currentRoom, setCurrentRoom] = useState();
   const history = useHistory();

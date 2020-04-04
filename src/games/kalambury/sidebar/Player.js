@@ -2,28 +2,25 @@ import React from "react";
 import { Icon, Segment, Feed, Transition, List } from "semantic-ui-react";
 import Action from "./Action";
 import { useTranslation } from "react-i18next";
-import { useProfiles } from "contexts/UserContext";
 
 const Player = ({
   uid,
   isActive,
-  empty,
   points,
   actions,
   isWinning,
   isCurrentPlayer,
   handleGuessClick,
+  profile: { displayName, photoURL },
 }) => {
   const { t } = useTranslation("kalambury");
-  const profiles = useProfiles();
-  const { displayName, photoURL } = profiles.get(uid);
 
-  if (!uid || empty) {
+  if (!uid) {
     return (
       <Segment disabled={true}>
         <Feed>
           <Feed.Event>
-            <Feed.Label image={"/images/avatar-empty.jpg"} />
+            <Feed.Label image={photoURL} />
             <Feed.Content>
               <Feed.Date>{t("sidebar.player.waiting")}</Feed.Date>
             </Feed.Content>
