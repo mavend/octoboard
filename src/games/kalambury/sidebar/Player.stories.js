@@ -10,7 +10,7 @@ export default {
   excludeStories: /.*Data$/,
 };
 
-export const Empty = () => <Player empty={true} />;
+export const Empty = () => <Player uid={null} />;
 
 export const Default = () => (
   <Player
