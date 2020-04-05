@@ -3,24 +3,20 @@ import { useTranslation } from "react-i18next";
 import { Header, Segment, Icon, Label } from "semantic-ui-react";
 import { useProfiles } from "contexts/UserContext";
 import Player from "./sidebar/Player";
+import { useBoardGame } from "contexts/BoardGameContext";
+import filterActions from "utils/user/filterActions";
 
-const Sidebar = ({
-  G: { actions, points, playersData, privateRoom },
-  ctx: { activePlayers },
-  playerID,
-  handleGuessClick,
-  getUserActions,
-  gameMetadata,
-}) => {
+const Sidebar = ({ handleGuessClick }) => {
   const { t } = useTranslation("lobby");
   const profiles = useProfiles();
+  const { G, ctx, playerID, gameMetadata } = useBoardGame();
 
   return (
     <>
       <Header as="h2" textAlign="center">
         {t("game.players")}
         <Header.Subheader>
-          {privateRoom ? (
+          {G.privateRoom ? (
             <Label as="span" size="small" color="grey">
               <Icon name="lock" />
               <Label.Detail>{t("game.private")}</Label.Detail>
@@ -38,15 +34,15 @@ const Sidebar = ({
           <Player
             key={id}
             uid={uid}
-            points={points[id]}
-            actions={getUserActions(actions, id)}
-            isWinning={points[id] === Math.max(...points)}
-            isDrawing={activePlayers[id] === "draw"}
-            canManageGame={activePlayers[id] === "manage"}
+            points={G.points[id]}
+            actions={filterActions(G.actions, id)}
+            isWinning={G.points[id] === Math.max(...G.points)}
+            isDrawing={ctx.activePlayers[id] === "draw"}
+            canManageGame={ctx.activePlayers[id] === "manage"}
             isCurrentPlayer={id === playerID}
             handleGuessClick={handleGuessClick}
             profile={profiles.get(uid)}
-            {...playersData[id]}
+            {...G.playersData[id]}
           />
         ))}
       </Segment.Group>

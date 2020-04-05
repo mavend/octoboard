@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Drawing from "./Drawing";
 import Toolbar from "./Toolbar";
+import { useBoardGame } from "contexts/BoardGameContext";
 
-const DrawArea = ({ remainingSeconds, onForfeit, lines, setLines }) => {
+const DrawArea = ({ lines, setLines }) => {
   const [isDrawing, setIsDrawing] = useState(false);
   const [penColor, setPenColor] = useState("#1b1c1d");
   const [penSize, setPenSize] = useState(3);
+  const { moves } = useBoardGame();
 
   useEffect(() => {
     document.addEventListener("mouseup", handleMouseUp);
@@ -59,6 +61,11 @@ const DrawArea = ({ remainingSeconds, onForfeit, lines, setLines }) => {
     setLines([...lines]);
   };
 
+  const handleForfeit = () => {
+    setLines([]);
+    moves.Forfeit();
+  };
+
   return (
     <div>
       <Toolbar
@@ -67,12 +74,11 @@ const DrawArea = ({ remainingSeconds, onForfeit, lines, setLines }) => {
         onSizeChange={setPenSize}
         onClearAll={handleClearAll}
         onUndoDrawing={handleUndo}
-        onForfeit={onForfeit}
         canUndo={lines.length > 0}
+        onForfeit={handleForfeit}
       />
       <Drawing
         lines={lines}
-        remainingSeconds={remainingSeconds}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onTouchStart={handleMouseDown}
