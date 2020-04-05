@@ -1,15 +1,16 @@
-import React, { useContext, useState } from "react";
-import { Sidebar, Image, Segment, Menu, Icon } from "semantic-ui-react";
-import { UserContext } from "contexts/UserContext";
-import { avatarForName } from "games/kalambury/utils/avatar";
-import { useTranslation } from "react-i18next";
-import { useQuery } from "react-query";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { routes } from "../../config/routes";
+import { useTranslation } from "react-i18next";
+import { Sidebar, Image, Segment, Menu, Icon } from "semantic-ui-react";
+
+import AuthProvider from "services/Auth";
+import { useUser } from "contexts/UserContext";
+import { routes } from "config/routes";
 
 const UserMenu = ({ style, children }) => {
-  const { user, logout, getNickName } = useContext(UserContext);
-  const { data: nickname } = useQuery(["user-nickname", user.uid], (key, id) => getNickName(id));
+  const { logout } = AuthProvider;
+  const { displayName, photoURL, email, isAnonymous } = useUser();
+
   const [visible, setVisible] = useState(false);
   const { t } = useTranslation();
 
@@ -29,14 +30,15 @@ const UserMenu = ({ style, children }) => {
         >
           <Menu.Item as={"div"}>
             <Icon name="user" />
-            {nickname}
+            {displayName}
           </Menu.Item>
-          {!user.isAnonymous ? (
+          {email && <Menu.Item as={"div"}>{email}</Menu.Item>}
+          {!isAnonymous && (
             <Menu.Item as={Link} to={routes.change_password()}>
               <Icon name="exchange" />
               {t("user.change_password")}
             </Menu.Item>
-          ) : null}
+          )}
           <Menu.Item as="a" onClick={logout}>
             <Icon name="log out" />
             {t("user.logout")}
@@ -44,8 +46,8 @@ const UserMenu = ({ style, children }) => {
         </Sidebar>
         <Sidebar.Pusher>
           <Segment floated="right" onClick={() => setVisible(!visible)}>
-            <Image avatar bordered src={avatarForName(user.uid)} />
-            <span>{nickname}</span>
+            <Image avatar bordered src={photoURL} />
+            <span>{displayName}</span>
           </Segment>
 
           {children}

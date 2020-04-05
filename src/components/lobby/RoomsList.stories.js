@@ -1,6 +1,6 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
-import { withKnobs, select, boolean } from "@storybook/addon-knobs";
+import { boolean } from "@storybook/addon-knobs";
 
 import RoomsList from "./RoomsList";
 
@@ -23,9 +23,9 @@ export const Default = () => (
         gameID: "qweasd0",
         gameName: "Kalambury",
         players: [
-          { name: "First player", email: "a@a.a" },
-          { name: "Second player", email: "b@b.b" },
-          { name: "Third player", email: "c@c.c" },
+          { id: "0", name: "user-0" },
+          { id: "1", name: "user-1" },
+          { id: "2", name: "user-2" },
           {},
         ],
         setupData: { private: true },

@@ -87,7 +87,7 @@ function Forfeit(G, ctx) {
   ctx.events.endTurn();
 }
 
-function Ping(G, { playerID, phase }, playerData) {
+function Ping(G, { playerID, phase }, playerData = {}) {
   if (phase === "play") {
     G.remainingSeconds = 120 - Math.floor((new Date() - Date.parse(G.startTime)) / 1000);
   }

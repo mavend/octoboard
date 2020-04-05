@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import { UserContext } from "contexts/UserContext";
+import AuthProvider from "services/Auth";
 import handleAuthorization from "utils/user/handleAuthorization";
+
 import CredentialsLayout from "components/layout/CredentialsLayout";
 import LoginForm from "components/user/forms/LoginForm";
-
 import OtherLoginOptions from "components/user/LoginRedirections";
 
 const LoginPage = () => {
@@ -14,12 +14,11 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const { logIn } = useContext(UserContext);
   const history = useHistory();
 
   const formValid = email.length > 0 && password.length > 0;
   const handleLoginFunc = handleAuthorization(
-    () => logIn(email, password),
+    () => AuthProvider.logIn(email, password),
     setError,
     setIsLoading,
     history

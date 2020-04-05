@@ -12,10 +12,10 @@ export function NotLoggedInRoute({ children, ...rest }) {
     <Route
       {...rest}
       render={() => {
-        if (!user) {
-          return children;
-        } else {
+        if (user && user.displayName) {
           return <Redirect to={from || routes.lobby()} />;
+        } else {
+          return children;
         }
       }}
     />

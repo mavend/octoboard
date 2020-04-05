@@ -1,7 +1,6 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
-import { withKnobs, boolean, number, text, select } from "@storybook/addon-knobs";
-import lines from "games/kalambury/data/stories/lines";
+import { boolean, number, text, select } from "@storybook/addon-knobs";
 
 import Board from "./Board";
 
@@ -21,8 +20,8 @@ export const Default = () => (
         step: 1,
       }),
       playersData: {
-        "0": { name: "Mieczysław Czosnek" },
-        "1": { name: "Janko Muzykant", isActive: true },
+        "0": {},
+        "1": { isActive: true },
       },
       points: [10, 3],
       actions: [],
@@ -36,8 +35,15 @@ export const Default = () => (
       numPlayers: number("Player count", 4, { range: true, min: 2, max: 10, step: 1 }),
     }}
     playerID={0}
-    moves={{ Guess: action("Guess"), Ping: action("Ping"), UpdateDrawing: action("UpdateDrawing") }}
-    gameMetadata={{}}
+    moves={{
+      Guess: action("Guess"),
+      Ping: action("Ping"),
+      UpdateDrawing: action("UpdateDrawing"),
+    }}
+    gameMetadata={[
+      { id: "0", name: "user-0" },
+      { id: "1", name: "user-1" },
+    ]}
     rawClient={{ transport: { socket: null } }}
   />
 );
