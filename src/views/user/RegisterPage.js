@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import { UserContext } from "contexts/UserContext";
-import CredentialsLayout from "components/layout/CredentialsLayout";
-import RegisterForm from "components/user/forms/RegisterForm";
+import AuthProvider from "services/Auth";
 import handleAuthorization from "utils/user/handleAuthorization";
 
+import CredentialsLayout from "components/layout/CredentialsLayout";
+import RegisterForm from "components/user/forms/RegisterForm";
 import OtherLoginOptions from "components/user/LoginRedirections";
 
 const RegisterPage = () => {
@@ -15,12 +15,11 @@ const RegisterPage = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { register } = useContext(UserContext);
   const history = useHistory();
 
   const formValid = nickname.length > 0 && email.length > 0 && password.length > 0;
   const handleRegisterFunc = handleAuthorization(
-    () => register(nickname, email, password),
+    () => AuthProvider.register(nickname, email, password),
     setError,
     setIsLoading,
     history

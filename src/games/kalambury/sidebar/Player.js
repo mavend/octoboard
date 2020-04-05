@@ -1,25 +1,21 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Icon, Segment, Feed, Transition, List } from "semantic-ui-react";
 import Action from "./Action";
 import { useTranslation } from "react-i18next";
-import { UserContext } from "contexts/UserContext";
-import { useQuery } from "react-query";
 
 const Player = ({
-  name,
+  uid,
   isActive,
-  empty,
-  avatar,
   points,
   actions,
   isWinning,
   isCurrentPlayer,
   handleGuessClick,
+  profile,
 }) => {
   const { t } = useTranslation("kalambury");
-  const { getNickName } = useContext(UserContext);
-  const { data: nickname } = useQuery(["user-nickname", name], (key, id) => getNickName(id));
-  if (!name || empty) {
+
+  if (!uid) {
     return (
       <Segment disabled={true}>
         <Feed>
@@ -34,14 +30,16 @@ const Player = ({
     );
   }
 
+  const { displayName, photoURL } = profile;
+
   return (
-    <Segment disabled={!isActive}>
+    <Segment disabled={!isActive && false}>
       <Feed>
         <Feed.Event>
-          <Feed.Label image={avatar || "/images/avatar-empty.jpg"} />
+          <Feed.Label image={photoURL} />
           <Feed.Content>
             <Feed.Date>
-              {nickname} {isCurrentPlayer && <span>({t("sidebar.player.current")})</span>}{" "}
+              {displayName} {isCurrentPlayer && <span>({t("sidebar.player.current")})</span>}{" "}
               {!isActive && <span>({t("sidebar.player.disconnected")})</span>}
             </Feed.Date>
             <Feed.Content>

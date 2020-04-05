@@ -10,14 +10,12 @@ export default {
   excludeStories: /.*Data$/,
 };
 
-export const Empty = () => <Player empty={true} />;
+export const Empty = () => <Player uid={null} />;
 
 export const Default = () => (
   <Player
-    name={text("Name", "Mieczysław Czosnek")}
+    uid={"user-1"}
     isActive={boolean("Active", true)}
-    empty={boolean("Empty", false)}
-    avatar={text("Avatar URL", "https://api.adorable.io/avatars/128/Mieczysław-Czosnek.png")}
     points={number("Points", 12)}
     actions={object("Actions array", [
       { action: "guess", id: "123", phrase: "Baba z wozu?" },
@@ -26,5 +24,9 @@ export const Default = () => (
     isWinning={boolean("Is player winning?", true)}
     isCurrentPlayer={boolean("Are you this player?", true)}
     handleGuessClick={action("handleGuessClick")}
+    profile={{
+      displayName: text("Name", "Mieczysław Czosnek"),
+      photoURL: text("Avatar URL", "https://api.adorable.io/avatars/128/Mieczysław-Czosnek.png"),
+    }}
   />
 );

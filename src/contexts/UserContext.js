@@ -1,27 +1,53 @@
-import React, { createContext, useCallback, useContext, useMemo, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import AuthProvider from "services/Auth";
+import DataStore from "services/DataStore";
+import MapWithDefault from "utils/mapWithDefault";
 
-import { UserClient } from "services/User";
+const defaultProfile = (uid) => ({
+  displayName: uid,
+  photoURL: "/images/avatar-empty.jpg",
+});
+export const profilesMap = (profiles = []) => new MapWithDefault(profiles, defaultProfile);
 
 const defaultContext = {
-  user: { name: "", email: "" },
+  user: null,
+  profiles: profilesMap(),
+  credentials: null,
 };
 
 export const UserContext = createContext(defaultContext);
 
-export const UserContextProvider = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(true);
+export const UserProvider = ({ children }) => {
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [profiles, setProfiles] = useState(profilesMap());
+  const [credentials, setCredentials] = useState();
 
-  const updater = useCallback((user) => {
-    setUser(user);
-    setIsLoading(false);
-  }, []);
+  useEffect(() => {
+    const unsubscribe = AuthProvider.onAuthChange((user) => {
+      setUser(user);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, [profiles, setUser, setLoading]);
 
-  const userClient = useMemo(() => {
-    return new UserClient(updater);
-  }, [updater]);
+  useEffect(() => {
+    const unsubscribe = DataStore.subscribeProfiles((profiles) => {
+      setProfiles(profilesMap(profiles));
+    });
+    return () => unsubscribe();
+  }, [setProfiles]);
 
-  if (isLoading) {
+  useEffect(() => {
+    if (user) {
+      const unsubscribe = DataStore.subscribeCredentials(user.uid, (cred) => {
+        setCredentials(cred);
+      });
+      return () => unsubscribe();
+    }
+  }, [user, setCredentials]);
+
+  if (loading) {
     return <div className="loading" />;
   }
 
@@ -29,14 +55,8 @@ export const UserContextProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         user,
-        logIn: userClient.logIn,
-        logInAnonymously: userClient.logInAnonymously,
-        LogInGoogle: userClient.logInGoogle,
-        getNickName: userClient.getNickName,
-        logout: userClient.logout,
-        register: userClient.register,
-        changePassword: userClient.changePassword,
-        sendResetPasswordLink: userClient.sendResetPasswordLink,
+        profiles,
+        credentials,
       }}
     >
       {children}
@@ -47,4 +67,14 @@ export const UserContextProvider = ({ children }) => {
 export const useUser = () => {
   const { user } = useContext(UserContext);
   return user;
+};
+
+export const useProfiles = () => {
+  const { profiles } = useContext(UserContext);
+  return profiles;
+};
+
+export const useCredentials = () => {
+  const { credentials } = useContext(UserContext);
+  return credentials;
 };
