@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Segment, Button, Header } from "semantic-ui-react";
 import Confetti from "react-dom-confetti";
 import { shuffle } from "lodash";
-import { withTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { timerFormat } from "../utils/time";
-import DrawingBoard from "./DrawingBoard";
+import DrawArea from "../DrawArea";
 import GuessingBoard from "./GuessingBoard";
 import { COLORS } from "config/constants";
+import { useBoardGame } from "contexts/BoardGameContext";
+import filterActions from "utils/user/filterActions";
 
 const confettiConfig = {
   angle: 90,
@@ -22,26 +24,19 @@ const confettiConfig = {
 };
 
 const GameBoard = ({
-  isDrawing,
-  playerData,
-  G,
-  ctx,
-  moves,
   envokeLastAnswer,
-  getUserActions,
-  actions,
-  playerID,
   guessInputRef,
   guess,
   setGuess,
   canChangePhrase,
   ChangePhrase,
-  t,
-  rawClient,
 }) => {
+  const { G, ctx, moves, playerID, rawClient } = useBoardGame();
+  const { t } = useTranslation("kalambury");
   const [lines, setLines] = useState([]);
+  const isDrawing = ctx.activePlayers[playerID] === "draw";
   const [lastSuccess, setLastSuccess] = useState(false);
-  const lastUserGuess = getUserActions(actions, playerID, "guess")[0] || {
+  const lastUserGuess = filterActions(G.actions, playerID, "guess")[0] || {
     id: null,
     success: false,
   };
@@ -81,16 +76,10 @@ const GameBoard = ({
   return (
     <>
       {isDrawing ? (
-        <DrawingBoard playerData={playerData} {...{ G, ctx, moves, lines, setLines }} />
+        <DrawArea {...{ lines, setLines }} />
       ) : (
         <GuessingBoard
-          envokeLastAnswer={envokeLastAnswer}
-          previousUserGuesses={getUserActions(actions, playerID, "guess")}
-          playerID={playerID}
-          guessInputRef={guessInputRef}
-          guess={guess}
-          setGuess={setGuess}
-          {...{ G, ctx, moves, rawClient, lines }}
+          {...{ lastUserGuess, envokeLastAnswer, guessInputRef, guess, setGuess, lines }}
         />
       )}
       <Header as="h3" attached="bottom" textAlign="center">
@@ -108,4 +97,4 @@ const GameBoard = ({
   );
 };
 
-export default withTranslation("kalambury")(GameBoard);
+export default GameBoard;

@@ -14,18 +14,9 @@ export default {
 export const Default = () => (
   <GuessingBoard
     lines={lines}
-    G={{
-      remainingSeconds: number("Remaining seconds", 100, {
-        range: true,
-        min: 0,
-        max: 120,
-        step: 1,
-      }),
-    }}
-    moves={{ Guess: action("Guess") }}
-    rawClient={{}}
     guess={text("Guess", "Baba z wozu?")}
     setGuess={action("SetGuess")}
+    lastUserGuess={text("Last Guess", "Dziad z wozu?")}
     guessInputRef={{}}
     previousUserGuesses={[]}
     envokeLastAnswer={action("envokeLastAnswer")}

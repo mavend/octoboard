@@ -1,22 +1,20 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Responsive, Segment, Container, Header, Grid } from "semantic-ui-react";
-import { filter, reverse } from "lodash";
 import Sidebar from "./Sidebar";
 import WaitingBoard from "./board/WaitingBoard";
 import GameBoard from "./board/GameBoard";
+import { useBoardGame } from "contexts/BoardGameContext";
 
-const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
-  const { players, actions, canChangePhrase } = G;
-  const { activePlayers, phase } = ctx;
-  const { Ping, ChangePhrase } = moves;
+const Board = () => {
+  const { G, ctx, moves, playerID, rawClient } = useBoardGame();
   const { t } = useTranslation("kalambury");
 
   const [guess, setGuess] = useState("");
-  const playerData = players[playerID];
-  const isDrawing = activePlayers[playerID] === "draw";
-  const hasGameStarted = phase === "play";
-  const canManageGame = activePlayers[playerID] === "manage";
+  const isDrawing = ctx.activePlayers[playerID] === "draw";
+  const playerData = G.players[playerID];
+  const hasGameStarted = ctx.phase === "play";
+  const canManageGame = ctx.activePlayers[playerID] === "manage";
 
   const guessInputRef = useRef();
 
@@ -32,78 +30,58 @@ const Board = ({ G, ctx, playerID, moves, gameMetadata, rawClient }) => {
   }, [rawClient]);
 
   useEffect(() => {
-    Ping();
-    let interval = setInterval(Ping, 1000);
+    moves.Ping();
+    let interval = setInterval(moves.Ping, 1000);
     return () => clearInterval(interval);
-  }, [Ping]);
+  }, [moves, moves.Ping]);
 
-  const handleGuessClick = (e) => {
-    if (!isDrawing) {
-      setGuess(e.target.textContent);
-      guessInputRef.current.focus();
-    }
-  };
+  const handleGuessClick = useCallback(
+    (e) => {
+      if (!isDrawing) {
+        setGuess(e.target.textContent);
+        guessInputRef.current.focus();
+      }
+    },
+    [isDrawing]
+  );
 
-  const getUserActions = (actions, playerID, actionType) => {
-    let allActions = reverse(filter(actions, { playerID: playerID.toString() }));
-    if (actionType) {
-      return filter(allActions, { action: actionType });
-    }
-    return allActions;
-  };
-
-  const envokeLastAnswer = (lastGuess) => {
-    if (!isDrawing) {
-      setGuess(lastGuess);
-      guessInputRef.current.inputRef.current.blur();
-      setTimeout(() => guessInputRef.current.focus(), 1);
-    }
-  };
+  const envokeLastAnswer = useCallback(
+    (lastGuess) => {
+      if (!isDrawing) {
+        setGuess(lastGuess);
+        guessInputRef.current.inputRef.current.blur();
+        setTimeout(() => guessInputRef.current.focus(), 1);
+      }
+    },
+    [isDrawing]
+  );
 
   let gameContent = () => (
     <>
       <Header as="h2" textAlign="center">
-        {t(`header.${phase}`)}
+        {t(`header.${ctx.phase}`)}
         <Header.Subheader>
-          {isDrawing ? playerData.phrase : t(`subheader.${phase}.${activePlayers[playerID]}`)}
+          {isDrawing
+            ? playerData.phrase
+            : t(`subheader.${ctx.phase}.${ctx.activePlayers[playerID]}`)}
         </Header.Subheader>
       </Header>
       {hasGameStarted ? (
         <GameBoard
           {...{
-            G,
-            ctx,
-            moves,
-            playerData,
-            isDrawing,
             envokeLastAnswer,
-            getUserActions,
-            actions,
-            playerID,
             guessInputRef,
             guess,
             setGuess,
-            canChangePhrase,
-            ChangePhrase,
-            rawClient,
           }}
         />
       ) : (
-        <WaitingBoard
-          previousUserMessages={getUserActions(actions, playerID, "message")}
-          {...{ moves, canManageGame, setGuess, guess }}
-        />
+        <WaitingBoard {...{ canManageGame, setGuess, guess }} />
       )}
     </>
   );
 
-  const sidebarContent = () => (
-    <Sidebar
-      handleGuessClick={handleGuessClick}
-      getUserActions={getUserActions}
-      {...{ G, ctx, playerID, moves, gameMetadata }}
-    />
-  );
+  const sidebarContent = () => <Sidebar handleGuessClick={handleGuessClick} />;
 
   return (
     <Container>

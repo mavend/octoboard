@@ -15,7 +15,5 @@ export const Default = () => (
     canManageGame={boolean("Can manage?", true)}
     setGuess={action("SetGuess")}
     guess={text("Message", "Dzień dobry")}
-    previousUserMessages={[]}
-    moves={{ StartGame: action("StartGame"), SendText: action("SendText") }}
   />
 );

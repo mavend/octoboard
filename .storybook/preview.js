@@ -4,6 +4,7 @@ import { MINIMAL_VIEWPORTS } from "@storybook/addon-viewport";
 import { withKnobs } from "@storybook/addon-knobs";
 import StoryRouter from "storybook-react-router";
 import UserContextMock from "./UserContextMock";
+import BoardGameContextMock from "./BoardGameContextMock";
 import "../src/i18n";
 
 import "semantic-ui-css/semantic.min.css";
@@ -12,6 +13,7 @@ import "../src/index.css";
 addDecorator(withKnobs);
 addDecorator(StoryRouter());
 addDecorator((storyFn) => <UserContextMock>{storyFn()}</UserContextMock>);
+addDecorator((storyFn) => <BoardGameContextMock>{storyFn()}</BoardGameContextMock>);
 
 const customViewports = {
   lowResLaptop: {

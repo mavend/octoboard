@@ -14,6 +14,7 @@ import DataStore from "services/DataStore";
 import { apiRequests } from "services/API";
 import { useTranslation } from "react-i18next";
 
+import { BoardGameProvider } from "contexts/BoardGameContext";
 import Loading from "components/game/Loading";
 import Layout from "components/layout/Layout";
 
@@ -30,7 +31,7 @@ const GamePage = () => {
   const credentials = useCredentials();
   const gameCredentials = credentials && credentials[gameID];
 
-  const { game, board } = gameComponents.find((gc) => gc.game.name === gameName);
+  const { game, Board } = gameComponents.find((gc) => gc.game.name === gameName);
 
   const fetchPlayerID = useCallback(() => {
     apiRequests
@@ -117,7 +118,7 @@ const GamePage = () => {
 
   const NewGameClient = Client({
     game: game,
-    board: board,
+    board: BoardGameProvider,
     loading: Loading,
     multiplayer: SocketIO({ server: API_ROOT }),
     debug: document.location.hostname === "localhost" && getUrlParam("debug") === "true",
@@ -128,7 +129,9 @@ const GamePage = () => {
       {error && <Redirect pass to={{ pathname: routes.lobby(), state: { error: error } }} />}
       {gameName && gameID && playerID && gameCredentials && (
         <>
-          <NewGameClient playerID={playerID} gameID={gameID} credentials={gameCredentials} />
+          <NewGameClient playerID={playerID} gameID={gameID} credentials={gameCredentials}>
+            <Board />
+          </NewGameClient>
           <Container style={{ marginTop: "20px" }}>
             <Button color="red" onClick={() => setConfirmOpen(true)}>
               <Icon name="close" />

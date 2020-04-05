@@ -11,20 +11,4 @@ export default {
   excludeStories: /.*Data$/,
 };
 
-export const actionsData = {
-  onUpdate: action("onUpdate"),
-  onForfeit: action("onForfeit"),
-};
-
-export const Default = () => (
-  <DrawArea
-    lines={lines}
-    remainingSeconds={number("Remaining seconds", 100, {
-      range: true,
-      min: 0,
-      max: 120,
-      step: 1,
-    })}
-    {...actionsData}
-  />
-);
+export const Default = () => <DrawArea lines={lines} setLines={action("setLines")} />;

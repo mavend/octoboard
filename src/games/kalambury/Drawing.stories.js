@@ -11,19 +11,6 @@ export default {
   excludeStories: /.*Data$/,
 };
 
-export const actionsData = {
-  onMouseDown: action("onMouseDown"),
-};
+export const Default = () => <Drawing lines={lines} />;
 
-export const Default = () => (
-  <Drawing
-    lines={lines}
-    remainingSeconds={number("Remaining seconds", 100, {
-      range: true,
-      min: 0,
-      max: 120,
-      step: 1,
-    })}
-    {...actionsData}
-  />
-);
+export const Drawable = () => <Drawing lines={lines} drawable={true} />;

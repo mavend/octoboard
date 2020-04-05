@@ -1,40 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { Image, Icon, Transition, Segment, Button, Form, Input } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
+import { useBoardGame } from "contexts/BoardGameContext";
+import filterActions from "utils/user/filterActions";
 
-const WaitingBoard = ({
-  canManageGame,
-  setGuess,
-  guess,
-  previousUserMessages,
-  moves: { StartGame, SendText },
-}) => {
+const WaitingBoard = ({ canManageGame, setGuess, guess }) => {
+  const { G, playerID, moves } = useBoardGame();
   const [inputLocked, setInputLocked] = useState(false);
   const [animateInput, setAnimateInput] = useState(true);
-  const [lastMessage, setLastMessage] = useState();
+  const [lastMessageID, setLastMessageID] = useState(null);
   const { t } = useTranslation("kalambury");
+
+  const lastUserMessage = filterActions(G.actions, playerID, "message")[0];
+  const lastUserMessageID = lastUserMessage ? lastUserMessage.id : null;
 
   const handleChange = (e) => {
     setGuess(e.target.value);
   };
+
   const sendGuess = () => {
-    if (guess) SendText(guess);
+    if (guess) moves.SendText(guess);
     setGuess("");
   };
 
   useEffect(() => {
-    let message = previousUserMessages[0];
-    if (!message) {
+    if (lastMessageID && lastMessageID === lastUserMessageID) {
       return;
     }
-    if (lastMessage && lastMessage.id === message.id) {
-      return;
-    }
-    setLastMessage(message);
+    setLastMessageID(lastUserMessageID);
     setInputLocked(true);
     setTimeout(() => setInputLocked(false), 250);
     setAnimateInput((animateInput) => !animateInput);
-  }, [previousUserMessages, lastMessage]);
+  }, [lastUserMessageID, lastMessageID]);
 
   return (
     <>
@@ -74,7 +71,7 @@ const WaitingBoard = ({
         }}
       >
         {canManageGame ? (
-          <Button icon labelPosition="right" color="green" onClick={() => StartGame()}>
+          <Button icon labelPosition="right" color="green" onClick={() => moves.StartGame()}>
             {t("board.wait.actions.start")}
             <Icon name="pencil" />
           </Button>
