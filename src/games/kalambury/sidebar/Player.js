@@ -11,7 +11,7 @@ const Player = ({
   isWinning,
   isCurrentPlayer,
   handleGuessClick,
-  profile: { displayName, photoURL },
+  profile,
 }) => {
   const { t } = useTranslation("kalambury");
 
@@ -20,7 +20,7 @@ const Player = ({
       <Segment disabled={true}>
         <Feed>
           <Feed.Event>
-            <Feed.Label image={photoURL} />
+            <Feed.Label image={"/images/avatar-empty.jpg"} />
             <Feed.Content>
               <Feed.Date>{t("sidebar.player.waiting")}</Feed.Date>
             </Feed.Content>
@@ -29,6 +29,8 @@ const Player = ({
       </Segment>
     );
   }
+
+  const { displayName, photoURL } = profile;
 
   return (
     <Segment disabled={!isActive && false}>
