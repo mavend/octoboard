@@ -14,10 +14,12 @@ const GuessingBoard = ({
 }) => {
   const [animateInput, setAnimateInput] = useState(true);
   const [inputLocked, setInputLocked] = useState(false);
-  const [lastGuess, setLastGuess] = useState();
+  const [lastGuessID, setLastGuessID] = useState(null);
   const [lastSuccess, setLastSuccess] = useState(true);
   const { t } = useTranslation("kalambury");
   const { moves } = useBoardGame();
+
+  const lastUserGuessID = lastUserGuess ? lastUserGuess.id : null;
 
   const sendGuess = () => {
     if (guess) moves.Guess(guess);
@@ -58,15 +60,15 @@ const GuessingBoard = ({
   );
 
   useEffect(() => {
-    if (lastGuess && lastGuess.id === lastUserGuess.id) {
+    if (lastGuessID === lastUserGuessID) {
       return;
     }
-    setLastGuess(lastUserGuess);
+    setLastGuessID(lastUserGuessID);
     setLastSuccess(lastUserGuess.success);
     setInputLocked(true);
     setTimeout(() => setInputLocked(false), 250);
     setAnimateInput((animateInput) => !animateInput);
-  }, [lastUserGuess, lastUserGuess.id, lastGuess]);
+  }, [lastUserGuess, lastUserGuessID, lastGuessID]);
 
   return (
     <div>

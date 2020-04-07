@@ -24,7 +24,7 @@ const WaitingBoard = ({ canManageGame, setGuess, guess }) => {
   };
 
   useEffect(() => {
-    if (lastMessageID && lastMessageID === lastUserMessageID) {
+    if (lastMessageID === lastUserMessageID) {
       return;
     }
     setLastMessageID(lastUserMessageID);
