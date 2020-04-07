@@ -41,6 +41,8 @@ const BoardGameContextMock = ({ children }) => (
         UpdateDrawing: action("UpdateDrawing"),
       },
       playerID: 0,
+      gameName: "Kalambury",
+      gameID: "qwe123",
       rawClient: { transport: { socket: null } },
       gameMetadata: [
         { id: "0", name: "user-0" },

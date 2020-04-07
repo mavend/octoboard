@@ -13,16 +13,7 @@ import { useTranslation } from "react-i18next";
 import RoomsList from "components/lobby/RoomsList";
 import CreateRoomForm from "components/lobby/CreateRoomForm";
 
-const Lobby = ({
-  error,
-  setError,
-  rooms,
-  currentRoom,
-  games,
-  handleJoinRoom,
-  handleCreate,
-  loading,
-}) => {
+const Lobby = ({ rooms, currentRoom, games, handleJoinRoom, handleCreate, loading }) => {
   const { t } = useTranslation("lobby");
 
   const styles = {

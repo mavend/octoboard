@@ -5,6 +5,7 @@ import { useProfiles } from "contexts/UserContext";
 import Player from "./sidebar/Player";
 import { useBoardGame } from "contexts/BoardGameContext";
 import filterActions from "utils/user/filterActions";
+import LeaveButton from "components/game/LeaveButton";
 
 const Sidebar = ({ handleGuessClick }) => {
   const { t } = useTranslation("lobby");
@@ -46,6 +47,9 @@ const Sidebar = ({ handleGuessClick }) => {
           />
         ))}
       </Segment.Group>
+      <Segment basic textAlign="center" style={{ marginTop: "-1rem" }}>
+        <LeaveButton />
+      </Segment>
     </>
   );
 };

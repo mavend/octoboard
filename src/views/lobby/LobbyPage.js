@@ -113,7 +113,7 @@ const LobbyPage = () => {
       {error && (
         <Container style={styles.error}>
           <Segment inverted color="red">
-            <div>{error}</div>
+            <div>{t(error)}</div>
             <Label
               as="a"
               attached="top right"
@@ -125,8 +125,6 @@ const LobbyPage = () => {
         </Container>
       )}
       <Lobby
-        error={error}
-        setError={setError}
         rooms={rooms}
         currentRoom={currentRoom}
         games={games}
