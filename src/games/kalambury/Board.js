@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { Responsive, Segment, Container, Header, Grid } from "semantic-ui-react";
-import Sidebar from "./Sidebar";
+import { Header } from "semantic-ui-react";
 import WaitingBoard from "./board/WaitingBoard";
 import GameBoard from "./board/GameBoard";
 import { useBoardGame } from "contexts/BoardGameContext";
+import GameLayout from "components/layout/GameLayout";
 
 const Board = () => {
   const { G, ctx, moves, playerID, rawClient } = useBoardGame();
@@ -17,6 +17,16 @@ const Board = () => {
   const canManageGame = ctx.activePlayers[playerID] === "manage";
 
   const guessInputRef = useRef();
+
+  const handleGuessClick = useCallback(
+    (e) => {
+      if (!isDrawing) {
+        setGuess(e.target.textContent);
+        guessInputRef.current.focus();
+      }
+    },
+    [isDrawing]
+  );
 
   useEffect(() => {
     // resync after connection to broadcast updated gameMetadata
@@ -35,16 +45,6 @@ const Board = () => {
     return () => clearInterval(interval);
   }, [moves, moves.Ping]);
 
-  const handleGuessClick = useCallback(
-    (e) => {
-      if (!isDrawing) {
-        setGuess(e.target.textContent);
-        guessInputRef.current.focus();
-      }
-    },
-    [isDrawing]
-  );
-
   const envokeLastAnswer = useCallback(
     (lastGuess) => {
       if (!isDrawing) {
@@ -56,8 +56,8 @@ const Board = () => {
     [isDrawing]
   );
 
-  let gameContent = () => (
-    <>
+  return (
+    <GameLayout gameName="Kalambury" handleGuessClick={handleGuessClick}>
       <Header as="h2" textAlign="center">
         {t(`header.${ctx.phase}`)}
         <Header.Subheader>
@@ -78,35 +78,7 @@ const Board = () => {
       ) : (
         <WaitingBoard {...{ canManageGame, setGuess, guess }} />
       )}
-    </>
-  );
-
-  const sidebarContent = () => <Sidebar handleGuessClick={handleGuessClick} />;
-
-  return (
-    <Container>
-      <Segment basic>
-        <Header as="h1" textAlign="center">
-          {t("game.name")}
-        </Header>
-      </Segment>
-      <Responsive as={Grid} minWidth={Responsive.onlyComputer.minWidth}>
-        <Grid.Column width="12">
-          <Grid.Row>{gameContent()}</Grid.Row>
-        </Grid.Column>
-        <Grid.Column width="4">
-          <Grid.Row>{sidebarContent()}</Grid.Row>
-        </Grid.Column>
-      </Responsive>
-      <Responsive as={Grid} maxWidth={Responsive.onlyTablet.maxWidth}>
-        <Grid.Row>
-          <Grid.Column>{gameContent()}</Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column>{sidebarContent()}</Grid.Column>
-        </Grid.Row>
-      </Responsive>
-    </Container>
+    </GameLayout>
   );
 };
 
