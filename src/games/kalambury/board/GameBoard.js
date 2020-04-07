@@ -86,7 +86,7 @@ const GameBoard = ({
         {timerFormat(G.remainingSeconds)}
       </Header>
       {isDrawing && (
-        <Segment basic textAlign="center">
+        <Segment basic textAlign="center" style={{ marginTop: "-1rem" }}>
           <Button color="yellow" disabled={!canChangePhrase} onClick={handleChangePhrase}>
             {t("board.game.new_phrase")}
           </Button>

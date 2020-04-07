@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useParams, useHistory, Redirect } from "react-router-dom";
-import { Button, Icon, Container, Confirm } from "semantic-ui-react";
+import { useParams, Redirect } from "react-router-dom";
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
 import { intersection, pickBy, identity, find, some, keys, map } from "lodash";
@@ -12,20 +11,16 @@ import { useUser, useCredentials } from "contexts/UserContext";
 import { getUrlParam } from "utils/url";
 import DataStore from "services/DataStore";
 import { apiRequests } from "services/API";
-import { useTranslation } from "react-i18next";
 
 import { BoardGameProvider } from "contexts/BoardGameContext";
 import Loading from "components/game/Loading";
 import Layout from "components/layout/Layout";
 
 const GamePage = () => {
-  const history = useHistory();
   const { gameID, gameName } = useParams();
-  const { t } = useTranslation("lobby");
 
   const [error, setError] = useState();
   const [playerID, setPlayerID] = useState();
-  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const user = useUser();
   const credentials = useCredentials();
@@ -104,18 +99,6 @@ const GamePage = () => {
     joinGame,
   ]);
 
-  const handleLeave = () => {
-    apiRequests
-      .leaveGame(game.name, gameID, playerID, gameCredentials)
-      .then(async () => {
-        await DataStore.deleteCredentials(user.uid, gameID);
-        history.push(routes.lobby());
-      })
-      .catch((e) => {
-        setError(e.message);
-      });
-  };
-
   const NewGameClient = Client({
     game: game,
     board: BoardGameProvider,
@@ -129,20 +112,14 @@ const GamePage = () => {
       {error && <Redirect pass to={{ pathname: routes.lobby(), state: { error: error } }} />}
       {gameName && gameID && playerID && gameCredentials && (
         <>
-          <NewGameClient playerID={playerID} gameID={gameID} credentials={gameCredentials}>
+          <NewGameClient
+            playerID={playerID}
+            gameID={gameID}
+            gameName={gameName}
+            credentials={gameCredentials}
+          >
             <Board />
           </NewGameClient>
-          <Container style={{ marginTop: "20px" }}>
-            <Button color="red" onClick={() => setConfirmOpen(true)}>
-              <Icon name="close" />
-              {t("game.leave")}
-            </Button>
-            <Confirm
-              open={confirmOpen}
-              onCancel={() => setConfirmOpen(false)}
-              onConfirm={handleLeave}
-            />
-          </Container>
         </>
       )}
     </Layout>
