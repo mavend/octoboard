@@ -32,6 +32,7 @@ const Player = ({
   }
 
   const { displayName, photoURL } = profile;
+  const visibleActions = actions.slice(0, 3);
 
   return (
     <Segment disabled={!isConnected && false}>
@@ -54,7 +55,7 @@ const Player = ({
                 duration={200}
                 verticalAlign="middle"
               >
-                {actions.map((action, idx) => (
+                {visibleActions.map((action, idx) => (
                   <List.Item
                     key={action.id}
                     style={{ opacity: ((3 - idx) * 0.5) / 3 + 0.5, marginRight: "8px" }}

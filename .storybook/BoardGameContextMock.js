@@ -13,7 +13,7 @@ const BoardGameContextMock = ({ children }) => {
         turnEndTime:
           Math.floor(new Date().getTime() / 1000) +
           number(
-            "Turn End Time",
+            "Remaining seconds",
             100,
             {
               range: true,
