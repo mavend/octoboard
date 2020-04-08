@@ -45,7 +45,7 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       const seconds = G.turnEndTime - currentTime();
-      if ((seconds <= 0 && isDrawing) || seconds < 5) {
+      if ((seconds <= 0 && isDrawing) || seconds < -5) {
         moves.NotifyTimeout();
       }
       setRemainingSeconds(Math.max(seconds, 0));
