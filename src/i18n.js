@@ -10,13 +10,7 @@ i18n
   .init({
     fallbackLng: "en",
     whitelist: ["en", "pl"],
-    debug: true,
-    interpolation: {
-      escapeValue: false,
-    },
-    react: {
-      useSuspense: false,
-    },
+    debug: process.env.NODE_ENV === "development",
   });
 
 export default i18n;
