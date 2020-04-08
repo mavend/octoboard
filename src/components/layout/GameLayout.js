@@ -1,6 +1,13 @@
 import React from "react";
+
+import { string, func } from "prop-types";
 import { Responsive, Segment, Container, Header, Grid } from "semantic-ui-react";
 import Sidebar from "components/game/Sidebar";
+
+const propTypes = {
+  gameName: string.isRequired,
+  handleGuessClick: func.isRequired,
+};
 
 const GameLayout = ({ gameName, handleGuessClick, children }) => {
   return (
@@ -33,5 +40,7 @@ const GameLayout = ({ gameName, handleGuessClick, children }) => {
     </Container>
   );
 };
+
+GameLayout.propTypes = propTypes;
 
 export default GameLayout;

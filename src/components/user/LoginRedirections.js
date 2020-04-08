@@ -1,9 +1,15 @@
-import { Link, useLocation } from "react-router-dom";
-import { routes } from "../../config/routes";
-import { Button, Icon, Responsive, Divider } from "semantic-ui-react";
 import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import { func } from "prop-types";
+import { Button, Icon, Responsive, Divider } from "semantic-ui-react";
+import { routes } from "config/routes";
 import { useTranslation } from "react-i18next";
 import GoogleLoginOption from "./GoogleLogin";
+
+const propTypes = {
+  setError: func.isRequired,
+  setLoading: func.isRequired,
+};
 
 const OtherLoginOptions = ({ setError, setLoading }) => {
   const { t } = useTranslation("credentials");
@@ -55,5 +61,7 @@ const OtherLoginOption = ({ link, current }) => {
     </Button>
   );
 };
+
+OtherLoginOptions.propTypes = propTypes;
 
 export default OtherLoginOptions;

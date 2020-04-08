@@ -1,6 +1,12 @@
 import React from "react";
+import { string, object } from "prop-types";
 import { Modal, Image, Header, Responsive } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
+
+const propTypes = {
+  action: string.isRequired,
+  modalOptions: object,
+};
 
 const CredentialsLayout = ({ action, modalOptions, children, ...props }) => {
   const { t } = useTranslation("credentials");
@@ -28,5 +34,7 @@ const CredentialsLayout = ({ action, modalOptions, children, ...props }) => {
     </Modal>
   );
 };
+
+CredentialsLayout.propTypes = propTypes;
 
 export default CredentialsLayout;
