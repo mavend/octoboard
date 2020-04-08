@@ -10,6 +10,8 @@ i18n
   .init({
     fallbackLng: "en",
     whitelist: ["en", "pl"],
+    ns: ["translation", "credentials", "lobby", "kalambury"],
+    defaultNS: "translation",
     debug: process.env.NODE_ENV === "development",
   });
 
