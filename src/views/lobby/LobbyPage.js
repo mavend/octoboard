@@ -103,7 +103,7 @@ const LobbyPage = () => {
   };
 
   return (
-    <Layout userMenu>
+    <Layout>
       <Container>
         <Image style={styles.mainImage} src="/images/game-hugo.png" />
         <Header as="h1" textAlign="center" style={styles.mainHeader}>

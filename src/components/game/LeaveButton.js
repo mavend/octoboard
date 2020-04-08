@@ -10,7 +10,7 @@ import { routes } from "config/routes";
 
 const LeaveButton = () => {
   const history = useHistory();
-  const { t } = useTranslation("lobby");
+  const { t } = useTranslation();
   const { playerID, gameID, gameName, credentials } = useBoardGame();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [error, setError] = useState();
@@ -33,9 +33,16 @@ const LeaveButton = () => {
       {error && <Redirect pass to={{ pathname: routes.lobby(), state: { error: error } }} />}
       <Button color="red" onClick={() => setConfirmOpen(true)}>
         <Icon name="close" />
-        {t("game.leave")}
+        {t("game.leave.button")}
       </Button>
-      <Confirm open={confirmOpen} onCancel={() => setConfirmOpen(false)} onConfirm={handleLeave} />
+      <Confirm
+        open={confirmOpen}
+        onCancel={() => setConfirmOpen(false)}
+        onConfirm={handleLeave}
+        cancelButton={t("game.leave.modal.cancel")}
+        confirmButton={t("game.leave.modal.confirm")}
+        content={t("game.leave.modal.content")}
+      />
     </>
   );
 };

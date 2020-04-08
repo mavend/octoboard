@@ -1,7 +1,18 @@
 {
   "user": {
+    "guest": "Gość",
     "change_password": "Zmień hasło",
     "logout": "Wyloguj"
+  },
+  "game": {
+    "leave": {
+      "button": "Opuść pokój",
+      "modal": {
+        "content": "Na pewno chcesz opuścić ten pokój?",
+        "confirm": "Tak",
+        "cancel": "Nie"
+      }
+    }
   },
   "footer": {
     "github": "Jesteśmy na GitHubie",

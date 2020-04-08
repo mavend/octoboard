@@ -44,6 +44,15 @@ const AuthProvider = {
   logout: async () => {
     return await FirebaseAuth.signOut();
   },
+  changePassword: async (currentPassword, newPassword) => {
+    const user = FirebaseAuth.currentUser;
+    if (user) {
+      await user.reauthenticateWithCredential(currentPassword);
+      await user.updatePassword(newPassword);
+    } else {
+      throw new Error("Something went wrong");
+    }
+  },
   onAuthChange: (callback) => {
     return FirebaseAuth.onAuthStateChanged(callback);
   },

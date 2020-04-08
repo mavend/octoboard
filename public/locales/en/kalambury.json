@@ -33,7 +33,7 @@
     "wait": {
       "input": {
         "placeholder": "Talk to other players while waiting...",
-        "action": "Send your messsage"
+        "action": "Send"
       },
       "actions": {
         "start": "Start game"
