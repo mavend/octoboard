@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Item, Button, Pagination, Label, Icon, Responsive } from "semantic-ui-react";
-import { useUser, useProfiles } from "contexts/UserContext";
-import { paginate } from "utils/paginate";
+import { string, func, bool, arrayOf, shape } from "prop-types";
 import { useTranslation } from "react-i18next";
+import { Item, Button, Pagination, Label, Icon, Responsive } from "semantic-ui-react";
+import { RoomType, GameType } from "config/propTypes";
+import { paginate } from "utils/paginate";
+import { useUser, useProfiles } from "contexts/UserContext";
+
+const roomsListPropTypes = {
+  rooms: arrayOf(RoomType).isRequired,
+  games: arrayOf(GameType).isRequired,
+  onJoinRoom: func,
+  currentRoom: RoomType,
+};
 
 const RoomsList = ({ rooms, games, onJoinRoom, currentRoom }) => {
   const [pagesCount, setPagesCount] = useState(1);
@@ -56,6 +65,14 @@ const RoomsList = ({ rooms, games, onJoinRoom, currentRoom }) => {
       </div>
     </div>
   );
+};
+
+const roomsListItemPropTypes = {
+  room: RoomType.isRequired,
+  game: GameType,
+  onJoin: func.isRequired,
+  current: bool,
+  disabled: bool,
 };
 
 const RoomsListItem = ({
@@ -177,6 +194,11 @@ const RoomsListItem = ({
   );
 };
 
+const roomsPlayerListItemPropTypes = {
+  player: shape({ name: string.isRequired }),
+  detailed: bool,
+};
+
 const RoomsPlayerListItem = ({ player: { name }, detailed }) => {
   const { uid } = useUser();
   const profiles = useProfiles();
@@ -195,5 +217,9 @@ const RoomsPlayerListItem = ({ player: { name }, detailed }) => {
     </Button>
   );
 };
+
+RoomsPlayerListItem.propTypes = roomsPlayerListItemPropTypes;
+RoomsListItem.propTypes = roomsListItemPropTypes;
+RoomsList.propTypes = roomsListPropTypes;
 
 export default RoomsList;

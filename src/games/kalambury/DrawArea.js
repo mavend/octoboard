@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { arrayOf, func } from "prop-types";
+import { LineType } from "config/propTypes";
+import { useBoardGame } from "contexts/BoardGameContext";
 import Drawing from "./Drawing";
 import Toolbar from "./Toolbar";
-import { useBoardGame } from "contexts/BoardGameContext";
+
+const propTypes = {
+  lines: arrayOf(LineType).isRequired,
+  setLines: func.isRequired,
+};
 
 const DrawArea = ({ lines, setLines, remainingSeconds }) => {
   const [isDrawing, setIsDrawing] = useState(false);
@@ -90,5 +97,7 @@ const DrawArea = ({ lines, setLines, remainingSeconds }) => {
     </div>
   );
 };
+
+DrawArea.propTypes = propTypes;
 
 export default DrawArea;

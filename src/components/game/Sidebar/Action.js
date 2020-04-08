@@ -1,6 +1,18 @@
 import React from "react";
-import { Icon, Label } from "semantic-ui-react";
+import { string, func, bool, shape } from "prop-types";
 import { useTranslation } from "react-i18next";
+import { Icon, Label } from "semantic-ui-react";
+
+const propTypes = {
+  action: shape({
+    action: string.isRequired,
+    text: string,
+    phrase: string,
+    previous: string,
+    success: bool,
+  }),
+  handleGuessClick: func,
+};
 
 const Action = ({ action, handleGuessClick }) => {
   const { t } = useTranslation("kalambury");
@@ -70,5 +82,7 @@ const ActionTimeout = ({ action: { previous }, t }) => (
     {t("sidebar.action.timeout", { phrase: previous })}
   </Label>
 );
+
+Action.propTypes = propTypes;
 
 export default Action;

@@ -1,6 +1,5 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
-import { boolean, number } from "@storybook/addon-knobs";
 
 import Sidebar from "./";
 

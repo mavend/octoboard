@@ -1,6 +1,15 @@
 import React from "react";
 import { Segment, Progress, Responsive } from "semantic-ui-react";
+import { arrayOf, bool, number } from "prop-types";
+import { LineType } from "config/propTypes";
 import smooth_path from "./utils/smooth_path";
+
+const propTypes = {
+  lines: arrayOf(LineType).isRequired,
+  drawable: bool,
+  remainingSeconds: number,
+  totalTime: number,
+};
 
 const Drawing = ({ lines, drawable, remainingSeconds, totalTime, ...props }) => {
   const styles = {
@@ -48,5 +57,7 @@ const DrawingLine = ({ line: { points, color, width } }) => (
     d={smooth_path(points, 0.12)}
   />
 );
+
+Drawing.propTypes = propTypes;
 
 export default Drawing;

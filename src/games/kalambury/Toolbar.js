@@ -1,7 +1,18 @@
 import React from "react";
 import { Responsive, Icon, Menu, Popup } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
+import { string, func, bool } from "prop-types";
 import { COLORS } from "config/constants";
+
+const propTypes = {
+  currentColor: string.isRequired,
+  onColorChange: func.isRequired,
+  onSizeChange: func.isRequired,
+  onClearAll: func.isRequired,
+  onUndoDrawing: func.isRequired,
+  onForfeit: func.isRequired,
+  canUndo: bool,
+};
 
 const Toolbar = ({
   currentColor,
@@ -136,5 +147,7 @@ const ColorBox = ({ color }) => (
     }}
   ></div>
 );
+
+Toolbar.propTypes = propTypes;
 
 export default Toolbar;

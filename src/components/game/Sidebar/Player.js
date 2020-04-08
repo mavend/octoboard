@@ -1,8 +1,11 @@
 import React from "react";
+import { string, number, func, bool, arrayOf, shape, object } from "prop-types";
 import { Icon, Segment, Feed, Transition, List } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
-
+import { PlayerType } from "config/propTypes";
 import Action from "./Action";
+
+const propTypes = PlayerType;
 
 const Player = ({
   uid,
@@ -71,5 +74,7 @@ const Player = ({
     </Segment>
   );
 };
+
+Player.propTypes = propTypes;
 
 export default Player;
