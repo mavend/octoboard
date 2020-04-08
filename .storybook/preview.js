@@ -12,8 +12,8 @@ import "../src/index.css";
 
 addDecorator(withKnobs);
 addDecorator(StoryRouter());
-addDecorator((storyFn) => <UserContextMock>{storyFn()}</UserContextMock>);
 addDecorator((storyFn) => <BoardGameContextMock>{storyFn()}</BoardGameContextMock>);
+addDecorator((storyFn) => <UserContextMock>{storyFn()}</UserContextMock>);
 
 const customViewports = {
   lowResLaptop: {

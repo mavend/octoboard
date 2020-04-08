@@ -24,7 +24,6 @@ export const BoardGameProvider = ({ children, ...props }) => {
 
   // Set players list
   useEffect(() => {
-    console.log("Change players");
     const maxPoints = Math.max(...points);
     const newPlayers = gameMetadata.map(({ id, name: uid, isConnected }) => {
       const stage = activePlayers[id];
@@ -51,7 +50,6 @@ export const BoardGameProvider = ({ children, ...props }) => {
   useEffect(() => {
     const currentPlayer = find(players, "isCurrentPlayer");
     if (currentPlayer) {
-      console.log("secrets");
       currentPlayer.secrets = playerSecret;
       setPlayer((player) => (isEqual(player, currentPlayer) ? player : currentPlayer));
     }
