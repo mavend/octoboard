@@ -15,6 +15,7 @@ function setupKalambury(ctx, setupData) {
     privateRoom: setupData && setupData.private,
     actionsCount: 0,
     startTime: new Date(),
+    timePerTurn: 120,
     canChangePhrase: true,
     players: {},
     points: Array(ctx.numPlayers).fill(0),
@@ -95,13 +96,7 @@ function NotifyTimeout(G, ctx) {}
 
 function indexOfMax(array) {
   const maxValue = Math.max(...array);
-  const maxIndexes = [];
-  let index = array.indexOf(maxValue);
-  while (index >= 0) {
-    maxIndexes.push(index);
-    index = array.indexOf(maxValue, index + 1);
-  }
-  return maxIndexes;
+  return keys(pickBy(array, (p) => p === maxValue)).map(Number);
 }
 
 export const Kalambury = {
@@ -149,7 +144,7 @@ export const Kalambury = {
           G.startTime = new Date();
           G.canChangePhrase = true;
           SetNewPhrase(G, ctx);
-          G.turnEndTime = currentTime() + 20;
+          G.turnEndTime = currentTime() + G.timePerTurn;
           LogAction(G, ctx, ctx.currentPlayer, "draw");
           ctx.events.setActivePlayers({ currentPlayer: "draw", others: "guess" });
         },
@@ -173,7 +168,6 @@ export const Kalambury = {
             moves: {
               UpdateDrawing: {
                 move: (_G, _ctx, lines) => {},
-                unsafe: true,
                 broadcast: true,
               },
               ChangePhrase: {

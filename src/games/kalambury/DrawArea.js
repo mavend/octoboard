@@ -7,9 +7,7 @@ const DrawArea = ({ lines, setLines, remainingSeconds }) => {
   const [isDrawing, setIsDrawing] = useState(false);
   const [penColor, setPenColor] = useState("#1b1c1d");
   const [penSize, setPenSize] = useState(3);
-  const {
-    moves: { Forfeit },
-  } = useBoardGame();
+  const { G, moves } = useBoardGame();
 
   useEffect(() => {
     document.addEventListener("mouseup", handleMouseUp);
@@ -65,7 +63,7 @@ const DrawArea = ({ lines, setLines, remainingSeconds }) => {
 
   const handleForfeit = () => {
     setLines([]);
-    Forfeit();
+    moves.Forfeit();
   };
 
   return (
@@ -82,6 +80,7 @@ const DrawArea = ({ lines, setLines, remainingSeconds }) => {
       <Drawing
         lines={lines}
         remainingSeconds={remainingSeconds}
+        totalTime={G.timePerTurn}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onTouchStart={handleMouseDown}

@@ -1,6 +1,5 @@
 import React from "react";
-import { action } from "@storybook/addon-actions";
-import { withKnobs, number } from "@storybook/addon-knobs";
+import { number } from "@storybook/addon-knobs";
 import lines from "games/kalambury/data/stories/lines";
 
 import Drawing from "./Drawing";
@@ -11,6 +10,19 @@ export default {
   excludeStories: /.*Data$/,
 };
 
-export const Default = () => <Drawing lines={lines} />;
+export const Default = () => (
+  <Drawing
+    lines={lines}
+    remainingSeconds={number("remainingSeconds", 40)}
+    totalTime={number("totalTime", 120)}
+  />
+);
 
-export const Drawable = () => <Drawing lines={lines} drawable={true} />;
+export const Drawable = () => (
+  <Drawing
+    lines={lines}
+    drawable={true}
+    remainingSeconds={number("remainingSeconds", 40)}
+    totalTime={number("totalTime", 120)}
+  />
+);

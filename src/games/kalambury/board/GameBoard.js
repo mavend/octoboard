@@ -27,31 +27,31 @@ const confettiConfig = {
 
 const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
   const {
-    G: { turnEndTime, canChangePhrase, actions },
-    moves: { NotifyTimeout, ChangePhrase, UpdateDrawing },
+    G,
+    moves,
     player: { isDrawing },
     playerID,
     rawClient,
   } = useBoardGame();
   const { t } = useTranslation("kalambury");
   const [lines, setLines] = useState([]);
-  const [remainingSeconds, setRemainingSeconds] = useState(turnEndTime - currentTime());
+  const [remainingSeconds, setRemainingSeconds] = useState(G.turnEndTime - currentTime());
   const [lastSuccess, setLastSuccess] = useState(false);
-  const lastUserGuess = filterActions(actions, playerID, "guess")[0] || {
+  const lastUserGuess = filterActions(G.actions, playerID, "guess")[0] || {
     id: null,
     success: false,
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const seconds = turnEndTime - currentTime();
+      const seconds = G.turnEndTime - currentTime();
       if ((seconds <= 0 && isDrawing) || seconds < 5) {
-        NotifyTimeout();
+        moves.NotifyTimeout();
       }
       setRemainingSeconds(Math.max(seconds, 0));
     }, 1000);
     return () => clearInterval(interval);
-  }, [turnEndTime, setRemainingSeconds, NotifyTimeout, isDrawing]);
+  }, [G.turnEndTime, setRemainingSeconds, moves, isDrawing]);
 
   useEffect(() => {
     setLastSuccess(lastUserGuess.success);
@@ -77,11 +77,11 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
   }, [isDrawing, rawClient.transport.socket]);
 
   useEffect(() => {
-    if (isDrawing) UpdateDrawing(lines);
+    if (isDrawing) moves.UpdateDrawing(lines);
   }, [isDrawing, moves, lines]);
 
   const handleChangePhrase = () => {
-    ChangePhrase();
+    moves.ChangePhrase();
     setLines([]);
   };
 
@@ -105,7 +105,7 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
       </Header>
       {isDrawing && (
         <Segment basic textAlign="center" style={{ marginTop: "-1rem" }}>
-          <Button color="yellow" disabled={!canChangePhrase} onClick={handleChangePhrase}>
+          <Button color="yellow" disabled={!G.canChangePhrase} onClick={handleChangePhrase}>
             {t("board.game.new_phrase")}
           </Button>
         </Segment>

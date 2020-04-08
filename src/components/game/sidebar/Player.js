@@ -54,7 +54,7 @@ const Player = ({
                 duration={200}
                 verticalAlign="middle"
               >
-                {actions.slice(0, 3).map((action, idx) => (
+                {actions.map((action, idx) => (
                   <List.Item
                     key={action.id}
                     style={{ opacity: ((3 - idx) * 0.5) / 3 + 0.5, marginRight: "8px" }}

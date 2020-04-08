@@ -2,7 +2,7 @@ import React from "react";
 import { Segment, Progress, Responsive } from "semantic-ui-react";
 import smooth_path from "./utils/smooth_path";
 
-const Drawing = ({ lines, drawable, remainingSeconds, ...props }) => {
+const Drawing = ({ lines, drawable, remainingSeconds, totalTime, ...props }) => {
   const styles = {
     wrapper: drawable
       ? {
@@ -32,7 +32,7 @@ const Drawing = ({ lines, drawable, remainingSeconds, ...props }) => {
           <DrawingLine key={id} line={scaleToViewBox(line)} viewBoxWidth />
         ))}
       </svg>
-      <Progress indicating percent={(100 * remainingSeconds) / 120} attached="bottom" />
+      <Progress indicating percent={(100 * remainingSeconds) / totalTime} attached="bottom" />
     </Segment>
   );
 };

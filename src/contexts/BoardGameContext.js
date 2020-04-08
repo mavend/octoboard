@@ -1,4 +1,6 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { find, isEqual } from "lodash";
+
 import filterActions from "utils/user/filterActions";
 import { useProfiles } from "./UserContext";
 
@@ -18,9 +20,11 @@ export const BoardGameProvider = ({ children, ...props }) => {
     stage: "wait",
   });
   const profiles = useProfiles();
+  const playerSecret = playersSecrets[playerID];
 
   // Set players list
   useEffect(() => {
+    console.log("Change players");
     const maxPoints = Math.max(...points);
     const newPlayers = gameMetadata.map(({ id, name: uid, isConnected }) => {
       const stage = activePlayers[id];
@@ -45,13 +49,13 @@ export const BoardGameProvider = ({ children, ...props }) => {
 
   // Set current player
   useEffect(() => {
-    const curretPlayer = find(players, "isCurrentPlayer");
+    const currentPlayer = find(players, "isCurrentPlayer");
     if (currentPlayer) {
-      const secrets = playersSecrets[curretPlayer.id];
-      curretPlayer.secrets = secrets;
+      console.log("secrets");
+      currentPlayer.secrets = playerSecret;
       setPlayer((player) => (isEqual(player, currentPlayer) ? player : currentPlayer));
     }
-  }, [players, setPlayer, playersSecrets]);
+  }, [players, setPlayer, playerSecret]);
 
   return (
     <BoardGameContext.Provider

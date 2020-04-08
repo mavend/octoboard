@@ -6,6 +6,7 @@ import filterActions from "utils/user/filterActions";
 
 const WaitingBoard = ({ guess, setGuess }) => {
   const {
+    G,
     playerID,
     player: { canManageGame },
     moves: { SendText, StartGame },

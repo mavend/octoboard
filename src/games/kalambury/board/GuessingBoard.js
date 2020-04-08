@@ -19,7 +19,7 @@ const GuessingBoard = ({
   const [lastGuessID, setLastGuessID] = useState(null);
   const [lastSuccess, setLastSuccess] = useState(true);
   const { t } = useTranslation("kalambury");
-  const { moves } = useBoardGame();
+  const { G, moves } = useBoardGame();
 
   const lastUserGuessID = lastUserGuess ? lastUserGuess.id : null;
 
@@ -88,7 +88,7 @@ const GuessingBoard = ({
           </Form.Field>
         </Transition>
       </Form>
-      <Drawing lines={lines} remainingSeconds={remainingSeconds} />
+      <Drawing lines={lines} remainingSeconds={remainingSeconds} totalTime={G.timePerTurn} />
     </div>
   );
 };

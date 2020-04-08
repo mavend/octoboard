@@ -7,17 +7,14 @@ import LeaveButton from "components/game/LeaveButton";
 
 const Sidebar = ({ handleGuessClick }) => {
   const { t } = useTranslation("lobby");
-  const {
-    G: { privateRoom },
-    players,
-  } = useBoardGame();
+  const { G, players } = useBoardGame();
 
   return (
     <>
       <Header as="h2" textAlign="center">
         {t("game.players")}
         <Header.Subheader>
-          {privateRoom ? (
+          {G.privateRoom ? (
             <Label as="span" size="small" color="grey">
               <Icon name="lock" />
               <Label.Detail>{t("game.private")}</Label.Detail>
