@@ -40,7 +40,7 @@ const WaitingBoard = ({ guess, setGuess }) => {
 
   return (
     <>
-      <Form onSubmit={sendGuess}>
+      <Form action="#" onSubmit={sendGuess}>
         <Transition animation={"pulse"} duration={300} visible={animateInput}>
           <Form.Field>
             <Input

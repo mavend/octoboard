@@ -1,45 +1,63 @@
 import React from "react";
-import { Container, Segment, Icon } from "semantic-ui-react";
+import { Menu, Icon, Dropdown, Responsive } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 
 const FooterLink = ({ text, children, ...props }) => (
-  <a style={{ color: "#aaa" }} target="_blank" rel="noopener noreferrer" {...props}>
+  <a
+    style={{ color: "#aaa", textDecoration: "underline dashed #ddd" }}
+    target="_blank"
+    rel="noopener noreferrer"
+    {...props}
+  >
     {children || text}
   </a>
 );
 
 const FooterItem = ({ children }) => {
-  return <div style={{ marginRight: "20px", color: "#aaa" }}>{children}</div>;
+  return <Menu.Item style={{ color: "#aaa" }}>{children}</Menu.Item>;
 };
 
 const Footer = () => {
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
 
-  const styles = {
-    footer: {
-      margin: 0,
-      background: "none",
-    },
-    wrapper: {
-      display: "flex",
-      flexDirection: "row",
-    },
+  const languages = [
+    { key: "en", text: "English", value: "en" },
+    { key: "pl", text: "polski", value: "pl" },
+  ];
+  const currentLanguage = languages.find(({ key }) => key === i18n.language);
+
+  const handleLanguageChange = (e, { value }) => {
+    i18n.changeLanguage(value);
   };
 
   return (
-    <Segment as="footer" style={styles.footer}>
-      <Container style={styles.wrapper}>
+    <Menu
+      secondary
+      stackable
+      as="footer"
+      style={window.innerWidth < Responsive.onlyTablet.minWidth ? { padding: "0 1rem" } : {}}
+    >
+      <FooterItem>
+        <FooterLink href="https://github.com/mavend/corona-games">
+          <Icon name="github" />
+          {t("footer.github")}
+        </FooterLink>
+      </FooterItem>
+      <FooterItem>
+        {t("footer.graphics")}: <FooterLink text="Icons8" href="https://icons8.com" />
+      </FooterItem>
+      <Menu.Menu position="right">
         <FooterItem>
-          <FooterLink href="https://github.com/mavend/corona-games">
-            <Icon name="github" />
-            {t("footer.github")}
-          </FooterLink>
+          <Icon size="large" name="language" style={{ marginRight: "8px" }} />
+          <Dropdown
+            pointing
+            options={languages}
+            defaultValue={currentLanguage.value}
+            onChange={handleLanguageChange}
+          />
         </FooterItem>
-        <FooterItem>
-          {t("footer.graphics")}: <FooterLink text="Icons8" href="https://icons8.com" />
-        </FooterItem>
-      </Container>
-    </Segment>
+      </Menu.Menu>
+    </Menu>
   );
 };
 

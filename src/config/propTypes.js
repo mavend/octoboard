@@ -3,7 +3,7 @@ import { string, arrayOf, shape, object, number, bool } from "prop-types";
 export const RoomType = shape({
   gameID: string.isRequired,
   gameName: string.isRequired,
-  players: arrayOf(shape({ id: string.isRequired, name: string })).isRequired,
+  players: arrayOf(shape({ id: number.isRequired, name: string })).isRequired,
   setupData: object,
 });
 

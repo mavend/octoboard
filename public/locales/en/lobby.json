@@ -28,7 +28,6 @@
     }
   },
   "game": {
-    "leave": "Leave room",
     "private": "Private",
     "public": "Public",
     "players": "Players"

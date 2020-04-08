@@ -1,7 +1,8 @@
 import React from "react";
 import { string, object } from "prop-types";
-import { Modal, Image, Header, Responsive } from "semantic-ui-react";
+import { Modal, Segment, Image, Header, Responsive } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
+import Footer from "./Footer";
 
 const propTypes = {
   action: string.isRequired,
@@ -31,6 +32,9 @@ const CredentialsLayout = ({ action, modalOptions, children, ...props }) => {
           {children}
         </Modal.Description>
       </Modal.Content>
+      <Segment basic secondary style={{ marginTop: 0 }}>
+        <Footer />
+      </Segment>
     </Modal>
   );
 };

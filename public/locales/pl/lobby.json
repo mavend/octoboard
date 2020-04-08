@@ -28,7 +28,6 @@
     }
   },
   "game": {
-    "leave": "Opuść pokój",
     "private": "Pokój prywatny",
     "public": "Pokój publiczny",
     "players": "Lista graczy"

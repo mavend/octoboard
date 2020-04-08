@@ -1,67 +1,48 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { object } from "prop-types";
-import { Sidebar, Image, Segment, Menu, Icon } from "semantic-ui-react";
+import { Dropdown, Image, Menu } from "semantic-ui-react";
 
 import AuthProvider from "services/Auth";
 import { useUser } from "contexts/UserContext";
 import { routes } from "config/routes";
 
-const propTypes = {
-  style: object,
-};
-
-const UserMenu = ({ style, children }) => {
+const UserMenu = () => {
   const { logout } = AuthProvider;
   const { displayName, photoURL, email, isAnonymous } = useUser();
-
-  const [visible, setVisible] = useState(false);
   const { t } = useTranslation();
 
   return (
-    <>
-      <Sidebar.Pushable style={style}>
-        <Sidebar
-          as={Menu}
-          animation="overlay"
-          icon="labeled"
-          inverted
-          onHide={() => setVisible(false)}
-          vertical
-          visible={visible}
-          width="thin"
-          style={{ width: "180px" }}
-        >
-          <Menu.Item as={"div"}>
-            <Icon name="user" />
-            {displayName}
-          </Menu.Item>
-          {email && <Menu.Item as={"div"}>{email}</Menu.Item>}
-          {!isAnonymous && (
-            <Menu.Item as={Link} to={routes.change_password()}>
-              <Icon name="exchange" />
-              {t("user.change_password")}
-            </Menu.Item>
-          )}
-          <Menu.Item as="a" onClick={logout}>
-            <Icon name="log out" />
-            {t("user.logout")}
-          </Menu.Item>
-        </Sidebar>
-        <Sidebar.Pusher>
-          <Segment floated="right" onClick={() => setVisible(!visible)}>
-            <Image avatar bordered src={photoURL} />
-            <span>{displayName}</span>
-          </Segment>
-
-          {children}
-        </Sidebar.Pusher>
-      </Sidebar.Pushable>
-    </>
+    <Menu secondary as="nav">
+      <Menu.Menu position="right">
+        <Menu.Item>
+          <Dropdown
+            pointing="top right"
+            trigger={
+              <>
+                <Image avatar style={{ marginRight: "10px" }} src={photoURL} />
+                {displayName}
+              </>
+            }
+          >
+            <Dropdown.Menu>
+              <Dropdown.Item icon="user" text={email || t("user.guest")} />
+              <Dropdown.Divider />
+              {!isAnonymous && (
+                <Dropdown.Item
+                  icon="exchange"
+                  as={Link}
+                  to={routes.change_password()}
+                  text={t("user.change_password")}
+                />
+              )}
+              <Dropdown.Item as="a" onClick={logout} icon="log out" text={t("user.logout")} />
+            </Dropdown.Menu>
+          </Dropdown>
+        </Menu.Item>
+      </Menu.Menu>
+    </Menu>
   );
 };
-
-UserMenu.propTypes = propTypes;
 
 export default UserMenu;

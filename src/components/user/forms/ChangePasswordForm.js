@@ -8,6 +8,8 @@ const ChangePasswordForm = ({
   isLoading,
   error,
   success,
+  currentPassword,
+  setCurrentPassword,
   newPassword,
   setNewPassword,
   formValid,
@@ -18,6 +20,15 @@ const ChangePasswordForm = ({
     <Form.Input
       autoFocus
       placeholder={t("form.password")}
+      label={t("form.password")}
+      type="password"
+      autoComplete="current-password"
+      name={t("form.password")}
+      value={currentPassword}
+      onChange={(_, { value }) => setCurrentPassword(value)}
+    />
+    <Form.Input
+      placeholder={t("form.new_password")}
       label={t("form.new_password")}
       type="password"
       autoComplete="new-password"

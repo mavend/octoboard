@@ -74,7 +74,7 @@ const GuessingBoard = ({
 
   return (
     <div>
-      <Form onSubmit={sendGuess}>
+      <Form action="#" onSubmit={sendGuess}>
         <Transition
           animation={lastSuccess ? "pulse" : "shake"}
           duration={300}

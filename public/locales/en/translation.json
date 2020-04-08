@@ -1,7 +1,18 @@
 {
   "user": {
+    "guest": "Guest",
     "change_password": "Change password",
     "logout": "Log Out"
+  },
+  "game": {
+    "leave": {
+      "button": "Leave Room",
+      "modal": {
+        "content": "Do you really want to leave this room?",
+        "confirm": "Yes",
+        "cancel": "No"
+      }
+    }
   },
   "footer": {
     "github": "We are on GitHub",

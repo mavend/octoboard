@@ -54,7 +54,7 @@ const OtherLoginOption = ({ link, current }) => {
       }}
       disabled={current}
       basic={current}
-      color={current && "black"}
+      color={current ? "black" : null}
     >
       <Icon name={link.icon} />
       <span> {link.text}</span>
