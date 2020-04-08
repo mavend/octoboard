@@ -105,7 +105,7 @@ const LobbyPage = () => {
   return (
     <Layout userMenu>
       <Container>
-        <Image style={styles.mainImage} src="/images/octoboard.png" />
+        <Image style={styles.mainImage} src="/images/game-hugo.png" />
         <Header as="h1" textAlign="center" style={styles.mainHeader}>
           {PAGE_TITLE}
           <Header.Subheader>{t("general.motto")}</Header.Subheader>
