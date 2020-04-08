@@ -7,6 +7,7 @@ import { useBoardGame } from "contexts/BoardGameContext";
 const GuessingBoard = ({
   guess,
   setGuess,
+  remainingSeconds,
   guessInputRef,
   lastUserGuess,
   envokeLastAnswer,
@@ -86,7 +87,7 @@ const GuessingBoard = ({
           </Form.Field>
         </Transition>
       </Form>
-      <Drawing lines={lines} />
+      <Drawing lines={lines} remainingSeconds={remainingSeconds} />
     </div>
   );
 };

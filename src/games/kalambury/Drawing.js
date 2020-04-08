@@ -1,11 +1,8 @@
 import React from "react";
 import { Segment, Progress, Responsive } from "semantic-ui-react";
 import smooth_path from "./utils/smooth_path";
-import { useBoardGame } from "contexts/BoardGameContext";
 
-const Drawing = ({ lines, drawable, ...props }) => {
-  const { G } = useBoardGame();
-
+const Drawing = ({ lines, drawable, remainingSeconds, ...props }) => {
   const styles = {
     wrapper: drawable
       ? {
@@ -35,7 +32,7 @@ const Drawing = ({ lines, drawable, ...props }) => {
           <DrawingLine key={id} line={scaleToViewBox(line)} viewBoxWidth />
         ))}
       </svg>
-      <Progress indicating percent={(100 * G.remainingSeconds) / 120} attached="bottom" />
+      <Progress indicating percent={(100 * remainingSeconds) / 120} attached="bottom" />
     </Segment>
   );
 };

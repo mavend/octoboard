@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 const Player = ({
   uid,
-  isActive,
+  isConnected,
   points,
   actions,
   isWinning,
@@ -33,14 +33,14 @@ const Player = ({
   const { displayName, photoURL } = profile;
 
   return (
-    <Segment disabled={!isActive && false}>
+    <Segment disabled={!isConnected && false}>
       <Feed>
         <Feed.Event>
           <Feed.Label image={photoURL} />
           <Feed.Content>
             <Feed.Date>
               {displayName} {isCurrentPlayer && <span>({t("sidebar.player.current")})</span>}{" "}
-              {!isActive && <span>({t("sidebar.player.disconnected")})</span>}
+              {!isConnected && <span>({t("sidebar.player.disconnected")})</span>}
             </Feed.Date>
             <Feed.Content>
               <Icon name="trophy" color={isWinning ? "yellow" : "grey"} />

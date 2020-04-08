@@ -1,4 +1,4 @@
-function timerFormat(remainingSeconds) {
+export function timerFormat(remainingSeconds) {
   let minutes = Math.floor(remainingSeconds / 60);
   let seconds = remainingSeconds - minutes * 60;
   if (seconds < 10) {
@@ -7,4 +7,6 @@ function timerFormat(remainingSeconds) {
   return minutes + ":" + seconds;
 }
 
-export { timerFormat };
+export function currentTime() {
+  return Math.floor(new Date().getTime() / 1000);
+}

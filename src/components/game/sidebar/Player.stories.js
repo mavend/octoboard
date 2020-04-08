@@ -15,7 +15,7 @@ export const Empty = () => <Player uid={null} />;
 export const Default = () => (
   <Player
     uid={"user-1"}
-    isActive={boolean("Active", true)}
+    isConnected={boolean("Connected", true)}
     points={number("Points", 12)}
     actions={object("Actions array", [
       { action: "guess", id: "123", phrase: "Baba z wozu?" },

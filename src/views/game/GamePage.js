@@ -50,7 +50,7 @@ const GamePage = () => {
         if (currenRooms.length > 0) {
           setError("errors.already_in_game");
         } else {
-          DataStore.setCredentials({});
+          DataStore.setCredentials(user.uid, {});
         }
       })
       .catch((e) => {

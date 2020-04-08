@@ -3,7 +3,7 @@ import { Segment, Button, Header } from "semantic-ui-react";
 import Confetti from "react-dom-confetti";
 import { shuffle } from "lodash";
 import { useTranslation } from "react-i18next";
-import { timerFormat } from "../utils/time";
+import { timerFormat, currentTime } from "../utils/time";
 import DrawArea from "../DrawArea";
 import GuessingBoard from "./GuessingBoard";
 import { COLORS } from "config/constants";
@@ -35,11 +35,23 @@ const GameBoard = ({
   const { t } = useTranslation("kalambury");
   const [lines, setLines] = useState([]);
   const isDrawing = ctx.activePlayers[playerID] === "draw";
+  const [remainingSeconds, setRemainingSeconds] = useState(G.turnEndTime - currentTime());
   const [lastSuccess, setLastSuccess] = useState(false);
   const lastUserGuess = filterActions(G.actions, playerID, "guess")[0] || {
     id: null,
     success: false,
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const seconds = G.turnEndTime - currentTime();
+      if ((seconds <= 0 && isDrawing) || seconds < 5) {
+        moves.NotifyTimeout();
+      }
+      setRemainingSeconds(Math.max(seconds, 0));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [G.turnEndTime, setRemainingSeconds, moves, isDrawing]);
 
   useEffect(() => {
     setLastSuccess(lastUserGuess.success);
@@ -76,14 +88,20 @@ const GameBoard = ({
   return (
     <>
       {isDrawing ? (
-        <DrawArea {...{ lines, setLines }} />
+        <DrawArea lines={lines} setLines={setLines} remainingSeconds={remainingSeconds} />
       ) : (
         <GuessingBoard
-          {...{ lastUserGuess, envokeLastAnswer, guessInputRef, guess, setGuess, lines }}
+          lastUserGuess={lastUserGuess}
+          envokeLastAnswer={envokeLastAnswer}
+          guessInputRef={guessInputRef}
+          guess={guess}
+          setGuess={setGuess}
+          lines={lines}
+          remainingSeconds={remainingSeconds}
         />
       )}
       <Header as="h3" attached="bottom" textAlign="center">
-        {timerFormat(G.remainingSeconds)}
+        {timerFormat(remainingSeconds)}
       </Header>
       {isDrawing && (
         <Segment basic textAlign="center" style={{ marginTop: "-1rem" }}>

@@ -59,6 +59,7 @@ const LobbyPage = () => {
 
   const handleJoinRoom = ({ gameName, gameID, players, playerID }) => {
     if (!currentRoom) {
+      setLoading(true);
       const freeSpotId = playerID || players.find((p) => !p.name).id;
       apiRequests
         .joinRoom(gameName, gameID, freeSpotId, user.uid)
@@ -104,7 +105,7 @@ const LobbyPage = () => {
   return (
     <Layout userMenu>
       <Container>
-        <Image style={styles.mainImage} src="/images/game-hugo.png" />
+        <Image style={styles.mainImage} src="/images/octoboard.png" />
         <Header as="h1" textAlign="center" style={styles.mainHeader}>
           {PAGE_TITLE}
           <Header.Subheader>{t("general.motto")}</Header.Subheader>
