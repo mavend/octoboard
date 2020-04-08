@@ -1,6 +1,6 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
-import { withKnobs, text, boolean, number, object } from "@storybook/addon-knobs";
+import { text, boolean, number, object } from "@storybook/addon-knobs";
 
 import Player from "./Player";
 

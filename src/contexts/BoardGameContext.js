@@ -1,11 +1,63 @@
 import React, { createContext, useContext } from "react";
+import filterActions from "utils/user/filterActions";
+import { useProfiles } from "./UserContext";
 
 export const BoardGameContext = createContext({});
 
 export const BoardGameProvider = ({ children, ...props }) => {
+  const {
+    G: { points, actions, players: playersSecrets },
+    ctx: { activePlayers },
+    gameMetadata,
+    playerID,
+  } = props;
+  const [players, setPlayers] = useState([]);
+  const [player, setPlayer] = useState({
+    secrets: { phrase: "" },
+    isCurrentPlayer: true,
+    stage: "wait",
+  });
+  const profiles = useProfiles();
+
+  // Set players list
+  useEffect(() => {
+    const maxPoints = Math.max(...points);
+    const newPlayers = gameMetadata.map(({ id, name: uid, isConnected }) => {
+      const stage = activePlayers[id];
+      const profile = profiles.get(uid);
+      return {
+        id,
+        uid,
+        profile,
+        isConnected,
+        stage,
+        points: points[id],
+        actions: filterActions(actions, id),
+        isDrawing: stage === "draw",
+        canManageGame: stage === "manage",
+        isCurrentPlayer: id.toString() === playerID,
+        isWinning: points[id] === maxPoints,
+        secrets: {},
+      };
+    });
+    setPlayers((players) => (isEqual(players, newPlayers) ? players : newPlayers));
+  }, [gameMetadata, points, activePlayers, actions, playerID, setPlayers, profiles]);
+
+  // Set current player
+  useEffect(() => {
+    const curretPlayer = find(players, "isCurrentPlayer");
+    if (currentPlayer) {
+      const secrets = playersSecrets[curretPlayer.id];
+      curretPlayer.secrets = secrets;
+      setPlayer((player) => (isEqual(player, currentPlayer) ? player : currentPlayer));
+    }
+  }, [players, setPlayer, playersSecrets]);
+
   return (
     <BoardGameContext.Provider
       value={{
+        player,
+        players,
         ...props,
       }}
     >

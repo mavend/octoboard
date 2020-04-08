@@ -1,20 +1,23 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Header, Segment, Icon, Label } from "semantic-ui-react";
-import Player from "./sidebar/Player";
+import Player from "./Player";
 import { useBoardGame } from "contexts/BoardGameContext";
 import LeaveButton from "components/game/LeaveButton";
 
 const Sidebar = ({ handleGuessClick }) => {
   const { t } = useTranslation("lobby");
-  const { G, players } = useBoardGame();
+  const {
+    G: { privateRoom },
+    players,
+  } = useBoardGame();
 
   return (
     <>
       <Header as="h2" textAlign="center">
         {t("game.players")}
         <Header.Subheader>
-          {G.privateRoom ? (
+          {privateRoom ? (
             <Label as="span" size="small" color="grey">
               <Icon name="lock" />
               <Label.Detail>{t("game.private")}</Label.Detail>

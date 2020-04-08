@@ -1,7 +1,8 @@
 import React from "react";
 import { Icon, Segment, Feed, Transition, List } from "semantic-ui-react";
-import Action from "./Action";
 import { useTranslation } from "react-i18next";
+
+import Action from "./Action";
 
 const Player = ({
   uid,

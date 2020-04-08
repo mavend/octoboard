@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Transition, Form, Input } from "semantic-ui-react";
-import Drawing from "../Drawing";
 import { useTranslation } from "react-i18next";
+
 import { useBoardGame } from "contexts/BoardGameContext";
+import Drawing from "../Drawing";
 
 const GuessingBoard = ({
   guess,
