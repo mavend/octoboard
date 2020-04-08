@@ -19,6 +19,7 @@
     "moment": "^2.24.0",
     "mongodb": "^3.5.5",
     "pretty-quick": "^2.0.1",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-dom-confetti": "^0.1.3",

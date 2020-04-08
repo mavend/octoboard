@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form } from "semantic-ui-react";
+import { func, bool, arrayOf } from "prop-types";
 import { useTranslation } from "react-i18next";
+import { Button, Form } from "semantic-ui-react";
+import { GameType } from "config/propTypes";
+
+const propTypes = {
+  games: arrayOf(GameType).isRequired,
+  onCreate: func.isRequired,
+  disabled: bool,
+  loading: bool,
+};
 
 const CreateRoomForm = ({ games, onCreate, disabled, loading }) => {
   const [game, setGame] = useState();
@@ -57,5 +66,7 @@ const CreateRoomForm = ({ games, onCreate, disabled, loading }) => {
     </Form>
   );
 };
+
+CreateRoomForm.propTypes = propTypes;
 
 export default CreateRoomForm;

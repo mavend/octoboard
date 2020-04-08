@@ -1,4 +1,5 @@
 import React from "react";
+import { func } from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Header, Segment, Icon, Label } from "semantic-ui-react";
 import { useProfiles } from "contexts/UserContext";
@@ -6,6 +7,10 @@ import Player from "./sidebar/Player";
 import { useBoardGame } from "contexts/BoardGameContext";
 import filterActions from "utils/user/filterActions";
 import LeaveButton from "components/game/LeaveButton";
+
+const propTypes = {
+  handleGuessClick: func,
+};
 
 const Sidebar = ({ handleGuessClick }) => {
   const { t } = useTranslation("lobby");
@@ -53,5 +58,7 @@ const Sidebar = ({ handleGuessClick }) => {
     </>
   );
 };
+
+Sidebar.propTypes = propTypes;
 
 export default Sidebar;

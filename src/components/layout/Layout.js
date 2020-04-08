@@ -1,6 +1,11 @@
 import React from "react";
+import { bool } from "prop-types";
 import UserMenu from "components/user/UserMenu";
 import Footer from "./Footer";
+
+const propTypes = {
+  userMenu: bool,
+};
 
 const Layout = ({ userMenu, children }) => {
   const styles = {
@@ -23,5 +28,7 @@ const Layout = ({ userMenu, children }) => {
     </div>
   );
 };
+
+Layout.propTypes = propTypes;
 
 export default Layout;

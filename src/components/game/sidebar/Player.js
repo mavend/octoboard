@@ -1,7 +1,22 @@
 import React from "react";
+import { string, number, func, bool, arrayOf, shape, object } from "prop-types";
 import { Icon, Segment, Feed, Transition, List } from "semantic-ui-react";
 import Action from "./Action";
 import { useTranslation } from "react-i18next";
+
+const propTypes = {
+  uid: string,
+  isActive: bool,
+  points: arrayOf(number),
+  actions: arrayOf(object),
+  isWinning: bool,
+  isCurrentPlayer: bool,
+  handleGuessClick: func,
+  profile: shape({
+    displayName: string,
+    photoURL: string,
+  }),
+};
 
 const Player = ({
   uid,
@@ -69,5 +84,7 @@ const Player = ({
     </Segment>
   );
 };
+
+Player.propTypes = propTypes;
 
 export default Player;

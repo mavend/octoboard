@@ -1,7 +1,14 @@
 import React from "react";
 import { Segment, Progress, Responsive } from "semantic-ui-react";
+import { arrayOf, bool } from "prop-types";
+import { LineType } from "config/propTypes";
 import smooth_path from "./utils/smooth_path";
 import { useBoardGame } from "contexts/BoardGameContext";
+
+const propTypes = {
+  lines: arrayOf(LineType).isRequired,
+  drawable: bool,
+};
 
 const Drawing = ({ lines, drawable, ...props }) => {
   const { G } = useBoardGame();
@@ -51,5 +58,7 @@ const DrawingLine = ({ line: { points, color, width } }) => (
     d={smooth_path(points, 0.12)}
   />
 );
+
+Drawing.propTypes = propTypes;
 
 export default Drawing;

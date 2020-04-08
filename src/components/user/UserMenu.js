@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { object } from "prop-types";
 import { Sidebar, Image, Segment, Menu, Icon } from "semantic-ui-react";
 
 import AuthProvider from "services/Auth";
 import { useUser } from "contexts/UserContext";
 import { routes } from "config/routes";
+
+const propTypes = {
+  style: object,
+};
 
 const UserMenu = ({ style, children }) => {
   const { logout } = AuthProvider;
@@ -56,5 +61,7 @@ const UserMenu = ({ style, children }) => {
     </>
   );
 };
+
+UserMenu.propTypes = propTypes;
 
 export default UserMenu;

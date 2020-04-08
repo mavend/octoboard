@@ -1,4 +1,5 @@
 import React from "react";
+import { func, bool, arrayOf } from "prop-types";
 import {
   Container,
   Header,
@@ -10,8 +11,18 @@ import {
   Responsive,
 } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
+import { GameType, RoomType } from "config/propTypes";
 import RoomsList from "components/lobby/RoomsList";
 import CreateRoomForm from "components/lobby/CreateRoomForm";
+
+const propTypes = {
+  rooms: arrayOf(RoomType).isRequired,
+  currentRoom: RoomType,
+  games: arrayOf(GameType).isRequired,
+  handleJoinRoom: func.isRequired,
+  handleCreate: func.isRequired,
+  loading: bool,
+};
 
 const Lobby = ({ rooms, currentRoom, games, handleJoinRoom, handleCreate, loading }) => {
   const { t } = useTranslation("lobby");
@@ -83,5 +94,7 @@ const Lobby = ({ rooms, currentRoom, games, handleJoinRoom, handleCreate, loadin
     </Container>
   );
 };
+
+Lobby.propTypes = propTypes;
 
 export default Lobby;
