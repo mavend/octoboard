@@ -2,16 +2,15 @@ import FirebaseClient from "./Firebase";
 
 const DB = FirebaseClient.firestore();
 
+console.log(DB);
+
 const DataStore = {
   // Public users' profiles
-  profiles: DB.collection("public_profiles"),
-  fetchProfile: async (uid) => await DataStore.profiles.doc(uid).get(),
-  updateProfile: async (uid, profileData) => await DataStore.profiles.doc(uid).set(profileData),
+  profiles: DB.collection("users").doc("public_profiles"),
+  updateProfile: async (uid, profileData) =>
+    await DataStore.profiles.update({ [uid]: profileData }),
   subscribeProfiles: (callback) => {
-    return DataStore.profiles.onSnapshot((snapshot) => {
-      const profiles = snapshot.docs.map((doc) => [doc.id, doc.data()]);
-      callback(profiles);
-    });
+    return DataStore.profiles.onSnapshot((doc) => callback(doc.data()));
   },
   // Game credentials
   credentials: DB.collection("game_credentials"),

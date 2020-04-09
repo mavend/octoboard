@@ -33,7 +33,7 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = DataStore.subscribeProfiles((profiles) => {
-      setProfiles(profilesMap(profiles));
+      setProfiles(profilesMap(Object.entries(profiles)));
     });
     return () => unsubscribe();
   }, [setProfiles]);
