@@ -46,7 +46,7 @@ const Player = ({
               {displayName} {isCurrentPlayer && <span>({t("sidebar.player.current")})</span>}{" "}
               <Icon
                 name="broken chain"
-                className={{ "smooth-disabled": true, hidden: !isConnected }}
+                className={`smooth-disabled ${isConnected ? "hidden" : ""}`}
                 style={{ opacity: isConnected ? 0 : 0.45 }}
               />
             </Feed.Date>
@@ -67,7 +67,10 @@ const Player = ({
 const ActionsList = ({ actions, handleGuessClick }) => (
   <List verticalAlign="middle">
     {actions.map((action, idx) => (
-      <List.Item style={{ opacity: ((3 - idx) * 0.5) / 3 + 0.5, marginRight: "8px" }}>
+      <List.Item
+        key={action.id}
+        style={{ opacity: ((3 - idx) * 0.5) / 3 + 0.5, marginRight: "8px" }}
+      >
         <Action action={action} handleGuessClick={handleGuessClick} />
       </List.Item>
     ))}
