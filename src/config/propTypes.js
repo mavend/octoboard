@@ -27,7 +27,7 @@ export const PlayerType = shape({
     photoURL: string,
   }),
   stage: string,
-  points: arrayOf(number),
+  points: number,
   actions: arrayOf(object),
   isDrawing: bool,
   isWinning: bool,

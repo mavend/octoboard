@@ -1,9 +1,11 @@
 import React from "react";
 import { func } from "prop-types";
-import { Icon, Segment, Feed, Transition, List } from "semantic-ui-react";
+import { Icon, Segment, Feed, List } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 import { PlayerType } from "config/propTypes";
 import Action from "./Action";
+
+import "./Player.css";
 
 const propTypes = {
   player: PlayerType,
@@ -44,7 +46,7 @@ const Player = ({
               {displayName} {isCurrentPlayer && <span>({t("sidebar.player.current")})</span>}{" "}
               <Icon
                 name="broken chain"
-                className="smooth-disabled"
+                className={{ "smooth-disabled": true, hidden: !isConnected }}
                 style={{ opacity: isConnected ? 0 : 0.45 }}
               />
             </Feed.Date>
@@ -53,21 +55,7 @@ const Player = ({
               {t("sidebar.player.points", { points: points })}
             </Feed.Content>
             <Feed.Extra text style={{ maxWidth: "230px", marginLeft: "-50px" }}>
-              <Transition.Group
-                as={List}
-                animation="fade left"
-                duration={200}
-                verticalAlign="middle"
-              >
-                {visibleActions.map((action, idx) => (
-                  <List.Item
-                    key={action.id}
-                    style={{ opacity: ((3 - idx) * 0.5) / 3 + 0.5, marginRight: "8px" }}
-                  >
-                    <Action action={action} handleGuessClick={handleGuessClick} />
-                  </List.Item>
-                ))}
-              </Transition.Group>
+              <ActionsList actions={visibleActions} handleGuessClick={handleGuessClick} />
             </Feed.Extra>
           </Feed.Content>
         </Feed.Event>
@@ -75,6 +63,16 @@ const Player = ({
     </Segment>
   );
 };
+
+const ActionsList = ({ actions, handleGuessClick }) => (
+  <List verticalAlign="middle">
+    {actions.map((action, idx) => (
+      <List.Item style={{ opacity: ((3 - idx) * 0.5) / 3 + 0.5, marginRight: "8px" }}>
+        <Action action={action} handleGuessClick={handleGuessClick} />
+      </List.Item>
+    ))}
+  </List>
+);
 
 Player.propTypes = propTypes;
 

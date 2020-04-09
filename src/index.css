@@ -40,11 +40,6 @@ code {
   left: 50%;
 }
 
-.smooth-disabled {
-  transition: opacity 2s cubic-bezier(0.55, 0.06, 0.82, 0.18),
-    color 2s cubic-bezier(0.55, 0.06, 0.82, 0.18);
-}
-
 @media screen and (max-width: 767px) {
   input,
   select,

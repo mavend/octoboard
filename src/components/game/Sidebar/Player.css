@@ -1,0 +1,23 @@
+.smooth-disabled {
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+.smooth-disabled.disabled,
+.smooth-disabled.hidden {
+  transition: opacity 2s cubic-bezier(0.55, 0.06, 0.82, 0.18),
+    color 2s cubic-bezier(0.55, 0.06, 0.82, 0.18);
+}
+
+.player-action-enter {
+  opacity: 0;
+}
+.player-action-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.player-action-exit {
+  opacity: 1;
+}
+.player-action-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
