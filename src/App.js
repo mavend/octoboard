@@ -1,9 +1,8 @@
 import React, { Suspense } from "react";
 import { Router, Switch } from "react-router-dom";
-import { Helmet, HelmetProvider } from "react-helmet-async";
+import { HelmetProvider } from "react-helmet-async";
 import { Dimmer, Loader } from "semantic-ui-react";
 
-import { PAGE_TITLE } from "config/constants";
 import { routes } from "config/routes";
 import history from "config/history";
 
@@ -31,30 +30,29 @@ const App = () => {
       <ErrorBoundary>
         <UserProvider>
           <HelmetProvider>
-            <Helmet titleTemplate={PAGE_TITLE} defaultTitle={PAGE_TITLE} />
+            <Router history={history}>
+              <Switch>
+                <PrivateRoute exact path={routes.lobby()}>
+                  <LobbyPage />
+                </PrivateRoute>
+                <NotLoggedInRoute exact path={routes.login()}>
+                  <LoginPage />
+                </NotLoggedInRoute>
+                <NotLoggedInRoute exact path={routes.login_guest()}>
+                  <AnonymousLoginPage />
+                </NotLoggedInRoute>
+                <NotLoggedInRoute exact path={routes.register()}>
+                  <RegisterPage />
+                </NotLoggedInRoute>
+                <PrivateRoute path={routes.game()}>
+                  <GamePage />
+                </PrivateRoute>
+                <PrivateRoute path={routes.change_password()}>
+                  <ChangePassword />
+                </PrivateRoute>
+              </Switch>
+            </Router>
           </HelmetProvider>
-          <Router history={history}>
-            <Switch>
-              <PrivateRoute exact path={routes.lobby()}>
-                <LobbyPage />
-              </PrivateRoute>
-              <NotLoggedInRoute exact path={routes.login()}>
-                <LoginPage />
-              </NotLoggedInRoute>
-              <NotLoggedInRoute exact path={routes.login_guest()}>
-                <AnonymousLoginPage />
-              </NotLoggedInRoute>
-              <NotLoggedInRoute exact path={routes.register()}>
-                <RegisterPage />
-              </NotLoggedInRoute>
-              <PrivateRoute path={routes.game()}>
-                <GamePage />
-              </PrivateRoute>
-              <PrivateRoute path={routes.change_password()}>
-                <ChangePassword />
-              </PrivateRoute>
-            </Switch>
-          </Router>
         </UserProvider>
       </ErrorBoundary>
     </Suspense>
