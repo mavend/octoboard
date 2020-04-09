@@ -35,14 +35,18 @@ const Player = ({
   const visibleActions = actions.slice(0, 3);
 
   return (
-    <Segment disabled={!isConnected && false}>
+    <Segment disabled={!isConnected} className="smooth-disabled">
       <Feed>
         <Feed.Event>
           <Feed.Label image={photoURL} />
           <Feed.Content>
             <Feed.Date>
               {displayName} {isCurrentPlayer && <span>({t("sidebar.player.current")})</span>}{" "}
-              {!isConnected && <span>({t("sidebar.player.disconnected")})</span>}
+              <Icon
+                name="broken chain"
+                className="smooth-disabled"
+                style={{ opacity: isConnected ? 0 : 0.45 }}
+              />
             </Feed.Date>
             <Feed.Content>
               <Icon name="trophy" color={isWinning ? "yellow" : "grey"} />
