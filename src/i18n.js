@@ -10,13 +10,9 @@ i18n
   .init({
     fallbackLng: "en",
     whitelist: ["en", "pl"],
-    debug: true,
-    interpolation: {
-      escapeValue: false,
-    },
-    react: {
-      useSuspense: false,
-    },
+    ns: ["translation", "credentials", "lobby", "kalambury"],
+    defaultNS: "translation",
+    debug: process.env.NODE_ENV === "development",
   });
 
 export default i18n;

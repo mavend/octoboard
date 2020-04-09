@@ -1,6 +1,8 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Router, Switch } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import { Dimmer, Loader } from "semantic-ui-react";
+
 import { PAGE_TITLE } from "config/constants";
 import { routes } from "config/routes";
 import history from "config/history";
@@ -17,9 +19,15 @@ import LoginPage from "views/user/LoginPage";
 import RegisterPage from "views/user/RegisterPage";
 import ChangePassword from "views/user/ChangePassword";
 
+const Loading = () => (
+  <Dimmer active inverted>
+    <Loader />
+  </Dimmer>
+);
+
 const App = () => {
   return (
-    <>
+    <Suspense fallback={<Loading />}>
       <ErrorBoundary>
         <UserProvider>
           <HelmetProvider>
@@ -49,7 +57,7 @@ const App = () => {
           </Router>
         </UserProvider>
       </ErrorBoundary>
-    </>
+    </Suspense>
   );
 };
 
