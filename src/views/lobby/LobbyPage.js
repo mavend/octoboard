@@ -15,6 +15,8 @@ import { gameComponents } from "games";
 import Layout from "components/layout/Layout";
 import Lobby from "components/lobby/Lobby";
 
+import { Helmet } from "react-helmet-async";
+
 const LobbyPage = () => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
@@ -104,6 +106,9 @@ const LobbyPage = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>Lobby | Corona Games</title>
+      </Helmet>
       <Container>
         <Image style={styles.mainImage} src="/images/game-hugo.png" />
         <Header as="h1" textAlign="center" style={styles.mainHeader}>
