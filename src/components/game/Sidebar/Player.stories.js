@@ -14,19 +14,21 @@ export const Empty = () => <Player uid={null} />;
 
 export const Default = () => (
   <Player
-    uid={"user-1"}
-    isConnected={boolean("Connected", true)}
-    points={number("Points", 12)}
-    actions={object("Actions array", [
-      { action: "guess", id: "123", phrase: "Baba z wozu?" },
-      { action: "manage", id: "456" },
-    ])}
-    isWinning={boolean("Is player winning?", true)}
-    isCurrentPlayer={boolean("Are you this player?", true)}
-    handleGuessClick={action("handleGuessClick")}
-    profile={{
-      displayName: text("Name", "Mieczysław Czosnek"),
-      photoURL: text("Avatar URL", "https://api.adorable.io/avatars/128/Mieczysław-Czosnek.png"),
+    player={{
+      uid: "user-1",
+      isConnected: boolean("Connected", true),
+      points: number("Points", 12),
+      actions: object("Actions array", [
+        { action: "guess", id: "123", phrase: "Baba z wozu?" },
+        { action: "manage", id: "456" },
+      ]),
+      isWinning: boolean("Is player winning?", true),
+      isCurrentPlayer: boolean("Are you this player?", true),
+      profile: {
+        displayName: text("Name", "Mieczysław Czosnek"),
+        photoURL: text("Avatar URL", "https://api.adorable.io/avatars/128/Mieczysław-Czosnek.png"),
+      },
     }}
+    handleGuessClick={action("handleGuessClick")}
   />
 );

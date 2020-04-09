@@ -34,7 +34,7 @@ const Sidebar = ({ handleGuessClick }) => {
       </Header>
       <Segment.Group style={{ marginTop: "-5px" }}>
         {players.map((player) => (
-          <Player key={player.id} handleGuessClick={handleGuessClick} {...player} />
+          <Player key={player.id} player={player} handleGuessClick={handleGuessClick} />
         ))}
       </Segment.Group>
       <Segment basic textAlign="center" style={{ marginTop: "-1rem" }}>

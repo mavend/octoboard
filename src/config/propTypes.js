@@ -19,7 +19,7 @@ export const LineType = shape({
 });
 
 export const PlayerType = shape({
-  id: string,
+  id: number.isRequired,
   uid: string,
   isConnected: bool,
   profile: shape({
@@ -33,6 +33,4 @@ export const PlayerType = shape({
   isWinning: bool,
   isCurrentPlayer: bool,
   canManageGame: bool,
-  isCurrentPlayer: bool,
-  handleGuessClick: func,
 });

@@ -1,21 +1,18 @@
 import React from "react";
-import { string, number, func, bool, arrayOf, shape, object } from "prop-types";
+import { func } from "prop-types";
 import { Icon, Segment, Feed, Transition, List } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 import { PlayerType } from "config/propTypes";
 import Action from "./Action";
 
-const propTypes = PlayerType;
+const propTypes = {
+  player: PlayerType,
+  handleGuessClick: func,
+};
 
 const Player = ({
-  uid,
-  isConnected,
-  points,
-  actions,
-  isWinning,
-  isCurrentPlayer,
+  player: { uid, isConnected, points, actions, isWinning, isCurrentPlayer, profile },
   handleGuessClick,
-  profile,
 }) => {
   const { t } = useTranslation("kalambury");
 
@@ -77,4 +74,4 @@ const Player = ({
 
 Player.propTypes = propTypes;
 
-export default Player;
+export default React.memo(Player);
