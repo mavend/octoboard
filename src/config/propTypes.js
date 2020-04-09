@@ -1,4 +1,4 @@
-import { string, arrayOf, shape, object, number } from "prop-types";
+import { string, arrayOf, shape, object, number, bool } from "prop-types";
 
 export const RoomType = shape({
   gameID: string.isRequired,
@@ -16,4 +16,21 @@ export const LineType = shape({
   points: arrayOf(arrayOf(number)).isRequired,
   color: string.isRequired,
   width: number.isRequired,
+});
+
+export const PlayerType = shape({
+  id: number.isRequired,
+  uid: string,
+  isConnected: bool,
+  profile: shape({
+    displayName: string,
+    photoURL: string,
+  }),
+  stage: string,
+  points: number,
+  actions: arrayOf(object),
+  isDrawing: bool,
+  isWinning: bool,
+  isCurrentPlayer: bool,
+  canManageGame: bool,
 });

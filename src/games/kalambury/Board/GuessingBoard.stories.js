@@ -1,6 +1,6 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
-import { withKnobs, number, text } from "@storybook/addon-knobs";
+import { text } from "@storybook/addon-knobs";
 import lines from "games/kalambury/data/stories/lines";
 
 import GuessingBoard from "./GuessingBoard";

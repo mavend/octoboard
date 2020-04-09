@@ -2,10 +2,8 @@ import React from "react";
 import { func } from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Header, Segment, Icon, Label } from "semantic-ui-react";
-import { useProfiles } from "contexts/UserContext";
-import Player from "./sidebar/Player";
+import Player from "./Player";
 import { useBoardGame } from "contexts/BoardGameContext";
-import filterActions from "utils/user/filterActions";
 import LeaveButton from "components/game/LeaveButton";
 
 const propTypes = {
@@ -14,8 +12,7 @@ const propTypes = {
 
 const Sidebar = ({ handleGuessClick }) => {
   const { t } = useTranslation("lobby");
-  const profiles = useProfiles();
-  const { G, ctx, playerID, gameMetadata } = useBoardGame();
+  const { G, players } = useBoardGame();
 
   return (
     <>
@@ -36,20 +33,8 @@ const Sidebar = ({ handleGuessClick }) => {
         </Header.Subheader>
       </Header>
       <Segment.Group style={{ marginTop: "-5px" }}>
-        {gameMetadata.map(({ id, name: uid }) => (
-          <Player
-            key={id}
-            uid={uid}
-            points={G.points[id]}
-            actions={filterActions(G.actions, id)}
-            isWinning={G.points[id] === Math.max(...G.points)}
-            isDrawing={ctx.activePlayers[id] === "draw"}
-            canManageGame={ctx.activePlayers[id] === "manage"}
-            isCurrentPlayer={id === playerID}
-            handleGuessClick={handleGuessClick}
-            profile={profiles.get(uid)}
-            {...G.playersData[id]}
-          />
+        {players.map((player) => (
+          <Player key={player.id} player={player} handleGuessClick={handleGuessClick} />
         ))}
       </Segment.Group>
       <Segment basic textAlign="center" style={{ marginTop: "-1rem" }}>

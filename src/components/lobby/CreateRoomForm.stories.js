@@ -1,6 +1,6 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
-import { withKnobs, select, boolean } from "@storybook/addon-knobs";
+import { boolean } from "@storybook/addon-knobs";
 
 import CreateRoomForm from "./CreateRoomForm";
 

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Transition, Form, Input } from "semantic-ui-react";
-import Drawing from "../Drawing";
 import { useTranslation } from "react-i18next";
+
 import { useBoardGame } from "contexts/BoardGameContext";
+import Drawing from "../Drawing";
 
 const GuessingBoard = ({
   guess,
   setGuess,
+  remainingSeconds,
   guessInputRef,
   lastUserGuess,
   envokeLastAnswer,
@@ -17,7 +19,7 @@ const GuessingBoard = ({
   const [lastGuessID, setLastGuessID] = useState(null);
   const [lastSuccess, setLastSuccess] = useState(true);
   const { t } = useTranslation("kalambury");
-  const { moves } = useBoardGame();
+  const { G, moves } = useBoardGame();
 
   const lastUserGuessID = lastUserGuess ? lastUserGuess.id : null;
 
@@ -86,7 +88,7 @@ const GuessingBoard = ({
           </Form.Field>
         </Transition>
       </Form>
-      <Drawing lines={lines} />
+      <Drawing lines={lines} remainingSeconds={remainingSeconds} totalTime={G.timePerTurn} />
     </div>
   );
 };

@@ -59,6 +59,7 @@ const LobbyPage = () => {
 
   const handleJoinRoom = ({ gameName, gameID, players, playerID }) => {
     if (!currentRoom) {
+      setLoading(true);
       const freeSpotId = playerID || players.find((p) => !p.name).id;
       apiRequests
         .joinRoom(gameName, gameID, freeSpotId, user.uid)

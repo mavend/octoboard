@@ -1,7 +1,9 @@
 import { PlayerView, INVALID_MOVE } from "boardgame.io/core";
+import { keys, pickBy } from "lodash";
 import proverbs from "./data/phrases/pl/proverbs.json";
 import idioms from "./data/phrases/pl/idioms.json";
 import nounPhrases from "./data/phrases/pl/noun_phrases.json";
+import { currentTime } from "./utils/time";
 import removeAccents from "remove-accents";
 
 function setupKalambury(ctx, setupData) {
@@ -13,12 +15,11 @@ function setupKalambury(ctx, setupData) {
     privateRoom: setupData && setupData.private,
     actionsCount: 0,
     startTime: new Date(),
+    timePerTurn: 120,
     canChangePhrase: true,
     players: {},
-    playersData: {},
     points: Array(ctx.numPlayers).fill(0),
     actions: [],
-    remainingSeconds: 120,
   };
 
   for (let i = 0; i < ctx.numPlayers; i++) {
@@ -87,38 +88,15 @@ function Forfeit(G, ctx) {
   ctx.events.endTurn();
 }
 
-function Ping(G, { playerID, phase }, playerData = {}) {
-  if (phase === "play") {
-    G.remainingSeconds = 120 - Math.floor((new Date() - Date.parse(G.startTime)) / 1000);
-  }
-  updatePlayersData(G, playerID, playerData);
-}
-
 function StartGame(G, ctx) {
   ctx.events.setPhase("play");
 }
 
-function updatePlayersData(G, playerID, playerData) {
-  G.playersData[playerID] = {
-    ...(G.playersData[playerID] || {}),
-    ...playerData,
-    lastActivity: new Date(),
-    id: playerID,
-  };
-  Object.values(G.playersData).forEach((player) => {
-    player.isActive = new Date() - Date.parse(player.lastActivity) < 5000;
-  });
-}
+function NotifyTimeout(G, ctx) {}
 
 function indexOfMax(array) {
   const maxValue = Math.max(...array);
-  const maxIndexes = [];
-  let index = array.indexOf(maxValue);
-  while (index >= 0) {
-    maxIndexes.push(index);
-    index = array.indexOf(maxValue, index + 1);
-  }
-  return maxIndexes;
+  return keys(pickBy(array, (p) => p === maxValue)).map(Number);
 }
 
 export const Kalambury = {
@@ -147,20 +125,12 @@ export const Kalambury = {
                 unsafe: true,
               },
               StartGame,
-              Ping: {
-                move: Ping,
-                unsafe: true,
-              },
             },
           },
           wait: {
             moves: {
               SendText: {
                 move: SendText,
-                unsafe: true,
-              },
-              Ping: {
-                move: Ping,
                 unsafe: true,
               },
             },
@@ -174,26 +144,23 @@ export const Kalambury = {
           G.startTime = new Date();
           G.canChangePhrase = true;
           SetNewPhrase(G, ctx);
-          G.remainingSeconds = 120;
+          G.turnEndTime = currentTime() + G.timePerTurn;
           LogAction(G, ctx, ctx.currentPlayer, "draw");
           ctx.events.setActivePlayers({ currentPlayer: "draw", others: "guess" });
         },
         onEnd: (G, ctx) => {
-          if (G.remainingSeconds <= 0) {
+          if (currentTime() >= G.turnEndTime) {
             LogAction(G, ctx, ctx.currentPlayer, "timeout", { previous: G.secret.phrase }, true);
             G.points[ctx.currentPlayer] -= 1;
           }
         },
-        endIf: (G, _ctx) => G.remainingSeconds <= 0,
+        endIf: (G, _ctx) => currentTime() >= G.turnEndTime,
         order: {
           first: () => 0,
           next: (G, ctx) => {
-            const activePlayersIdxs = Object.keys(G.playersData).filter(
-              (pid) => G.playersData[pid].isActive
-            );
-            const nextActivePlayerIdx =
-              (activePlayersIdxs.indexOf(ctx.currentPlayer) + 1) % activePlayersIdxs.length;
-            return parseInt(activePlayersIdxs[nextActivePlayerIdx]);
+            const activeIdxs = keys(pickBy(ctx.gameMetadata, "isConnected"));
+            const nextActiveIdx = (activeIdxs.indexOf(ctx.currentPlayer) + 1) % activeIdxs.length;
+            return parseInt(activeIdxs[nextActiveIdx] || 0);
           },
         },
         stages: {
@@ -201,21 +168,17 @@ export const Kalambury = {
             moves: {
               UpdateDrawing: {
                 move: (_G, _ctx, lines) => {},
-                unsafe: true,
                 broadcast: true,
               },
               ChangePhrase: {
                 move: ChangePhrase,
                 client: false,
               },
-              Ping: {
-                move: Ping,
-                unsafe: true,
-              },
               Forfeit: {
                 move: Forfeit,
                 client: false,
               },
+              NotifyTimeout,
             },
           },
           guess: {
@@ -225,10 +188,7 @@ export const Kalambury = {
                 unsafe: true,
                 client: false,
               },
-              Ping: {
-                move: Ping,
-                unsafe: true,
-              },
+              NotifyTimeout,
             },
           },
         },

@@ -10,11 +10,11 @@ const propTypes = {
   setLines: func.isRequired,
 };
 
-const DrawArea = ({ lines, setLines }) => {
+const DrawArea = ({ lines, setLines, remainingSeconds }) => {
   const [isDrawing, setIsDrawing] = useState(false);
   const [penColor, setPenColor] = useState("#1b1c1d");
   const [penSize, setPenSize] = useState(3);
-  const { moves } = useBoardGame();
+  const { G, moves } = useBoardGame();
 
   useEffect(() => {
     document.addEventListener("mouseup", handleMouseUp);
@@ -86,6 +86,8 @@ const DrawArea = ({ lines, setLines }) => {
       />
       <Drawing
         lines={lines}
+        remainingSeconds={remainingSeconds}
+        totalTime={G.timePerTurn}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onTouchStart={handleMouseDown}
