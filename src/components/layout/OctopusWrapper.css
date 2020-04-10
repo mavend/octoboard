@@ -1,0 +1,36 @@
+.octopus-badge {
+  position: relative;
+}
+.octopus-badge::after {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 100px;
+  height: 100px;
+  background: url("/images/octopus-red.png");
+  background-size: cover;
+  z-index: -1;
+}
+.octopus-red::after {
+  background-image: url("/images/octopus-red.png");
+}
+.octopus-blue::after {
+  background-image: url("/images/octopus-blue.png");
+}
+.octopus-yellow::after {
+  background-image: url("/images/octopus-yellow.png");
+}
+.octopus-cw::after {
+  transform: rotateZ(25deg);
+}
+.octopus-ccw::after {
+  transform: rotateZ(-25deg);
+}
+.octopus-bottom-left::after {
+  bottom: -80px;
+  left: 20px;
+}
+.octopus-bottom-right::after {
+  bottom: -80px;
+  right: 20px;
+}

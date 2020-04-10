@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { Router, Switch } from "react-router-dom";
+import { Router, Switch, Route } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Dimmer, Loader } from "semantic-ui-react";
 
@@ -35,9 +35,9 @@ const App = () => {
           </HelmetProvider>
           <Router history={history}>
             <Switch>
-              <PrivateRoute exact path={routes.lobby()}>
+              <Route exact path={routes.lobby()}>
                 <LobbyPage />
-              </PrivateRoute>
+              </Route>
               <NotLoggedInRoute exact path={routes.login()}>
                 <LoginPage />
               </NotLoggedInRoute>

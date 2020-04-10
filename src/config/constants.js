@@ -1,4 +1,4 @@
-export const PAGE_TITLE = "Corona Games";
+export const PAGE_TITLE = "octoboard";
 export const COLORS = [
   "#1b1c1d",
   "#db2828",
