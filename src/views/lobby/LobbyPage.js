@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 import { eq, filter, find } from "lodash";
 import { Container, Image, Segment, Label } from "semantic-ui-react";
 
@@ -120,8 +121,11 @@ const LobbyPage = ({ noRefetch }) => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>Lobby | octoboard</title>
+      </Helmet>
       <Container style={styles.header}>
-        <Image style={styles.mainImage} src="/images/octoboard.png" />
+        <Image style={styles.mainImage} src="/images/octoboard.svg" alt="octoboard logo" />
       </Container>
       {error && (
         <Container style={styles.error}>

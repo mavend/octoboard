@@ -16,6 +16,8 @@ import { BoardGameProvider } from "contexts/BoardGameContext";
 import Loading from "components/game/Loading";
 import Layout from "components/layout/Layout";
 
+import { Helmet } from "react-helmet-async";
+
 const GamePage = () => {
   const { gameID, gameName } = useParams();
 
@@ -109,6 +111,11 @@ const GamePage = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>
+          {gameName} [{gameID}] | octoboard
+        </title>
+      </Helmet>
       {error && <Redirect pass to={{ pathname: routes.lobby(), state: { error: error } }} />}
       {gameName && gameID && playerID && gameCredentials && (
         <>

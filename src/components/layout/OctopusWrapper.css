@@ -5,20 +5,20 @@
   position: absolute;
   content: "";
   display: block;
-  width: 100px;
-  height: 100px;
-  background: url("/images/octopus-red.png");
+  width: 80px;
+  height: 90px;
+  background: url("/images/octopus-red.svg");
   background-size: cover;
   z-index: -1;
 }
 .octopus-red::after {
-  background-image: url("/images/octopus-red.png");
+  background-image: url("/images/octopus-red.svg");
 }
 .octopus-blue::after {
-  background-image: url("/images/octopus-blue.png");
+  background-image: url("/images/octopus-blue.svg");
 }
 .octopus-yellow::after {
-  background-image: url("/images/octopus-yellow.png");
+  background-image: url("/images/octopus-yellow.svg");
 }
 .octopus-cw::after {
   transform: rotateZ(25deg);

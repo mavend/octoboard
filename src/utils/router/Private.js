@@ -3,8 +3,10 @@ import React from "react";
 import { useUser } from "contexts/UserContext";
 import { routes } from "config/routes";
 
-export function PrivateRoute({ children, ...rest }) {
+export function PrivateRoute({ children, computedMatch, ...rest }) {
   const user = useUser();
+  const { params } = computedMatch;
+
   return (
     <Route
       {...rest}
@@ -16,7 +18,7 @@ export function PrivateRoute({ children, ...rest }) {
             <Redirect
               to={{
                 pathname: routes.login_guest(),
-                state: { from: location },
+                state: { from: location, params: params },
               }}
             />
           );

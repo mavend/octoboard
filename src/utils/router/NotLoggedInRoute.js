@@ -2,11 +2,13 @@ import { Route, Redirect, useLocation } from "react-router-dom";
 import React from "react";
 import { useUser } from "contexts/UserContext";
 import { routes } from "config/routes";
+import { Helmet } from "react-helmet-async";
 
 export function NotLoggedInRoute({ children, ...rest }) {
   const user = useUser();
   const location = useLocation();
-  const { from } = location.state || {};
+  const { from, params } = location.state || {};
+  const { gameName, gameID } = params || {};
 
   return (
     <Route
@@ -15,7 +17,27 @@ export function NotLoggedInRoute({ children, ...rest }) {
         if (user && user.displayName) {
           return <Redirect to={from || routes.lobby()} />;
         } else {
-          return children;
+          return (
+            <>
+              <Helmet>
+                {gameName && <title>Join to play {gameName} | octoboard</title>}
+                <meta property="og:title" content={`Play ${gameName} with your friends!`} />
+                {gameName && gameID && (
+                  <meta
+                    property="og:description"
+                    content={`Your friend wants to play ${gameName} with you. They wait for you in room #${gameID}`}
+                  />
+                )}
+                {from && (
+                  <meta
+                    property="og:url"
+                    content={`https://corona-games.netlify.com${from.pathname}`}
+                  />
+                )}
+              </Helmet>
+              {children}
+            </>
+          );
         }
       }}
     />
