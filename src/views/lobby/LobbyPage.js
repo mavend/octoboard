@@ -1,23 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 import { useTranslation } from "react-i18next";
-import { isEqual, filter, find } from "lodash";
-import { Container, Header, Image, Segment, Label } from "semantic-ui-react";
+import { Helmet } from "react-helmet-async";
+import { eq, filter, find } from "lodash";
+import { Container, Image, Segment, Label } from "semantic-ui-react";
 
 import { routes } from "config/routes";
 import DataStore from "services/DataStore";
 import { apiRequests } from "services/API";
 import { useUser } from "contexts/UserContext";
-import { PAGE_TITLE } from "config/constants";
 import { gameComponents } from "games";
 
 import Layout from "components/layout/Layout";
 import Lobby from "components/lobby/Lobby";
 
-import { Helmet } from "react-helmet-async";
-
-const LobbyPage = () => {
+const LobbyPage = ({ noRefetch }) => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
   const [rooms, setRooms] = useState([]);
@@ -31,7 +29,7 @@ const LobbyPage = () => {
   const { data: roomsData, error: roomsError, status, isFetching } = useQuery(
     "rooms",
     () => apiRequests.fetchRooms(games),
-    { refetchInterval: 1000 }
+    { refetchInterval: noRefetch ? false : 1000 }
   );
 
   useEffect(() => {
@@ -40,16 +38,18 @@ const LobbyPage = () => {
       setError(roomsError);
     } else {
       const newRooms = filter(roomsData, { setupData: { private: false } });
-      const room = roomsData.find((r) => find(r.players, { name: user.uid }));
-      if (room) {
-        setCurrentRoom((currentRoom) => (isEqual(currentRoom, room) ? currentRoom : room));
-      } else {
-        setCurrentRoom();
+      if (user) {
+        const room = roomsData.find((r) => find(r.players, { name: user.uid }));
+        if (room) {
+          setCurrentRoom((currentRoom) => (eq(currentRoom, room) ? currentRoom : room));
+        } else {
+          setCurrentRoom();
+        }
       }
-      setRooms((rooms) => (isEqual(rooms, newRooms) ? rooms : newRooms));
+      setRooms((rooms) => (eq(rooms, newRooms) ? rooms : newRooms));
     }
     setLoading(false);
-  }, [user.uid, roomsData, roomsError, status, isFetching]);
+  }, [user, roomsData, roomsError, status, isFetching]);
 
   useEffect(() => {
     const { state } = location;
@@ -59,8 +59,21 @@ const LobbyPage = () => {
     }
   }, [location, history, setError, t]);
 
-  const handleJoinRoom = ({ gameName, gameID, players, playerID }) => {
-    if (!currentRoom) {
+  const handleJoinRoom = useCallback(
+    ({ gameName, gameID, players, playerID }) => {
+      if (!user) {
+        history.push({
+          pathname: routes.login_guest(),
+          state: { from: { pathname: routes.game(gameName, gameID) } },
+        });
+        return;
+      }
+
+      if (currentRoom) {
+        history.push(routes.game(gameName, gameID));
+        return;
+      }
+
       setLoading(true);
       const freeSpotId = playerID || players.find((p) => !p.name).id;
       apiRequests
@@ -71,29 +84,31 @@ const LobbyPage = () => {
           history.push(routes.game(gameName, gameID));
         })
         .catch((e) => setError(e.message));
-    } else {
-      history.push(routes.game(gameName, gameID));
-    }
-  };
+    },
+    [user, currentRoom, setLoading, setError, history]
+  );
 
-  const handleCreate = (gameName, numPlayers, gameOptions) => {
-    if (!currentRoom && gameName && numPlayers) {
-      setLoading(true);
-      apiRequests
-        .createRoom(gameName, numPlayers, gameOptions)
-        .then(({ gameID }) => {
-          handleJoinRoom({ gameName, gameID, playerID: "0" });
-        })
-        .catch((e) => setError(e.message));
-    } else {
-      alert("Not valid!");
-    }
-  };
+  const handleCreate = useCallback(
+    (gameName, numPlayers, gameOptions) => {
+      if (!currentRoom && gameName && numPlayers && user) {
+        setLoading(true);
+        apiRequests
+          .createRoom(gameName, numPlayers, gameOptions)
+          .then(({ gameID }) => {
+            handleJoinRoom({ gameName, gameID, playerID: "0" });
+          })
+          .catch((e) => setError(e.message));
+      } else {
+        alert("Not valid!");
+      }
+    },
+    [user, currentRoom, setLoading, setError, handleJoinRoom]
+  );
 
   const styles = {
     mainImage: {
       width: "300px",
-      margin: "30px auto 0",
+      margin: "30px auto 30px",
     },
     mainHeader: {
       marginTop: "20px",
@@ -107,14 +122,10 @@ const LobbyPage = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Lobby | Corona Games</title>
+        <title>Lobby | octoboard</title>
       </Helmet>
-      <Container>
-        <Image style={styles.mainImage} src="/images/game-hugo.png" />
-        <Header as="h1" textAlign="center" style={styles.mainHeader}>
-          {PAGE_TITLE}
-          <Header.Subheader>{t("general.motto")}</Header.Subheader>
-        </Header>
+      <Container style={styles.header}>
+        <Image style={styles.mainImage} src="/images/octoboard.svg" alt="octoboard logo" />
       </Container>
       {error && (
         <Container style={styles.error}>
@@ -131,6 +142,7 @@ const LobbyPage = () => {
         </Container>
       )}
       <Lobby
+        loggedIn={!!user}
         rooms={rooms}
         currentRoom={currentRoom}
         games={games}

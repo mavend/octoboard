@@ -27,6 +27,10 @@
       "false": "Public room 🐵"
     }
   },
+  "login": {
+    "title": "Come and play",
+    "button": "Login"
+  },
   "game": {
     "private": "Private",
     "public": "Public",

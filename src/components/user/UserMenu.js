@@ -9,8 +9,12 @@ import { routes } from "config/routes";
 
 const UserMenu = () => {
   const { logout } = AuthProvider;
-  const { displayName, photoURL, email, isAnonymous } = useUser();
+  const user = useUser();
   const { t } = useTranslation();
+
+  if (!user) return null;
+
+  const { displayName, photoURL, email, isAnonymous } = user;
 
   return (
     <Menu secondary as="nav">

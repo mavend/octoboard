@@ -113,7 +113,7 @@ const GamePage = () => {
     <Layout>
       <Helmet>
         <title>
-          {gameName} [{gameID}] | Corona Games
+          {gameName} [{gameID}] | octoboard
         </title>
       </Helmet>
       {error && <Redirect pass to={{ pathname: routes.lobby(), state: { error: error } }} />}

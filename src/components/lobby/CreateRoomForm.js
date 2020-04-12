@@ -60,7 +60,7 @@ const CreateRoomForm = ({ games, onCreate, disabled, loading }) => {
         checked={privateRoom}
         onChange={(_, { checked }) => setPrivateRoom(checked)}
       />
-      <Button fluid color="green" type="submit" disabled={disabled}>
+      <Button fluid color="orange" type="submit" disabled={disabled}>
         {t("create.button")}
       </Button>
     </Form>

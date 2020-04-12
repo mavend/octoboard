@@ -20,7 +20,7 @@ export function NotLoggedInRoute({ children, ...rest }) {
           return (
             <>
               <Helmet>
-                {gameName && <title>Join to play {gameName} | Corona Games</title>}
+                {gameName && <title>Join to play {gameName} | octoboard</title>}
                 <meta property="og:title" content={`Play ${gameName} with your friends!`} />
                 {gameName && gameID && (
                   <meta
