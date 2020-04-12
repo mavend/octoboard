@@ -47,7 +47,11 @@ const AuthProvider = {
   changePassword: async (currentPassword, newPassword) => {
     const user = FirebaseAuth.currentUser;
     if (user) {
-      await user.reauthenticateWithCredential(currentPassword);
+      const credential = FirebaseClient.auth.EmailAuthProvider.credential(
+        user.email,
+        currentPassword
+      );
+      await user.reauthenticateWithCredential(credential);
       await user.updatePassword(newPassword);
     } else {
       throw new Error("Something went wrong");
