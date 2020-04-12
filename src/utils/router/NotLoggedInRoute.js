@@ -31,7 +31,7 @@ export function NotLoggedInRoute({ children, ...rest }) {
                 {from && (
                   <meta
                     property="og:url"
-                    content={`https://corona-games.netlify.com${from.pathname}`}
+                    content={`https://octoboard.netlify.com${from.pathname}`}
                   />
                 )}
               </Helmet>
