@@ -27,6 +27,10 @@
       "false": "Pokój publiczny 🐵"
     }
   },
+  "login": {
+    "title": "Zagraj z nami",
+    "button": "Zaloguj się"
+  },
   "game": {
     "private": "Pokój prywatny",
     "public": "Pokój publiczny",

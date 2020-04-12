@@ -57,12 +57,12 @@ const Lobby = ({ rooms, currentRoom, games, handleJoinRoom, handleCreate, loadin
     <OctopusWrapper position="bottom-right" color="yellow" rotation="cw">
       <Segment textAlign="center">
         <Header as="h3" textAlign="center">
-          Come and play
+          {t("login.title")}
         </Header>
         <Image src="/images/hugo-easy-money.png" />
         <Button as={Link} to={routes.login_guest()} color="orange">
           <Icon name="sign-in" />
-          Login
+          {t("login.button")}
         </Button>
       </Segment>
     </OctopusWrapper>
