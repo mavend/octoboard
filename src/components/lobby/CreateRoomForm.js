@@ -12,7 +12,7 @@ const propTypes = {
 };
 
 const CreateRoomForm = ({ games, onCreate, disabled, loading }) => {
-  const [game, setGame] = useState();
+  const [game, setGame] = useState(games[0]);
   const [players, setPlayers] = useState();
   const [privateRoom, setPrivateRoom] = useState(true);
   const [playersOptions, setPlayersOptions] = useState([]);
@@ -24,10 +24,6 @@ const CreateRoomForm = ({ games, onCreate, disabled, loading }) => {
     text: name,
     image: { avatar: true, src: image },
   }));
-
-  useEffect(() => {
-    setGame(games[0]);
-  }, [games, setGame]);
 
   useEffect(() => {
     if (game) {

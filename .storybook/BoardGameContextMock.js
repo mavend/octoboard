@@ -28,12 +28,19 @@ const BoardGameContextMock = ({ children }) => {
           { action: "message", text: text("Message text", "Hello there, shall we begin?", ref) },
         ],
         privateRoom: boolean("Private", true, ref),
-        players: { "0": { phrase: text("Phrase", "Baba z wozu", ref) }, "1": {} },
+        players: {
+          "0": {
+            phrase: text("Phrase", "Baba z wozu", ref),
+            card: { pictures: [], layout: 0, rotation: 0 },
+          },
+          "1": {},
+        },
         canChangePhrase: boolean("Can change phrase?", true, ref),
+        currentCard: { pictures: [], layout: 0, rotation: 0 },
       }}
       ctx={{
         activePlayers: [
-          select("action", ["draw", "guess", "wait", "manage"], "draw", ref),
+          select("stage", ["draw", "guess", "wait", "manage", "match"], "draw", ref),
           "guess",
         ],
         phase: select("phase", ["wait", "play"], "play", ref),
@@ -50,8 +57,8 @@ const BoardGameContextMock = ({ children }) => {
       gameID={"qwe123"}
       rawClient={{ transport: { socket: null } }}
       gameMetadata={[
-        { id: "0", name: "user-0", isConnected: true },
-        { id: "1", name: "user-1", isConnected: false },
+        { id: 0, name: "user-0", isConnected: true },
+        { id: 1, name: "user-1", isConnected: false },
       ]}
     >
       {children}

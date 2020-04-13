@@ -6,7 +6,7 @@ import Sidebar from "components/game/Sidebar";
 
 const propTypes = {
   gameName: string.isRequired,
-  handleGuessClick: func.isRequired,
+  handleGuessClick: func,
 };
 
 const GameLayout = ({ gameName, handleGuessClick, children }) => {

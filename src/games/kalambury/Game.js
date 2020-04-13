@@ -6,7 +6,7 @@ import nounPhrases from "./data/phrases/pl/noun_phrases.json";
 import { currentTime } from "./utils/time";
 import removeAccents from "remove-accents";
 
-function setupKalambury(ctx, setupData) {
+function setupGame(ctx, setupData) {
   const G = {
     secret: {
       phrase: "",
@@ -101,12 +101,12 @@ function indexOfMax(array) {
 
 export const Kalambury = {
   name: "Kalambury",
-  image: "/images/kalambury-icon.png",
+  image: "/images/games/kalambury/icon.png",
   minPlayers: 2,
   maxPlayers: 10,
 
   seed: process.env.NODE_ENV === "production" ? undefined : "test",
-  setup: setupKalambury,
+  setup: setupGame,
 
   phases: {
     wait: {

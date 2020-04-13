@@ -42,9 +42,9 @@ const Board = () => {
   );
 
   return (
-    <GameLayout gameName="Kalambury" handleGuessClick={handleGuessClick}>
+    <GameLayout gameName={t("game.name")} handleGuessClick={handleGuessClick}>
       <Header as="h2" textAlign="center">
-        {t(`header.${phase}`)}
+        {hasGameStarted ? t(`header.${phase}.${stage}`) : t(`header.${phase}`)}
         <Header.Subheader>
           {isDrawing ? secrets.phrase : t(`subheader.${phase}.${stage}`)}
         </Header.Subheader>

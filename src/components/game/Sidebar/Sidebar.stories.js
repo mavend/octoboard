@@ -5,7 +5,7 @@ import Sidebar from "./";
 
 export default {
   component: Sidebar,
-  title: "Kalambury/Sidebar",
+  title: "Sidebar",
   excludeStories: /.*Data$/,
 };
 
