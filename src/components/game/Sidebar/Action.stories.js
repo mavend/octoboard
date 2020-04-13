@@ -6,7 +6,7 @@ import Action from "./Action";
 
 export default {
   component: Action,
-  title: "Kalambury/Sidebar/Action",
+  title: "Sidebar/Action",
   excludeStories: /.*Data$/,
 };
 

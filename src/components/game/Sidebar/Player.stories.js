@@ -6,11 +6,11 @@ import Player from "./Player";
 
 export default {
   component: Player,
-  title: "Kalambury/Sidebar/Player",
+  title: "Sidebar/Player",
   excludeStories: /.*Data$/,
 };
 
-export const Empty = () => <Player uid={null} />;
+export const Empty = () => <Player player={{ uid: null }} />;
 
 export const Default = () => (
   <Player

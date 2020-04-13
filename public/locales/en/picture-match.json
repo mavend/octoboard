@@ -1,0 +1,29 @@
+{
+  "game": {
+    "name": "Picture Match"
+  },
+  "header": {
+    "wait": "Waiting for other players",
+    "play": "Find the matching picture"
+  },
+  "subheader": {
+    "wait": {
+      "manage": "You can start the game anytime you want",
+      "wait": "Lobby admin can start the game"
+    },
+    "play": {
+      "match": "Find and click the matching picture on both cards"
+    }
+  },
+  "board": {
+    "wait": {
+      "input": {
+        "placeholder": "Talk to other players while waiting...",
+        "action": "Send"
+      },
+      "actions": {
+        "start": "Start game"
+      }
+    }
+  }
+}
