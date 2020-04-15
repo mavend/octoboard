@@ -9,12 +9,12 @@ import "./Player.css";
 
 const propTypes = {
   player: PlayerType,
-  handleGuessClick: func,
+  handleActionClick: func,
 };
 
 const Player = ({
   player: { uid, isConnected, points, actions, isWinning, isCurrentPlayer, profile },
-  handleGuessClick,
+  handleActionClick,
 }) => {
   const { t } = useTranslation("kalambury");
 
@@ -55,7 +55,7 @@ const Player = ({
               {t("sidebar.player.points", { points: points })}
             </Feed.Content>
             <Feed.Extra text style={{ maxWidth: "230px", marginLeft: "-50px" }}>
-              <ActionsList actions={visibleActions} handleGuessClick={handleGuessClick} />
+              <ActionsList actions={visibleActions} handleActionClick={handleActionClick} />
             </Feed.Extra>
           </Feed.Content>
         </Feed.Event>
@@ -64,14 +64,14 @@ const Player = ({
   );
 };
 
-const ActionsList = ({ actions, handleGuessClick }) => (
+const ActionsList = ({ actions, handleActionClick }) => (
   <List verticalAlign="middle">
     {actions.map((action, idx) => (
       <List.Item
         key={action.id}
         style={{ opacity: ((3 - idx) * 0.5) / 3 + 0.5, marginRight: "8px" }}
       >
-        <Action action={action} handleGuessClick={handleGuessClick} />
+        <Action action={action} handleActionClick={handleActionClick} />
       </List.Item>
     ))}
   </List>

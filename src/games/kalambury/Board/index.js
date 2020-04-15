@@ -20,7 +20,7 @@ const Board = () => {
 
   const hasGameStarted = phase === "play";
 
-  const handleGuessClick = useCallback(
+  const handleActionClick = useCallback(
     (e) => {
       if (!isDrawing) {
         setGuess(e.target.textContent);
@@ -42,7 +42,7 @@ const Board = () => {
   );
 
   return (
-    <GameLayout gameName="Kalambury" handleGuessClick={handleGuessClick}>
+    <GameLayout gameName="Kalambury" handleActionClick={handleActionClick}>
       <Header as="h2" textAlign="center">
         {t(`header.${phase}`)}
         <Header.Subheader>

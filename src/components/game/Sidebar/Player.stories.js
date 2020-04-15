@@ -29,6 +29,6 @@ export const Default = () => (
         photoURL: text("Avatar URL", "https://api.adorable.io/avatars/128/Mieczysław-Czosnek.png"),
       },
     }}
-    handleGuessClick={action("handleGuessClick")}
+    handleActionClick={action("handleActionClick")}
   />
 );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { addParameters, addDecorator } from "@storybook/react";
 import { MINIMAL_VIEWPORTS } from "@storybook/addon-viewport";
 import { withKnobs } from "@storybook/addon-knobs";
@@ -14,7 +14,7 @@ addDecorator(withKnobs);
 addDecorator(StoryRouter());
 addDecorator((storyFn) => <BoardGameContextMock>{storyFn()}</BoardGameContextMock>);
 addDecorator((storyFn) => <UserContextMock>{storyFn()}</UserContextMock>);
-
+addDecorator((storyFn) => <Suspense fallback="Loading">{storyFn()}</Suspense>);
 const customViewports = {
   lowResLaptop: {
     name: "Low resolution laptop",

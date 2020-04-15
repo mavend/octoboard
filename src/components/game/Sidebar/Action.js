@@ -11,10 +11,10 @@ const propTypes = {
     previous: string,
     success: bool,
   }),
-  handleGuessClick: func,
+  handleActionClick: func,
 };
 
-const Action = ({ action, handleGuessClick }) => {
+const Action = ({ action, handleActionClick }) => {
   const { t } = useTranslation("kalambury");
   const ActionType = {
     message: ActionMessage,
@@ -25,7 +25,7 @@ const Action = ({ action, handleGuessClick }) => {
     draw: ActionDraw,
     timeout: ActionTimeout,
   }[action.action];
-  return <ActionType action={action} handleGuessClick={handleGuessClick} t={t} />;
+  return <ActionType action={action} handleActionClick={handleActionClick} t={t} />;
 };
 
 const ActionMessage = ({ action: { text } }) => (
@@ -35,13 +35,13 @@ const ActionMessage = ({ action: { text } }) => (
   </Label>
 );
 
-const ActionGuess = ({ action: { phrase, success }, handleGuessClick }) => (
+const ActionGuess = ({ action: { phrase, success }, handleActionClick }) => (
   <Label
     basic={!success}
     color={success ? "green" : "red"}
     pointing="left"
     style={{ maxWidth: "100%", marginLeft: 0, cursor: "pointer" }}
-    onClick={handleGuessClick}
+    onClick={handleActionClick}
   >
     {success ? <Icon name="check circle" /> : <Icon name="times circle" color="red" />}
     {phrase}

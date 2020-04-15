@@ -22,7 +22,7 @@ export const ActionGuess = () => (
       phrase: text("User guess", "Baba z wozu koniom lżej"),
       success: boolean("Success", true),
     }}
-    handleGuessClick={action("handleGuessClick")}
+    handleActionClick={action("handleActionClick")}
   />
 );
 export const ActionChange = () => (

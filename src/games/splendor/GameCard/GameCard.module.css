@@ -1,0 +1,50 @@
+.card,
+.cardPlaceholder {
+  border-radius: 15px !important;
+  overflow: hidden;
+  margin: 10px !important;
+}
+
+.cardPlaceholder {
+  background-color: #f4f6f9 !important;
+  opacity: 0.4;
+}
+
+.topContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 35px;
+  padding: 0px 20px !important;
+  background-color: #f4f6f9 !important;
+  font-size: 20px !important;
+}
+
+.topContent :global(.icon) {
+  margin-bottom: 5px;
+}
+
+.imageBox {
+  background-color: #f4f6f9;
+  padding: 15px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.imageBox img {
+  width: 100%;
+}
+
+.bottomContent {
+  padding: 15px 5px !important;
+  display: flex;
+  justify-content: space-around;
+}
+
+.topContent::after,
+.bottomContent::after {
+  content: none !important;
+}

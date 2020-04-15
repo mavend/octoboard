@@ -1,15 +1,16 @@
 import React from "react";
 
-import { string, func } from "prop-types";
+import { string, func, node } from "prop-types";
 import { Responsive, Segment, Container, Header, Grid } from "semantic-ui-react";
 import Sidebar from "components/game/Sidebar";
 
 const propTypes = {
   gameName: string.isRequired,
-  handleGuessClick: func.isRequired,
+  handleActionClick: func,
+  sidebarHeader: node,
 };
 
-const GameLayout = ({ gameName, handleGuessClick, children }) => {
+const GameLayout = ({ gameName, handleActionClick, sidebarHeader, children }) => {
   return (
     <Container>
       <Segment basic>
@@ -23,7 +24,7 @@ const GameLayout = ({ gameName, handleGuessClick, children }) => {
         </Grid.Column>
         <Grid.Column width="4">
           <Grid.Row>
-            <Sidebar handleGuessClick={handleGuessClick} />
+            <Sidebar header={sidebarHeader} handleActionClick={handleActionClick} />
           </Grid.Row>
         </Grid.Column>
       </Responsive>
@@ -33,7 +34,7 @@ const GameLayout = ({ gameName, handleGuessClick, children }) => {
         </Grid.Row>
         <Grid.Row>
           <Grid.Column>
-            <Sidebar handleGuessClick={handleGuessClick} />
+            <Sidebar header={sidebarHeader} handleActionClick={handleActionClick} />
           </Grid.Column>
         </Grid.Row>
       </Responsive>

@@ -9,4 +9,4 @@ export default {
   excludeStories: /.*Data$/,
 };
 
-export const Default = () => <Sidebar handleGuessClick={action("handleGuessClick")} />;
+export const Default = () => <Sidebar handleActionClick={action("handleActionClick")} />;
