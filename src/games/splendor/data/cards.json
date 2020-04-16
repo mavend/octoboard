@@ -5,520 +5,320 @@
       "resource": "lab",
       "points": null,
       "img": "capsule.png",
-      "cost": {
-        "edu": 1,
-        "water": 1,
-        "nature": 1,
-        "tech": 1,
-        "lab": null
-      }
+      "cost": { "edu": 1, "water": 1, "nature": 1, "tech": 1, "lab": null },
+      "id": 1
     },
     {
       "level": 1,
       "resource": "lab",
       "points": null,
       "img": "capsule.png",
-      "cost": {
-        "edu": 1,
-        "water": 2,
-        "nature": 1,
-        "tech": 1,
-        "lab": null
-      }
+      "cost": { "edu": 1, "water": 2, "nature": 1, "tech": 1, "lab": null },
+      "id": 2
     },
     {
       "level": 1,
       "resource": "lab",
       "points": null,
       "img": "capsule.png",
-      "cost": {
-        "edu": 2,
-        "water": 2,
-        "nature": null,
-        "tech": 1,
-        "lab": null
-      }
+      "cost": { "edu": 2, "water": 2, "nature": null, "tech": 1, "lab": null },
+      "id": 3
     },
     {
       "level": 1,
       "resource": "lab",
       "points": null,
       "img": "capsule.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": 1,
-        "tech": 3,
-        "lab": 1
-      }
+      "cost": { "edu": null, "water": null, "nature": 1, "tech": 3, "lab": 1 },
+      "id": 4
     },
     {
       "level": 1,
       "resource": "lab",
       "points": null,
       "img": "capsule.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": 2,
-        "tech": 1,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": null, "nature": 2, "tech": 1, "lab": null },
+      "id": 5
     },
     {
       "level": 1,
       "resource": "lab",
       "points": null,
       "img": "capsule.png",
-      "cost": {
-        "edu": 2,
-        "water": null,
-        "nature": 2,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": 2, "water": null, "nature": 2, "tech": null, "lab": null },
+      "id": 6
     },
     {
       "level": 1,
       "resource": "lab",
       "points": null,
       "img": "capsule.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": 3,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": null, "nature": 3, "tech": null, "lab": null },
+      "id": 7
     },
     {
       "level": 1,
       "resource": "lab",
       "points": 1,
       "img": "capsule.png",
-      "cost": {
-        "edu": null,
-        "water": 4,
-        "nature": null,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": 4, "nature": null, "tech": null, "lab": null },
+      "id": 8
     },
     {
       "level": 1,
       "resource": "water",
       "points": null,
       "img": "coffee.png",
-      "cost": {
-        "edu": 1,
-        "water": null,
-        "nature": 1,
-        "tech": 1,
-        "lab": 1
-      }
+      "cost": { "edu": 1, "water": null, "nature": 1, "tech": 1, "lab": 1 },
+      "id": 9
     },
     {
       "level": 1,
       "resource": "water",
       "points": null,
       "img": "coffee.png",
-      "cost": {
-        "edu": 1,
-        "water": null,
-        "nature": 1,
-        "tech": 2,
-        "lab": 1
-      }
+      "cost": { "edu": 1, "water": null, "nature": 1, "tech": 2, "lab": 1 },
+      "id": 10
     },
     {
       "level": 1,
       "resource": "water",
       "points": null,
       "img": "coffee.png",
-      "cost": {
-        "edu": 1,
-        "water": null,
-        "nature": 2,
-        "tech": 2,
-        "lab": null
-      }
+      "cost": { "edu": 1, "water": null, "nature": 2, "tech": 2, "lab": null },
+      "id": 11
     },
     {
       "level": 1,
       "resource": "water",
       "points": null,
       "img": "coffee.png",
-      "cost": {
-        "edu": null,
-        "water": 1,
-        "nature": 3,
-        "tech": 1,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": 1, "nature": 3, "tech": 1, "lab": null },
+      "id": 12
     },
     {
       "level": 1,
       "resource": "water",
       "points": null,
       "img": "coffee.png",
-      "cost": {
-        "edu": 1,
-        "water": null,
-        "nature": null,
-        "tech": null,
-        "lab": 2
-      }
+      "cost": { "edu": 1, "water": null, "nature": null, "tech": null, "lab": 2 },
+      "id": 13
     },
     {
       "level": 1,
       "resource": "water",
       "points": null,
       "img": "coffee.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": 2,
-        "tech": null,
-        "lab": 2
-      }
+      "cost": { "edu": null, "water": null, "nature": 2, "tech": null, "lab": 2 },
+      "id": 14
     },
     {
       "level": 1,
       "resource": "water",
       "points": null,
       "img": "coffee.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": null,
-        "tech": null,
-        "lab": 3
-      }
+      "cost": { "edu": null, "water": null, "nature": null, "tech": null, "lab": 3 },
+      "id": 15
     },
     {
       "level": 1,
       "resource": "water",
       "points": 1,
       "img": "coffee.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": null,
-        "tech": 4,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": null, "nature": null, "tech": 4, "lab": null },
+      "id": 16
     },
     {
       "level": 1,
       "resource": "edu",
       "points": null,
       "img": "books.png",
-      "cost": {
-        "edu": null,
-        "water": 1,
-        "nature": 1,
-        "tech": 1,
-        "lab": 1
-      }
+      "cost": { "edu": null, "water": 1, "nature": 1, "tech": 1, "lab": 1 },
+      "id": 17
     },
     {
       "level": 1,
       "resource": "edu",
       "points": null,
       "img": "books.png",
-      "cost": {
-        "edu": null,
-        "water": 1,
-        "nature": 2,
-        "tech": 1,
-        "lab": 1
-      }
+      "cost": { "edu": null, "water": 1, "nature": 2, "tech": 1, "lab": 1 },
+      "id": 18
     },
     {
       "level": 1,
       "resource": "edu",
       "points": null,
       "img": "books.png",
-      "cost": {
-        "edu": null,
-        "water": 2,
-        "nature": 2,
-        "tech": null,
-        "lab": 1
-      }
+      "cost": { "edu": null, "water": 2, "nature": 2, "tech": null, "lab": 1 },
+      "id": 19
     },
     {
       "level": 1,
       "resource": "edu",
       "points": null,
       "img": "books.png",
-      "cost": {
-        "edu": 3,
-        "water": 1,
-        "nature": null,
-        "tech": null,
-        "lab": 1
-      }
+      "cost": { "edu": 3, "water": 1, "nature": null, "tech": null, "lab": 1 },
+      "id": 20
     },
     {
       "level": 1,
       "resource": "edu",
       "points": null,
       "img": "books.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": null,
-        "tech": 2,
-        "lab": 1
-      }
+      "cost": { "edu": null, "water": null, "nature": null, "tech": 2, "lab": 1 },
+      "id": 21
     },
     {
       "level": 1,
       "resource": "edu",
       "points": null,
       "img": "books.png",
-      "cost": {
-        "edu": null,
-        "water": 2,
-        "nature": null,
-        "tech": null,
-        "lab": 2
-      }
+      "cost": { "edu": null, "water": 2, "nature": null, "tech": null, "lab": 2 },
+      "id": 22
     },
     {
       "level": 1,
       "resource": "edu",
       "points": null,
       "img": "books.png",
-      "cost": {
-        "edu": null,
-        "water": 3,
-        "nature": null,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": 3, "nature": null, "tech": null, "lab": null },
+      "id": 23
     },
     {
       "level": 1,
       "resource": "edu",
       "points": 1,
       "img": "books.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": 4,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": null, "nature": 4, "tech": null, "lab": null },
+      "id": 24
     },
     {
       "level": 1,
       "resource": "nature",
       "points": null,
       "img": "trees.png",
-      "cost": {
-        "edu": 1,
-        "water": 1,
-        "nature": null,
-        "tech": 1,
-        "lab": 1
-      }
+      "cost": { "edu": 1, "water": 1, "nature": null, "tech": 1, "lab": 1 },
+      "id": 25
     },
     {
       "level": 1,
       "resource": "nature",
       "points": null,
       "img": "trees.png",
-      "cost": {
-        "edu": 1,
-        "water": 1,
-        "nature": null,
-        "tech": 1,
-        "lab": 2
-      }
+      "cost": { "edu": 1, "water": 1, "nature": null, "tech": 1, "lab": 2 },
+      "id": 26
     },
     {
       "level": 1,
       "resource": "nature",
       "points": null,
       "img": "trees.png",
-      "cost": {
-        "edu": null,
-        "water": 1,
-        "nature": null,
-        "tech": 2,
-        "lab": 2
-      }
+      "cost": { "edu": null, "water": 1, "nature": null, "tech": 2, "lab": 2 },
+      "id": 27
     },
     {
       "level": 1,
       "resource": "nature",
       "points": null,
       "img": "trees.png",
-      "cost": {
-        "edu": 1,
-        "water": 3,
-        "nature": 1,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": 1, "water": 3, "nature": 1, "tech": null, "lab": null },
+      "id": 28
     },
     {
       "level": 1,
       "resource": "nature",
       "points": null,
       "img": "trees.png",
-      "cost": {
-        "edu": 2,
-        "water": 1,
-        "nature": null,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": 2, "water": 1, "nature": null, "tech": null, "lab": null },
+      "id": 29
     },
     {
       "level": 1,
       "resource": "nature",
       "points": null,
       "img": "trees.png",
-      "cost": {
-        "edu": null,
-        "water": 2,
-        "nature": null,
-        "tech": 2,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": 2, "nature": null, "tech": 2, "lab": null },
+      "id": 30
     },
     {
       "level": 1,
       "resource": "nature",
       "points": null,
       "img": "trees.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": null,
-        "tech": 3,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": null, "nature": null, "tech": 3, "lab": null },
+      "id": 31
     },
     {
       "level": 1,
       "resource": "nature",
       "points": 1,
       "img": "trees.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": null,
-        "tech": null,
-        "lab": 4
-      }
+      "cost": { "edu": null, "water": null, "nature": null, "tech": null, "lab": 4 },
+      "id": 32
     },
     {
       "level": 1,
       "resource": "tech",
       "points": null,
       "img": "boxes.png",
-      "cost": {
-        "edu": 1,
-        "water": 1,
-        "nature": 1,
-        "tech": null,
-        "lab": 1
-      }
+      "cost": { "edu": 1, "water": 1, "nature": 1, "tech": null, "lab": 1 },
+      "id": 33
     },
     {
       "level": 1,
       "resource": "tech",
       "points": null,
       "img": "boxes.png",
-      "cost": {
-        "edu": 2,
-        "water": 1,
-        "nature": 1,
-        "tech": null,
-        "lab": 1
-      }
+      "cost": { "edu": 2, "water": 1, "nature": 1, "tech": null, "lab": 1 },
+      "id": 34
     },
     {
       "level": 1,
       "resource": "tech",
       "points": null,
       "img": "boxes.png",
-      "cost": {
-        "edu": 2,
-        "water": null,
-        "nature": 1,
-        "tech": null,
-        "lab": 2
-      }
+      "cost": { "edu": 2, "water": null, "nature": 1, "tech": null, "lab": 2 },
+      "id": 35
     },
     {
       "level": 1,
       "resource": "tech",
       "points": null,
       "img": "boxes.png",
-      "cost": {
-        "edu": 1,
-        "water": null,
-        "nature": null,
-        "tech": 1,
-        "lab": 3
-      }
+      "cost": { "edu": 1, "water": null, "nature": null, "tech": 1, "lab": 3 },
+      "id": 36
     },
     {
       "level": 1,
       "resource": "tech",
       "points": null,
       "img": "boxes.png",
-      "cost": {
-        "edu": null,
-        "water": 2,
-        "nature": 1,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": 2, "nature": 1, "tech": null, "lab": null },
+      "id": 37
     },
     {
       "level": 1,
       "resource": "tech",
       "points": null,
       "img": "boxes.png",
-      "cost": {
-        "edu": 2,
-        "water": null,
-        "nature": null,
-        "tech": 2,
-        "lab": null
-      }
+      "cost": { "edu": 2, "water": null, "nature": null, "tech": 2, "lab": null },
+      "id": 38
     },
     {
       "level": 1,
       "resource": "tech",
       "points": null,
       "img": "boxes.png",
-      "cost": {
-        "edu": 3,
-        "water": null,
-        "nature": null,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": 3, "water": null, "nature": null, "tech": null, "lab": null },
+      "id": 39
     },
     {
       "level": 1,
       "resource": "tech",
       "points": 1,
       "img": "boxes.png",
-      "cost": {
-        "edu": 4,
-        "water": null,
-        "nature": null,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": 4, "water": null, "nature": null, "tech": null, "lab": null },
+      "id": 40
     }
   ],
   "2": [
@@ -527,390 +327,240 @@
       "resource": "lab",
       "points": 1,
       "img": "laser.png",
-      "cost": {
-        "edu": 3,
-        "water": 2,
-        "nature": 2,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": 3, "water": 2, "nature": 2, "tech": null, "lab": null },
+      "id": 41
     },
     {
       "level": 2,
       "resource": "lab",
       "points": 1,
       "img": "laser.png",
-      "cost": {
-        "edu": 3,
-        "water": null,
-        "nature": 3,
-        "tech": null,
-        "lab": 2
-      }
+      "cost": { "edu": 3, "water": null, "nature": 3, "tech": null, "lab": 2 },
+      "id": 42
     },
     {
       "level": 2,
       "resource": "lab",
       "points": 2,
       "img": "laser.png",
-      "cost": {
-        "edu": null,
-        "water": 1,
-        "nature": 4,
-        "tech": 2,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": 1, "nature": 4, "tech": 2, "lab": null },
+      "id": 43
     },
     {
       "level": 2,
       "resource": "lab",
       "points": 2,
       "img": "robothead.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": 5,
-        "tech": 3,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": null, "nature": 5, "tech": 3, "lab": null },
+      "id": 44
     },
     {
       "level": 2,
       "resource": "lab",
       "points": 2,
       "img": "robothead.png",
-      "cost": {
-        "edu": 5,
-        "water": null,
-        "nature": null,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": 5, "water": null, "nature": null, "tech": null, "lab": null },
+      "id": 45
     },
     {
       "level": 2,
       "resource": "lab",
       "points": 3,
       "img": "robothead.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": null,
-        "tech": null,
-        "lab": 6
-      }
+      "cost": { "edu": null, "water": null, "nature": null, "tech": null, "lab": 6 },
+      "id": 46
     },
     {
       "level": 2,
       "resource": "water",
       "points": 1,
       "img": "snowman.png",
-      "cost": {
-        "edu": null,
-        "water": 2,
-        "nature": 2,
-        "tech": 3,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": 2, "nature": 2, "tech": 3, "lab": null },
+      "id": 47
     },
     {
       "level": 2,
       "resource": "water",
       "points": 1,
       "img": "snowman.png",
-      "cost": {
-        "edu": null,
-        "water": 2,
-        "nature": 3,
-        "tech": null,
-        "lab": 3
-      }
+      "cost": { "edu": null, "water": 2, "nature": 3, "tech": null, "lab": 3 },
+      "id": 48
     },
     {
       "level": 2,
       "resource": "water",
       "points": 2,
       "img": "snowman.png",
-      "cost": {
-        "edu": 5,
-        "water": 3,
-        "nature": null,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": 5, "water": 3, "nature": null, "tech": null, "lab": null },
+      "id": 49
     },
     {
       "level": 2,
       "resource": "water",
       "points": 2,
       "img": "headpour.png",
-      "cost": {
-        "edu": 2,
-        "water": null,
-        "nature": null,
-        "tech": 1,
-        "lab": 4
-      }
+      "cost": { "edu": 2, "water": null, "nature": null, "tech": 1, "lab": 4 },
+      "id": 50
     },
     {
       "level": 2,
       "resource": "water",
       "points": 2,
       "img": "headpour.png",
-      "cost": {
-        "edu": null,
-        "water": 5,
-        "nature": null,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": 5, "nature": null, "tech": null, "lab": null },
+      "id": 51
     },
     {
       "level": 2,
       "resource": "water",
       "points": 3,
       "img": "headpour.png",
-      "cost": {
-        "edu": null,
-        "water": 6,
-        "nature": null,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": 6, "nature": null, "tech": null, "lab": null },
+      "id": 52
     },
     {
       "level": 2,
       "resource": "edu",
       "points": 1,
       "img": "calculations.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": 3,
-        "tech": 2,
-        "lab": 2
-      }
+      "cost": { "edu": null, "water": null, "nature": 3, "tech": 2, "lab": 2 },
+      "id": 53
     },
     {
       "level": 2,
       "resource": "edu",
       "points": 1,
       "img": "calculations.png",
-      "cost": {
-        "edu": 2,
-        "water": 3,
-        "nature": null,
-        "tech": 3,
-        "lab": null
-      }
+      "cost": { "edu": 2, "water": 3, "nature": null, "tech": 3, "lab": null },
+      "id": 54
     },
     {
       "level": 2,
       "resource": "edu",
       "points": 2,
       "img": "calculations.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": 1,
-        "tech": 4,
-        "lab": 2
-      }
+      "cost": { "edu": null, "water": null, "nature": 1, "tech": 4, "lab": 2 },
+      "id": 55
     },
     {
       "level": 2,
       "resource": "edu",
       "points": 2,
       "img": "brain.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": null,
-        "tech": 5,
-        "lab": 3
-      }
+      "cost": { "edu": null, "water": null, "nature": null, "tech": 5, "lab": 3 },
+      "id": 56
     },
     {
       "level": 2,
       "resource": "edu",
       "points": 2,
       "img": "brain.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": null,
-        "tech": 5,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": null, "nature": null, "tech": 5, "lab": null },
+      "id": 57
     },
     {
       "level": 2,
       "resource": "edu",
       "points": 3,
       "img": "brain.png",
-      "cost": {
-        "edu": 6,
-        "water": null,
-        "nature": null,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": 6, "water": null, "nature": null, "tech": null, "lab": null },
+      "id": 58
     },
     {
       "level": 2,
       "resource": "nature",
       "points": 1,
       "img": "eco.png",
-      "cost": {
-        "edu": 3,
-        "water": null,
-        "nature": 2,
-        "tech": 3,
-        "lab": null
-      }
+      "cost": { "edu": 3, "water": null, "nature": 2, "tech": 3, "lab": null },
+      "id": 59
     },
     {
       "level": 2,
       "resource": "nature",
       "points": 1,
       "img": "eco.png",
-      "cost": {
-        "edu": 2,
-        "water": 3,
-        "nature": null,
-        "tech": null,
-        "lab": 2
-      }
+      "cost": { "edu": 2, "water": 3, "nature": null, "tech": null, "lab": 2 },
+      "id": 60
     },
     {
       "level": 2,
       "resource": "nature",
       "points": 2,
       "img": "eco.png",
-      "cost": {
-        "edu": 4,
-        "water": 2,
-        "nature": null,
-        "tech": null,
-        "lab": 1
-      }
+      "cost": { "edu": 4, "water": 2, "nature": null, "tech": null, "lab": 1 },
+      "id": 61
     },
     {
       "level": 2,
       "resource": "nature",
       "points": 2,
       "img": "christmastree.png",
-      "cost": {
-        "edu": null,
-        "water": 5,
-        "nature": 3,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": 5, "nature": 3, "tech": null, "lab": null },
+      "id": 62
     },
     {
       "level": 2,
       "resource": "nature",
       "points": 2,
       "img": "christmastree.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": 5,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": null, "nature": 5, "tech": null, "lab": null },
+      "id": 63
     },
     {
       "level": 2,
       "resource": "nature",
       "points": 3,
       "img": "christmastree.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": 6,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": null, "nature": 6, "tech": null, "lab": null },
+      "id": 64
     },
     {
       "level": 2,
       "resource": "tech",
       "points": 1,
       "img": "split.png",
-      "cost": {
-        "edu": 2,
-        "water": null,
-        "nature": null,
-        "tech": 2,
-        "lab": 3
-      }
+      "cost": { "edu": 2, "water": null, "nature": null, "tech": 2, "lab": 3 },
+      "id": 65
     },
     {
       "level": 2,
       "resource": "tech",
       "points": 1,
       "img": "split.png",
-      "cost": {
-        "edu": null,
-        "water": 3,
-        "nature": null,
-        "tech": 2,
-        "lab": 3
-      }
+      "cost": { "edu": null, "water": 3, "nature": null, "tech": 2, "lab": 3 },
+      "id": 66
     },
     {
       "level": 2,
       "resource": "tech",
       "points": 2,
       "img": "split.png",
-      "cost": {
-        "edu": 1,
-        "water": 4,
-        "nature": 2,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": 1, "water": 4, "nature": 2, "tech": null, "lab": null },
+      "id": 67
     },
     {
       "level": 2,
       "resource": "tech",
       "points": 2,
       "img": "safe.png",
-      "cost": {
-        "edu": 3,
-        "water": null,
-        "nature": null,
-        "tech": null,
-        "lab": 5
-      }
+      "cost": { "edu": 3, "water": null, "nature": null, "tech": null, "lab": 5 },
+      "id": 68
     },
     {
       "level": 2,
       "resource": "tech",
       "points": 2,
       "img": "safe.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": null,
-        "tech": null,
-        "lab": 5
-      }
+      "cost": { "edu": null, "water": null, "nature": null, "tech": null, "lab": 5 },
+      "id": 69
     },
     {
       "level": 2,
       "resource": "tech",
       "points": 3,
       "img": "safe.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": null,
-        "tech": 6,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": null, "nature": null, "tech": 6, "lab": null },
+      "id": 70
     }
   ],
   "3": [
@@ -919,260 +569,160 @@
       "resource": "lab",
       "points": 3,
       "img": "headopen.png",
-      "cost": {
-        "edu": 3,
-        "water": 3,
-        "nature": 5,
-        "tech": 3,
-        "lab": null
-      }
+      "cost": { "edu": 3, "water": 3, "nature": 5, "tech": 3, "lab": null },
+      "id": 71
     },
     {
       "level": 3,
       "resource": "lab",
       "points": 4,
       "img": "verification.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": null,
-        "tech": 7,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": null, "nature": null, "tech": 7, "lab": null },
+      "id": 72
     },
     {
       "level": 3,
       "resource": "lab",
       "points": 4,
       "img": "verification.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": 3,
-        "tech": 6,
-        "lab": 3
-      }
+      "cost": { "edu": null, "water": null, "nature": 3, "tech": 6, "lab": 3 },
+      "id": 73
     },
     {
       "level": 3,
       "resource": "lab",
       "points": 5,
       "img": "headopen.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": null,
-        "tech": 7,
-        "lab": 3
-      }
+      "cost": { "edu": null, "water": null, "nature": null, "tech": 7, "lab": 3 },
+      "id": 74
     },
     {
       "level": 3,
       "resource": "water",
       "points": 3,
       "img": "cloud.png",
-      "cost": {
-        "edu": 3,
-        "water": null,
-        "nature": 3,
-        "tech": 3,
-        "lab": 5
-      }
+      "cost": { "edu": 3, "water": null, "nature": 3, "tech": 3, "lab": 5 },
+      "id": 75
     },
     {
       "level": 3,
       "resource": "water",
       "points": 4,
       "img": "cloud.png",
-      "cost": {
-        "edu": 7,
-        "water": null,
-        "nature": null,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": 7, "water": null, "nature": null, "tech": null, "lab": null },
+      "id": 76
     },
     {
       "level": 3,
       "resource": "water",
       "points": 4,
       "img": "app.png",
-      "cost": {
-        "edu": 6,
-        "water": 3,
-        "nature": null,
-        "tech": null,
-        "lab": 3
-      }
+      "cost": { "edu": 6, "water": 3, "nature": null, "tech": null, "lab": 3 },
+      "id": 77
     },
     {
       "level": 3,
       "resource": "water",
       "points": 5,
       "img": "app.png",
-      "cost": {
-        "edu": 7,
-        "water": 3,
-        "nature": null,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": 7, "water": 3, "nature": null, "tech": null, "lab": null },
+      "id": 78
     },
     {
       "level": 3,
       "resource": "edu",
       "points": 3,
       "img": "design.png",
-      "cost": {
-        "edu": null,
-        "water": 3,
-        "nature": 3,
-        "tech": 5,
-        "lab": 3
-      }
+      "cost": { "edu": null, "water": 3, "nature": 3, "tech": 5, "lab": 3 },
+      "id": 79
     },
     {
       "level": 3,
       "resource": "edu",
       "points": 4,
       "img": "teamwork.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": null,
-        "tech": null,
-        "lab": 7
-      }
+      "cost": { "edu": null, "water": null, "nature": null, "tech": null, "lab": 7 },
+      "id": 80
     },
     {
       "level": 3,
       "resource": "edu",
       "points": 4,
       "img": "teamwork.png",
-      "cost": {
-        "edu": 3,
-        "water": null,
-        "nature": null,
-        "tech": 3,
-        "lab": 6
-      }
+      "cost": { "edu": 3, "water": null, "nature": null, "tech": 3, "lab": 6 },
+      "id": 81
     },
     {
       "level": 3,
       "resource": "edu",
       "points": 5,
       "img": "design.png",
-      "cost": {
-        "edu": 3,
-        "water": null,
-        "nature": null,
-        "tech": null,
-        "lab": 7
-      }
+      "cost": { "edu": 3, "water": null, "nature": null, "tech": null, "lab": 7 },
+      "id": 82
     },
     {
       "level": 3,
       "resource": "nature",
       "points": 3,
       "img": "flowerwait.png",
-      "cost": {
-        "edu": 5,
-        "water": 3,
-        "nature": null,
-        "tech": 3,
-        "lab": 3
-      }
+      "cost": { "edu": 5, "water": 3, "nature": null, "tech": 3, "lab": 3 },
+      "id": 83
     },
     {
       "level": 3,
       "resource": "nature",
       "points": 4,
       "img": "turkey.png",
-      "cost": {
-        "edu": null,
-        "water": 7,
-        "nature": null,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": 7, "nature": null, "tech": null, "lab": null },
+      "id": 84
     },
     {
       "level": 3,
       "resource": "nature",
       "points": 4,
       "img": "turkey.png",
-      "cost": {
-        "edu": 3,
-        "water": 6,
-        "nature": 3,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": 3, "water": 6, "nature": 3, "tech": null, "lab": null },
+      "id": 85
     },
     {
       "level": 3,
       "resource": "nature",
       "points": 5,
       "img": "flowerwait.png",
-      "cost": {
-        "edu": null,
-        "water": 7,
-        "nature": 3,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": 7, "nature": 3, "tech": null, "lab": null },
+      "id": 86
     },
     {
       "level": 3,
       "resource": "tech",
       "points": 3,
       "img": "robot.png",
-      "cost": {
-        "edu": 3,
-        "water": 5,
-        "nature": 3,
-        "tech": null,
-        "lab": 3
-      }
+      "cost": { "edu": 3, "water": 5, "nature": 3, "tech": null, "lab": 3 },
+      "id": 87
     },
     {
       "level": 3,
       "resource": "tech",
       "points": 4,
       "img": "robot.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": 7,
-        "tech": null,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": null, "nature": 7, "tech": null, "lab": null },
+      "id": 88
     },
     {
       "level": 3,
       "resource": "tech",
       "points": 4,
       "img": "atm.png",
-      "cost": {
-        "edu": null,
-        "water": 3,
-        "nature": 6,
-        "tech": 3,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": 3, "nature": 6, "tech": 3, "lab": null },
+      "id": 89
     },
     {
       "level": 3,
       "resource": "tech",
       "points": 5,
       "img": "atm.png",
-      "cost": {
-        "edu": null,
-        "water": null,
-        "nature": 7,
-        "tech": 3,
-        "lab": null
-      }
+      "cost": { "edu": null, "water": null, "nature": 7, "tech": 3, "lab": null },
+      "id": 90
     }
   ]
 }

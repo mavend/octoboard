@@ -9,4 +9,9 @@ export default {
   excludeStories: /.*Data$/,
 };
 
-export const Default = () => <Sidebar handleActionClick={action("handleActionClick")} />;
+export const Default = () => (
+  <Sidebar
+    handleActionClick={action("handleActionClick")}
+    extraPlayerContent={({ profile: { displayName } }) => <span>Hello {displayName}!</span>}
+  />
+);

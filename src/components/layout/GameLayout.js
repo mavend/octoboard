@@ -7,10 +7,17 @@ import Sidebar from "components/game/Sidebar";
 const propTypes = {
   gameName: string.isRequired,
   handleActionClick: func,
+  extraPlayerContent: func,
   sidebarHeader: node,
 };
 
-const GameLayout = ({ gameName, handleActionClick, sidebarHeader, children }) => {
+const GameLayout = ({
+  gameName,
+  handleActionClick,
+  sidebarHeader,
+  extraPlayerContent,
+  children,
+}) => {
   return (
     <Container>
       <Segment basic>
@@ -24,7 +31,11 @@ const GameLayout = ({ gameName, handleActionClick, sidebarHeader, children }) =>
         </Grid.Column>
         <Grid.Column width="4">
           <Grid.Row>
-            <Sidebar header={sidebarHeader} handleActionClick={handleActionClick} />
+            <Sidebar
+              header={sidebarHeader}
+              handleActionClick={handleActionClick}
+              extraPlayerContent={extraPlayerContent}
+            />
           </Grid.Row>
         </Grid.Column>
       </Responsive>
@@ -34,7 +45,11 @@ const GameLayout = ({ gameName, handleActionClick, sidebarHeader, children }) =>
         </Grid.Row>
         <Grid.Row>
           <Grid.Column>
-            <Sidebar header={sidebarHeader} handleActionClick={handleActionClick} />
+            <Sidebar
+              header={sidebarHeader}
+              handleActionClick={handleActionClick}
+              extraPlayerContent={extraPlayerContent}
+            />
           </Grid.Column>
         </Grid.Row>
       </Responsive>

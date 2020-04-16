@@ -49,14 +49,25 @@ const Splendor = {
       "3": shuffle(cards["3"]).slice(0, 4),
     },
     points: [10, 3],
-    players: { "0": { tokens: {}, cards: {} }, "1": { tokens: {}, cards: {} } },
+    players: {
+      "0": {
+        tokens: { edu: 0, water: 1, nature: 2, tech: 3, lab: 0, gold: 0 },
+        cards: { edu: 0, water: 1, nature: 2, tech: 3, lab: 0 },
+        reservedCards: [cards["2"][4], cards["1"][14]],
+      },
+      "1": {
+        tokens: { edu: 1, water: 1, nature: 0, tech: 0, lab: 1, gold: 2 },
+        cards: { edu: 2, water: 0, nature: 1, tech: 3, lab: 4 },
+        reservedCards: [],
+      },
+    },
   },
 };
 
 const BoardGameContextMock = ({ children }) => {
   return (
     <BoardGameProvider
-      {...select("Game", { Kalambury, Splendor }, Kalambury, ref)}
+      {...select("Game", { Kalambury, Splendor }, Splendor, ref)}
       ctx={{
         activePlayers: [
           select("action", ["draw", "guess", "wait", "manage"], "draw", ref),
@@ -70,7 +81,7 @@ const BoardGameContextMock = ({ children }) => {
       rawClient={{ transport: { socket: null } }}
       gameMetadata={[
         { id: "0", name: "user-0", isConnected: true },
-        { id: "1", name: "user-1", isConnected: false },
+        { id: "1", name: "user-1", isConnected: true },
       ]}
     >
       {children}

@@ -1,0 +1,27 @@
+.extraTitle {
+  color: #999;
+}
+
+.tokens {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.bookmark {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+.reservedCards {
+  display: flex;
+  max-width: 500px;
+}
+
+.reservedCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

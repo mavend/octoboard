@@ -1,0 +1,32 @@
+.extra {
+  max-width: 230px !important;
+  margin-left: -50px !important;
+}
+
+.player {
+  position: relative;
+}
+
+.smoothDisabled {
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+.smoothDisabled:global(.disabled),
+.smoothDisabled:global(.hidden) {
+  transition: opacity 2s cubic-bezier(0.55, 0.06, 0.82, 0.18),
+    color 2s cubic-bezier(0.55, 0.06, 0.82, 0.18);
+}
+
+:global(.player-action-enter) {
+  opacity: 0;
+}
+:global(.player-action-active) {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+:global(.player-action-exit) {
+  opacity: 1;
+}
+:global(.player-action-exit-active) {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}

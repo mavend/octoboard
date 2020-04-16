@@ -8,23 +8,31 @@ import LeaveButton from "components/game/LeaveButton";
 
 const propTypes = {
   handleActionClick: func,
+  extraPlayerContent: func,
   header: node,
 };
 
 const defaultProps = {
   handleActionClick: () => {},
+  extraPlayerContent: null,
   header: null,
+  noHeader: false,
 };
 
-const Sidebar = ({ handleActionClick, header }) => {
+const Sidebar = ({ handleActionClick, header, extraPlayerContent }) => {
   const { players } = useBoardGame();
 
   return (
     <>
       {header || <SidebarHeader />}
-      <Segment.Group style={{ marginTop: "-5px" }}>
+      <Segment.Group>
         {players.map((player) => (
-          <Player key={player.id} player={player} handleActionClick={handleActionClick} />
+          <Player
+            key={player.id}
+            player={player}
+            handleActionClick={handleActionClick}
+            extraContent={extraPlayerContent}
+          />
         ))}
       </Segment.Group>
       <Segment basic textAlign="center" style={{ marginTop: "-1rem" }}>
@@ -39,7 +47,7 @@ const SidebarHeader = () => {
   const { G } = useBoardGame();
 
   return (
-    <Header as="h2" textAlign="center">
+    <Header as="h2" textAlign="center" style={{ marginBottom: "-5px" }}>
       {t("game.players")}
       <Header.Subheader>
         {G.privateRoom ? (

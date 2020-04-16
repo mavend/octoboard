@@ -26,8 +26,8 @@
 
 .imageBox {
   background-color: #f4f6f9;
-  padding: 15px;
-  height: 160px;
+  padding: 10px;
+  height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,10 +36,12 @@
 
 .imageBox img {
   width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .bottomContent {
-  padding: 15px 5px !important;
+  padding: 20px 5px !important;
   display: flex;
   justify-content: space-around;
 }
@@ -47,4 +49,63 @@
 .topContent::after,
 .bottomContent::after {
   content: none !important;
+}
+
+.cardYellow .bottomContent {
+  border-top-color: #f1c761 !important;
+}
+.cardRed .bottomContent {
+  border-top-color: #af6268 !important;
+}
+.cardBlue .bottomContent {
+  border-top-color: #5ec3d5 !important;
+}
+
+.actions {
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  transition: 0.8s opacity ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+:global(.visible) .actions {
+  animation: fadeIn 0.8s;
+}
+
+.pointsBadge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: flex-start;
+  width: 70px;
+  height: 100%;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  color: #fff;
+  background-color: #37e055;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.small.card {
+  width: 150px !important;
+}
+
+.small .imageBox {
+  height: 100px;
+}
+
+.small .pointsBadge {
+  width: 50px;
+  font-size: 20px;
 }

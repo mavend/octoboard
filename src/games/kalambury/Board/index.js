@@ -11,7 +11,7 @@ import GameBoard from "./GameBoard";
 const Board = () => {
   const {
     ctx: { phase },
-    player: { isDrawing, stage, secrets },
+    player: { isDrawing, stage, data },
   } = useBoardGame();
 
   const { t } = useTranslation("kalambury");
@@ -21,9 +21,9 @@ const Board = () => {
   const hasGameStarted = phase === "play";
 
   const handleActionClick = useCallback(
-    (e) => {
-      if (!isDrawing) {
-        setGuess(e.target.textContent);
+    ({ action, phrase }) => {
+      if (!isDrawing && action === "guess") {
+        setGuess(phrase);
         guessInputRef.current.focus();
       }
     },
@@ -46,7 +46,7 @@ const Board = () => {
       <Header as="h2" textAlign="center">
         {t(`header.${phase}`)}
         <Header.Subheader>
-          {isDrawing ? secrets.phrase : t(`subheader.${phase}.${stage}`)}
+          {isDrawing ? data.phrase : t(`subheader.${phase}.${stage}`)}
         </Header.Subheader>
       </Header>
       {hasGameStarted ? (

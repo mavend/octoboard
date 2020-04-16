@@ -1,8 +1,8 @@
 import React from "react";
 import { oneOf, number } from "prop-types";
-import { RESOURCES, RESOURCES_CONFIG } from "./config";
+import { RESOURCES, RESOURCES_CONFIG } from "../config";
 
-import styles from "./Resource.module.css";
+import styles from "./GameCard.module.css";
 
 const propTypes = {
   resource: oneOf(RESOURCES).isRequired,

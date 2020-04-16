@@ -1,5 +1,4 @@
 import React from "react";
-import { select, number } from "@storybook/addon-knobs";
 
 import Board from "./";
 
