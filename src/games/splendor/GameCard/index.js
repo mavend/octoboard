@@ -7,6 +7,7 @@ import { RESOURCES } from "../config";
 import ResourceToken from "../ResourceToken";
 import ResourceIcon from "../ResourceIcon";
 import PointsBadge from "./PointsBadge";
+import BonusCard from "./BonusCard";
 
 import styles from "./GameCard.module.css";
 
@@ -132,9 +133,10 @@ const Action = ({ name, icon, loading, disabled, color, onClick }) => (
   </Button>
 );
 
-export const PlaceholderCard = () => <Card className={styles.cardPlaceholder}></Card>;
+const PlaceholderCard = () => <Card className={styles.cardPlaceholder}></Card>;
 
 GameCard.propTypes = propTypes;
 GameCard.defaultProps = defaultProps;
 
 export default GameCard;
+export { PlaceholderCard, BonusCard };

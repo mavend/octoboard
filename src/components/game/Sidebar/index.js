@@ -1,10 +1,11 @@
 import React from "react";
 import { func, node } from "prop-types";
 import { useTranslation } from "react-i18next";
-import { Header, Segment, Icon, Label } from "semantic-ui-react";
+import { Header, Segment } from "semantic-ui-react";
 import Player from "./Player";
 import { useBoardGame } from "contexts/BoardGameContext";
 import LeaveButton from "components/game/LeaveButton";
+import RoomTypeBadge from "components/game/RoomTypeBadge";
 
 const propTypes = {
   handleActionClick: func,
@@ -49,19 +50,7 @@ const SidebarHeader = () => {
   return (
     <Header as="h2" textAlign="center" style={{ marginBottom: "-5px" }}>
       {t("game.players")}
-      <Header.Subheader>
-        {G.privateRoom ? (
-          <Label as="span" size="small" color="grey">
-            <Icon name="lock" />
-            <Label.Detail>{t("game.private")}</Label.Detail>
-          </Label>
-        ) : (
-          <Label as="span" size="small">
-            <Icon name="open lock" />
-            <Label.Detail>{t("game.public")}</Label.Detail>
-          </Label>
-        )}
-      </Header.Subheader>
+      <RoomTypeBadge privateRoom={G.privateRoom} detailed />
     </Header>
   );
 };

@@ -11,7 +11,7 @@ import GameBoard from "./GameBoard";
 const Board = () => {
   const {
     ctx: { phase },
-    player: { isDrawing, stage, data },
+    player: { isDrawing, stage, phrase },
   } = useBoardGame();
 
   const { t } = useTranslation("kalambury");
@@ -45,9 +45,7 @@ const Board = () => {
     <GameLayout gameName="Kalambury" handleActionClick={handleActionClick}>
       <Header as="h2" textAlign="center">
         {t(`header.${phase}`)}
-        <Header.Subheader>
-          {isDrawing ? data.phrase : t(`subheader.${phase}.${stage}`)}
-        </Header.Subheader>
+        <Header.Subheader>{isDrawing ? phrase : t(`subheader.${phase}.${stage}`)}</Header.Subheader>
       </Header>
       {hasGameStarted ? (
         <GameBoard

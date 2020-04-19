@@ -15,6 +15,7 @@
   justify-content: space-between;
   align-items: flex-end;
   height: 35px;
+  width: 100%;
   padding: 0px 20px !important;
   background-color: #f4f6f9 !important;
   font-size: 20px !important;
@@ -41,9 +42,10 @@
 }
 
 .bottomContent {
-  padding: 20px 5px !important;
   display: flex;
   justify-content: space-around;
+  width: 100%;
+  padding: 20px 5px !important;
 }
 
 .topContent::after,
@@ -108,4 +110,44 @@
 .small .pointsBadge {
   width: 50px;
   font-size: 20px;
+}
+
+.bonusCard {
+  position: relative;
+  width: 120px !important;
+  height: 120px !important;
+  border-radius: 15px !important;
+  background-color: #f4f6f9 !important;
+  overflow: hidden;
+}
+
+.bonusCard .topContent {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  height: 25px;
+  background: none !important;
+}
+
+.bonusCard .pointsBadge {
+  width: 50px;
+  font-size: 18px;
+}
+
+.bonusCard .imageBox {
+  padding: 10px 10px 20px !important;
+}
+
+.bonusCard .bottomContent {
+  position: absolute;
+  bottom: -20px;
+  padding: 0 2px !important;
+  border-top: none !important;
+  transition: bottom 0.5s ease;
+}
+
+.bonusCard:hover .bottomContent {
+  position: absolute;
+  bottom: 0px;
 }

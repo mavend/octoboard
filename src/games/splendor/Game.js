@@ -2,6 +2,7 @@ import { INVALID_MOVE } from "boardgame.io/core";
 import { mapValues, sum } from "lodash";
 import { stripPhrase } from "utils/strings";
 import cards from "./data/cards.json";
+import { canBuyCard } from "./utils";
 import { RESOURCES, RESOURCES_CONFIG } from "./config";
 
 const REGULAR_RESOURCES = RESOURCES.filter((res) => res != "gold");
@@ -85,7 +86,7 @@ function TakeTokens(G, ctx, requestedTokens) {
   ctx.events.endTurn();
 }
 
-function canBuyCard(player, card) {
+function canBuyCard(tokens, cards, card) {
   let gold = player.tokens.gold;
   return Object.keys(card.cost).every((res) => {
     const available = player.tokens[res] + player.cards[res];
@@ -116,8 +117,9 @@ function payForCard(player, card) {
 
 function BuyCard(G, ctx, level, cardIdx) {
   const player = G.players[ctx.currentPlayer];
+  const { tokens, cards } = player;
   const card = G.table[level][cardIdx];
-  if (!canBuyCard(player, card)) {
+  if (!canBuyCard(tokens, cards, card)) {
     return INVALID_MOVE;
   }
 
@@ -132,8 +134,9 @@ function BuyCard(G, ctx, level, cardIdx) {
 
 function BuyReserved(G, ctx, cardIdx) {
   const player = G.players[ctx.currentPlayer];
+  const { tokens, cards } = player;
   const card = player.reservedCards[cardIdx];
-  if (!canBuyCard(player, card)) {
+  if (!canBuyCard(tokens, cards, card)) {
     return INVALID_MOVE;
   }
 

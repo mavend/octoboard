@@ -25,3 +25,54 @@
   flex-direction: column;
   align-items: center;
 }
+
+.topBar {
+  margin-top: 20px !important;
+  display: flex;
+  justify-content: space-between;
+}
+
+.topBar .ribbon {
+  position: absolute !important;
+  left: -14px !important;
+  top: -18px;
+  z-index: 10;
+}
+
+.tokensShop {
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  padding-left: 20px;
+  border-left: 1px solid rgba(36, 36, 36, 0.15);
+}
+
+.tokensShopHeader {
+  text-align: center;
+  color: #737373 !important;
+  font-size: 14px !important;
+  margin-bottom: 6px !important;
+}
+
+.tokensRow {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 3px;
+}
+
+.tokensCounter {
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin: 2px;
+}
+
+.tokensCounter :global(.label) {
+  cursor: pointer;
+}
+
+.takeButton {
+  text-align: center;
+}

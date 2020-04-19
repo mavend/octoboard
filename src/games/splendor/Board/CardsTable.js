@@ -4,20 +4,31 @@ import GameCard, { PlaceholderCard } from "../GameCard";
 
 const LEVELS_ORDER = ["3", "2", "1"];
 
-const CardsTable = ({ table, selectedCard, loading, onSelect, onBuy }) =>
+const CardsTable = ({
+  table,
+  active,
+  selectedCard,
+  loading,
+  onSelect,
+  onBuy,
+  canBuy,
+  onReserve,
+  canReserve,
+}) =>
   LEVELS_ORDER.map((level) => (
     <Card.Group key={level} itemsPerRow={4}>
       {table[level].map((card, idx) =>
         card ? (
           <GameCard
             key={card.id}
-            active={level == 2}
+            active={active}
             selected={card.id === selectedCard}
             loading={loading}
-            canBuy={card.id % 2 === 0}
             onClick={() => onSelect(card.id)}
             onBuy={() => onBuy(card.id)}
-            onReserve={() => console.log("reserve")}
+            canBuy={canBuy(card)}
+            onReserve={onReserve}
+            canReserve={canReserve}
             {...card}
           />
         ) : (

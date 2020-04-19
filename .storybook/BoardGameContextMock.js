@@ -48,12 +48,13 @@ const Splendor = {
       "2": [...shuffle(cards["2"]).slice(0, 3), null],
       "3": shuffle(cards["3"]).slice(0, 4),
     },
+    tokens: { edu: 7, water: 7, nature: 3, tech: 7, lab: 5, gold: 5 },
     points: [10, 3],
     players: {
       "0": {
         tokens: { edu: 0, water: 1, nature: 2, tech: 3, lab: 0, gold: 0 },
         cards: { edu: 0, water: 1, nature: 2, tech: 3, lab: 0 },
-        reservedCards: [cards["2"][4], cards["1"][14]],
+        reservedCards: [cards["2"][4], cards["1"][25]],
       },
       "1": {
         tokens: { edu: 1, water: 1, nature: 0, tech: 0, lab: 1, gold: 2 },
@@ -76,7 +77,7 @@ const BoardGameContextMock = ({ children }) => {
         phase: select("phase", ["wait", "play"], "play", ref),
         numPlayers: number("Player count", 4, { range: true, min: 2, max: 10, step: 1 }, ref),
       }}
-      playerID={0}
+      playerID={"0"}
       gameID={"qwe123"}
       rawClient={{ transport: { socket: null } }}
       gameMetadata={[

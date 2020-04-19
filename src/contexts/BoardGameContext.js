@@ -39,7 +39,7 @@ export const BoardGameProvider = ({ children, ...props }) => {
         canManageGame: stage === "manage",
         isCurrentPlayer: id.toString() === playerID,
         isWinning: points[id] === maxPoints,
-        data: playersData[id] || {},
+        ...(playersData[id] || {}),
       };
     });
     setPlayers((players) => (isEqual(players, newPlayers) ? players : newPlayers));
