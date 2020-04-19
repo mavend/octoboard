@@ -113,8 +113,6 @@ const GamePage = () => {
     [game]
   );
 
-  console.log("DEBUG", gameName, gameID, playerID, gameCredentials);
-
   return (
     <Layout>
       <Helmet>
