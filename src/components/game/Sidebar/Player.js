@@ -4,6 +4,7 @@ import { Icon, Segment, Feed, List } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 import { PlayerType } from "config/propTypes";
 import Action from "./Action";
+import Avatar from "components/user/Avatar";
 
 import "./Player.css";
 
@@ -33,14 +34,16 @@ const Player = ({
     );
   }
 
-  const { displayName, photoURL } = profile;
+  const { displayName } = profile;
   const visibleActions = actions.slice(0, 3);
 
   return (
     <Segment disabled={!isConnected} className="smooth-disabled">
       <Feed>
         <Feed.Event>
-          <Feed.Label image={photoURL} />
+          <Feed.Label>
+            <Avatar uid={uid} />
+          </Feed.Label>
           <Feed.Content>
             <Feed.Date>
               {displayName} {isCurrentPlayer && <span>({t("sidebar.player.current")})</span>}{" "}

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <circle
+    cx="119.977"
+    cy="149.092"
+    r="16.4"
+    fill="#8bdcfc"
+    fill-opacity="0.55"
+    stroke="#473d2e"
+    stroke-width="3"
+  />
+  <circle
+    cx="80.049"
+    cy="149.092"
+    r="16.4"
+    fill="#8bdcfc"
+    fill-opacity="0.55"
+    stroke="#473d2e"
+    stroke-width="3"
+  />
+  <path
+    d="M96,147.423c2.405,-2.667 5.595,-2.667 8,0"
+    fill="none"
+    stroke="#473d2e"
+    stroke-width="3"
+    stroke-linecap="butt"
+  />
+</svg>

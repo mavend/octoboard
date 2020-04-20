@@ -5,7 +5,6 @@ import MapWithDefault from "utils/mapWithDefault";
 
 const defaultProfile = (uid) => ({
   displayName: uid,
-  photoURL: "/images/avatar-empty.jpg",
 });
 export const profilesMap = (profiles = []) => new MapWithDefault(profiles, defaultProfile);
 

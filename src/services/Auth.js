@@ -1,12 +1,10 @@
 import FirebaseClient from "./Firebase";
 import DataStore from "./DataStore";
-import { avatarForName } from "utils/avatar";
 
 async function initUserProfile(user, { displayName }) {
-  const photoURL = avatarForName(user.uid);
-  await DataStore.updateProfile(user.uid, { displayName, photoURL });
+  await DataStore.updateProfile(user.uid, { displayName });
   await DataStore.setCredentials(user.uid, {});
-  await user.updateProfile({ displayName, photoURL });
+  await user.updateProfile({ displayName });
 }
 
 const FirebaseAuth = FirebaseClient.auth();

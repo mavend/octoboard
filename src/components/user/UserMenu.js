@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Dropdown, Image, Menu } from "semantic-ui-react";
-
+import { Dropdown, Menu } from "semantic-ui-react";
+import Avatar from "components/user/Avatar";
 import AuthProvider from "services/Auth";
 import { useUser } from "contexts/UserContext";
 import { routes } from "config/routes";
@@ -14,7 +14,7 @@ const UserMenu = () => {
 
   if (!user) return null;
 
-  const { displayName, photoURL, email, isAnonymous } = user;
+  const { displayName, uid, email, isAnonymous } = user;
 
   return (
     <Menu secondary as="nav">
@@ -24,7 +24,7 @@ const UserMenu = () => {
             pointing="top right"
             trigger={
               <>
-                <Image avatar style={{ marginRight: "10px" }} src={photoURL} />
+                <Avatar style={{ marginRight: "10px" }} small uid={uid} />
                 {displayName}
               </>
             }
