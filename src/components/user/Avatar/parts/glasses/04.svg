@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <ellipse
+    cx="123.977"
+    cy="151.092"
+    rx="20.4"
+    ry="12.4"
+    fill="#8b4c8c"
+    fill-opacity="0.75"
+    stroke="#473d2e"
+    stroke-width="3"
+  />
+  <ellipse
+    cx="76.049"
+    cy="151.092"
+    rx="20.4"
+    ry="12.4"
+    fill="#8b4c8c"
+    fill-opacity="0.75"
+    stroke="#473d2e"
+    stroke-width="3"
+  />
+  <path
+    d="M96,147.423c2.405,-2.667 5.595,-2.667 8,0"
+    fill="none"
+    stroke="#473d2e"
+    stroke-width="3"
+    stroke-linecap="butt"
+  /> 
+</svg>
