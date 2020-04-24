@@ -1,4 +1,4 @@
-name: Corona-games
+name: octoboard
 
 on:
   push:

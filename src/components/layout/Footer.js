@@ -38,7 +38,7 @@ const Footer = () => {
       style={window.innerWidth < Responsive.onlyTablet.minWidth ? { padding: "0 1rem" } : {}}
     >
       <FooterItem>
-        <FooterLink href="https://github.com/mavend/corona-games">
+        <FooterLink href="https://github.com/mavend/octoboard">
           <Icon name="github" />
           {t("footer.github")}
         </FooterLink>
