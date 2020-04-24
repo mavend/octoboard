@@ -6,20 +6,24 @@ import { COLORS } from "config/constants";
 
 const propTypes = {
   currentColor: string.isRequired,
+  canChangePhrase: bool.isRequired,
   onColorChange: func.isRequired,
   onSizeChange: func.isRequired,
   onClearAll: func.isRequired,
   onUndoDrawing: func.isRequired,
+  onPhraseChange: func.isRequired,
   onForfeit: func.isRequired,
   canUndo: bool,
 };
 
 const Toolbar = ({
   currentColor,
+  canChangePhrase,
   onColorChange,
   onSizeChange,
   onClearAll,
   onUndoDrawing,
+  onPhraseChange,
   onForfeit,
   canUndo,
 }) => {
@@ -71,6 +75,19 @@ const Toolbar = ({
           }
         />
         <Popup
+          content={t("board.game.new_phrase")}
+          trigger={
+            <Menu.Item
+              name="exchange"
+              active={false}
+              disabled={!canChangePhrase}
+              onClick={onPhraseChange}
+            >
+              <Icon fitted name="exchange" />
+            </Menu.Item>
+          }
+        />
+        <Popup
           content={t("tools.forfeit")}
           trigger={
             <Menu.Item name="flag" active={false} onClick={onForfeit}>
@@ -84,9 +101,17 @@ const Toolbar = ({
 
   const MenuNarrow = () => (
     <>
-      <Menu widths={2} size="small">
+      <Menu widths={3} size="small">
         <Menu.Item name="trash" active={false} onClick={onClearAll}>
           <Icon fitted color="red" name="trash alternate outline" />
+        </Menu.Item>
+        <Menu.Item
+          name="exchange"
+          active={false}
+          disabled={!canChangePhrase}
+          onClick={onPhraseChange}
+        >
+          <Icon fitted name="exchange" />
         </Menu.Item>
         <Menu.Item name="flag" active={false} onClick={onForfeit}>
           <Icon fitted color="red" name="flag" />
