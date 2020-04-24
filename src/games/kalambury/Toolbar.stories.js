@@ -15,6 +15,7 @@ export const actionsData = {
   onSizeChange: action("onSizeChange"),
   onClearAll: action("onClearAll"),
   onUndoDrawing: action("onUndoDrawing"),
+  onPhraseChange: action("onPhraseChange"),
   onForfeit: action("onForfeit"),
 };
 
@@ -38,6 +39,7 @@ export const Default = () => (
       "#1b1c1d"
     )}
     canUndo={boolean("Can Undo", true)}
+    canChangePhrase={boolean("Can change phrase", true)}
     {...actionsData}
   />
 );

@@ -68,6 +68,11 @@ const DrawArea = ({ lines, setLines, remainingSeconds }) => {
     setLines([...lines]);
   };
 
+  const handlePhraseChange = () => {
+    moves.ChangePhrase([]);
+    setLines([]);
+  };
+
   const handleForfeit = () => {
     setLines([]);
     moves.Forfeit();
@@ -77,11 +82,13 @@ const DrawArea = ({ lines, setLines, remainingSeconds }) => {
     <div>
       <Toolbar
         currentColor={penColor}
+        canChangePhrase={G.canChangePhrase}
         onColorChange={setPenColor}
         onSizeChange={setPenSize}
         onClearAll={handleClearAll}
         onUndoDrawing={handleUndo}
         canUndo={lines.length > 0}
+        onPhraseChange={handlePhraseChange}
         onForfeit={handleForfeit}
       />
       <Drawing
