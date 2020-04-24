@@ -30,7 +30,7 @@ const UserMenu = () => {
             }
           >
             <Dropdown.Menu>
-              <Dropdown.Item icon="user" text={email || t("user.guest")} />
+              <Dropdown.Item icon="user" disabled text={email || t("user.guest")} />
               <Dropdown.Divider />
               {!isAnonymous && (
                 <Dropdown.Item
