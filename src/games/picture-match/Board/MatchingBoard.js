@@ -1,44 +1,69 @@
-import React, { useState, useEffect } from "react";
-import { Grid } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Grid, Transition } from "semantic-ui-react";
 import Card from "./Card";
 import { useBoardGame } from "contexts/BoardGameContext";
+import Confetti from "react-dom-confetti";
+import { shuffle } from "lodash";
+import { COLORS } from "config/constants";
+
+const confettiConfig = {
+  angle: 90,
+  spread: "54",
+  startVelocity: "36",
+  elementCount: "55",
+  dragFriction: "0.07",
+  duration: "2090",
+  stagger: 0,
+  width: "10px",
+  height: "43px",
+  colors: shuffle(COLORS).slice(0, 5),
+};
 
 const MatchingBoard = () => {
   const { G, moves, player } = useBoardGame();
-  const [selected, setSelected] = useState({ type: null, picture: null });
+  const [guessingEnabled, setGuessingEnabled] = useState(true);
+  const [success, setSuccess] = useState(false);
 
-  const handleMatch = (type, picture) => {
-    if (selected.picture === picture && selected.type === type) {
-      setSelected({ type: null, picture: null });
+  const handleClick = (picture) => {
+    if (!guessingEnabled) {
       return;
     }
-    if (selected.picture === null || selected.type === type || selected.picture !== picture) {
-      setSelected({ type, picture });
+    if (
+      player.secrets.card.pictures.indexOf(picture) === -1 ||
+      G.currentCard.pictures.indexOf(picture) === -1
+    ) {
+      setTimeout(() => setGuessingEnabled(true), 500);
+      setGuessingEnabled(false);
       return;
     }
-    setSelected({ type: null, picture: null });
+    setSuccess(true);
+    setTimeout(() => setSuccess(false), 1);
     moves.Match(picture);
   };
-
-  useEffect(() => {
-    setSelected({ type: null, picture: null });
-  }, [G.currentCard]);
 
   return (
     <Grid stackable>
       <Grid.Row columns={2}>
         <Grid.Column style={{ display: "flex", justifyContent: "center" }}>
-          <Card
-            card={player.secrets.card}
-            type="player"
-            selected={selected}
-            handleClick={handleMatch}
-          />
+          <Transition animation={"tada"} duration={500} visible={guessingEnabled}>
+            {/*
+            Transition doesn't seem to work on a Component so we wrap it in a `div`
+            It's required anyway for inner transform to work
+            */}
+            <div>
+              <Card card={player.secrets.card} handleClick={handleClick} />
+            </div>
+          </Transition>
         </Grid.Column>
         <Grid.Column style={{ display: "flex", justifyContent: "center" }}>
-          <Card card={G.currentCard} type="current" selected={selected} handleClick={handleMatch} />
+          <Transition animation={"tada"} duration={500} visible={guessingEnabled}>
+            <div>
+              <Card card={G.currentCard} handleClick={handleClick} />
+            </div>
+          </Transition>
         </Grid.Column>
       </Grid.Row>
+      <Confetti active={success} config={confettiConfig} className="confetti" />
     </Grid>
   );
 };
