@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import { Card, Image } from "semantic-ui-react";
 
 import CardSymbol from "../CardSymbol";
@@ -11,7 +11,7 @@ function imgUrl(name) {
   return `/images/games/splendor/cards/${name}`;
 }
 
-const BonusCard = ({}) => {
+const BonusCard = () => {
   return (
     <Card className={`${styles.bonusCard}`}>
       <Card.Content className={styles.topContent}>

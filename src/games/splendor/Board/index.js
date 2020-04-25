@@ -13,11 +13,12 @@ import ReservedCards from "./ReservedCards";
 import styles from "./Board.module.css";
 
 const Board = () => {
-  const { G, player } = useBoardGame();
+  const { G, ctx, player } = useBoardGame();
   const [selectedCard, setSelectedCard] = useState(null);
   const [loading, setLoading] = useState(null);
 
-  const active = player.stage === "draw";
+  console.log(ctx.activePlayers);
+  const isActivePlayer = true;
 
   const selectCard = useCallback(
     (cardId) => {
@@ -84,17 +85,18 @@ const Board = () => {
       header={
         <Segment className={styles.topBar}>
           <BonusCards />
-          <TokensShop tokens={G.tokens} active={active} />
+          <TokensShop tokens={G.tokens} active={isActivePlayer} />
         </Segment>
       }
       sidebarHeader={<></>}
+      sidebarSize={5}
       extraPlayerContent={extraPlayerContent}
     >
       <Segment style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
         {G.table && (
           <CardsTable
             table={G.table}
-            active={active}
+            active={isActivePlayer}
             selectedCard={selectedCard}
             onSelect={selectCard}
             loading={loading}

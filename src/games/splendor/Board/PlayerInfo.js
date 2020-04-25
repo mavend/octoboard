@@ -28,17 +28,29 @@ const PlayerInfo = ({ tokens, cards, children }) => (
     <span className={styles.extraTitle}>Tokens:</span>
     <div className={styles.tokens}>
       {tokens &&
-        Object.entries(tokens).map(
-          ([res, count]) => count > 0 && <ResourceToken key={res} type={res} count={count} raised />
-        )}
+        Object.entries(tokens).map(([res, count]) => (
+          <ResourceToken
+            key={res}
+            type={res}
+            count={count > 0 && count}
+            disabled={count === 0}
+            raised
+          />
+        ))}
     </div>
     <span className={styles.extraTitle}>Cards:</span>
     <div className={styles.tokens}>
       {tokens &&
-        Object.entries(cards).map(
-          ([res, count]) =>
-            count > 0 && <CardSymbol key={res} resource={res} count={count} raised />
-        )}
+        Object.entries(cards).map(([res, count]) => (
+          <CardSymbol
+            key={res}
+            resource={res}
+            count={count > 0 && count}
+            disabled={count === 0}
+            raised={count > 0}
+          />
+        ))}
+      <span style={{ width: 35 }}></span>
     </div>
   </>
 );

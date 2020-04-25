@@ -44,27 +44,34 @@ const TokensShop = ({ tokens, active, onTakeTokens }) => {
     );
   };
 
+  const tokensCount = (res) => tokens[res] - selected[res];
+
   return (
     <div className={styles.tokensShop}>
       <Header className={styles.tokensShopHeader}>Available tokens</Header>
       <div className={styles.tokensRow}>
-        {Object.entries(tokens).map(([res, count]) => (
+        {RESOURCES.map((res) => (
           <ResourceToken
             key={res}
             type={res}
-            count={count}
-            onClick={active ? () => addToken(res) : undefined}
-            disabled={!canTakeToken(res)}
+            count={tokensCount(res) > 0 && tokensCount(res)}
+            onClick={active && res !== "gold" ? () => addToken(res) : undefined}
+            disabled={tokensCount(res) === 0 || !canTakeToken(res)}
             raised
             big
           />
         ))}
       </div>
       <div className={styles.tokensRow}>
-        {Object.entries(selected).map(([res, count]) => (
+        {RESOURCES.map((res) => (
           <span key={res} className={styles.tokensCounter}>
-            {count > 0 && (
-              <Label size="mini" content={count} color="green" onClick={() => removeToken(res)} />
+            {selected[res] > 0 && (
+              <Label
+                size="mini"
+                content={selected[res]}
+                color="green"
+                onClick={() => removeToken(res)}
+              />
             )}
           </span>
         ))}

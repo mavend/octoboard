@@ -52,6 +52,6 @@
   top: -2px;
 }
 
-.token.disabled {
-  opacity: 0.5;
+.disabled {
+  opacity: 0.4;
 }

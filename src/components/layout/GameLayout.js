@@ -1,7 +1,7 @@
 import React from "react";
 
-import { string, func, node } from "prop-types";
-import { Responsive, Segment, Container, Header, Grid, Image } from "semantic-ui-react";
+import PropTypes from "prop-types";
+import { Responsive, Container, Grid, Image } from "semantic-ui-react";
 import Sidebar from "components/game/Sidebar";
 import UserMenu from "components/user/UserMenu";
 import RoomTypeBadge from "components/game/RoomTypeBadge";
@@ -9,11 +9,19 @@ import RoomTypeBadge from "components/game/RoomTypeBadge";
 import styles from "./Layout.module.css";
 
 const propTypes = {
-  gameName: string.isRequired,
-  header: node,
-  handleActionClick: func,
-  extraPlayerContent: func,
-  sidebarHeader: node,
+  gameName: PropTypes.string.isRequired,
+  privateRoom: PropTypes.bool,
+  header: PropTypes.node,
+  handleActionClick: PropTypes.func,
+  extraPlayerContent: PropTypes.func,
+  sidebarHeader: PropTypes.node,
+  sidebarSize: PropTypes.number,
+};
+
+const defaultProps = {
+  privateRoom: false,
+  header: null,
+  sidebarSize: 4,
 };
 
 const GameLayout = ({
@@ -24,6 +32,7 @@ const GameLayout = ({
   sidebarHeader,
   extraPlayerContent,
   children,
+  sidebarSize,
 }) => {
   return (
     <>
@@ -38,18 +47,12 @@ const GameLayout = ({
         </Container>
       </div>
       <Container>
-        {header || (
-          <Segment basic>
-            <Header as="h1" textAlign="center">
-              {gameName}
-            </Header>
-          </Segment>
-        )}
+        {header}
         <Responsive as={Grid} minWidth={Responsive.onlyComputer.minWidth}>
-          <Grid.Column width="12">
+          <Grid.Column width={16 - sidebarSize}>
             <Grid.Row>{children}</Grid.Row>
           </Grid.Column>
-          <Grid.Column width="4">
+          <Grid.Column width={sidebarSize}>
             <Grid.Row>
               <Sidebar
                 header={sidebarHeader}
@@ -79,5 +82,6 @@ const GameLayout = ({
 };
 
 GameLayout.propTypes = propTypes;
+GameLayout.defaultProps = defaultProps;
 
 export default GameLayout;

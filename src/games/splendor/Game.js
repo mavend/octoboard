@@ -1,11 +1,10 @@
 import { INVALID_MOVE } from "boardgame.io/core";
 import { mapValues, sum } from "lodash";
-import { stripPhrase } from "utils/strings";
 import cards from "./data/cards.json";
 import { canBuyCard } from "./utils";
 import { RESOURCES, RESOURCES_CONFIG } from "./config";
 
-const REGULAR_RESOURCES = RESOURCES.filter((res) => res != "gold");
+const REGULAR_RESOURCES = RESOURCES.filter((res) => res !== "gold");
 const CARDS_PER_LEVEL = 4;
 
 function setupGame(ctx, setupData) {
@@ -45,7 +44,7 @@ function LogAction(G, ctx, playerID, action, params = {}, clear = false) {
 }
 
 function SendText(G, ctx, text) {
-  if (!stripPhrase(text)) return;
+  // if (!stripPhrase(text)) return;
   LogAction(G, ctx, ctx.playerID, "message", { text: text });
 }
 
@@ -84,22 +83,6 @@ function TakeTokens(G, ctx, requestedTokens) {
   }
 
   ctx.events.endTurn();
-}
-
-function canBuyCard(tokens, cards, card) {
-  let gold = player.tokens.gold;
-  return Object.keys(card.cost).every((res) => {
-    const available = player.tokens[res] + player.cards[res];
-    const cost = card.cost[res];
-    if (available >= cost) {
-      return true;
-    }
-    if (available + gold >= cost) {
-      gold -= cost - available;
-      return true;
-    }
-    return false;
-  });
 }
 
 function payForCard(player, card) {
@@ -144,7 +127,7 @@ function BuyReserved(G, ctx, cardIdx) {
 
   player.cards[card.resource] += 1;
   G.points[ctx.currentPlayer] += card.points;
-  G.reservedCards = G.reservedCards.filter((c) => c != card);
+  G.reservedCards = G.reservedCards.filter((c) => c !== card);
 
   ctx.events.endTurn();
 }
