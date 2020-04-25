@@ -24,6 +24,7 @@ const BoardGameContextMock = ({ children }) => {
             ref
           ),
         points: [10, 3],
+        maxPoints: number("Max points", 15, ref),
         actions: [
           { action: "message", text: text("Message text", "Hello there, shall we begin?", ref) },
         ],

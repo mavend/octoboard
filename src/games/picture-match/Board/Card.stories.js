@@ -26,6 +26,7 @@ const pictureKnobs = (id) => {
 export const Default = () => (
   <Card
     card={{ pictures: [1, 2, 3, 4, 5, 6, 7, 8], layout: number("Layout", 0) }}
+    style="color"
     handleClick={action("handleClick")}
   />
 );
@@ -50,6 +51,7 @@ export const LayoutDesign = () => {
           layout: 0,
           rotation: number("Card Rotation", 0, { range: true, min: 0, max: 359, step: 1 }),
         }}
+        style="color"
         customLayout={customLayout}
         handleClick={action("handleClick")}
       />

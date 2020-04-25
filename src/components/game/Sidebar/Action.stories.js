@@ -1,6 +1,6 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
-import { text, boolean } from "@storybook/addon-knobs";
+import { text, number, select, boolean } from "@storybook/addon-knobs";
 
 import Action from "./Action";
 
@@ -45,6 +45,15 @@ export const ActionTimeout = () => (
     action={{
       action: "timeout",
       previous: text("Phrase before timeout", "Baba z wozu koniom lżej"),
+    }}
+  />
+);
+export const ActionMatch = () => (
+  <Action
+    action={{
+      action: "match",
+      picture: number("Picture number", 0),
+      style: select("Picture style", ["emoji", "color", "circle", "lines"], "emoji"),
     }}
   />
 );

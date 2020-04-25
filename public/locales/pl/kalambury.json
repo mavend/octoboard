@@ -1,6 +1,14 @@
 {
   "game": {
-    "name": "Kalambury"
+    "name": "Kalambury",
+    "settings": {
+      "mode": "Rodzaj gry",
+      "maxPoints": "Limit punktów",
+      "modes": {
+        "regular": "Zwykły",
+        "infinite": "Bez końca"
+      }
+    }
   },
   "tools": {
     "undo": "Usuń ostatnią linię",
