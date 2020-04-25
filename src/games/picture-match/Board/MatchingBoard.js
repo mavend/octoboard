@@ -8,11 +8,11 @@ import { COLORS } from "config/constants";
 
 const confettiConfig = {
   angle: 90,
-  spread: "54",
-  startVelocity: "36",
+  spread: "74",
+  startVelocity: "56",
   elementCount: "55",
   dragFriction: "0.07",
-  duration: "2090",
+  duration: "1290",
   stagger: 0,
   width: "10px",
   height: "43px",

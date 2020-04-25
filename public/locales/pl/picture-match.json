@@ -2,7 +2,12 @@
   "game": {
     "name": "Picture Match",
     "settings": {
-      "style": "Styl kart"
+      "style": "Styl kart",
+      "mode": "Rodzaj gry",
+      "modes": {
+        "regular": "Zwykły",
+        "infinite": "Bez końca"
+      }
     }
   },
   "header": {
