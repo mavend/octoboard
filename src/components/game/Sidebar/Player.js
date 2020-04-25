@@ -15,6 +15,7 @@ const propTypes = {
 
 const Player = ({
   player: { uid, isConnected, points, actions, isWinning, isCurrentPlayer, profile },
+  maxPoints,
   handleGuessClick,
 }) => {
   const { t } = useTranslation("kalambury");
@@ -55,7 +56,9 @@ const Player = ({
             </Feed.Date>
             <Feed.Content>
               <Icon name="trophy" color={isWinning ? "yellow" : "grey"} />
-              {t("sidebar.player.points", { points: points })}
+              {t("sidebar.player.points", {
+                points: maxPoints ? `${points} / ${maxPoints}` : points,
+              })}
             </Feed.Content>
             <Feed.Extra text style={{ maxWidth: "230px", marginLeft: "-50px" }}>
               <ActionsList actions={visibleActions} handleGuessClick={handleGuessClick} />

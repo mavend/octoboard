@@ -46,7 +46,7 @@ function setupGame(ctx, setupData) {
     actionsCount: 0,
     players: {},
     points: Array(ctx.numPlayers).fill(0),
-    maxPoints: cards.length,
+    maxPoints: 0,
     actions: [],
   };
 
@@ -84,6 +84,8 @@ function SendText(G, ctx, text) {
 function StartGame(G, ctx, style, mode) {
   G.style = style;
   G.mode = mode;
+  // Once this gets resolved https://github.com/nicolodavis/boardgame.io/issues/588
+  // we could remove `client: false` from `StartGame` and perform deck setup in phase onBegin
   G.secret.deck = prepareDeck(ctx, styles[style]);
   G.secret.used = [];
   ctx.events.setPhase("play");
@@ -155,16 +157,18 @@ export const PictureMatch = {
       },
     },
     play: {
-      turn: {
-        onBegin: (G, ctx) => {
-          G.actions = [];
-          G.currentCard = G.secret.deck.pop();
+      onBegin: (G, ctx) => {
+        G.actions = [];
+        G.currentCard = G.secret.deck.pop();
+        if (G.mode !== "infinite") {
           G.maxPoints = Math.floor(G.secret.deck.length / ctx.numPlayers);
-          for (let i = 0; i < ctx.numPlayers; i++) {
-            G.players[i].card = G.secret.deck.pop();
-          }
-          ctx.events.setActivePlayers({ all: "match" });
-        },
+        }
+        for (let i = 0; i < ctx.numPlayers; i++) {
+          G.players[i].card = G.secret.deck.pop();
+        }
+        ctx.events.setActivePlayers({ all: "match" });
+      },
+      turn: {
         stages: {
           match: {
             moves: {
@@ -181,7 +185,7 @@ export const PictureMatch = {
 
   endIf: (G, ctx) => {
     let winner = G.points.findIndex((points) => points >= G.maxPoints);
-    if (G.mode === "regular" && winner >= 0) {
+    if (G.mode !== "infinite" && G.maxPoints > 0 && winner >= 0) {
       return { winner: winner };
     }
   },

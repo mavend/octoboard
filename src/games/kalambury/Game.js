@@ -1,10 +1,12 @@
-import { PlayerView, INVALID_MOVE } from "boardgame.io/core";
+import { PlayerView, Stage, INVALID_MOVE } from "boardgame.io/core";
 import { keys, pickBy } from "lodash";
 import proverbs from "./data/phrases/pl/proverbs.json";
 import idioms from "./data/phrases/pl/idioms.json";
 import nounPhrases from "./data/phrases/pl/noun_phrases.json";
 import { currentTime } from "./utils/time";
 import removeAccents from "remove-accents";
+
+const modes = ["regular", "infinite"];
 
 function setupGame(ctx, setupData) {
   const G = {
@@ -18,7 +20,10 @@ function setupGame(ctx, setupData) {
     timePerTurn: 120,
     canChangePhrase: true,
     players: {},
+    modes: modes,
+    mode: modes[0],
     points: Array(ctx.numPlayers).fill(0),
+    maxPoints: 0,
     actions: [],
   };
 
@@ -88,7 +93,11 @@ function Forfeit(G, ctx) {
   ctx.events.endTurn();
 }
 
-function StartGame(G, ctx) {
+function StartGame(G, ctx, mode, maxPoints = 0) {
+  G.mode = mode;
+  if (G.mode !== "infinite") {
+    G.maxPoints = maxPoints;
+  }
   ctx.events.setPhase("play");
 }
 
@@ -198,6 +207,12 @@ export const Kalambury = {
 
   endIf: (G, ctx) => {
     if (G.secret.phrases.length === 0 && !G.secret.phrase) {
+      ctx.events.setActivePlayers({ all: Stage.NULL });
+      return { winners: indexOfMax(G.points) };
+    }
+    let winner = G.points.findIndex((points) => points >= G.maxPoints);
+    if (G.mode !== "infinite" && G.maxPoints > 0 && winner >= 0) {
+      ctx.events.setActivePlayers({ all: Stage.NULL });
       return { winners: indexOfMax(G.points) };
     }
   },
