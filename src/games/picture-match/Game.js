@@ -109,7 +109,7 @@ function Match(G, ctx, picture) {
     G.secter.used = [];
   }
 
-  LogAction(G, ctx, ctx.playerID, "guess", { phrase: `Matched: ${picture}`, success: true });
+  LogAction(G, ctx, ctx.playerID, "match", { picture: picture, style: G.style }, true);
 }
 
 export const PictureMatch = {
