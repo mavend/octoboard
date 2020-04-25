@@ -2,7 +2,7 @@ import React from "react";
 import { Segment } from "semantic-ui-react";
 import layouts from "../data/layouts.json";
 
-const Card = ({ card, customLayout, handleClick }) => {
+const Card = ({ card, style, customLayout, handleClick }) => {
   if (!card) {
     return <></>;
   }
@@ -26,7 +26,7 @@ const Card = ({ card, customLayout, handleClick }) => {
               height: `${100 * pictureStyle.s}px`,
               position: "absolute",
               transform: `rotate(${pictureStyle.r}deg)`,
-              backgroundImage: `url(/images/games/picture-match/pictures/${picture}.png)`,
+              backgroundImage: `url(/images/games/picture-match/pictures/${style}/${picture}.png)`,
               backgroundSize: "contain",
               left: `${pictureStyle.x}px`,
               top: `${pictureStyle.y}px`,
