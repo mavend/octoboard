@@ -32,7 +32,7 @@ const MatchingBoard = () => {
       player.secrets.card.pictures.indexOf(picture) === -1 ||
       G.currentCard.pictures.indexOf(picture) === -1
     ) {
-      setTimeout(() => setGuessingEnabled(true), 500);
+      setTimeout(() => setGuessingEnabled(true), 700);
       setGuessingEnabled(false);
       return;
     }
@@ -45,7 +45,7 @@ const MatchingBoard = () => {
     <Grid stackable>
       <Grid.Row columns={2}>
         <Grid.Column style={{ display: "flex", justifyContent: "center" }}>
-          <Transition animation={"tada"} duration={500} visible={guessingEnabled}>
+          <Transition animation={"tada"} duration={700} visible={guessingEnabled}>
             {/*
             Transition doesn't seem to work on a Component so we wrap it in a `div`
             It's required anyway for inner transform to work
@@ -56,7 +56,7 @@ const MatchingBoard = () => {
           </Transition>
         </Grid.Column>
         <Grid.Column style={{ display: "flex", justifyContent: "center" }}>
-          <Transition animation={"tada"} duration={500} visible={guessingEnabled}>
+          <Transition animation={"tada"} duration={700} visible={guessingEnabled}>
             <div>
               <Card card={G.currentCard} style={G.style} handleClick={handleClick} />
             </div>
