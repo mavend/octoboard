@@ -9,7 +9,10 @@
   },
   "header": {
     "wait": "Waiting for other players",
-    "play": "You are drawing"
+    "play": {
+      "draw": "You are drawing",
+      "guess": "You are guessing"
+    }
   },
   "subheader": {
     "wait": {

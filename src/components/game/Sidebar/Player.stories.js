@@ -6,7 +6,7 @@ import Player from "./Player";
 
 export default {
   component: Player,
-  title: "Kalambury/Sidebar/Player",
+  title: "Sidebar/Player",
   excludeStories: /.*Data$/,
 };
 

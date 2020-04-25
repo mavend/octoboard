@@ -1,0 +1,29 @@
+{
+  "game": {
+    "name": "Picture Match"
+  },
+  "header": {
+    "wait": "Oczekiwanie na innych graczy",
+    "play": "Znajdź wspólny symbol"
+  },
+  "subheader": {
+    "wait": {
+      "manage": "Możesz rozpocząć grę w dowolnym momencie",
+      "wait": "Administrator pokoju może rozpocząć grę"
+    },
+    "play": {
+      "match": "Znajdź i kliknij we wspólny symbol na obydwu kartach"
+    }
+  },
+  "board": {
+    "wait": {
+      "input": {
+        "placeholder": "Porozmawiaj z innymi graczami...",
+        "action": "Wyślij"
+      },
+      "actions": {
+        "start": "Rozpocznij grę"
+      }
+    }
+  }
+}

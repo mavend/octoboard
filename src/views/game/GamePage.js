@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useParams, Redirect } from "react-router-dom";
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
@@ -101,13 +101,17 @@ const GamePage = () => {
     joinGame,
   ]);
 
-  const NewGameClient = Client({
-    game: game,
-    board: BoardGameProvider,
-    loading: Loading,
-    multiplayer: SocketIO({ server: API_ROOT }),
-    debug: document.location.hostname === "localhost" && getUrlParam("debug") === "true",
-  });
+  const NewGameClient = useMemo(
+    () =>
+      Client({
+        game: game,
+        board: BoardGameProvider,
+        loading: Loading,
+        multiplayer: SocketIO({ server: API_ROOT }),
+        debug: document.location.hostname === "localhost" && getUrlParam("debug") === "true",
+      }),
+    [game]
+  );
 
   return (
     <Layout hideUserMenu>

@@ -37,7 +37,7 @@ export const BoardGameProvider = ({ children, ...props }) => {
         actions: filterActions(actions, id),
         isDrawing: stage === "draw",
         canManageGame: stage === "manage",
-        isCurrentPlayer: id.toString() === playerID,
+        isCurrentPlayer: id.toString() === playerID.toString(),
         isWinning: points[id] === maxPoints,
         ...(playersData[id] || {}),
       };

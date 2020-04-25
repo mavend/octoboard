@@ -24,7 +24,6 @@ export const PlayerType = shape({
   isConnected: bool,
   profile: shape({
     displayName: string,
-    photoURL: string,
   }),
   stage: string,
   points: number,

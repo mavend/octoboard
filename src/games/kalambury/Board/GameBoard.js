@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Segment, Button, Header } from "semantic-ui-react";
+import { Header } from "semantic-ui-react";
 import Confetti from "react-dom-confetti";
 import { shuffle } from "lodash";
-import { useTranslation } from "react-i18next";
 
 import { timerFormat, currentTime } from "../utils/time";
 import { COLORS } from "config/constants";
@@ -33,7 +32,6 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
     playerID,
     rawClient,
   } = useBoardGame();
-  const { t } = useTranslation("kalambury");
   const [lines, setLines] = useState([]);
   const [remainingSeconds, setRemainingSeconds] = useState(G.turnEndTime - currentTime());
   const [lastSuccess, setLastSuccess] = useState(false);
@@ -80,11 +78,6 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
     if (isDrawing) moves.UpdateDrawing(lines);
   }, [isDrawing, moves, lines]);
 
-  const handleChangePhrase = () => {
-    moves.ChangePhrase();
-    setLines([]);
-  };
-
   return (
     <>
       {isDrawing ? (
@@ -103,13 +96,6 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
       <Header as="h3" attached="bottom" textAlign="center">
         {timerFormat(remainingSeconds)}
       </Header>
-      {isDrawing && (
-        <Segment basic textAlign="center" style={{ marginTop: "-1rem" }}>
-          <Button color="yellow" disabled={!G.canChangePhrase} onClick={handleChangePhrase}>
-            {t("board.game.new_phrase")}
-          </Button>
-        </Segment>
-      )}
       <Confetti active={lastSuccess} config={confettiConfig} className="confetti" />
     </>
   );

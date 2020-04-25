@@ -71,7 +71,7 @@ const BoardGameContextMock = ({ children }) => {
       {...select("Game", { Kalambury, Splendor }, Splendor, ref)}
       ctx={{
         activePlayers: [
-          select("action", ["draw", "guess", "wait", "manage"], "draw", ref),
+          select("stage", ["draw", "guess", "wait", "manage", "match"], "draw", ref),
           "guess",
         ],
         phase: select("phase", ["wait", "play"], "play", ref),

@@ -16,7 +16,6 @@ export const Default = () => (
     guessInputRef={{}}
     guess={text("Guess", "Baba z wozu?")}
     setGuess={action("SetGuess")}
-    canChangePhrase={boolean("Can change phrase?", true)}
     ChangePhrase={action("ChangePhrase")}
   />
 );

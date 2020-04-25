@@ -46,7 +46,7 @@ const ActionGuess = ({ action: { phrase, success }, onClick }) => (
     basic={!success}
     color={success ? "green" : "red"}
     pointing="left"
-    style={{ maxWidth: "100%", marginLeft: 0, cursor: "pointer" }}
+    style={{ maxWidth: "100%", marginLeft: 0, cursor: onClick ? "pointer" : "auto" }}
     onClick={onClick}
   >
     {success ? <Icon name="check circle" /> : <Icon name="times circle" color="red" />}

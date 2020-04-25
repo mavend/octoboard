@@ -12,6 +12,7 @@ import "../src/index.css";
 
 addDecorator(withKnobs);
 addDecorator(StoryRouter());
+addDecorator((storyFn) => <Suspense fallback="Loading...">{storyFn()}</Suspense>);
 addDecorator((storyFn) => <BoardGameContextMock>{storyFn()}</BoardGameContextMock>);
 addDecorator((storyFn) => <UserContextMock>{storyFn()}</UserContextMock>);
 addDecorator((storyFn) => <Suspense fallback="Loading">{storyFn()}</Suspense>);

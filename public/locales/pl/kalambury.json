@@ -9,7 +9,10 @@
   },
   "header": {
     "wait": "Oczekiwanie na innych graczy",
-    "play": "Narysuj podane hasło"
+    "play": {
+      "draw": "Narysuj podane hasło",
+      "guess": "Odgadujesz"
+    }
   },
   "subheader": {
     "wait": {
