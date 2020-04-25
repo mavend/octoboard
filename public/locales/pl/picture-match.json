@@ -1,6 +1,9 @@
 {
   "game": {
-    "name": "Picture Match"
+    "name": "Picture Match",
+    "settings": {
+      "style": "Styl kart"
+    }
   },
   "header": {
     "wait": "Oczekiwanie na innych graczy",

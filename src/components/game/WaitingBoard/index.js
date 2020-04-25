@@ -4,12 +4,12 @@ import { useTranslation } from "react-i18next";
 import { useBoardGame } from "contexts/BoardGameContext";
 import filterActions from "utils/user/filterActions";
 
-const WaitingBoard = ({ guess, setGuess }) => {
+const WaitingBoard = ({ guess, setGuess, onStartGame, children }) => {
   const {
     G,
     playerID,
     player: { canManageGame },
-    moves: { SendText, StartGame },
+    moves: { SendText },
   } = useBoardGame();
   const [inputLocked, setInputLocked] = useState(false);
   const [animateInput, setAnimateInput] = useState(true);
@@ -76,10 +76,13 @@ const WaitingBoard = ({ guess, setGuess }) => {
         }}
       >
         {canManageGame ? (
-          <Button icon labelPosition="right" color="green" onClick={() => StartGame()}>
-            {t("board.wait.actions.start")}
-            <Icon name="pencil" />
-          </Button>
+          <>
+            {children}
+            <Button icon labelPosition="right" color="green" onClick={onStartGame}>
+              {t("board.wait.actions.start")}
+              <Icon name="pencil" />
+            </Button>
+          </>
         ) : (
           <Image src="/images/hugo-waiting.png" style={{ width: 400, margin: "0 auto" }} />
         )}

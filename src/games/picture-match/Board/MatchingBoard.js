@@ -51,14 +51,14 @@ const MatchingBoard = () => {
             It's required anyway for inner transform to work
             */}
             <div>
-              <Card card={player.secrets.card} handleClick={handleClick} />
+              <Card card={player.secrets.card} style={G.style} handleClick={handleClick} />
             </div>
           </Transition>
         </Grid.Column>
         <Grid.Column style={{ display: "flex", justifyContent: "center" }}>
           <Transition animation={"tada"} duration={500} visible={guessingEnabled}>
             <div>
-              <Card card={G.currentCard} handleClick={handleClick} />
+              <Card card={G.currentCard} style={G.style} handleClick={handleClick} />
             </div>
           </Transition>
         </Grid.Column>

@@ -5,13 +5,14 @@ import { Header } from "semantic-ui-react";
 import { useBoardGame } from "contexts/BoardGameContext";
 import GameLayout from "components/layout/GameLayout";
 
-import WaitingBoard from "./WaitingBoard";
+import WaitingBoard from "components/game/WaitingBoard";
 import GameBoard from "./GameBoard";
 
 const Board = () => {
   const {
     ctx: { phase },
     player: { isDrawing, stage, secrets },
+    moves: { StartGame },
   } = useBoardGame();
 
   const { t } = useTranslation("kalambury");
@@ -57,7 +58,7 @@ const Board = () => {
           envokeLastAnswer={envokeLastAnswer}
         />
       ) : (
-        <WaitingBoard guess={guess} setGuess={setGuess} />
+        <WaitingBoard guess={guess} setGuess={setGuess} onStartGame={() => StartGame()} />
       )}
     </GameLayout>
   );

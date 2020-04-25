@@ -2,8 +2,15 @@ import { PlayerView } from "boardgame.io/core";
 import cards from "./data/cards/8.json";
 import removeAccents from "remove-accents";
 
-function prepareDeck(ctx) {
-  const mapping = ctx.random.Shuffle([...Array(88).keys()]).slice(0, 57);
+const styles = {
+  circle: 68,
+  color: 88,
+  emoji: 88,
+  lines: 84,
+};
+
+function prepareDeck(ctx, cardsCount) {
+  const mapping = ctx.random.Shuffle([...Array(cardsCount).keys()]).slice(0, 57);
   let shuffleAndMapPictures = (pictures) => {
     return ctx.random.Shuffle(pictures).map((number) => mapping[number]);
   };
@@ -20,10 +27,12 @@ function prepareDeck(ctx) {
 function setupGame(ctx, setupData) {
   const G = {
     secret: {
-      deck: prepareDeck(ctx),
+      deck: [],
     },
     privateRoom: setupData && setupData.private,
     currentCard: { pictures: [], layout: 0, rotation: 0 },
+    styles: Object.keys(styles),
+    style: "color",
     actionsCount: 0,
     players: {},
     points: Array(ctx.numPlayers).fill(0),
@@ -62,7 +71,9 @@ function SendText(G, ctx, text) {
   LogAction(G, ctx, ctx.playerID, "message", { text: text });
 }
 
-function StartGame(G, ctx) {
+function StartGame(G, ctx, style) {
+  G.style = style;
+  G.secret.deck = prepareDeck(ctx, styles[style]);
   ctx.events.setPhase("play");
 }
 
@@ -106,7 +117,10 @@ export const PictureMatch = {
                 move: SendText,
                 unsafe: true,
               },
-              StartGame,
+              StartGame: {
+                move: StartGame,
+                client: false,
+              },
             },
           },
           wait: {
