@@ -2,6 +2,7 @@ import { PlayerView } from "boardgame.io/core";
 import cards from "./data/cards/8.json";
 import removeAccents from "remove-accents";
 
+// This dictionary keeps track of number of pictures for each style
 const styles = {
   circle: 68,
   color: 88,
@@ -9,17 +10,23 @@ const styles = {
   lines: 84,
 };
 
+const modes = ["regular", "infinite"];
+
+function randomizeCardLayout(ctx, pictures) {
+  return {
+    pictures: pictures,
+    layout: Math.round(100 * ctx.random.Number()),
+    rotation: 360 * ctx.random.Number(),
+  };
+}
+
 function prepareDeck(ctx, cardsCount) {
   const mapping = ctx.random.Shuffle([...Array(cardsCount).keys()]).slice(0, 57);
   let shuffleAndMapPictures = (pictures) => {
     return ctx.random.Shuffle(pictures).map((number) => mapping[number]);
   };
   let picturesToCards = (pictures) => {
-    return {
-      pictures: pictures,
-      layout: Math.round(100 * ctx.random.Number()),
-      rotation: 360 * ctx.random.Number(),
-    };
+    return randomizeCardLayout(ctx, pictures);
   };
   return ctx.random.Shuffle(cards).map(shuffleAndMapPictures).map(picturesToCards);
 }
@@ -28,11 +35,14 @@ function setupGame(ctx, setupData) {
   const G = {
     secret: {
       deck: [],
+      used: [],
     },
     privateRoom: setupData && setupData.private,
     currentCard: { pictures: [], layout: 0, rotation: 0 },
     styles: Object.keys(styles),
     style: "color",
+    modes: modes,
+    mode: modes[0],
     actionsCount: 0,
     players: {},
     points: Array(ctx.numPlayers).fill(0),
@@ -71,9 +81,11 @@ function SendText(G, ctx, text) {
   LogAction(G, ctx, ctx.playerID, "message", { text: text });
 }
 
-function StartGame(G, ctx, style) {
+function StartGame(G, ctx, style, mode) {
   G.style = style;
+  G.mode = mode;
   G.secret.deck = prepareDeck(ctx, styles[style]);
+  G.secret.used = [];
   ctx.events.setPhase("play");
 }
 
@@ -85,9 +97,17 @@ function Match(G, ctx, picture) {
     return;
   }
 
+  G.secret.used.push(G.players[ctx.playerID].card);
   G.points[ctx.playerID] += 1;
   G.currentCard = G.players[ctx.playerID].card;
   G.players[ctx.playerID].card = G.secret.deck.pop();
+
+  if (G.secret.deck.length === 0 && G.mode === "infinite") {
+    G.secret.deck = ctx.random
+      .Shuffle(G.secret.used)
+      .map(({ pictures }) => randomizeCardLayout(ctx, pictures));
+    G.secter.used = [];
+  }
 
   LogAction(G, ctx, ctx.playerID, "guess", { phrase: `Matched: ${picture}`, success: true });
 }
@@ -161,7 +181,7 @@ export const PictureMatch = {
 
   endIf: (G, ctx) => {
     let winner = G.points.findIndex((points) => points >= G.maxPoints);
-    if (winner >= 0) {
+    if (G.mode === "regular" && winner >= 0) {
       return { winner: winner };
     }
   },

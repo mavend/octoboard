@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Header, Image, Segment } from "semantic-ui-react";
+import { Header, Image, Segment, Form } from "semantic-ui-react";
 
 import { useBoardGame } from "contexts/BoardGameContext";
 import GameLayout from "components/layout/GameLayout";
@@ -19,6 +19,7 @@ const Board = () => {
   const { t } = useTranslation("picture-match");
   const [guess, setGuess] = useState("");
   const [chosenStyle, setChosenStyle] = useState(G.style);
+  const [gameMode, setGameMode] = useState(G.mode);
 
   const hasGameStarted = phase === "play";
 
@@ -31,7 +32,11 @@ const Board = () => {
       {hasGameStarted ? (
         <MatchingBoard />
       ) : (
-        <WaitingBoard guess={guess} setGuess={setGuess} onStartGame={() => StartGame(chosenStyle)}>
+        <WaitingBoard
+          guess={guess}
+          setGuess={setGuess}
+          onStartGame={() => StartGame(chosenStyle, gameMode)}
+        >
           <Segment>
             <Header>{t("game.settings.style")}</Header>
             <Image.Group>
@@ -50,6 +55,20 @@ const Board = () => {
                 />
               ))}
             </Image.Group>
+            <Header>{t("game.settings.mode")}</Header>
+            <Form>
+              {G.modes.map((mode) => (
+                <Form.Field>
+                  <Form.Radio
+                    toggle
+                    label={t(`game.settings.modes.${mode}`)}
+                    value={mode}
+                    checked={gameMode === mode}
+                    onChange={(e, { value }) => setGameMode(value)}
+                  />
+                </Form.Field>
+              ))}
+            </Form>
           </Segment>
         </WaitingBoard>
       )}

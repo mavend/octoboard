@@ -2,7 +2,12 @@
   "game": {
     "name": "Picture Match",
     "settings": {
-      "style": "Cards style"
+      "style": "Cards style",
+      "mode": "Game mode",
+      "modes": {
+        "regular": "Regular",
+        "infinite": "Infinite"
+      }
     }
   },
   "header": {
