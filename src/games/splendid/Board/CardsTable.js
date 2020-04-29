@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "semantic-ui-react";
 import GameCard, { PlaceholderCard } from "../GameCard";
 
-const LEVELS_ORDER = ["3", "2", "1"];
+const LEVELS_ORDER = ["1", "2", "3"];
 
 const CardsTable = ({
   table,
@@ -27,7 +27,7 @@ const CardsTable = ({
             onClick={() => onSelect(card.id)}
             onBuy={() => onBuy(level, card.id)}
             canBuy={canBuy(card)}
-            onReserve={onReserve}
+            onReserve={() => onReserve(level, card.id)}
             canReserve={canReserve}
             {...card}
           />

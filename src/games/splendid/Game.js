@@ -86,7 +86,7 @@ function TakeTokens(G, ctx, requestedTokens) {
   ctx.events.endTurn();
 }
 
-function payForCard(player, card) {
+function payForCard(player, card, publicTokens) {
   for (const [res, cost] of Object.entries(card.cost)) {
     const tokens = player.tokens[res];
     const cards = player.cards[res];
@@ -100,8 +100,8 @@ function payForCard(player, card) {
     }
     player.tokens[res] -= tokensPaid;
     player.tokens.gold -= goldPaid;
-    G.tokens[res] += tokensPaid;
-    G.tokens.gold += goldPaid;
+    publicTokens[res] += tokensPaid;
+    publicTokens.gold += goldPaid;
   }
 }
 
@@ -115,7 +115,7 @@ function BuyCard(G, ctx, level, cardId) {
     return INVALID_MOVE;
   }
 
-  payForCard(player, card);
+  payForCard(player, card, G.tokens);
 
   player.cards[card.resource] += 1;
   G.points[ctx.currentPlayer] += card.points;
@@ -132,7 +132,7 @@ function BuyReserved(G, ctx, cardIdx) {
     return INVALID_MOVE;
   }
 
-  payForCard(player, card);
+  payForCard(player, card, G.tokens);
 
   player.cards[card.resource] += 1;
   G.points[ctx.currentPlayer] += card.points;
@@ -141,9 +141,11 @@ function BuyReserved(G, ctx, cardIdx) {
   ctx.events.endTurn();
 }
 
-function ReserveCard(G, ctx, level, cardIdx) {
+function ReserveCard(G, ctx, level, cardId) {
   const player = G.players[ctx.currentPlayer];
+  const cardIdx = findIndex(G.table[level], { id: cardId });
   const card = G.table[level][cardIdx];
+
   if (!card || player.reservedCards.length >= 3) {
     return INVALID_MOVE;
   }
@@ -172,9 +174,9 @@ function addCardsToTheTable(G) {
   });
 }
 
-export const Splendor = {
-  name: "Splendor",
-  image: "/images/games/splendor/icon.png",
+export const Splendid = {
+  name: "Splendid",
+  image: "/images/games/splendid/icon.png",
   minPlayers: 2,
   maxPlayers: 4,
 

@@ -7,7 +7,7 @@ import cards from "../data/cards.json";
 
 export default {
   component: GameCard,
-  title: "Splendor/GameCard",
+  title: "Splendid/GameCard",
   excludeStories: /.*Data$/,
 };
 

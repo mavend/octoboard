@@ -3,7 +3,7 @@ import { boolean, number, text, select } from "@storybook/addon-knobs";
 import { action } from "@storybook/addon-actions";
 import { shuffle } from "lodash";
 import { BoardGameProvider } from "contexts/BoardGameContext";
-import cards from "../src/games/splendor/data/cards.json";
+import cards from "../src/games/splendid/data/cards.json";
 
 const ref = "Game Context";
 
@@ -40,8 +40,8 @@ const Kalambury = {
   },
 };
 
-const Splendor = {
-  gameName: "Splendor",
+const Splendid = {
+  gameName: "Splendid",
   G: {
     table: {
       "1": shuffle(cards["1"]).slice(0, 4),
@@ -68,7 +68,7 @@ const Splendor = {
 const BoardGameContextMock = ({ children }) => {
   return (
     <BoardGameProvider
-      {...select("Game", { Kalambury, Splendor }, Splendor, ref)}
+      {...select("Game", { Kalambury, Splendid }, Splendid, ref)}
       ctx={{
         activePlayers: [
           select("stage", ["draw", "guess", "wait", "manage", "match"], "draw", ref),

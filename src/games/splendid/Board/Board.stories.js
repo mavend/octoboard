@@ -4,7 +4,7 @@ import Board from "./";
 
 export default {
   component: Board,
-  title: "Splendor/Board",
+  title: "Splendid/Board",
   excludeStories: /.*Data$/,
 };
 

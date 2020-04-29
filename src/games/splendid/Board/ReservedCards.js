@@ -7,7 +7,7 @@ import styles from "./Board.module.css";
 
 const MAX_RESERVED = 3;
 
-const ReservedCards = ({ cards, selectedCard, loading, onSelect, onBuy }) => (
+const ReservedCards = ({ cards, selectedCard, loading, active, onSelect, onBuy, canBuy }) => (
   <Popup
     position="bottom right"
     on="click"
@@ -32,8 +32,8 @@ const ReservedCards = ({ cards, selectedCard, loading, onSelect, onBuy }) => (
               key={card.id}
               small
               loading={loading}
-              active={true}
-              canBuy={true}
+              active={active}
+              canBuy={canBuy(card)}
               selected={card.id === selectedCard}
               onClick={() => onSelect(card.id)}
               onBuy={() => onBuy(card.id)}

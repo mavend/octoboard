@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Segment } from "semantic-ui-react";
 
 import { useBoardGame } from "contexts/BoardGameContext";
@@ -18,6 +18,11 @@ const Board = () => {
   const [loading, setLoading] = useState(null);
 
   const isActivePlayer = ctx.currentPlayer === playerID;
+
+  useEffect(() => {
+    setSelectedCard(null);
+    setLoading(false);
+  }, [isActivePlayer, setSelectedCard, setLoading]);
 
   const selectCard = useCallback(
     (cardId) => {
@@ -44,25 +49,25 @@ const Board = () => {
 
   const buyReservedCard = useCallback(
     (id) => {
-      setLoading(true);
-      console.log("buy reserved", id);
-      setTimeout(() => {
-        setLoading(false);
-        setSelectedCard(null);
-      }, 2000);
+      moves.BuyReservedCard(id);
     },
-    [setLoading]
+    [moves]
   );
 
-  const reserveCard = useCallback((id) => {
-    console.log("reserve", id);
-  }, []);
+  const reserveCard = useCallback(
+    (level, id) => {
+      setLoading(true);
+      moves.ReserveCard(level, id);
+    },
+    [moves, setLoading]
+  );
 
   const takeTokens = useCallback(
     (tokens) => {
+      setLoading(true);
       moves.TakeTokens(tokens);
     },
-    [moves]
+    [moves, setLoading]
   );
 
   const extraPlayerContent = useCallback(
@@ -73,16 +78,18 @@ const Board = () => {
           selectedCard={selectedCard}
           onSelect={selectCard}
           loading={loading}
+          active={isActivePlayer}
           onBuy={buyReservedCard}
+          canBuy={canBuy}
         />
       </PlayerInfo>
     ),
-    [selectedCard, loading, buyReservedCard, selectCard]
+    [selectedCard, loading, buyReservedCard, selectCard, canBuy, isActivePlayer]
   );
 
   return (
     <GameLayout
-      gameName={"Splendor"}
+      gameName={"Splendid"}
       header={
         <Segment className={styles.topBar}>
           <BonusCards />

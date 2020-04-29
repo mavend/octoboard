@@ -8,7 +8,7 @@ import PointsBadge from "./PointsBadge";
 import styles from "./GameCard.module.css";
 
 function imgUrl(name) {
-  return `/images/games/splendor/cards/${name}`;
+  return `/images/games/splendid/cards/${name}`;
 }
 
 const BonusCard = () => {

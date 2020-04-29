@@ -1,9 +1,9 @@
 const { Kalambury } = require("./games/kalambury/Game");
-const { Splendor } = require("./games/splendor/Game");
+const { Splendid } = require("./games/splendid/Game");
 const { PictureMatch } = require("./games/picture-match/Game");
 const { Server } = require("boardgame.io/server");
 
 const server = Server({
-  games: [Kalambury, PictureMatch, Splendor],
+  games: [Kalambury, PictureMatch, Splendid],
 });
 server.run(process.env.PORT || 8000);
