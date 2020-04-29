@@ -25,7 +25,7 @@ export const BoardGameProvider = ({ children, ...props }) => {
   useEffect(() => {
     const maxPoints = Math.max(...points);
     const newPlayers = gameMetadata.map(({ id, name: uid, isConnected }) => {
-      const stage = activePlayers[id];
+      const stage = activePlayers && activePlayers[id];
       const profile = profiles.get(uid);
       return {
         id,

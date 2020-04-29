@@ -1,7 +1,7 @@
-import { INVALID_MOVE } from "boardgame.io/core";
-import { mapValues, sum } from "lodash";
+import { INVALID_MOVE, TurnOrder } from "boardgame.io/core";
+import { mapValues, sum, findIndex } from "lodash";
 import cards from "./data/cards.json";
-import { canBuyCard } from "./utils";
+import { canBuyCard, fromEntries } from "./utils";
 import { RESOURCES, RESOURCES_CONFIG } from "./config";
 
 const REGULAR_RESOURCES = RESOURCES.filter((res) => res !== "gold");
@@ -14,15 +14,15 @@ function setupGame(ctx, setupData) {
     players: {},
     points: Array(ctx.numPlayers).fill(0),
     actions: [],
-    deck: mapValues(cards, ctx.random.shuffle),
+    deck: mapValues(cards, ctx.random.Shuffle),
     table: mapValues(cards, () => Array(CARDS_PER_LEVEL).fill(null)),
     tokens: mapValues(RESOURCES_CONFIG, (res) => res.tokensCount[ctx.numPlayers]),
   };
 
   for (let i = 0; i < ctx.numPlayers; i++) {
     G.players[i] = {
-      cards: Object.fromEntries(REGULAR_RESOURCES.map((res) => [res, 0])),
-      tokens: Object.fromEntries(RESOURCES.map((res) => [res, 0])),
+      cards: fromEntries(REGULAR_RESOURCES.map((res) => [res, 0])),
+      tokens: fromEntries(RESOURCES.map((res) => [res, 0])),
       reservedCards: [],
     };
   }
@@ -49,7 +49,7 @@ function SendText(G, ctx, text) {
 }
 
 function StartGame(G, ctx) {
-  ctx.events.setPhase("play");
+  ctx.events.setPhase("play", { next: "0" });
 }
 
 function canTakeTokens(availableTokens, requestedTokens, playerTokens) {
@@ -73,13 +73,14 @@ function canTakeTokens(availableTokens, requestedTokens, playerTokens) {
 }
 
 function TakeTokens(G, ctx, requestedTokens) {
-  if (!canTakeTokens(G.tokens, requestedTokens)) {
+  const player = G.players[ctx.currentPlayer];
+  if (!canTakeTokens(G.tokens, requestedTokens, player.tokens)) {
     return INVALID_MOVE;
   }
 
   for (const [res, count] of Object.entries(requestedTokens)) {
     G.tokens[res] -= count;
-    G.players[ctx.currentPlayer].tokens += count;
+    player.tokens[res] += count;
   }
 
   ctx.events.endTurn();
@@ -89,19 +90,27 @@ function payForCard(player, card) {
   for (const [res, cost] of Object.entries(card.cost)) {
     const tokens = player.tokens[res];
     const cards = player.cards[res];
+    let tokensPaid = 0;
+    let goldPaid = 0;
     if (tokens + cards >= cost) {
-      player.tokens[res] -= cost - cards;
+      tokensPaid = cost - cards;
     } else {
-      player.tokens.gold -= cost - (tokens + cards);
-      player.tokens[res] = 0;
+      tokensPaid = player.tokens[res];
+      goldPaid = cost - (tokens + cards);
     }
+    player.tokens[res] -= tokensPaid;
+    player.tokens.gold -= goldPaid;
+    G.tokens[res] += tokensPaid;
+    G.tokens.gold += goldPaid;
   }
 }
 
-function BuyCard(G, ctx, level, cardIdx) {
+function BuyCard(G, ctx, level, cardId) {
   const player = G.players[ctx.currentPlayer];
   const { tokens, cards } = player;
+  const cardIdx = findIndex(G.table[level], { id: cardId });
   const card = G.table[level][cardIdx];
+
   if (!canBuyCard(tokens, cards, card)) {
     return INVALID_MOVE;
   }
@@ -158,7 +167,7 @@ function DiscardToken(G, ctx, resource) {
 }
 
 function addCardsToTheTable(G) {
-  Object.keys(G.table).each((level) => {
+  Object.keys(G.table).forEach((level) => {
     G.table[level] = G.table[level].map((card) => card || G.deck[level].pop() || null);
   });
 }
@@ -169,7 +178,7 @@ export const Splendor = {
   minPlayers: 2,
   maxPlayers: 4,
 
-  seed: process.env.NODE_ENV === "production" ? undefined : "test",
+  seed: process.env.NODE_ENV === "production" ? undefined : "tesdddt",
   setup: setupGame,
 
   phases: {
@@ -208,6 +217,7 @@ export const Splendor = {
         onBegin: (G, ctx) => {
           addCardsToTheTable(G);
         },
+        order: TurnOrder.RESET,
       },
     },
   },

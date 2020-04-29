@@ -25,7 +25,7 @@ const CardsTable = ({
             selected={card.id === selectedCard}
             loading={loading}
             onClick={() => onSelect(card.id)}
-            onBuy={() => onBuy(card.id)}
+            onBuy={() => onBuy(level, card.id)}
             canBuy={canBuy(card)}
             onReserve={onReserve}
             canReserve={canReserve}

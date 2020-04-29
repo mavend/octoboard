@@ -13,12 +13,11 @@ import ReservedCards from "./ReservedCards";
 import styles from "./Board.module.css";
 
 const Board = () => {
-  const { G, ctx, player } = useBoardGame();
+  const { G, ctx, moves, player, playerID } = useBoardGame();
   const [selectedCard, setSelectedCard] = useState(null);
   const [loading, setLoading] = useState(null);
 
-  console.log(ctx.activePlayers);
-  const isActivePlayer = true;
+  const isActivePlayer = ctx.currentPlayer === playerID;
 
   const selectCard = useCallback(
     (cardId) => {
@@ -31,21 +30,16 @@ const Board = () => {
   const canBuy = useCallback(
     (card) => {
       const { tokens, cards } = player;
-      canBuyCard(tokens, cards, card);
+      return canBuyCard(tokens, cards, card);
     },
     [player]
   );
 
   const buyCard = useCallback(
-    (id) => {
-      setLoading(true);
-      console.log("buy", id);
-      setTimeout(() => {
-        setLoading(false);
-        setSelectedCard(null);
-      }, 2000);
+    (level, id) => {
+      moves.BuyCard(level, id);
     },
-    [setLoading]
+    [moves]
   );
 
   const buyReservedCard = useCallback(
@@ -63,6 +57,13 @@ const Board = () => {
   const reserveCard = useCallback((id) => {
     console.log("reserve", id);
   }, []);
+
+  const takeTokens = useCallback(
+    (tokens) => {
+      moves.TakeTokens(tokens);
+    },
+    [moves]
+  );
 
   const extraPlayerContent = useCallback(
     ({ tokens, cards, reservedCards }) => (
@@ -85,7 +86,7 @@ const Board = () => {
       header={
         <Segment className={styles.topBar}>
           <BonusCards />
-          <TokensShop tokens={G.tokens} active={isActivePlayer} />
+          <TokensShop tokens={G.tokens} active={isActivePlayer} onTakeTokens={takeTokens} />
         </Segment>
       }
       sidebarHeader={<></>}
@@ -105,6 +106,7 @@ const Board = () => {
             onReserve={reserveCard}
           />
         )}
+        <button onClick={() => moves.StartGame()}>Start Game</button>
       </Segment>
     </GameLayout>
   );

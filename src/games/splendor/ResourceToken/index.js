@@ -14,7 +14,7 @@ const propTypes = {
 };
 
 const ResourceToken = ({ type, count, raised, big, disabled, onClick }) => {
-  const { color } = RESOURCES_CONFIG[type];
+  const { color } = RESOURCES_CONFIG[type] || {};
   return (
     <div
       className={compact([

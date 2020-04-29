@@ -14,3 +14,10 @@ export function canBuyCard(tokens, cards, card) {
     return false;
   });
 }
+
+export function fromEntries(iterable) {
+  return [...iterable].reduce((obj, [key, val]) => {
+    obj[key] = val;
+    return obj;
+  }, {});
+}

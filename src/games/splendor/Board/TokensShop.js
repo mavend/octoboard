@@ -54,7 +54,7 @@ const TokensShop = ({ tokens, active, onTakeTokens }) => {
           <ResourceToken
             key={res}
             type={res}
-            count={tokensCount(res) > 0 && tokensCount(res)}
+            count={tokensCount(res) > 0 ? tokensCount(res) : null}
             onClick={active && res !== "gold" ? () => addToken(res) : undefined}
             disabled={tokensCount(res) === 0 || !canTakeToken(res)}
             raised

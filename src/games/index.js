@@ -11,4 +11,4 @@ export const KalamburyComponent = { game: Kalambury, Board: KalamburyBoard };
 export const PictureMatchComponent = { game: PictureMatch, Board: PictureMatchBoard };
 export const SplendorComponent = { game: Splendor, Board: SplendorBoard };
 
-export const gameComponents = [KalamburyComponent, PictureMatchComponent, PictureMatchComponent];
+export const gameComponents = [KalamburyComponent, PictureMatchComponent, SplendorComponent];
