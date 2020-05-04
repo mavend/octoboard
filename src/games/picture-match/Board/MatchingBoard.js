@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, Transition } from "semantic-ui-react";
 import Card from "./Card";
 import { useBoardGame } from "contexts/BoardGameContext";
@@ -23,6 +23,13 @@ const MatchingBoard = () => {
   const { G, moves, player } = useBoardGame();
   const [guessingEnabled, setGuessingEnabled] = useState(true);
   const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    G.pictures.map(
+      (picture) =>
+        (new Image().src = `/images/games/picture-match/pictures/${G.style}/${picture}.png`)
+    );
+  }, [G.style, G.pictures]);
 
   const handleClick = (picture) => {
     if (!guessingEnabled) {

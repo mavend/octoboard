@@ -17,6 +17,7 @@ const Card = ({ card, style, customLayout, handleClick }) => {
         const pictureStyle = layout[idx];
         return (
           <div
+            key={picture}
             onClick={(e) => handleClick(picture)}
             style={{
               cursor: "pointer",
