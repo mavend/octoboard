@@ -2,10 +2,13 @@ import React from "react";
 
 import PropTypes from "prop-types";
 import { Responsive, Container, Grid, Image } from "semantic-ui-react";
+import { ToastContainer, toast } from "react-toastify";
+
 import Sidebar from "components/game/Sidebar";
 import UserMenu from "components/user/UserMenu";
 import RoomTypeBadge from "components/game/RoomTypeBadge";
 
+import "react-toastify/dist/ReactToastify.css";
 import styles from "./Layout.module.css";
 
 const propTypes = {
@@ -76,6 +79,7 @@ const GameLayout = ({
             </Grid.Column>
           </Grid.Row>
         </Responsive>
+        <ToastContainer toastClassName={styles.toast} position={toast.POSITION.TOP_CENTER} />
       </Container>
     </>
   );

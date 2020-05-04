@@ -41,5 +41,14 @@
     "not_in_game": "Gracz nie jest w wybranym pokoju",
     "no_space": "Brak miejsca w tym pokoju",
     "already_in_game": "Jesteś aktualnie w trakcie innej gry"
+  },
+  "sidebar": {
+    "player": {
+      "waiting": "Oczekiwanie na gracza...",
+      "you": "Ty",
+      "turn": "Tura",
+      "disconnected": "Połączenie przerwane",
+      "points": "Punkty: {{points}}"
+    }
   }
 }

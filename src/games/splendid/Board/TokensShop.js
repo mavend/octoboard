@@ -9,7 +9,7 @@ import styles from "./Board.module.css";
 
 const emptyTokens = Object.fromEntries(RESOURCES.map((res) => [res, 0]));
 
-const TokensShop = ({ tokens, active, onTakeTokens }) => {
+const TokensShop = ({ tokens, active, loading, onTakeTokens }) => {
   const [selected, setSelected] = useState({ ...emptyTokens });
 
   useEffect(() => {
@@ -82,7 +82,7 @@ const TokensShop = ({ tokens, active, onTakeTokens }) => {
             color="green"
             size="mini"
             onClick={takeTokens}
-            disabled={sum(Object.values(selected)) === 0}
+            disabled={sum(Object.values(selected)) === 0 || loading}
           >
             Take tokens
           </Button>

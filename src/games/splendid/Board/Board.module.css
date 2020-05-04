@@ -1,3 +1,9 @@
+.mainBoard {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
 .extraTitle {
   color: #999;
 }
@@ -75,4 +81,25 @@
 
 .takeButton {
   text-align: center;
+}
+
+.waitBoard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px !important;
+}
+
+.waitImage {
+  width: 400px;
+  margin: 0 auto;
+}
+
+.waitInfo {
+  font-size: 16px;
+  color: #666;
+  margin-top: 20px;
+  text-align: center;
+  line-height: 200%;
 }

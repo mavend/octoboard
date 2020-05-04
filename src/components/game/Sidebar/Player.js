@@ -1,6 +1,6 @@
 import React from "react";
 import { func } from "prop-types";
-import { Icon, Segment, Feed, List } from "semantic-ui-react";
+import { Icon, Segment, Feed, List, Label } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 import { PlayerType } from "config/propTypes";
 import Action from "./Action";
@@ -20,11 +20,11 @@ const defaultProps = {
 
 const Player = ({
   player,
-  player: { uid, isConnected, points, actions, isWinning, isCurrentPlayer, profile },
+  player: { uid, isConnected, points, actions, isWinning, isYou, isCurrentPlayer, profile },
   handleActionClick,
   extraContent,
 }) => {
-  const { t } = useTranslation("kalambury");
+  const { t } = useTranslation("lobby");
 
   if (!uid) {
     return (
@@ -53,7 +53,8 @@ const Player = ({
           </Feed.Label>
           <Feed.Content>
             <Feed.Date>
-              {displayName} {isCurrentPlayer && <span>({t("sidebar.player.current")})</span>}{" "}
+              {displayName} {isYou && <span>({t("sidebar.player.you")})</span>}{" "}
+              {isCurrentPlayer && <Label content={t("sidebar.player.turn")} color="green" />}
               <Icon
                 name="broken chain"
                 className={`${styles.smoothDisabled} ${isConnected ? "hidden" : ""}`}

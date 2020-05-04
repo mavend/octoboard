@@ -41,5 +41,15 @@
     "not_in_game": "You are not in a game",
     "no_space": "No space left in this room",
     "already_in_game": "You are currently in another game"
+  },
+  "sidebar": {
+    "player": {
+      "waiting": "Waiting for player...",
+      "you": "You",
+      "turn": "Turn",
+      "disconnected": "Disconnected",
+      "points": "{{points}} Point",
+      "points_plural": "{{points}} Points"
+    }
   }
 }

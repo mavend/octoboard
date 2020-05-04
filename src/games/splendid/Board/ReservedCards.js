@@ -36,7 +36,7 @@ const ReservedCards = ({ cards, selectedCard, loading, active, onSelect, onBuy, 
               canBuy={canBuy(card)}
               selected={card.id === selectedCard}
               onClick={() => onSelect(card.id)}
-              onBuy={() => onBuy(card.id)}
+              onBuy={() => onBuy(card)}
               {...card}
             />
           ))}

@@ -78,7 +78,6 @@ const GameCard = ({
       <Card.Content className={styles.topContent}>
         <ResourceIcon type={resource} />
         {points > 0 && <PointsBadge resource={resource} points={points} />}
-        <ResourceIcon type={resource} />
       </Card.Content>
       <Dimmer.Dimmable blurring dimmed={selected}>
         <div className={styles.imageBox}>
@@ -109,7 +108,7 @@ const GameCard = ({
           </div>
         </Dimmer>
       </Dimmer.Dimmable>
-      <Card.Content className={styles.bottomContent}>
+      <Card.Content className={styles.bottomContent} style={{ opacity: canBuy ? 1 : 0.7 }}>
         {Object.entries(cost).map(
           ([res, count]) => count > 0 && <ResourceToken key={res} type={res} count={count} />
         )}

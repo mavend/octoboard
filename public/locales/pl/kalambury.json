@@ -44,12 +44,6 @@
     }
   },
   "sidebar": {
-    "player": {
-      "waiting": "Oczekiwanie na gracza...",
-      "current": "Ty",
-      "disconnected": "Połączenie przerwane",
-      "points": "Punkty: {{points}}"
-    },
     "action": {
       "change": "Zmiana hasła. Porzednie hasło to: {{phrase}}",
       "forfeit": "Runda poddana. Hasło to: {{phrase}}",

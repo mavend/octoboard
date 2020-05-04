@@ -9,14 +9,14 @@ export const BoardGameContext = createContext({});
 export const BoardGameProvider = ({ children, ...props }) => {
   const {
     G: { points, actions, players: playersData },
-    ctx: { activePlayers },
+    ctx: { activePlayers, currentPlayer },
     gameMetadata,
     playerID,
   } = props;
   const [players, setPlayers] = useState([]);
   const [player, setPlayer] = useState({
     data: {},
-    isCurrentPlayer: true,
+    isYou: true,
     stage: "wait",
   });
   const profiles = useProfiles();
@@ -37,19 +37,30 @@ export const BoardGameProvider = ({ children, ...props }) => {
         actions: filterActions(actions, id),
         isDrawing: stage === "draw",
         canManageGame: stage === "manage",
-        isCurrentPlayer: id.toString() === playerID.toString(),
+        isYou: id.toString() === playerID.toString(),
+        isCurrentPlayer: id.toString() === currentPlayer.toString(),
         isWinning: points[id] === maxPoints,
         ...(playersData[id] || {}),
       };
     });
     setPlayers((players) => (isEqual(players, newPlayers) ? players : newPlayers));
-  }, [gameMetadata, points, activePlayers, actions, playerID, setPlayers, profiles, playersData]);
+  }, [
+    gameMetadata,
+    points,
+    activePlayers,
+    actions,
+    playerID,
+    setPlayers,
+    profiles,
+    playersData,
+    currentPlayer,
+  ]);
 
-  // Set current player
+  // Set this player
   useEffect(() => {
-    const currentPlayer = find(players, "isCurrentPlayer");
-    if (currentPlayer) {
-      setPlayer((player) => (isEqual(player, currentPlayer) ? player : currentPlayer));
+    const thisPlayer = find(players, "isYou");
+    if (thisPlayer) {
+      setPlayer((player) => (isEqual(player, thisPlayer) ? player : thisPlayer));
     }
   }, [players, setPlayer]);
 

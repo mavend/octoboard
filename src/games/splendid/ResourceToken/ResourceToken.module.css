@@ -55,3 +55,17 @@
 .disabled {
   opacity: 0.4;
 }
+
+.token i.iconRemove {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background-color: #fff;
+  cursor: pointer;
+  box-shadow: none !important;
+  display: none;
+}
+
+.token:hover i.iconRemove {
+  display: block;
+}

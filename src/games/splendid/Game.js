@@ -1,8 +1,9 @@
 import { INVALID_MOVE, TurnOrder } from "boardgame.io/core";
-import { mapValues, sum, findIndex } from "lodash";
+import { mapValues, sum } from "lodash";
 import cards from "./data/cards.json";
 import { canBuyCard, fromEntries } from "./utils";
 import { RESOURCES, RESOURCES_CONFIG } from "./config";
+import { stripPhrase } from "../../utils/strings";
 
 const REGULAR_RESOURCES = RESOURCES.filter((res) => res !== "gold");
 const CARDS_PER_LEVEL = 4;
@@ -44,11 +45,12 @@ function LogAction(G, ctx, playerID, action, params = {}, clear = false) {
 }
 
 function SendText(G, ctx, text) {
-  // if (!stripPhrase(text)) return;
+  if (!stripPhrase(text)) return;
   LogAction(G, ctx, ctx.playerID, "message", { text: text });
 }
 
 function StartGame(G, ctx) {
+  G.actions = [];
   ctx.events.setPhase("play", { next: "0" });
 }
 
@@ -108,8 +110,7 @@ function payForCard(player, card, publicTokens) {
 function BuyCard(G, ctx, level, cardId) {
   const player = G.players[ctx.currentPlayer];
   const { tokens, cards } = player;
-  const cardIdx = findIndex(G.table[level], { id: cardId });
-  const card = G.table[level][cardIdx];
+  const card = G.table[level].find((card) => card.id === cardId);
 
   if (!canBuyCard(tokens, cards, card)) {
     return INVALID_MOVE;
@@ -119,15 +120,16 @@ function BuyCard(G, ctx, level, cardId) {
 
   player.cards[card.resource] += 1;
   G.points[ctx.currentPlayer] += card.points;
-  G.table[level][cardIdx] = null;
+  G.table[level] = G.table[level].map((card) => (card.id === cardId ? null : card));
 
   ctx.events.endTurn();
 }
 
-function BuyReserved(G, ctx, cardIdx) {
+function BuyReserved(G, ctx, cardId) {
   const player = G.players[ctx.currentPlayer];
   const { tokens, cards } = player;
-  const card = player.reservedCards[cardIdx];
+  const card = player.reservedCards.find((card) => card.id === cardId);
+
   if (!canBuyCard(tokens, cards, card)) {
     return INVALID_MOVE;
   }
@@ -136,15 +138,14 @@ function BuyReserved(G, ctx, cardIdx) {
 
   player.cards[card.resource] += 1;
   G.points[ctx.currentPlayer] += card.points;
-  G.reservedCards = G.reservedCards.filter((c) => c !== card);
+  player.reservedCards = player.reservedCards.filter((card) => card.id !== cardId);
 
   ctx.events.endTurn();
 }
 
 function ReserveCard(G, ctx, level, cardId) {
   const player = G.players[ctx.currentPlayer];
-  const cardIdx = findIndex(G.table[level], { id: cardId });
-  const card = G.table[level][cardIdx];
+  const card = G.table[level].find((card) => card.id === cardId);
 
   if (!card || player.reservedCards.length >= 3) {
     return INVALID_MOVE;
@@ -152,9 +153,10 @@ function ReserveCard(G, ctx, level, cardId) {
 
   if (sum(Object.values(player.tokens)) < 10) {
     player.tokens.gold += 1;
+    G.tokens.gold -= 1;
   }
   player.reservedCards.push(card);
-  G.table[level][cardIdx] = null;
+  G.table[level] = G.table[level].map((card) => (card.id === cardId ? null : card));
 
   ctx.events.endTurn();
 }
@@ -166,6 +168,7 @@ function DiscardToken(G, ctx, resource) {
   }
 
   player.tokens[resource] -= 1;
+  G.tokens[resource] += 1;
 }
 
 function addCardsToTheTable(G) {

@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Segment } from "semantic-ui-react";
+import { toast } from "react-toastify";
+import { sum } from "lodash";
 
 import { useBoardGame } from "contexts/BoardGameContext";
 import GameLayout from "components/layout/GameLayout";
 import { canBuyCard } from "../utils";
+import WaitingBoard from "./WaitingBoard";
 import BonusCards from "./BonusCards";
 import TokensShop from "./TokensShop";
 import PlayerInfo from "./PlayerInfo";
@@ -13,16 +16,20 @@ import ReservedCards from "./ReservedCards";
 import styles from "./Board.module.css";
 
 const Board = () => {
-  const { G, ctx, moves, player, playerID } = useBoardGame();
+  const { G, ctx, moves, players, player, playerID } = useBoardGame();
   const [selectedCard, setSelectedCard] = useState(null);
   const [loading, setLoading] = useState(null);
 
+  const hasGameStarted = ctx.phase !== "wait";
   const isActivePlayer = ctx.currentPlayer === playerID;
 
   useEffect(() => {
     setSelectedCard(null);
     setLoading(false);
-  }, [isActivePlayer, setSelectedCard, setLoading]);
+    if (isActivePlayer && hasGameStarted) {
+      toast.success("🎲 Your turn!", { autoClose: 2000 });
+    }
+  }, [isActivePlayer, hasGameStarted, setSelectedCard, setLoading]);
 
   const selectCard = useCallback(
     (cardId) => {
@@ -41,51 +48,102 @@ const Board = () => {
   );
 
   const buyCard = useCallback(
-    (level, id) => {
-      moves.BuyCard(level, id);
+    (card) => {
+      if (canBuy(card)) {
+        const { level, id } = card;
+        setLoading(true);
+        moves.BuyCard(level, id);
+      } else {
+        toast.error("⛔️Not enough resources");
+      }
     },
-    [moves]
+    [moves, canBuy]
   );
 
   const buyReservedCard = useCallback(
-    (id) => {
-      moves.BuyReservedCard(id);
+    (card) => {
+      if (canBuy(card)) {
+        const { id } = card;
+        setLoading(true);
+        moves.BuyReserved(id);
+      } else {
+        toast.error("⛔️Not enough resources");
+      }
     },
-    [moves]
+    [moves, canBuy]
   );
 
   const reserveCard = useCallback(
-    (level, id) => {
-      setLoading(true);
-      moves.ReserveCard(level, id);
+    (card) => {
+      const playerTokens = sum(Object.values(player.tokens));
+      if (playerTokens < 10) {
+        const { level, id } = card;
+        setLoading(true);
+        moves.ReserveCard(level, id);
+      } else {
+        toast.error("⛔️You can't have more than 10 tokens!");
+      }
     },
-    [moves, setLoading]
+    [player, moves, setLoading]
   );
 
   const takeTokens = useCallback(
     (tokens) => {
-      setLoading(true);
-      moves.TakeTokens(tokens);
+      const takenTokens = sum(Object.values(tokens));
+      const playerTokens = sum(Object.values(player.tokens));
+      if (playerTokens + takenTokens <= 10) {
+        setLoading(true);
+        moves.TakeTokens(tokens);
+      } else {
+        toast.error("⛔️You can't have more than 10 tokens!");
+      }
     },
-    [moves, setLoading]
+    [player, moves, setLoading]
+  );
+
+  const discardToken = useCallback(
+    (resource) => {
+      if (player.tokens[resource] > 0) {
+        setLoading(true);
+        moves.DiscardToken(resource);
+      } else {
+        toast.error("⛔️Not enough resources");
+      }
+    },
+    [player, moves]
   );
 
   const extraPlayerContent = useCallback(
-    ({ tokens, cards, reservedCards }) => (
-      <PlayerInfo tokens={tokens} cards={cards}>
+    ({ isYou, isCurrentPlayer, tokens, cards, reservedCards }) => (
+      <PlayerInfo
+        tokens={tokens}
+        cards={cards}
+        onDiscardToken={isYou && isCurrentPlayer ? discardToken : undefined}
+      >
         <ReservedCards
           cards={reservedCards}
           selectedCard={selectedCard}
           onSelect={selectCard}
           loading={loading}
-          active={isActivePlayer}
+          active={isCurrentPlayer}
           onBuy={buyReservedCard}
           canBuy={canBuy}
         />
       </PlayerInfo>
     ),
-    [selectedCard, loading, buyReservedCard, selectCard, canBuy, isActivePlayer]
+    [selectedCard, loading, buyReservedCard, selectCard, canBuy]
   );
+
+  if (!hasGameStarted) {
+    return (
+      <WaitingBoard
+        canManageGame={player.canManageGame}
+        currentPlayers={players.filter((p) => p.uid).length}
+        totalPlayers={ctx.numPlayers}
+        onStartGame={() => moves.StartGame()}
+      />
+    );
+  }
 
   return (
     <GameLayout
@@ -93,14 +151,20 @@ const Board = () => {
       header={
         <Segment className={styles.topBar}>
           <BonusCards />
-          <TokensShop tokens={G.tokens} active={isActivePlayer} onTakeTokens={takeTokens} />
+          <TokensShop
+            tokens={G.tokens}
+            active={isActivePlayer}
+            loading={loading}
+            onTakeTokens={takeTokens}
+          />
         </Segment>
       }
       sidebarHeader={<></>}
       sidebarSize={5}
       extraPlayerContent={extraPlayerContent}
     >
-      <Segment style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
+      {}
+      <Segment className={styles.mainBoard}>
         {G.table && (
           <CardsTable
             table={G.table}
@@ -113,7 +177,6 @@ const Board = () => {
             onReserve={reserveCard}
           />
         )}
-        <button onClick={() => moves.StartGame()}>Start Game</button>
       </Segment>
     </GameLayout>
   );

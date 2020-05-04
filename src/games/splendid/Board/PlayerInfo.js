@@ -1,5 +1,5 @@
 import React from "react";
-import { shape, number, array, func } from "prop-types";
+import { shape, number, func } from "prop-types";
 
 import { RESOURCES } from "../config";
 import CardSymbol from "../CardSymbol";
@@ -12,9 +12,7 @@ const resourcesShape = shape(Object.fromEntries(RESOURCES.map((res) => [res, num
 const propTypes = {
   tokens: resourcesShape,
   cards: resourcesShape,
-  reservedCards: array,
-  selectedCard: number,
-  onBuyCard: func,
+  onDiscardToken: func,
 };
 
 const defaultProps = {
@@ -22,7 +20,7 @@ const defaultProps = {
   cards: {},
 };
 
-const PlayerInfo = ({ tokens, cards, children }) => (
+const PlayerInfo = ({ tokens, cards, onDiscardToken, children }) => (
   <>
     {children}
     <span className={styles.extraTitle}>Tokens:</span>
@@ -35,6 +33,7 @@ const PlayerInfo = ({ tokens, cards, children }) => (
             count={tokens[res] > 0 ? tokens[res] : null}
             disabled={tokens[res] === 0}
             raised={tokens[res] > 0}
+            onDelete={onDiscardToken ? () => onDiscardToken(res) : undefined}
           />
         ))}
     </div>

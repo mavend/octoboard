@@ -30,6 +30,7 @@ export const PlayerType = shape({
   actions: arrayOf(object),
   isDrawing: bool,
   isWinning: bool,
+  isYou: bool,
   isCurrentPlayer: bool,
   canManageGame: bool,
 });

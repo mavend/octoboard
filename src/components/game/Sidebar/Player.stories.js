@@ -23,7 +23,7 @@ export const Default = () => (
         { action: "manage", id: "456" },
       ]),
       isWinning: boolean("Is player winning?", true),
-      isCurrentPlayer: boolean("Are you this player?", true),
+      isYou: boolean("Are you this player?", true),
       profile: {
         displayName: text("Name", "Mieczysław Czosnek"),
         photoURL: text("Avatar URL", "https://api.adorable.io/avatars/128/Mieczysław-Czosnek.png"),
@@ -44,7 +44,7 @@ export const WithAdditionalContent = () => (
         { action: "manage", id: "456" },
       ]),
       isWinning: boolean("Is player winning?", true),
-      isCurrentPlayer: boolean("Are you this player?", true),
+      isYou: boolean("Are you this player?", true),
       profile: {
         displayName: text("Name", "Mieczysław Czosnek"),
         photoURL: text("Avatar URL", "https://api.adorable.io/avatars/128/Mieczysław-Czosnek.png"),
