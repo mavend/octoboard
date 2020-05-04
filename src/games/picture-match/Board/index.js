@@ -58,7 +58,7 @@ const Board = () => {
             <Header>{t("game.settings.mode")}</Header>
             <Form>
               {G.modes.map((mode) => (
-                <Form.Field>
+                <Form.Field key={mode}>
                   <Form.Radio
                     toggle
                     label={t(`game.settings.modes.${mode}`)}

@@ -20,8 +20,7 @@ function randomizeCardLayout(ctx, pictures) {
   };
 }
 
-function prepareDeck(ctx, cardsCount) {
-  const mapping = ctx.random.Shuffle([...Array(cardsCount).keys()]).slice(0, 57);
+function prepareDeck(ctx, mapping) {
   let shuffleAndMapPictures = (pictures) => {
     return ctx.random.Shuffle(pictures).map((number) => mapping[number]);
   };
@@ -41,6 +40,7 @@ function setupGame(ctx, setupData) {
     currentCard: { pictures: [], layout: 0, rotation: 0 },
     styles: Object.keys(styles),
     style: "color",
+    pictures: [],
     modes: modes,
     mode: modes[0],
     actionsCount: 0,
@@ -84,9 +84,10 @@ function SendText(G, ctx, text) {
 function StartGame(G, ctx, style, mode) {
   G.style = style;
   G.mode = mode;
+  G.pictures = ctx.random.Shuffle([...Array(styles[style]).keys()]).slice(0, 57);
   // Once this gets resolved https://github.com/nicolodavis/boardgame.io/issues/588
   // we could remove `client: false` from `StartGame` and perform deck setup in phase onBegin
-  G.secret.deck = prepareDeck(ctx, styles[style]);
+  G.secret.deck = prepareDeck(ctx, G.pictures);
   G.secret.used = [];
   ctx.events.setPhase("play");
 }
