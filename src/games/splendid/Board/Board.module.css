@@ -103,3 +103,10 @@
   text-align: center;
   line-height: 200%;
 }
+
+.bonusesModal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}

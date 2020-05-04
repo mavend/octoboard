@@ -1,7 +1,8 @@
 import { INVALID_MOVE, TurnOrder } from "boardgame.io/core";
 import { mapValues, sum } from "lodash";
 import cards from "./data/cards.json";
-import { canBuyCard, fromEntries } from "./utils";
+import bonuses from "./data/bonuses.json";
+import { canBuyCard, canTakeBonus, fromEntries } from "./utils";
 import { RESOURCES, RESOURCES_CONFIG } from "./config";
 import { stripPhrase } from "../../utils/strings";
 
@@ -18,6 +19,7 @@ function setupGame(ctx, setupData) {
     deck: mapValues(cards, ctx.random.Shuffle),
     table: mapValues(cards, () => Array(CARDS_PER_LEVEL).fill(null)),
     tokens: mapValues(RESOURCES_CONFIG, (res) => res.tokensCount[ctx.numPlayers]),
+    bonuses: ctx.random.Shuffle(bonuses).slice(0, ctx.numPlayers + 1),
   };
 
   for (let i = 0; i < ctx.numPlayers; i++) {
@@ -85,7 +87,7 @@ function TakeTokens(G, ctx, requestedTokens) {
     player.tokens[res] += count;
   }
 
-  ctx.events.endTurn();
+  checkBonusAndEndTurn(G, ctx);
 }
 
 function payForCard(player, card, publicTokens) {
@@ -122,7 +124,7 @@ function BuyCard(G, ctx, level, cardId) {
   G.points[ctx.currentPlayer] += card.points;
   G.table[level] = G.table[level].map((card) => (card.id === cardId ? null : card));
 
-  ctx.events.endTurn();
+  checkBonusAndEndTurn(G, ctx);
 }
 
 function BuyReserved(G, ctx, cardId) {
@@ -140,7 +142,7 @@ function BuyReserved(G, ctx, cardId) {
   G.points[ctx.currentPlayer] += card.points;
   player.reservedCards = player.reservedCards.filter((card) => card.id !== cardId);
 
-  ctx.events.endTurn();
+  checkBonusAndEndTurn(G, ctx);
 }
 
 function ReserveCard(G, ctx, level, cardId) {
@@ -158,7 +160,7 @@ function ReserveCard(G, ctx, level, cardId) {
   player.reservedCards.push(card);
   G.table[level] = G.table[level].map((card) => (card.id === cardId ? null : card));
 
-  ctx.events.endTurn();
+  checkBonusAndEndTurn(G, ctx);
 }
 
 function DiscardToken(G, ctx, resource) {
@@ -169,6 +171,28 @@ function DiscardToken(G, ctx, resource) {
 
   player.tokens[resource] -= 1;
   G.tokens[resource] += 1;
+}
+
+function TakeBonus(G, ctx, id) {
+  const player = G.players[ctx.currentPlayer];
+  const bonus = G.bonuses.find((bonus) => bonus.id === id);
+  if (!bonus || !canTakeBonus(player.cards, bonus)) {
+    return INVALID_MOVE;
+  }
+
+  G.points[ctx.currentPlayer] += bonus.points;
+  G.bonuses = G.bonuses.filter((bonus) => bonus.id !== id);
+  ctx.events.endStage();
+  ctx.events.endTurn();
+}
+
+function checkBonusAndEndTurn(G, ctx) {
+  const player = G.players[ctx.currentPlayer];
+  if (G.bonuses.some((bonus) => canTakeBonus(player.cards, bonus))) {
+    ctx.events.setStage("bonus");
+  } else {
+    ctx.events.endTurn();
+  }
 }
 
 function addCardsToTheTable(G) {
@@ -183,7 +207,7 @@ export const Splendid = {
   minPlayers: 2,
   maxPlayers: 4,
 
-  seed: process.env.NODE_ENV === "production" ? undefined : "tesdddt",
+  seed: process.env.NODE_ENV === "production" ? undefined : "test",
   setup: setupGame,
 
   phases: {
@@ -223,6 +247,15 @@ export const Splendid = {
           addCardsToTheTable(G);
         },
         order: TurnOrder.RESET,
+        events: {
+          endGame: false,
+          endTurn: false,
+        },
+        stages: {
+          bonus: {
+            moves: { TakeBonus },
+          },
+        },
       },
     },
   },

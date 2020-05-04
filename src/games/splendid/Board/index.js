@@ -5,19 +5,21 @@ import { sum } from "lodash";
 
 import { useBoardGame } from "contexts/BoardGameContext";
 import GameLayout from "components/layout/GameLayout";
-import { canBuyCard } from "../utils";
+import { canBuyCard, canTakeBonus } from "../utils";
 import WaitingBoard from "./WaitingBoard";
 import BonusCards from "./BonusCards";
 import TokensShop from "./TokensShop";
 import PlayerInfo from "./PlayerInfo";
 import CardsTable from "./CardsTable";
 import ReservedCards from "./ReservedCards";
+import BonusCardsModal from "./BonusCardsModal";
 
 import styles from "./Board.module.css";
 
 const Board = () => {
   const { G, ctx, moves, players, player, playerID } = useBoardGame();
   const [selectedCard, setSelectedCard] = useState(null);
+  const [availableBonuses, setAvailableBonuses] = useState(null);
   const [loading, setLoading] = useState(null);
 
   const hasGameStarted = ctx.phase !== "wait";
@@ -30,6 +32,11 @@ const Board = () => {
       toast.success("🎲 Your turn!", { autoClose: 2000 });
     }
   }, [isActivePlayer, hasGameStarted, setSelectedCard, setLoading]);
+
+  useEffect(() => {
+    const bonuses = G.bonuses.filter((bonus) => canTakeBonus(player.cards, bonus));
+    setAvailableBonuses(bonuses);
+  }, [player.cards, G.bonuses, setAvailableBonuses]);
 
   const selectCard = useCallback(
     (cardId) => {
@@ -113,6 +120,13 @@ const Board = () => {
     [player, moves]
   );
 
+  const takeBonus = useCallback(
+    (id) => {
+      moves.TakeBonus(id);
+    },
+    [moves]
+  );
+
   const extraPlayerContent = useCallback(
     ({ isYou, isCurrentPlayer, tokens, cards, reservedCards }) => (
       <PlayerInfo
@@ -131,7 +145,7 @@ const Board = () => {
         />
       </PlayerInfo>
     ),
-    [selectedCard, loading, buyReservedCard, selectCard, canBuy]
+    [selectedCard, loading, buyReservedCard, selectCard, canBuy, discardToken]
   );
 
   if (!hasGameStarted) {
@@ -150,7 +164,7 @@ const Board = () => {
       gameName={"Splendid"}
       header={
         <Segment className={styles.topBar}>
-          <BonusCards />
+          <BonusCards bonuses={G.bonuses || []} />
           <TokensShop
             tokens={G.tokens}
             active={isActivePlayer}
@@ -163,7 +177,6 @@ const Board = () => {
       sidebarSize={5}
       extraPlayerContent={extraPlayerContent}
     >
-      {}
       <Segment className={styles.mainBoard}>
         {G.table && (
           <CardsTable
@@ -178,6 +191,11 @@ const Board = () => {
           />
         )}
       </Segment>
+      <BonusCardsModal
+        open={player.stage === "bonus"}
+        bonuses={availableBonuses}
+        onTake={takeBonus}
+      />
     </GameLayout>
   );
 };

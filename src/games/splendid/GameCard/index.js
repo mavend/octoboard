@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Card, Image, Dimmer, Button, Icon } from "semantic-ui-react";
 import { compact } from "lodash";
 
+import { imgUrl } from "../utils";
 import { RESOURCES } from "../config";
 import ResourceToken from "../ResourceToken";
 import ResourceIcon from "../ResourceIcon";
@@ -10,10 +11,6 @@ import PointsBadge from "./PointsBadge";
 import BonusCard from "./BonusCard";
 
 import styles from "./GameCard.module.css";
-
-function imgUrl(name) {
-  return `/images/games/splendid/cards/${name}`;
-}
 
 const LEVEL_CLASS = {
   "1": styles.cardYellow,

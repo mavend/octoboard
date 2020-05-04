@@ -15,9 +15,18 @@ export function canBuyCard(tokens, cards, card) {
   });
 }
 
+export function canTakeBonus(cards, bonus) {
+  if (!cards || !bonus) return false;
+  return Object.keys(bonus.cost).every((res) => cards[res] >= bonus.cost[res]);
+}
+
 export function fromEntries(iterable) {
   return [...iterable].reduce((obj, [key, val]) => {
     obj[key] = val;
     return obj;
   }, {});
+}
+
+export function imgUrl(name) {
+  return `/images/games/splendid/cards/${name}`;
 }
