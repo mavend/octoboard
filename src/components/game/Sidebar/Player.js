@@ -22,6 +22,7 @@ const Player = ({
   player,
   player: { uid, isConnected, points, actions, isWinning, isYou, isCurrentPlayer, profile },
   handleActionClick,
+  maxPoints,
   extraContent,
 }) => {
   const { t } = useTranslation("lobby");
@@ -63,7 +64,9 @@ const Player = ({
             </Feed.Date>
             <Feed.Content>
               <Icon name="trophy" color={isWinning ? "yellow" : "grey"} />
-              {t("sidebar.player.points", { points: points })}
+              {t("sidebar.player.points", {
+                points: maxPoints ? `${points} / ${maxPoints}` : points,
+              })}
             </Feed.Content>
             <Feed.Extra text className={styles.extra}>
               <ActionsList actions={visibleActions} handleActionClick={handleActionClick} />

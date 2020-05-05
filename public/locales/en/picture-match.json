@@ -1,6 +1,14 @@
 {
   "game": {
-    "name": "Picture Match"
+    "name": "Picture Match",
+    "settings": {
+      "style": "Cards style",
+      "mode": "Game mode",
+      "modes": {
+        "regular": "Regular",
+        "infinite": "Infinite"
+      }
+    }
   },
   "header": {
     "wait": "Waiting for other players",

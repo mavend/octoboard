@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "./Card";
 import { number } from "@storybook/addon-knobs";
+import { action } from "@storybook/addon-actions";
 
 export default {
   component: Card,
@@ -25,8 +26,8 @@ const pictureKnobs = (id) => {
 export const Default = () => (
   <Card
     card={{ pictures: [1, 2, 3, 4, 5, 6, 7, 8], layout: number("Layout", 0) }}
-    type="foo"
-    selected={{ type: null, picture: null }}
+    style="color"
+    handleClick={action("handleClick")}
   />
 );
 
@@ -50,23 +51,11 @@ export const LayoutDesign = () => {
           layout: 0,
           rotation: number("Card Rotation", 0, { range: true, min: 0, max: 359, step: 1 }),
         }}
+        style="color"
         customLayout={customLayout}
-        type="foo"
-        selected={{ type: null, picture: null }}
+        handleClick={action("handleClick")}
       />
       <p>{JSON.stringify(customLayout)}</p>
     </div>
   );
 };
-
-export const WithSelectedPicture = () => (
-  <Card
-    card={{
-      pictures: [1, 2, 3, 4, 5, 6, 7, 8],
-      layout: 0,
-      rotation: number("Card Rotation", 0, { range: true, min: 0, max: 359, step: 1 }),
-    }}
-    type="foo"
-    selected={{ type: "foo", picture: 5 }}
-  />
-);

@@ -21,7 +21,7 @@ const defaultProps = {
 };
 
 const Sidebar = ({ handleActionClick, header, extraPlayerContent }) => {
-  const { players } = useBoardGame();
+  const { G, players } = useBoardGame();
 
   return (
     <>
@@ -33,6 +33,7 @@ const Sidebar = ({ handleActionClick, header, extraPlayerContent }) => {
             player={player}
             handleActionClick={handleActionClick}
             extraContent={extraPlayerContent}
+            maxPoints={G.maxPoints}
           />
         ))}
       </Segment.Group>

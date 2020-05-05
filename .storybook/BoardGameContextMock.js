@@ -25,12 +25,14 @@ const Kalambury = {
         ref
       ),
     points: [10, 3],
+    maxPoints: number("Max points", 15, ref),
     actions: [
       { action: "message", text: text("Message text", "Hello there, shall we begin?", ref) },
     ],
     privateRoom: boolean("Private", true, ref),
     players: { "0": { phrase: text("Phrase", "Baba z wozu", ref) }, "1": {} },
     canChangePhrase: boolean("Can change phrase?", true, ref),
+    currentCard: { pictures: [], layout: 0, rotation: 0 },
   },
   moves: {
     Guess: action("Guess"),

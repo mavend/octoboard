@@ -1,7 +1,7 @@
 import React from "react";
 import { string, func, bool, shape } from "prop-types";
 import { useTranslation } from "react-i18next";
-import { Icon, Label } from "semantic-ui-react";
+import { Icon, Label, Image } from "semantic-ui-react";
 
 const propTypes = {
   action: shape({
@@ -23,6 +23,7 @@ const Action = ({ action, handleActionClick }) => {
     forfeit: ActionForfeit,
     manage: ActionManage,
     draw: ActionDraw,
+    match: ActionMatch,
     timeout: ActionTimeout,
   }[action.action];
   return <ActionType action={action} onClick={() => handleActionClick(action)} t={t} />;
@@ -52,6 +53,14 @@ const ActionGuess = ({ action: { phrase, success }, onClick }) => (
     {success ? <Icon name="check circle" /> : <Icon name="times circle" color="red" />}
     {phrase}
   </Label>
+);
+
+const ActionMatch = ({ action: { picture, style, onClick } }) => (
+  <Image
+    src={`/images/games/picture-match/pictures/${style}/${picture}.png`}
+    size="tiny"
+    onClick={onClick}
+  />
 );
 
 const ActionChange = ({ action: { previous }, onClick, t }) => (

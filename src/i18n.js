@@ -13,6 +13,9 @@ i18n
     ns: ["translation", "credentials", "lobby", "kalambury", "picture-match"],
     defaultNS: "translation",
     debug: process.env.NODE_ENV === "development",
+    interpolation: {
+      escapeValue: false,
+    },
   });
 
 export default i18n;

@@ -1,6 +1,14 @@
 {
   "game": {
-    "name": "Picture Match"
+    "name": "Picture Match",
+    "settings": {
+      "style": "Styl kart",
+      "mode": "Rodzaj gry",
+      "modes": {
+        "regular": "Zwykły",
+        "infinite": "Bez końca"
+      }
+    }
   },
   "header": {
     "wait": "Oczekiwanie na innych graczy",
