@@ -8,3 +8,5 @@ export const RESOURCES_CONFIG = {
 };
 
 export const RESOURCES = Object.keys(RESOURCES_CONFIG);
+
+export const WINNING_POINTS = 15;

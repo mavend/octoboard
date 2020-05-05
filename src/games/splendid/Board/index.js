@@ -2,9 +2,11 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Segment } from "semantic-ui-react";
 import { toast } from "react-toastify";
 import { sum } from "lodash";
+import Confetti from "react-dom-confetti";
 
 import { useBoardGame } from "contexts/BoardGameContext";
 import GameLayout from "components/layout/GameLayout";
+import { CONFETTI_CONFIG } from "config/constants";
 import { canBuyCard, canTakeBonus } from "../utils";
 import WaitingBoard from "./WaitingBoard";
 import BonusCards from "./BonusCards";
@@ -21,9 +23,18 @@ const Board = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [availableBonuses, setAvailableBonuses] = useState(null);
   const [loading, setLoading] = useState(null);
+  const [confetti, setConfetti] = useState(false);
 
   const hasGameStarted = ctx.phase !== "wait";
-  const isActivePlayer = ctx.currentPlayer === playerID;
+  const isActivePlayer = ctx.currentPlayer === playerID && !ctx.gameover;
+
+  const lastRoundPlayer = G.lastPlayer && players.find((p) => p.id.toString() === G.lastPlayer);
+  const lastRoundPlayerName = lastRoundPlayer && lastRoundPlayer.profile.displayName;
+
+  const winnerID = ctx.gameover && ctx.gameover.winner.toString();
+  const winner = winnerID && players.find((p) => p.id.toString() === winnerID);
+  const winnerName = winner && winner.profile.displayName;
+  const isWinner = playerID.toString() === winnerID.toString();
 
   useEffect(() => {
     setSelectedCard(null);
@@ -32,6 +43,25 @@ const Board = () => {
       toast.success("🎲 Your turn!", { autoClose: 2000 });
     }
   }, [isActivePlayer, hasGameStarted, setSelectedCard, setLoading]);
+
+  useEffect(() => {
+    if (lastRoundPlayerName && !winnerName) {
+      toast.warn(`This is a last round. ${lastRoundPlayerName} scored >= 15 points.`);
+    }
+  }, [lastRoundPlayerName, winnerName]);
+
+  useEffect(() => {
+    if (winnerName) {
+      toast.success(isWinner ? "🏅You won! 🎉" : `🏅${winnerName} won the game!`, {
+        autoClose: false,
+        closeButton: false,
+        draggable: false,
+      });
+      if (isWinner) {
+        setConfetti(true);
+      }
+    }
+  }, [winnerName, isWinner, setConfetti]);
 
   useEffect(() => {
     const bonuses = G.bonuses.filter((bonus) => canTakeBonus(player.cards, bonus));
@@ -196,6 +226,7 @@ const Board = () => {
         bonuses={availableBonuses}
         onTake={takeBonus}
       />
+      <Confetti active={confetti} config={CONFETTI_CONFIG} className="confetti" />
     </GameLayout>
   );
 };

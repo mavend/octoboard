@@ -3,7 +3,7 @@ import { mapValues, sum } from "lodash";
 import cards from "./data/cards.json";
 import bonuses from "./data/bonuses.json";
 import { canBuyCard, canTakeBonus, fromEntries } from "./utils";
-import { RESOURCES, RESOURCES_CONFIG } from "./config";
+import { RESOURCES, RESOURCES_CONFIG, WINNING_POINTS } from "./config";
 import { stripPhrase } from "../../utils/strings";
 
 const REGULAR_RESOURCES = RESOURCES.filter((res) => res !== "gold");
@@ -27,6 +27,7 @@ function setupGame(ctx, setupData) {
       cards: fromEntries(REGULAR_RESOURCES.map((res) => [res, 0])),
       tokens: fromEntries(RESOURCES.map((res) => [res, 0])),
       reservedCards: [],
+      bonuses: [],
     };
   }
 
@@ -181,6 +182,7 @@ function TakeBonus(G, ctx, id) {
   }
 
   G.points[ctx.currentPlayer] += bonus.points;
+  player.bonuses.push(bonus);
   G.bonuses = G.bonuses.filter((bonus) => bonus.id !== id);
   ctx.events.endStage();
   ctx.events.endTurn();
@@ -245,6 +247,15 @@ export const Splendid = {
       turn: {
         onBegin: (G, ctx) => {
           addCardsToTheTable(G);
+          if (G.lastPlayer === ctx.currentPlayer) {
+            G.calculateWinner = true;
+          }
+        },
+        onEnd: (G, ctx) => {
+          const points = G.points[ctx.currentPlayer];
+          if (points >= WINNING_POINTS && !G.lastPlayer) {
+            G.lastPlayer = ctx.currentPlayer;
+          }
         },
         order: TurnOrder.RESET,
         events: {
@@ -259,11 +270,17 @@ export const Splendid = {
       },
     },
   },
-
   endIf: (G, ctx) => {
-    let winner = G.points.findIndex((points) => points >= 15);
-    if (winner >= 0) {
-      return { winner: winner };
+    if (G.calculateWinner) {
+      const cardsCount = (playerID) => sum(Object.values(G.players[playerID].cards));
+      const bonusesCount = (playerID) => G.player[playerID].bonuses.length;
+      const winner = Object.keys(G.players).sort(
+        (a, b) =>
+          G.points[b] - G.points[a] ||
+          cardsCount(a) - cardsCount(b) ||
+          bonusesCount(b) - bonusesCount(a)
+      )[0];
+      return { winner };
     }
   },
 };
