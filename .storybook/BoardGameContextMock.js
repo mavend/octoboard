@@ -23,7 +23,7 @@ const BoardGameContextMock = ({ children }) => {
             },
             ref
           ),
-        points: [10, 3],
+        points: [10, 3, 7],
         maxPoints: number("Max points", 15, ref),
         actions: [
           { action: "message", text: text("Message text", "Hello there, shall we begin?", ref) },
@@ -35,6 +35,8 @@ const BoardGameContextMock = ({ children }) => {
             card: { pictures: [], layout: 0, rotation: 0 },
           },
           "1": {},
+          "2": {},
+          "3": {},
         },
         canChangePhrase: boolean("Can change phrase?", true, ref),
         currentCard: { pictures: [], layout: 0, rotation: 0 },
@@ -42,6 +44,8 @@ const BoardGameContextMock = ({ children }) => {
       ctx={{
         activePlayers: [
           select("stage", ["draw", "guess", "wait", "manage", "match"], "draw", ref),
+          "guess",
+          "guess",
           "guess",
         ],
         phase: select("phase", ["wait", "play"], "play", ref),
@@ -60,6 +64,8 @@ const BoardGameContextMock = ({ children }) => {
       gameMetadata={[
         { id: 0, name: "user-0", isConnected: true },
         { id: 1, name: "user-1", isConnected: false },
+        { id: 2, name: "user-2", isConnected: true },
+        { id: 3 },
       ]}
     >
       {children}
