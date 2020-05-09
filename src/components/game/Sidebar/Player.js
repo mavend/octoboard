@@ -25,7 +25,9 @@ const Player = ({
       <Segment disabled={true}>
         <Feed>
           <Feed.Event>
-            <Feed.Label image={"/images/avatar-empty.jpg"} />
+            <Feed.Label>
+              <Avatar empty />
+            </Feed.Label>
             <Feed.Content>
               <Feed.Date>{t("sidebar.player.waiting")}</Feed.Date>
             </Feed.Content>
