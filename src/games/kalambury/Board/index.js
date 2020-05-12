@@ -12,7 +12,7 @@ const Board = () => {
   const {
     G,
     ctx: { phase },
-    player: { isDrawing, stage },
+    player: { isDrawing, stage, phrase },
     moves: { StartGame },
   } = useBoardGame();
 

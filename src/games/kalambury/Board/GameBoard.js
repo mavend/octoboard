@@ -3,7 +3,7 @@ import { Header } from "semantic-ui-react";
 import Confetti from "react-dom-confetti";
 
 import { timerFormat, currentTime } from "../utils/time";
-import { CONFETTI_CONFIG } from "config/constants";
+import { WIDE_CONFETTI } from "config/confetti";
 import { useBoardGame } from "contexts/BoardGameContext";
 import filterActions from "utils/user/filterActions";
 
@@ -82,7 +82,7 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
       <Header as="h3" attached="bottom" textAlign="center">
         {timerFormat(remainingSeconds)}
       </Header>
-      <Confetti active={lastSuccess} config={CONFETTI_CONFIG} className="confetti" />
+      <Confetti active={lastSuccess} config={WIDE_CONFETTI} className="confetti" />
     </>
   );
 };

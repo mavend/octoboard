@@ -6,7 +6,7 @@ import Confetti from "react-dom-confetti";
 
 import { useBoardGame } from "contexts/BoardGameContext";
 import GameLayout from "components/layout/GameLayout";
-import { CONFETTI_CONFIG } from "config/constants";
+import { WIDE_CONFETTI } from "config/confetti";
 import { canBuyCard, canTakeBonus } from "../utils";
 import WaitingBoard from "./WaitingBoard";
 import BonusCards from "./BonusCards";
@@ -226,7 +226,7 @@ const Board = () => {
         bonuses={availableBonuses}
         onTake={takeBonus}
       />
-      <Confetti active={confetti} config={CONFETTI_CONFIG} className="confetti" />
+      <Confetti active={confetti} config={WIDE_CONFETTI} className="confetti" />
     </GameLayout>
   );
 };
