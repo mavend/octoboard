@@ -5,4 +5,5 @@ import { ReactComponent as Eyes04 } from "./04.svg";
 import { ReactComponent as Eyes05 } from "./05.svg";
 import { ReactComponent as Eyes06 } from "./06.svg";
 
-export default [Eyes01, Eyes02, Eyes03, Eyes04, Eyes05, Eyes06];
+const eyes = [Eyes01, Eyes02, Eyes03, Eyes04, Eyes05, Eyes06];
+export { eyes, Eyes01 as DefaultEyes };

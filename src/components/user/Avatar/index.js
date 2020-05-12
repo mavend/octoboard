@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import bodies from "./parts/bodies";
-import eyes from "./parts/eyes";
-import features from "./parts/features";
-import glasses from "./parts/glasses";
-import borders from "./parts/borders";
+import { bodies, DefaultBody } from "./parts/bodies";
+import { eyes, DefaultEyes } from "./parts/eyes";
+import { features, DefaultFeature } from "./parts/features";
+import { glasses, DefaultGlasses } from "./parts/glasses";
+import { borders, DefaultBorder } from "./parts/borders";
 
 const propTypes = {
   uid: PropTypes.string.isRequired,
@@ -50,8 +50,10 @@ const hashFn = (string) =>
     .map((x) => x.charCodeAt(0))
     .reduce((a, b) => a + b, 1);
 
-const Avatar = ({ uid, small, ...props }) => {
-  const find = (name, attributes) => {
+const Avatar = ({ uid, empty, small, ...props }) => {
+  const find = (name, attributes, emptyAttribute) => {
+    if (empty) return emptyAttribute || attributes[0];
+
     if (props[name] !== null && props[name] !== undefined) {
       return attributes[Math.abs(props[name]) % attributes.length];
     }
@@ -60,25 +62,26 @@ const Avatar = ({ uid, small, ...props }) => {
     return attributes[Math.abs(hash) % attributes.length];
   };
 
-  const color = find("color", colors);
-  const bodyStyle = find("bodyStyle", bodyStyles);
-  const Body = find("body", bodies);
-  const Eyes = find("eyes", eyes);
-  const Glasses = find("glasses", glasses);
-  const Features = find("features", features);
-  const Border = find("border", borders);
+  const color = find("color", colors, "#d3beca");
+  const bodyStyle = find("bodyStyle", bodyStyles, { fillOpacity: 0.5, strokeWidth: 10 });
+  const Body = find("body", bodies, DefaultBody);
+  const Eyes = find("eyes", eyes, DefaultEyes);
+  const Glasses = find("glasses", glasses, DefaultGlasses);
+  const Features = find("features", features, DefaultFeature);
+  const Border = find("border", borders, DefaultBorder);
 
   const styles = {
     display: "inline-block",
     verticalAlign: "middle",
-    width: small ? "35px" : undefined,
-    height: small ? "35xp" : undefined,
+    width: small ? "35px" : "100%",
+    height: small ? "35xp" : "100%",
     ...props.style,
   };
 
   return (
     <div style={styles}>
       <svg
+        className="octopus avatar"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 200 200"
         style={{

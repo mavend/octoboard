@@ -30,7 +30,13 @@ const Kalambury = {
       { action: "message", text: text("Message text", "Hello there, shall we begin?", ref) },
     ],
     privateRoom: boolean("Private", true, ref),
-    players: { "0": { phrase: text("Phrase", "Baba z wozu", ref) }, "1": {} },
+    players: {
+      "0": {
+        phrase: text("Phrase", "Baba z wozu", ref),
+        card: { pictures: [], layout: 0, rotation: 0 },
+      },
+      "1": {},
+    },
     canChangePhrase: boolean("Can change phrase?", true, ref),
     currentCard: { pictures: [], layout: 0, rotation: 0 },
   },
@@ -75,6 +81,8 @@ const BoardGameContextMock = ({ children }) => {
         activePlayers: [
           select("stage", ["draw", "guess", "wait", "manage", "match"], "draw", ref),
           "guess",
+          "guess",
+          "guess",
         ],
         phase: select("phase", ["wait", "play"], "play", ref),
         numPlayers: number("Player count", 4, { range: true, min: 2, max: 10, step: 1 }, ref),
@@ -83,8 +91,10 @@ const BoardGameContextMock = ({ children }) => {
       gameID={"qwe123"}
       rawClient={{ transport: { socket: null } }}
       gameMetadata={[
-        { id: "0", name: "user-0", isConnected: true },
-        { id: "1", name: "user-1", isConnected: true },
+        { id: 0, name: "user-0", isConnected: true },
+        { id: 1, name: "user-1", isConnected: false },
+        { id: 2, name: "user-2", isConnected: true },
+        { id: 3 },
       ]}
     >
       {children}

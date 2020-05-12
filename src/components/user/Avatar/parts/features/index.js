@@ -5,4 +5,5 @@ import { ReactComponent as Feature03 } from "./03.svg";
 import { ReactComponent as Feature04 } from "./04.svg";
 import { ReactComponent as Feature05 } from "./05.svg";
 
-export default [Empty, Feature01, Feature02, Feature03, Feature04, Feature05];
+const features = [Empty, Feature01, Feature02, Feature03, Feature04, Feature05];
+export { features, Empty as DefaultFeature };

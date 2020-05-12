@@ -1,5 +1,5 @@
 import React from "react";
-import { text, number } from "@storybook/addon-knobs";
+import { text, number, boolean } from "@storybook/addon-knobs";
 import { Card } from "semantic-ui-react";
 import Avatar from "./index";
 
@@ -9,7 +9,9 @@ export default {
   excludeStories: /.*Data$/,
 };
 
-export const Default = () => <Avatar small uid={text("UID", "some-user-uid")} />;
+export const Default = () => (
+  <Avatar small uid={text("UID", "some-user-uid")} empty={boolean("Empty?", false)} />
+);
 
 export const NicePreview = () => {
   const uid = text("UID", "some-user-uid");
@@ -28,6 +30,7 @@ export const WithOverrides = () => {
   return (
     <Avatar
       uid={text("UID", "some-user-uid")}
+      empty={boolean("Empty?", false)}
       color={number("Custom color", 0)}
       bodyStyle={number("Custom body Style", 0)}
       body={number("Custom body", 0)}
