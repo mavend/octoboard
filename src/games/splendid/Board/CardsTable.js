@@ -1,6 +1,7 @@
 import React from "react";
 import { Card } from "semantic-ui-react";
 import GameCard, { PlaceholderCard } from "../GameCard";
+import styles from "./Board.module.css";
 
 const LEVELS_ORDER = ["1", "2", "3"];
 
@@ -16,7 +17,7 @@ const CardsTable = ({
   canReserve,
 }) =>
   LEVELS_ORDER.map((level) => (
-    <Card.Group key={level} itemsPerRow={4}>
+    <Card.Group key={level} itemsPerRow={4} className={styles.cardsRow}>
       {table[level].map((card, idx) =>
         card ? (
           <GameCard

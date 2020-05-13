@@ -19,12 +19,14 @@ const propTypes = {
   extraPlayerContent: PropTypes.func,
   sidebarHeader: PropTypes.node,
   sidebarSize: PropTypes.number,
+  showCurrentPlayer: PropTypes.bool,
 };
 
 const defaultProps = {
   privateRoom: false,
   header: null,
   sidebarSize: 4,
+  showCurrentPlayer: true,
 };
 
 const GameLayout = ({
@@ -36,6 +38,7 @@ const GameLayout = ({
   extraPlayerContent,
   children,
   sidebarSize,
+  showCurrentPlayer,
 }) => {
   return (
     <>
@@ -61,6 +64,7 @@ const GameLayout = ({
                 header={sidebarHeader}
                 handleActionClick={handleActionClick}
                 extraPlayerContent={extraPlayerContent}
+                showCurrentPlayer={showCurrentPlayer}
               />
             </Grid.Row>
           </Grid.Column>
@@ -75,6 +79,7 @@ const GameLayout = ({
                 header={sidebarHeader}
                 handleActionClick={handleActionClick}
                 extraPlayerContent={extraPlayerContent}
+                showCurrentPlayer={showCurrentPlayer}
               />
             </Grid.Column>
           </Grid.Row>

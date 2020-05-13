@@ -1,6 +1,6 @@
 import React from "react";
-import { func } from "prop-types";
-import { Icon, Segment, Feed, List, Label } from "semantic-ui-react";
+import PropTypes from "prop-types";
+import { Icon, Segment, Feed, List } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 import { PlayerType } from "config/propTypes";
 import Action from "./Action";
@@ -10,8 +10,9 @@ import styles from "./Player.module.css";
 
 const propTypes = {
   player: PlayerType,
-  handleActionClick: func,
-  extraContent: func,
+  handleActionClick: PropTypes.func,
+  extraContent: PropTypes.func,
+  showCurrentPlayer: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -24,6 +25,7 @@ const Player = ({
   handleActionClick,
   maxPoints,
   extraContent,
+  showCurrentPlayer,
 }) => {
   const { t } = useTranslation("lobby");
 
@@ -57,7 +59,7 @@ const Player = ({
           <Feed.Content>
             <Feed.Date>
               {displayName} {isYou && <span>({t("sidebar.player.you")})</span>}{" "}
-              {isCurrentPlayer && <Label content={t("sidebar.player.turn")} color="green" />}
+              {showCurrentPlayer && isCurrentPlayer && <Icon name="check circle" color="green" />}
               <Icon
                 name="broken chain"
                 className={`${styles.smoothDisabled} ${isConnected ? "hidden" : ""}`}

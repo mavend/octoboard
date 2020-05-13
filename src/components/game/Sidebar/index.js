@@ -1,5 +1,5 @@
 import React from "react";
-import { func, node } from "prop-types";
+import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Header, Segment } from "semantic-ui-react";
 import Player from "./Player";
@@ -8,9 +8,10 @@ import LeaveButton from "components/game/LeaveButton";
 import RoomTypeBadge from "components/game/RoomTypeBadge";
 
 const propTypes = {
-  handleActionClick: func,
-  extraPlayerContent: func,
-  header: node,
+  handleActionClick: PropTypes.func,
+  extraPlayerContent: PropTypes.func,
+  header: PropTypes.node,
+  showCurrentPlayer: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -18,9 +19,10 @@ const defaultProps = {
   extraPlayerContent: null,
   header: null,
   noHeader: false,
+  showCurrentPlayer: true,
 };
 
-const Sidebar = ({ handleActionClick, header, extraPlayerContent }) => {
+const Sidebar = ({ handleActionClick, header, extraPlayerContent, showCurrentPlayer }) => {
   const { G, players } = useBoardGame();
 
   return (
@@ -34,6 +36,7 @@ const Sidebar = ({ handleActionClick, header, extraPlayerContent }) => {
             handleActionClick={handleActionClick}
             extraContent={extraPlayerContent}
             maxPoints={G.maxPoints}
+            showCurrentPlayer={showCurrentPlayer}
           />
         ))}
       </Segment.Group>

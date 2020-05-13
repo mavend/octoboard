@@ -4,6 +4,10 @@
   flex-wrap: wrap;
 }
 
+.cardsRow {
+  flex: 1 0 auto;
+}
+
 .extraTitle {
   color: #999;
 }

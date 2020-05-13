@@ -37,7 +37,6 @@ const BoardGameContextMock = ({ children }) => {
           "1": {},
         },
         canChangePhrase: boolean("Can change phrase?", true, ref),
-        currentCard: { pictures: [], layout: 0, rotation: 0 },
       }}
       moves={{
         Guess: action("Guess"),
@@ -54,7 +53,6 @@ const BoardGameContextMock = ({ children }) => {
         ],
         currentPlayer: "0",
         phase: select("phase", ["wait", "play"], "play", ref),
-        numPlayers: number("Player count", 4, { range: true, min: 2, max: 10, step: 1 }, ref),
       }}
       playerID={"0"}
       gameID={"qwe123"}

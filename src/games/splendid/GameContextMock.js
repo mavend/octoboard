@@ -38,7 +38,6 @@ const BoardGameContextMock = ({ children }) => {
         activePlayers: [],
         currentPlayer: "0",
         phase: select("phase", ["wait", "play"], "play", ref),
-        numPlayers: number("Player count", 4, { range: true, min: 2, max: 4, step: 1 }, ref),
       }}
       playerID={"0"}
       gameID={"qwe123"}
