@@ -2,12 +2,14 @@ import React from "react";
 import { action } from "@storybook/addon-actions";
 import { boolean, text } from "@storybook/addon-knobs";
 
+import { kalamburyDecorator } from "../GameContextMock";
 import GameBoard from "./GameBoard";
 
 export default {
   component: GameBoard,
   title: "Kalambury/GameBoard",
   excludeStories: /.*Data$/,
+  decorators: [kalamburyDecorator],
 };
 
 export const Default = () => (

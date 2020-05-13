@@ -5,7 +5,6 @@ import { withKnobs } from "@storybook/addon-knobs";
 import StoryRouter from "storybook-react-router";
 import { HelmetProvider } from "react-helmet-async";
 import UserContextMock from "./UserContextMock";
-import BoardGameContextMock from "./BoardGameContextMock";
 import "../src/i18n";
 
 import "semantic-ui-css/semantic.min.css";
@@ -15,8 +14,8 @@ addDecorator(withKnobs);
 addDecorator(StoryRouter());
 addDecorator((storyFn) => <Suspense fallback="Loading...">{storyFn()}</Suspense>);
 addDecorator((storyFn) => <HelmetProvider>{storyFn()}</HelmetProvider>);
-addDecorator((storyFn) => <BoardGameContextMock>{storyFn()}</BoardGameContextMock>);
 addDecorator((storyFn) => <UserContextMock>{storyFn()}</UserContextMock>);
+addDecorator((storyFn) => <Suspense fallback="Loading">{storyFn()}</Suspense>);
 
 const customViewports = {
   lowResLaptop: {

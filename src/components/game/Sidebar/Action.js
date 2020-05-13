@@ -11,10 +11,10 @@ const propTypes = {
     previous: string,
     success: bool,
   }),
-  handleGuessClick: func,
+  handleActionClick: func,
 };
 
-const Action = ({ action, handleGuessClick }) => {
+const Action = ({ action, handleActionClick }) => {
   const { t } = useTranslation("kalambury");
   const ActionType = {
     message: ActionMessage,
@@ -26,63 +26,73 @@ const Action = ({ action, handleGuessClick }) => {
     match: ActionMatch,
     timeout: ActionTimeout,
   }[action.action];
-  return <ActionType action={action} handleGuessClick={handleGuessClick} t={t} />;
+  return <ActionType action={action} onClick={() => handleActionClick(action)} t={t} />;
 };
 
-const ActionMessage = ({ action: { text } }) => (
-  <Label basic pointing="left" color="blue" style={{ maxWidth: "100%", marginLeft: 0 }}>
+const ActionMessage = ({ action: { text }, onClick }) => (
+  <Label
+    basic
+    pointing="left"
+    color="blue"
+    style={{ maxWidth: "100%", marginLeft: 0 }}
+    onClick={onClick}
+  >
     <Icon name="chat" color="blue" />
     {text}
   </Label>
 );
 
-const ActionGuess = ({ action: { phrase, success }, handleGuessClick }) => (
+const ActionGuess = ({ action: { phrase, success }, onClick }) => (
   <Label
     basic={!success}
     color={success ? "green" : "red"}
     pointing="left"
-    style={{ maxWidth: "100%", marginLeft: 0, cursor: handleGuessClick ? "pointer" : "auto" }}
-    onClick={handleGuessClick}
+    style={{ maxWidth: "100%", marginLeft: 0, cursor: onClick ? "pointer" : "auto" }}
+    onClick={onClick}
   >
     {success ? <Icon name="check circle" /> : <Icon name="times circle" color="red" />}
     {phrase}
   </Label>
 );
 
-const ActionMatch = ({ action: { picture, style } }) => (
-  <Image src={`/images/games/picture-match/pictures/${style}/${picture}.png`} size="tiny" />
+const ActionMatch = ({ action: { picture, style, onClick } }) => (
+  <Image
+    src={`/images/games/picture-match/pictures/${style}/${picture}.png`}
+    size="tiny"
+    onClick={onClick}
+  />
 );
 
-const ActionChange = ({ action: { previous }, t }) => (
-  <Label color="yellow" style={{ maxWidth: "100%" }}>
+const ActionChange = ({ action: { previous }, onClick, t }) => (
+  <Label color="yellow" style={{ maxWidth: "100%" }} onClick={onClick}>
     <Icon name="exchange" />
     {t("sidebar.action.change", { phrase: previous })}
   </Label>
 );
 
-const ActionForfeit = ({ action: { previous }, t }) => (
-  <Label color="red" style={{ maxWidth: "100%" }}>
+const ActionForfeit = ({ action: { previous }, onClick, t }) => (
+  <Label color="red" style={{ maxWidth: "100%" }} onClick={onClick}>
     <Icon name="flag" />
     {t("sidebar.action.forfeit", { phrase: previous })}
   </Label>
 );
 
-const ActionManage = ({ t }) => (
-  <Label style={{ maxWidth: "100%" }}>
+const ActionManage = ({ onClick, t }) => (
+  <Label style={{ maxWidth: "100%" }} onClick={onClick}>
     <Icon name="chess king" color="yellow" />
     {t("sidebar.action.manage")}
   </Label>
 );
 
-const ActionDraw = ({ t }) => (
-  <Label style={{ maxWidth: "100%" }}>
+const ActionDraw = ({ onClick, t }) => (
+  <Label style={{ maxWidth: "100%" }} onClick={onClick}>
     <Icon name="pencil" />
     {t("sidebar.action.draw")}
   </Label>
 );
 
-const ActionTimeout = ({ action: { previous }, t }) => (
-  <Label color="red" style={{ maxWidth: "100%" }}>
+const ActionTimeout = ({ onClick, action: { previous }, t }) => (
+  <Label color="red" style={{ maxWidth: "100%" }} onClick={onClick}>
     <Icon name="clock outline" />
     {t("sidebar.action.timeout", { phrase: previous })}
   </Label>

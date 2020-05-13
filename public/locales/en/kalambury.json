@@ -52,13 +52,6 @@
     }
   },
   "sidebar": {
-    "player": {
-      "waiting": "Waiting for player...",
-      "current": "You",
-      "disconnected": "Disconnected",
-      "points": "{{points}} Point",
-      "points_plural": "{{points}} Points"
-    },
     "action": {
       "change": "Changed phrase. Old one was {{phrase}}",
       "forfeit": "Gave up. The phrase was {{phrase}}",

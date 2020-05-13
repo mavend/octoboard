@@ -1,0 +1,21 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 35px;
+  height: 50px;
+  padding-top: 5px;
+  border-radius: 5px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.raised {
+  box-shadow: 0 1px 2px rgba(36, 36, 36, 0.15);
+}
+
+.disabled {
+  opacity: 0.15;
+}

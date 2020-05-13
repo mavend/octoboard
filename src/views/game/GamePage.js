@@ -114,7 +114,7 @@ const GamePage = () => {
   );
 
   return (
-    <Layout>
+    <Layout hideUserMenu>
       <Helmet>
         <title>
           {gameName} [{gameID}] | octoboard

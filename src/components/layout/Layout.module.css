@@ -1,0 +1,36 @@
+.mainMenu {
+  height: 50px;
+  padding: 10px 0;
+  margin-bottom: 30px;
+}
+
+.mainMenu > :global(.container) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+}
+
+.mainMenu .logo {
+  margin-right: 15px;
+  margin-bottom: -15px;
+}
+
+.mainMenu .gameName {
+  color: #999;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 0 15px;
+  border-left: 1px solid #aaa;
+  line-height: 30px;
+  text-transform: lowercase;
+}
+
+.mainMenu .userMenu {
+  margin-top: 0 !important;
+  flex: 1;
+}
+
+.toast {
+  border-radius: 10px;
+}

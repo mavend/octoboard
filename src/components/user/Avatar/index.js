@@ -84,7 +84,13 @@ const Avatar = ({ uid, empty, small, ...props }) => {
         className="octopus avatar"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 200 200"
-        style={{ strokeLinecap: "round", stroke: "#000", strokeWidth: 0, fill: "#000" }}
+        style={{
+          strokeLinecap: "round",
+          stroke: "#000",
+          strokeWidth: 0,
+          fill: "#000",
+          width: "100%",
+        }}
       >
         <g style={{ fill: color, stroke: color, ...bodyStyle }}>
           <Body />}

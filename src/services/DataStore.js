@@ -2,8 +2,6 @@ import FirebaseClient from "./Firebase";
 
 const DB = FirebaseClient.firestore();
 
-console.log(DB);
-
 const DataStore = {
   // Public users' profiles
   profiles: DB.collection("users").doc("public_profiles"),

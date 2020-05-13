@@ -5,6 +5,7 @@ import { Item, Button, Pagination, Label, Icon, Responsive } from "semantic-ui-r
 import { RoomType, GameType } from "config/propTypes";
 import { paginate } from "utils/paginate";
 import { useUser, useProfiles } from "contexts/UserContext";
+import RoomTypeBadge from "components/game/RoomTypeBadge";
 
 const roomsListPropTypes = {
   rooms: arrayOf(RoomType).isRequired,
@@ -123,17 +124,11 @@ const RoomsListItem = React.memo(
             {t("list.game.your_game")}
           </Label>
         )}
-        {setupData && setupData.private ? (
-          <Label as="span" style={labelsStyle} color="grey">
-            <Icon name="lock" />
-            {detailed && <Label.Detail>{t("game.private")}</Label.Detail>}
-          </Label>
-        ) : (
-          <Label as="span" style={labelsStyle}>
-            <Icon name="open lock" />
-            {detailed && <Label.Detail>{t("game.public")}</Label.Detail>}
-          </Label>
-        )}
+        <RoomTypeBadge
+          privateRoom={setupData && setupData.private}
+          detailed={detailed}
+          style={labelsStyle}
+        />
       </>
     );
 
@@ -210,7 +205,7 @@ const RoomsPlayerListItem = ({ player: { name }, detailed }) => {
       color={uid === name ? "orange" : null}
     >
       <Icon name="user" color={uid === name ? null : "grey"} />
-      {detailed && profile.displayName}
+      {detailed && profile && profile.displayName}
     </Button>
   );
 };

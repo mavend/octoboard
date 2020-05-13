@@ -8,25 +8,24 @@ export const BoardGameContext = createContext({});
 
 export const BoardGameProvider = ({ children, ...props }) => {
   const {
-    G: { points, actions, players: playersSecrets },
-    ctx: { activePlayers },
+    G: { points, actions, players: playersData },
+    ctx: { activePlayers, currentPlayer },
     gameMetadata,
     playerID,
   } = props;
   const [players, setPlayers] = useState([]);
   const [player, setPlayer] = useState({
-    secrets: { phrase: "" },
-    isCurrentPlayer: true,
+    data: {},
+    isYou: true,
     stage: "wait",
   });
   const profiles = useProfiles();
-  const playerSecret = playersSecrets[playerID];
 
   // Set players list
   useEffect(() => {
     const maxPoints = Math.max(...points);
     const newPlayers = gameMetadata.map(({ id, name: uid, isConnected }) => {
-      const stage = activePlayers[id];
+      const stage = activePlayers && activePlayers[id];
       const profile = profiles.get(uid);
       return {
         id,
@@ -38,22 +37,32 @@ export const BoardGameProvider = ({ children, ...props }) => {
         actions: filterActions(actions, id),
         isDrawing: stage === "draw",
         canManageGame: stage === "manage",
-        isCurrentPlayer: id.toString() === playerID.toString(),
+        isYou: id.toString() === playerID.toString(),
+        isCurrentPlayer: id.toString() === currentPlayer.toString(),
         isWinning: points[id] === maxPoints,
-        secrets: {},
+        ...(playersData[id] || {}),
       };
     });
     setPlayers((players) => (isEqual(players, newPlayers) ? players : newPlayers));
-  }, [gameMetadata, points, activePlayers, actions, playerID, setPlayers, profiles]);
+  }, [
+    gameMetadata,
+    points,
+    activePlayers,
+    actions,
+    playerID,
+    setPlayers,
+    profiles,
+    playersData,
+    currentPlayer,
+  ]);
 
-  // Set current player
+  // Set this player
   useEffect(() => {
-    const currentPlayer = find(players, "isCurrentPlayer");
-    if (currentPlayer) {
-      currentPlayer.secrets = playerSecret;
-      setPlayer((player) => (isEqual(player, currentPlayer) ? player : currentPlayer));
+    const thisPlayer = find(players, "isYou");
+    if (thisPlayer) {
+      setPlayer((player) => (isEqual(player, thisPlayer) ? player : thisPlayer));
     }
-  }, [players, setPlayer, playerSecret]);
+  }, [players, setPlayer]);
 
   return (
     <BoardGameContext.Provider

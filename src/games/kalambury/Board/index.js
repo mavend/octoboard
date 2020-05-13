@@ -12,7 +12,7 @@ const Board = () => {
   const {
     G,
     ctx: { phase },
-    player: { isDrawing, stage, secrets },
+    player: { isDrawing, stage, phrase },
     moves: { StartGame },
   } = useBoardGame();
 
@@ -24,10 +24,10 @@ const Board = () => {
 
   const hasGameStarted = phase === "play";
 
-  const handleGuessClick = useCallback(
-    (e) => {
-      if (!isDrawing) {
-        setGuess(e.target.textContent);
+  const handleActionClick = useCallback(
+    ({ action, phrase }) => {
+      if (!isDrawing && action === "guess") {
+        setGuess(phrase);
         guessInputRef.current.focus();
       }
     },
@@ -46,12 +46,10 @@ const Board = () => {
   );
 
   return (
-    <GameLayout gameName={t("game.name")} handleGuessClick={handleGuessClick}>
+    <GameLayout gameName={t("game.name")} handleActionClick={handleActionClick}>
       <Header as="h2" textAlign="center">
         {hasGameStarted ? t(`header.${phase}.${stage}`) : t(`header.${phase}`)}
-        <Header.Subheader>
-          {isDrawing ? secrets.phrase : t(`subheader.${phase}.${stage}`)}
-        </Header.Subheader>
+        <Header.Subheader>{isDrawing ? phrase : t(`subheader.${phase}.${stage}`)}</Header.Subheader>
       </Header>
       {hasGameStarted ? (
         <GameBoard

@@ -1,0 +1,116 @@
+.mainBoard {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.cardsRow {
+  flex: 1 0 auto;
+}
+
+.extraTitle {
+  color: #999;
+}
+
+.tokens {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.bookmark {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+.reservedCards {
+  display: flex;
+  max-width: 500px;
+}
+
+.reservedCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.topBar {
+  margin-top: 20px !important;
+  display: flex;
+  justify-content: space-between;
+}
+
+.topBar .ribbon {
+  position: absolute !important;
+  left: -14px !important;
+  top: -18px;
+  z-index: 10;
+}
+
+.tokensShop {
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  padding-left: 20px;
+  border-left: 1px solid rgba(36, 36, 36, 0.15);
+}
+
+.tokensShopHeader {
+  text-align: center;
+  color: #737373 !important;
+  font-size: 14px !important;
+  margin-bottom: 6px !important;
+}
+
+.tokensRow {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 3px;
+}
+
+.tokensCounter {
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin: 2px;
+}
+
+.tokensCounter :global(.label) {
+  cursor: pointer;
+}
+
+.takeButton {
+  text-align: center;
+}
+
+.waitBoard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px !important;
+}
+
+.waitImage {
+  width: 400px;
+  margin: 0 auto;
+}
+
+.waitInfo {
+  font-size: 16px;
+  color: #666;
+  margin-top: 20px;
+  text-align: center;
+  line-height: 200%;
+}
+
+.bonusesModal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}

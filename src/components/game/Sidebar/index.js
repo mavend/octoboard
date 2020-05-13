@@ -1,44 +1,42 @@
 import React from "react";
-import { func } from "prop-types";
+import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { Header, Segment, Icon, Label } from "semantic-ui-react";
+import { Header, Segment } from "semantic-ui-react";
 import Player from "./Player";
 import { useBoardGame } from "contexts/BoardGameContext";
 import LeaveButton from "components/game/LeaveButton";
+import RoomTypeBadge from "components/game/RoomTypeBadge";
 
 const propTypes = {
-  handleGuessClick: func,
+  handleActionClick: PropTypes.func,
+  extraPlayerContent: PropTypes.func,
+  header: PropTypes.node,
+  showCurrentPlayer: PropTypes.bool,
 };
 
-const Sidebar = ({ handleGuessClick }) => {
-  const { t } = useTranslation("lobby");
+const defaultProps = {
+  handleActionClick: () => {},
+  extraPlayerContent: null,
+  header: null,
+  noHeader: false,
+  showCurrentPlayer: true,
+};
+
+const Sidebar = ({ handleActionClick, header, extraPlayerContent, showCurrentPlayer }) => {
   const { G, players } = useBoardGame();
 
   return (
     <>
-      <Header as="h2" textAlign="center">
-        {t("game.players")}
-        <Header.Subheader>
-          {G.privateRoom ? (
-            <Label as="span" size="small" color="grey">
-              <Icon name="lock" />
-              <Label.Detail>{t("game.private")}</Label.Detail>
-            </Label>
-          ) : (
-            <Label as="span" size="small">
-              <Icon name="open lock" />
-              <Label.Detail>{t("game.public")}</Label.Detail>
-            </Label>
-          )}
-        </Header.Subheader>
-      </Header>
-      <Segment.Group style={{ marginTop: "-5px" }}>
+      {header || <SidebarHeader />}
+      <Segment.Group>
         {players.map((player) => (
           <Player
             key={player.id}
             player={player}
+            handleActionClick={handleActionClick}
+            extraContent={extraPlayerContent}
             maxPoints={G.maxPoints}
-            handleGuessClick={handleGuessClick}
+            showCurrentPlayer={showCurrentPlayer}
           />
         ))}
       </Segment.Group>
@@ -49,6 +47,19 @@ const Sidebar = ({ handleGuessClick }) => {
   );
 };
 
+const SidebarHeader = () => {
+  const { t } = useTranslation("lobby");
+  const { G } = useBoardGame();
+
+  return (
+    <Header as="h2" textAlign="center" style={{ marginBottom: "-5px" }}>
+      {t("game.players")}
+      <RoomTypeBadge privateRoom={G.privateRoom} detailed />
+    </Header>
+  );
+};
+
 Sidebar.propTypes = propTypes;
+Sidebar.defaultProps = defaultProps;
 
 export default Sidebar;

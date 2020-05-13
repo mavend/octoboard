@@ -10,7 +10,7 @@ export default {
   excludeStories: /.*Data$/,
 };
 
-export const Empty = () => <Player player={{ uid: null }} />;
+export const Empty = () => <Player />;
 
 export const Default = () => (
   <Player
@@ -23,12 +23,34 @@ export const Default = () => (
         { action: "manage", id: "456" },
       ]),
       isWinning: boolean("Is player winning?", true),
-      isCurrentPlayer: boolean("Are you this player?", true),
+      isYou: boolean("Are you this player?", true),
       profile: {
         displayName: text("Name", "Mieczysław Czosnek"),
         photoURL: text("Avatar URL", "https://api.adorable.io/avatars/128/Mieczysław-Czosnek.png"),
       },
     }}
-    handleGuessClick={action("handleGuessClick")}
+    handleActionClick={action("handleActionClick")}
+  />
+);
+
+export const WithAdditionalContent = () => (
+  <Player
+    player={{
+      uid: "user-1",
+      isConnected: boolean("Connected", true),
+      points: number("Points", 12),
+      actions: object("Actions array", [
+        { action: "guess", id: "123", phrase: "Baba z wozu?" },
+        { action: "manage", id: "456" },
+      ]),
+      isWinning: boolean("Is player winning?", true),
+      isYou: boolean("Are you this player?", true),
+      profile: {
+        displayName: text("Name", "Mieczysław Czosnek"),
+        photoURL: text("Avatar URL", "https://api.adorable.io/avatars/128/Mieczysław-Czosnek.png"),
+      },
+    }}
+    handleActionClick={action("handleActionClick")}
+    additionalContent={({ profile: { displayName } }) => <span>Hello {displayName}!</span>}
   />
 );

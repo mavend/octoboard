@@ -7,7 +7,7 @@ import AuthProvider from "services/Auth";
 import { useUser } from "contexts/UserContext";
 import { routes } from "config/routes";
 
-const UserMenu = () => {
+const UserMenu = ({ className }) => {
   const { logout } = AuthProvider;
   const user = useUser();
   const { t } = useTranslation();
@@ -17,7 +17,7 @@ const UserMenu = () => {
   const { displayName, uid, email, isAnonymous } = user;
 
   return (
-    <Menu secondary as="nav">
+    <Menu secondary as="nav" className={className}>
       <Menu.Menu position="right">
         <Menu.Item>
           <Dropdown

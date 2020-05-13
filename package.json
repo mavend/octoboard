@@ -28,6 +28,7 @@
     "react-query": "^1.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "react-toastify": "^5.5.0",
     "remove-accents": "^0.4.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.2"
