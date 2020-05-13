@@ -36,7 +36,7 @@ const MatchingBoard = () => {
       return;
     }
     if (
-      player.secrets.card.pictures.indexOf(picture) === -1 ||
+      player.card.pictures.indexOf(picture) === -1 ||
       G.currentCard.pictures.indexOf(picture) === -1
     ) {
       setTimeout(() => setGuessingEnabled(true), 700);
@@ -58,7 +58,7 @@ const MatchingBoard = () => {
             It's required anyway for inner transform to work
             */}
             <div>
-              <Card card={player.secrets.card} style={G.style} handleClick={handleClick} />
+              <Card card={player.card} style={G.style} handleClick={handleClick} />
             </div>
           </Transition>
         </Grid.Column>

@@ -34,7 +34,7 @@ const Board = () => {
   const winnerID = ctx.gameover && ctx.gameover.winner.toString();
   const winner = winnerID && players.find((p) => p.id.toString() === winnerID);
   const winnerName = winner && winner.profile.displayName;
-  const isWinner = playerID.toString() === winnerID.toString();
+  const isWinner = winnerID && winnerID.toString() === playerID.toString();
 
   useEffect(() => {
     setSelectedCard(null);

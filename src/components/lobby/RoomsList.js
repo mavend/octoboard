@@ -205,7 +205,7 @@ const RoomsPlayerListItem = ({ player: { name }, detailed }) => {
       color={uid === name ? "orange" : null}
     >
       <Icon name="user" color={uid === name ? null : "grey"} />
-      {detailed && profile.displayName}
+      {detailed && profile && profile.displayName}
     </Button>
   );
 };
