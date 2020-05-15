@@ -1,0 +1,25 @@
+{
+  "game": {
+    "name": "Scrambled",
+    "settings": {
+      "language": "Język"
+    }
+  },
+  "header": {
+    "wait": "Oczekiwanie na innych graczy",
+    "play": {
+      "play": "Twoja kolej",
+      "wait": "Poczekaj na ruch przeciwnika"
+    }
+  },
+  "subheader": {
+    "wait": {
+      "manage": "Możesz rozpocząć grę w dowolnym momencie",
+      "wait": "Administrator pokoju może rozpocząć grę"
+    },
+    "play": {
+      "play": "Wybierz litery do zagrania i zatwierdź swój ruch",
+      "wait": "Zagrane litery będą wymagały Twojej weryfikacji"
+    }
+  }
+}

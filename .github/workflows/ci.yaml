@@ -3,6 +3,8 @@ name: octoboard
 on:
   push:
     branches: [master]
+    tags:
+      - "!*" # Do not execute on tags
   pull_request:
     branches: [master]
 
@@ -27,3 +29,18 @@ jobs:
           node-version: "14"
       - run: npm ci
       - run: npm run storybook-ci
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - run: npm ci
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: "${{ secrets.CC_TEST_REPORTER_ID }}"
+        with:
+          coverageCommand: npm run test-ci

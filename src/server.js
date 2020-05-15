@@ -3,6 +3,7 @@ const Sentry = require("@sentry/node");
 const { Kalambury } = require("./games/kalambury/Game");
 const { Splendid } = require("./games/splendid/Game");
 const { PictureMatch } = require("./games/picture-match/Game");
+const { Scrambled } = require("./games/scrambled/Game");
 const { Server } = require("boardgame.io/server");
 const { StorageCache } = require("bgio-storage-cache");
 const { Firestore } = require("bgio-firebase");
@@ -26,7 +27,7 @@ const db = new Firestore({ config });
 const dbWithCaching = new StorageCache(db, { cacheSize: 200 });
 
 const server = Server({
-  games: [Kalambury, PictureMatch, Splendid],
+  games: [Kalambury, PictureMatch, Splendid, Scrambled],
   db: dbWithCaching,
 });
 
