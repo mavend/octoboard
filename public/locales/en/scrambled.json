@@ -1,0 +1,25 @@
+{
+  "game": {
+    "name": "Scrambled",
+    "settings": {
+      "language": "Language"
+    }
+  },
+  "header": {
+    "wait": "Waiting for other players",
+    "play": {
+      "play": "It's your turn",
+      "wait": "Waiting for other player"
+    }
+  },
+  "subheader": {
+    "wait": {
+      "manage": "You can start the game anytime you want",
+      "wait": "Lobby admin can start the game"
+    },
+    "play": {
+      "play": "Place some tiles and submit your move",
+      "wait": "Once they place some tiles you'd be able to review them"
+    }
+  }
+}
