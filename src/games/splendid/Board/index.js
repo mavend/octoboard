@@ -46,7 +46,7 @@ const Board = () => {
 
   useEffect(() => {
     if (lastRoundPlayerName && !winnerName) {
-      toast.warn(`This is a last round. ${lastRoundPlayerName} scored >= 15 points.`);
+      toast.warn(`This is a last round. ${lastRoundPlayerName} scored at least 15 points.`);
     }
   }, [lastRoundPlayerName, winnerName]);
 
@@ -200,6 +200,7 @@ const Board = () => {
             active={isActivePlayer}
             loading={loading}
             onTakeTokens={takeTokens}
+            playerTokensCount={sum(Object.values(player.tokens || {}))}
           />
         </Segment>
       }
@@ -218,6 +219,7 @@ const Board = () => {
             onBuy={buyCard}
             canBuy={canBuy}
             onReserve={reserveCard}
+            canReserve={(player.reservedCards || []).length < 3}
           />
         )}
       </Segment>

@@ -154,7 +154,7 @@ function ReserveCard(G, ctx, level, cardId) {
     return INVALID_MOVE;
   }
 
-  if (sum(Object.values(player.tokens)) < 10) {
+  if (sum(Object.values(player.tokens)) < 10 && G.tokens.gold > 0) {
     player.tokens.gold += 1;
     G.tokens.gold -= 1;
   }

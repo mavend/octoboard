@@ -68,6 +68,7 @@ const GameCard = ({
         LEVEL_CLASS[level],
         active && styles.active,
         small && styles.small,
+        canBuy && styles.highlighted,
       ]).join(" ")}
       raised={selected}
       onClick={active ? onClick : undefined}

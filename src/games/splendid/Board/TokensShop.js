@@ -9,8 +9,10 @@ import styles from "./Board.module.css";
 
 const emptyTokens = Object.fromEntries(RESOURCES.map((res) => [res, 0]));
 
-const TokensShop = ({ tokens, active, loading, onTakeTokens }) => {
+const TokensShop = ({ tokens, active, loading, onTakeTokens, playerTokensCount }) => {
   const [selected, setSelected] = useState({ ...emptyTokens });
+
+  const tooMuchTokens = sum(Object.values(selected)) + playerTokensCount >= 10;
 
   useEffect(() => {
     setSelected({ ...emptyTokens });
@@ -37,6 +39,9 @@ const TokensShop = ({ tokens, active, loading, onTakeTokens }) => {
   const canTakeToken = (res) => {
     const selectedCount = sum(Object.values(selected));
     const selectedRes = Object.keys(selected).filter((res) => selected[res] > 0);
+
+    if (tooMuchTokens) return false;
+
     return (
       selectedCount === 0 ||
       (selectedCount === 1 && (!selectedRes.includes(res) || tokens[res] >= 4)) ||
@@ -86,6 +91,9 @@ const TokensShop = ({ tokens, active, loading, onTakeTokens }) => {
           >
             Take tokens
           </Button>
+        )}
+        {active && tooMuchTokens && (
+          <p className={styles.tokensShopError}>You can't have more than 10 tokens</p>
         )}
       </div>
     </div>

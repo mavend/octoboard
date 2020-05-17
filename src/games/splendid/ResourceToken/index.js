@@ -18,6 +18,11 @@ const ResourceToken = ({ type, count, raised, big, disabled, onClick, onDelete }
   const [confirmOpen, setConfirmOpen] = useState(false);
   const { color } = RESOURCES_CONFIG[type] || {};
 
+  const handleDelete = () => {
+    onDelete();
+    setConfirmOpen(false);
+  };
+
   return (
     <div
       className={compact([
@@ -48,7 +53,7 @@ const ResourceToken = ({ type, count, raised, big, disabled, onClick, onDelete }
           <Confirm
             content={`Do you want to discard 1 token?`}
             open={confirmOpen}
-            onConfirm={onDelete}
+            onConfirm={handleDelete}
             onCancel={() => setConfirmOpen(false)}
           />
         </>

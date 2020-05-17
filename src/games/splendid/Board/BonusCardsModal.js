@@ -13,7 +13,7 @@ const propTypes = {
 
 const BonusCardsModal = ({ open, bonuses, onTake }) => {
   return (
-    <Modal open={open}>
+    <Modal open={open} style={{ width: "auto" }}>
       <Modal.Header>
         <span role="img" aria-label="Yay">
           🎉

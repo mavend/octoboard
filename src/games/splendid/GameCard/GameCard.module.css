@@ -111,6 +111,10 @@
   font-size: 20px;
 }
 
+.highlighted.card {
+  box-shadow: 0 3px 6px rgba(60, 172, 36, 0.67) !important;
+}
+
 .bonusCard {
   position: relative;
   width: 120px !important;
