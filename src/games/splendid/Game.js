@@ -18,7 +18,7 @@ function setupGame(ctx, setupData) {
     actions: [],
     deck: mapValues(cards, ctx.random.Shuffle),
     table: mapValues(cards, () => Array(CARDS_PER_LEVEL).fill(null)),
-    tokens: mapValues(RESOURCES_CONFIG, (res) => res.tokensCount[ctx.numPlayers]),
+    tokens: mapValues(RESOURCES_CONFIG, (res) => res.tokensCount[ctx.numPlayers - 1]),
     bonuses: ctx.random.Shuffle(bonuses).slice(0, ctx.numPlayers + 1),
   };
 
