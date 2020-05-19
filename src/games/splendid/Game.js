@@ -207,7 +207,7 @@ export const Splendid = {
   name: "Splendid",
   image: "/images/games/splendid/icon.png",
   minPlayers: 2,
-  maxPlayers: 4,
+  maxPlayers: 5,
 
   seed: process.env.NODE_ENV === "production" ? undefined : "test",
   setup: setupGame,
