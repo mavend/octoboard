@@ -98,7 +98,7 @@ function payForCard(player, card, publicTokens) {
     let tokensPaid = 0;
     let goldPaid = 0;
     if (tokens + cards >= cost) {
-      tokensPaid = cost - cards;
+      tokensPaid = Math.max(cost - cards, 0);
     } else {
       tokensPaid = player.tokens[res];
       goldPaid = cost - (tokens + cards);
