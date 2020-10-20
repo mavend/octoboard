@@ -1,7 +1,7 @@
 import { string, arrayOf, shape, object, number, bool, oneOfType } from "prop-types";
 
-export const RoomType = shape({
-  gameID: string.isRequired,
+export const MatchType = shape({
+  matchID: string.isRequired,
   gameName: string.isRequired,
   players: arrayOf(shape({ id: number.isRequired, name: string })).isRequired,
   setupData: object,

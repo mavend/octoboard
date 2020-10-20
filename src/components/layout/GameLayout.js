@@ -6,14 +6,14 @@ import { ToastContainer, toast } from "react-toastify";
 
 import Sidebar from "components/game/Sidebar";
 import UserMenu from "components/user/UserMenu";
-import RoomTypeBadge from "components/game/RoomTypeBadge";
+import MatchTypeBadge from "components/game/MatchTypeBadge";
 
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./Layout.module.css";
 
 const propTypes = {
   gameName: PropTypes.string.isRequired,
-  privateRoom: PropTypes.bool,
+  privateMatch: PropTypes.bool,
   header: PropTypes.node,
   handleActionClick: PropTypes.func,
   extraPlayerContent: PropTypes.func,
@@ -23,7 +23,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  privateRoom: false,
+  privateMatch: false,
   header: null,
   sidebarSize: 4,
   showCurrentPlayer: true,
@@ -31,7 +31,7 @@ const defaultProps = {
 
 const GameLayout = ({
   gameName,
-  privateRoom,
+  privateMatch,
   header,
   handleActionClick,
   sidebarHeader,
@@ -48,7 +48,7 @@ const GameLayout = ({
             <Image src="/images/octoboard-small.svg" slt="Octoboard logo" />
           </span>
           <span className={styles.gameName}>{gameName}</span>
-          <RoomTypeBadge privateRoom={privateRoom} detailed />
+          <MatchTypeBadge privateMatch={privateMatch} detailed />
           <UserMenu className={styles.userMenu} />
         </Container>
       </div>

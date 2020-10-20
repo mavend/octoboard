@@ -43,7 +43,7 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
   }, [lastUserGuess.id, lastUserGuess.success]);
 
   useEffect(() => {
-    const broadcastHandler = (gameID, data) => {
+    const broadcastHandler = (matchID, data) => {
       if (data.type === "UpdateDrawing" && !isDrawing) {
         setLines(data.args[0]);
       }

@@ -11,16 +11,16 @@ import { routes } from "config/routes";
 const LeaveButton = () => {
   const history = useHistory();
   const { t } = useTranslation();
-  const { playerID, gameID, gameName, credentials } = useBoardGame();
+  const { playerID, matchID, gameName, credentials } = useBoardGame();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [error, setError] = useState();
   const user = useUser();
 
   const handleLeave = () => {
     apiRequests
-      .leaveGame(gameName, gameID, playerID, credentials)
+      .leaveGame(gameName, matchID, playerID, credentials)
       .then(async () => {
-        await DataStore.deleteCredentials(user.uid, gameID);
+        await DataStore.deleteCredentials(user.uid, matchID);
         history.push(routes.lobby());
       })
       .catch((e) => {

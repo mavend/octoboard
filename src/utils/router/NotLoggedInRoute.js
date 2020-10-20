@@ -8,7 +8,7 @@ export function NotLoggedInRoute({ children, ...rest }) {
   const user = useUser();
   const location = useLocation();
   const { from, params } = location.state || {};
-  const { gameName, gameID } = params || {};
+  const { gameName, matchID } = params || {};
 
   return (
     <Route
@@ -22,10 +22,10 @@ export function NotLoggedInRoute({ children, ...rest }) {
               <Helmet>
                 {gameName && <title>Join to play {gameName} | octoboard</title>}
                 <meta property="og:title" content={`Play ${gameName} with your friends!`} />
-                {gameName && gameID && (
+                {gameName && matchID && (
                   <meta
                     property="og:description"
-                    content={`Your friend wants to play ${gameName} with you. They wait for you in room #${gameID}`}
+                    content={`Your friend wants to play ${gameName} with you. They wait for you in match #${matchID}`}
                   />
                 )}
                 {from && (

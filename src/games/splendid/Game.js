@@ -11,7 +11,7 @@ const CARDS_PER_LEVEL = 4;
 
 function setupGame(ctx, setupData) {
   const G = {
-    privateRoom: setupData && setupData.private,
+    privateMatch: setupData && setupData.private,
     actionsCount: 0,
     players: {},
     points: Array(ctx.numPlayers).fill(0),

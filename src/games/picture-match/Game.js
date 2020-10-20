@@ -36,7 +36,7 @@ function setupGame(ctx, setupData) {
       deck: [],
       used: [],
     },
-    privateRoom: setupData && setupData.private,
+    privateMatch: setupData && setupData.private,
     currentCard: { pictures: [], layout: 0, rotation: 0 },
     styles: Object.keys(styles),
     style: "color",

@@ -14,7 +14,7 @@ function setupGame(ctx, setupData) {
       phrase: "",
       phrases: ctx.random.Shuffle([...proverbs, ...idioms, ...nounPhrases]),
     },
-    privateRoom: setupData && setupData.private,
+    privateMatch: setupData && setupData.private,
     actionsCount: 0,
     startTime: new Date(),
     timePerTurn: 120,

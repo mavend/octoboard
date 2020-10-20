@@ -14,10 +14,10 @@ const BoardGameContextMock = ({ children }) => {
         actions: [
           { action: "message", text: text("Message text", "Hello there, shall we begin?", ref) },
         ],
-        privateRoom: boolean("Private", true, ref),
+        privateMatch: boolean("Private", true, ref),
         players: {
-          "0": {},
-          "1": {},
+          0: {},
+          1: {},
         },
       }}
       moves={{}}
@@ -28,7 +28,7 @@ const BoardGameContextMock = ({ children }) => {
         numPlayers: number("Player count", 4, { range: true, min: 2, max: 10, step: 1 }, ref),
       }}
       playerID={"0"}
-      gameID={"qwe123"}
+      matchID={"qwe123"}
       rawClient={{ transport: { socket: null } }}
       gameMetadata={[
         { id: 0, name: "user-0", isConnected: true },

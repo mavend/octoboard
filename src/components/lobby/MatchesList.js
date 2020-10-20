@@ -2,33 +2,33 @@ import React, { useState, useEffect } from "react";
 import { string, func, bool, arrayOf, shape } from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Item, Button, Pagination, Label, Icon, Responsive } from "semantic-ui-react";
-import { RoomType, GameType } from "config/propTypes";
+import { MatchType, GameType } from "config/propTypes";
 import { paginate } from "utils/paginate";
 import { useUser, useProfiles } from "contexts/UserContext";
-import RoomTypeBadge from "components/game/RoomTypeBadge";
+import MatchTypeBadge from "components/game/MatchTypeBadge";
 
-const roomsListPropTypes = {
-  rooms: arrayOf(RoomType).isRequired,
+const matchesListPropTypes = {
+  matches: arrayOf(MatchType).isRequired,
   games: arrayOf(GameType).isRequired,
-  onJoinRoom: func,
-  currentRoom: RoomType,
+  onJoinMatch: func,
+  currentMatch: MatchType,
 };
 
-const RoomsList = ({ rooms, games, onJoinRoom, currentRoom }) => {
+const MatchesList = ({ matches, games, onJoinMatch, currentMatch }) => {
   const [pagesCount, setPagesCount] = useState(1);
   const [pageNum, setPageNum] = useState(1);
-  const [filteredRooms, setFilteredRooms] = useState(rooms);
+  const [filteredMatches, setFilteredMatches] = useState(matches);
 
   const perPage = 6;
 
   useEffect(() => {
-    let filteredRooms = rooms;
-    if (currentRoom) {
-      filteredRooms = rooms.filter((room) => room.gameID !== currentRoom.gameID);
+    let filteredMatches = matches;
+    if (currentMatch) {
+      filteredMatches = matches.filter((match) => match.matchID !== currentMatch.matchID);
     }
-    setFilteredRooms(filteredRooms);
-    setPagesCount(Math.ceil(filteredRooms.length / perPage));
-  }, [rooms, currentRoom, setFilteredRooms]);
+    setFilteredMatches(filteredMatches);
+    setPagesCount(Math.ceil(filteredMatches.length / perPage));
+  }, [matches, currentMatch, setFilteredMatches]);
 
   const handlePageChange = (e, { activePage }) => {
     setPageNum(activePage);
@@ -37,21 +37,21 @@ const RoomsList = ({ rooms, games, onJoinRoom, currentRoom }) => {
   return (
     <div>
       <Item.Group divided relaxed="very" size="big">
-        {currentRoom && (
-          <RoomsListItem
-            room={currentRoom}
-            game={games.find((g) => g.name === currentRoom.gameName)}
-            onJoin={onJoinRoom}
+        {currentMatch && (
+          <MatchesListItem
+            match={currentMatch}
+            game={games.find((g) => g.name === currentMatch.gameName)}
+            onJoin={onJoinMatch}
             current
           />
         )}
-        {paginate(filteredRooms, perPage, pageNum).map((room) => (
-          <RoomsListItem
-            key={room.gameID}
-            room={room}
-            game={games.find((g) => g.name === room.gameName)}
-            onJoin={onJoinRoom}
-            disabled={!!currentRoom}
+        {paginate(filteredMatches, perPage, pageNum).map((match) => (
+          <MatchesListItem
+            key={match.matchID}
+            match={match}
+            game={games.find((g) => g.name === match.gameName)}
+            onJoin={onJoinMatch}
+            disabled={!!currentMatch}
           />
         ))}
       </Item.Group>
@@ -68,16 +68,16 @@ const RoomsList = ({ rooms, games, onJoinRoom, currentRoom }) => {
   );
 };
 
-const roomsListItemPropTypes = {
-  room: RoomType.isRequired,
+const matchesListItemPropTypes = {
+  match: MatchType.isRequired,
   game: GameType,
   onJoin: func.isRequired,
   current: bool,
   disabled: bool,
 };
 
-const RoomsListItem = React.memo(
-  ({ room, room: { gameID, players, setupData }, game, onJoin, current, disabled }) => {
+const MatchesListItem = React.memo(
+  ({ match, match: { matchID, players, setupData }, game, onJoin, current, disabled }) => {
     const { t } = useTranslation("lobby");
 
     if (!game) return null;
@@ -88,7 +88,7 @@ const RoomsListItem = React.memo(
     const canJoin = !disabled && (!isFull || current);
 
     const handleClick = () => {
-      if (canJoin) onJoin(room);
+      if (canJoin) onJoin(match);
     };
 
     const buttonLabel = () => {
@@ -114,28 +114,28 @@ const RoomsListItem = React.memo(
       />
     );
 
-    const RoomLabels = ({ labelsStyle, detailed }) => (
+    const MatchLabels = ({ labelsStyle, detailed }) => (
       <>
         <Label as="span" style={labelsStyle} color={current ? "orange" : null}>
-          #<Label.Detail>{gameID}</Label.Detail>
+          #<Label.Detail>{matchID}</Label.Detail>
         </Label>
         {current && (
           <Label as="span" style={labelsStyle} color="orange">
             {t("list.game.your_game")}
           </Label>
         )}
-        <RoomTypeBadge
-          privateRoom={setupData && setupData.private}
+        <MatchTypeBadge
+          privateMatch={setupData && setupData.private}
           detailed={detailed}
           style={labelsStyle}
         />
       </>
     );
 
-    const RoomMembers = ({ detailed }) => (
+    const MatchMembers = ({ detailed }) => (
       <>
         {currentPlayers.map((p) => (
-          <RoomsPlayerListItem player={p} key={p.id} detailed={detailed} />
+          <MatchesPlayerListItem player={p} key={p.id} detailed={detailed} />
         ))}
         {Array(maxPlayers - currentPlayers.length)
           .fill(0)
@@ -160,7 +160,7 @@ const RoomsListItem = React.memo(
           <Item.Header style={{ display: "block" }}>
             {game.name}
             <Responsive as={"span"} minWidth={Responsive.onlyComputer.minWidth}>
-              <RoomLabels detailed labelsStyle={{ marginLeft: "1rem" }} />
+              <MatchLabels detailed labelsStyle={{ marginLeft: "1rem" }} />
               <JoinGameButton floated="right" />
             </Responsive>
             <Responsive as={"span"} maxWidth={Responsive.onlyTablet.maxWidth}>
@@ -168,14 +168,14 @@ const RoomsListItem = React.memo(
             </Responsive>
           </Item.Header>
           <Responsive as={Item.Description} maxWidth={Responsive.onlyTablet.maxWidth}>
-            <RoomLabels />
+            <MatchLabels />
           </Responsive>
           <Item.Extra>
             <Responsive as={"span"} minWidth={Responsive.onlyComputer.minWidth}>
-              <RoomMembers detailed />
+              <MatchMembers detailed />
             </Responsive>
             <Responsive as={"span"} maxWidth={Responsive.onlyTablet.maxWidth}>
-              <RoomMembers />
+              <MatchMembers />
             </Responsive>
           </Item.Extra>
         </Item.Content>
@@ -184,12 +184,12 @@ const RoomsListItem = React.memo(
   }
 );
 
-const roomsPlayerListItemPropTypes = {
+const matchesPlayerListItemPropTypes = {
   player: shape({ name: string.isRequired }),
   detailed: bool,
 };
 
-const RoomsPlayerListItem = ({ player: { name }, detailed }) => {
+const MatchesPlayerListItem = ({ player: { name }, detailed }) => {
   const user = useUser();
   const profiles = useProfiles();
   const profile = profiles.get(name);
@@ -210,8 +210,8 @@ const RoomsPlayerListItem = ({ player: { name }, detailed }) => {
   );
 };
 
-RoomsPlayerListItem.propTypes = roomsPlayerListItemPropTypes;
-RoomsListItem.propTypes = roomsListItemPropTypes;
-RoomsList.propTypes = roomsListPropTypes;
+MatchesPlayerListItem.propTypes = matchesPlayerListItemPropTypes;
+MatchesListItem.propTypes = matchesListItemPropTypes;
+MatchesList.propTypes = matchesListPropTypes;
 
-export default RoomsList;
+export default MatchesList;

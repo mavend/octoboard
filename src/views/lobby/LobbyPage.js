@@ -18,38 +18,38 @@ import Lobby from "components/lobby/Lobby";
 const LobbyPage = ({ noRefetch }) => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(true);
-  const [rooms, setRooms] = useState([]);
-  const [currentRoom, setCurrentRoom] = useState();
+  const [matches, setMatches] = useState([]);
+  const [currentMatch, setCurrentMatch] = useState();
   const history = useHistory();
   const location = useLocation();
   const { t } = useTranslation("lobby");
   const games = gameComponents.map((g) => g.game);
   const user = useUser();
 
-  const { data: roomsData, error: roomsError, status, isFetching } = useQuery(
-    "rooms",
-    () => apiRequests.fetchRooms(games),
+  const { data: matchesData, error: matchesError, status, isFetching } = useQuery(
+    "matches",
+    () => apiRequests.fetchMatches(games),
     { refetchInterval: noRefetch ? false : 1000 }
   );
 
   useEffect(() => {
     if (isFetching) return;
     if (status === "error") {
-      setError(roomsError);
+      setError(matchesError);
     } else {
-      const newRooms = filter(roomsData, { setupData: { private: false } });
+      const newMatches = filter(matchesData, { setupData: { private: false } });
       if (user) {
-        const room = roomsData.find((r) => find(r.players, { name: user.uid }));
-        if (room) {
-          setCurrentRoom((currentRoom) => (eq(currentRoom, room) ? currentRoom : room));
+        const match = matchesData.find((r) => find(r.players, { name: user.uid }));
+        if (match) {
+          setCurrentMatch((currentMatch) => (eq(currentMatch, match) ? currentMatch : match));
         } else {
-          setCurrentRoom();
+          setCurrentMatch();
         }
       }
-      setRooms((rooms) => (eq(rooms, newRooms) ? rooms : newRooms));
+      setMatches((matches) => (eq(matches, newMatches) ? matches : newMatches));
     }
     setLoading(false);
-  }, [user, roomsData, roomsError, status, isFetching]);
+  }, [user, matchesData, matchesError, status, isFetching]);
 
   useEffect(() => {
     const { state } = location;
@@ -59,50 +59,50 @@ const LobbyPage = ({ noRefetch }) => {
     }
   }, [location, history, setError, t]);
 
-  const handleJoinRoom = useCallback(
-    ({ gameName, gameID, players, playerID }) => {
+  const handleJoinMatch = useCallback(
+    ({ gameName, matchID, players, playerID }) => {
       if (!user) {
         history.push({
           pathname: routes.login_guest(),
-          state: { from: { pathname: routes.game(gameName, gameID) } },
+          state: { from: { pathname: routes.game(gameName, matchID) } },
         });
         return;
       }
 
-      if (currentRoom) {
-        history.push(routes.game(gameName, gameID));
+      if (currentMatch) {
+        history.push(routes.game(gameName, matchID));
         return;
       }
 
       setLoading(true);
       const freeSpotId = playerID || players.find((p) => !p.name).id;
       apiRequests
-        .joinRoom(gameName, gameID, freeSpotId, user.uid)
+        .joinMatch(gameName, matchID, freeSpotId, user.uid)
         .then(async (response) => {
-          await DataStore.addCredentials(user.uid, gameID, response.playerCredentials);
+          await DataStore.addCredentials(user.uid, matchID, response.playerCredentials);
           setLoading(false);
-          history.push(routes.game(gameName, gameID));
+          history.push(routes.game(gameName, matchID));
         })
         .catch((e) => setError(e.message));
     },
-    [user, currentRoom, setLoading, setError, history]
+    [user, currentMatch, setLoading, setError, history]
   );
 
   const handleCreate = useCallback(
     (gameName, numPlayers, gameOptions) => {
-      if (!currentRoom && gameName && numPlayers && user) {
+      if (!currentMatch && gameName && numPlayers && user) {
         setLoading(true);
         apiRequests
-          .createRoom(gameName, numPlayers, gameOptions)
-          .then(({ gameID }) => {
-            handleJoinRoom({ gameName, gameID, playerID: "0" });
+          .createMatch(gameName, numPlayers, gameOptions)
+          .then(({ matchID }) => {
+            handleJoinMatch({ gameName, matchID, playerID: "0" });
           })
           .catch((e) => setError(e.message));
       } else {
         alert("Not valid!");
       }
     },
-    [user, currentRoom, setLoading, setError, handleJoinRoom]
+    [user, currentMatch, setLoading, setError, handleJoinMatch]
   );
 
   const styles = {
@@ -143,10 +143,10 @@ const LobbyPage = ({ noRefetch }) => {
       )}
       <Lobby
         loggedIn={!!user}
-        rooms={rooms}
-        currentRoom={currentRoom}
+        matches={matches}
+        currentMatch={currentMatch}
         games={games}
-        handleJoinRoom={handleJoinRoom}
+        handleJoinMatch={handleJoinMatch}
         handleCreate={handleCreate}
         loading={loading}
       />

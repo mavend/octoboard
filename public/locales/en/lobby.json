@@ -7,9 +7,9 @@
     "subheader": "We are connecting you to the game lobby."
   },
   "list": {
-    "title": "Available rooms",
-    "empty": "No rooms available at the moment",
-    "loading": "Loading rooms",
+    "title": "Available matches",
+    "empty": "No matches available at the moment",
+    "loading": "Loading matches",
     "game": {
       "full": "Full",
       "join": "Join",
@@ -18,13 +18,13 @@
     }
   },
   "create": {
-    "title": "Create room",
+    "title": "Create match",
     "game_type": "Game",
     "max_players": "Maximum number of players",
     "button": "Create",
     "private": {
-      "true": "Private room 🙈",
-      "false": "Public room 🐵"
+      "true": "Private match 🙈",
+      "false": "Public match 🐵"
     }
   },
   "login": {
@@ -39,7 +39,7 @@
   "errors": {
     "no_game": "Game not found",
     "not_in_game": "You are not in a game",
-    "no_space": "No space left in this room",
+    "no_space": "No space left in this match",
     "already_in_game": "You are currently in another game"
   },
   "sidebar": {
