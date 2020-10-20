@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useHistory, Redirect } from "react-router-dom";
 import { Button, Icon, Confirm } from "semantic-ui-react";
 import { useUser } from "contexts/UserContext";
-import { apiRequests } from "services/API";
+import { lobbyClient } from "services/LobbyClient";
 import DataStore from "services/DataStore";
 import { useBoardGame } from "contexts/BoardGameContext";
 import { routes } from "config/routes";
@@ -17,8 +17,8 @@ const LeaveButton = () => {
   const user = useUser();
 
   const handleLeave = () => {
-    apiRequests
-      .leaveGame(gameName, matchID, playerID, credentials)
+    lobbyClient
+      .leaveMatch(gameName, matchID, { playerID, credentials })
       .then(async () => {
         await DataStore.deleteCredentials(user.uid, matchID);
         history.push(routes.lobby());

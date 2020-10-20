@@ -8,7 +8,7 @@ import { Container, Image, Segment, Label } from "semantic-ui-react";
 
 import { routes } from "config/routes";
 import DataStore from "services/DataStore";
-import { apiRequests } from "services/API";
+import { lobbyClient } from "services/LobbyClient";
 import { useUser } from "contexts/UserContext";
 import { gameComponents } from "games";
 
@@ -28,7 +28,7 @@ const LobbyPage = ({ noRefetch }) => {
 
   const { data: matchesData, error: matchesError, status, isFetching } = useQuery(
     "matches",
-    () => apiRequests.fetchMatches(games),
+    () => lobbyClient.listAllMatches(games),
     { refetchInterval: noRefetch ? false : 1000 }
   );
 
@@ -76,8 +76,8 @@ const LobbyPage = ({ noRefetch }) => {
 
       setLoading(true);
       const freeSpotId = playerID || players.find((p) => !p.name).id;
-      apiRequests
-        .joinMatch(gameName, matchID, freeSpotId, user.uid)
+      lobbyClient
+        .joinMatch(gameName, matchID, { playerID: freeSpotId, playerName: user.uid })
         .then(async (response) => {
           await DataStore.addCredentials(user.uid, matchID, response.playerCredentials);
           setLoading(false);
@@ -92,8 +92,8 @@ const LobbyPage = ({ noRefetch }) => {
     (gameName, numPlayers, gameOptions) => {
       if (!currentMatch && gameName && numPlayers && user) {
         setLoading(true);
-        apiRequests
-          .createMatch(gameName, numPlayers, gameOptions)
+        lobbyClient
+          .createMatch(gameName, { numPlayers, setupData: gameOptions })
           .then(({ matchID }) => {
             handleJoinMatch({ gameName, matchID, playerID: "0" });
           })

@@ -10,7 +10,7 @@ import { gameComponents } from "games";
 import { useUser, useCredentials } from "contexts/UserContext";
 import { getUrlParam } from "utils/url";
 import DataStore from "services/DataStore";
-import { apiRequests } from "services/API";
+import { lobbyClient } from "services/LobbyClient";
 
 import { BoardGameProvider } from "contexts/BoardGameContext";
 import Loading from "components/game/Loading";
@@ -31,8 +31,8 @@ const GamePage = () => {
   const { game, Board } = gameComponents.find((gc) => gc.game.name === gameName);
 
   const fetchPlayerID = useCallback(() => {
-    apiRequests
-      .fetchMatch(gameName, matchID)
+    lobbyClient
+      .getMatch(gameName, matchID)
       .then((match) => {
         const player = match.players.find((player) => player.name === user.uid);
         setPlayerID(player.id.toString());
@@ -44,8 +44,8 @@ const GamePage = () => {
 
   const detectCurrentGames = useCallback(() => {
     const currentCredentials = pickBy(credentials, identity);
-    apiRequests
-      .fetchMatches([game])
+    lobbyClient
+      .listMatches(game.name)
       .then((matches) => {
         const matchesWithUser = matches.filter((match) => find(match.players, { name: user.uid }));
         const currenMatches = intersection(
@@ -65,12 +65,15 @@ const GamePage = () => {
 
   const joinGame = useCallback(() => {
     let freeSeat;
-    apiRequests
-      .fetchMatch(gameName, matchID)
+    lobbyClient
+      .getMatch(gameName, matchID)
       .then((match) => {
         freeSeat = match.players.find((p) => !p.name);
         if (!freeSeat) throw new Error("errors.no_space");
-        return apiRequests.joinMatch(gameName, matchID, freeSeat.id.toString(), user.uid);
+        return lobbyClient.joinMatch(gameName, matchID, {
+          playerID: freeSeat.id.toString(),
+          playerName: user.uid,
+        });
       })
       .then(async ({ playerCredentials }) => {
         setPlayerID(freeSeat.id.toString());

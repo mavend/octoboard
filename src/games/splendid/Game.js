@@ -113,7 +113,7 @@ function payForCard(player, card, publicTokens) {
 function BuyCard(G, ctx, level, cardId) {
   const player = G.players[ctx.currentPlayer];
   const { tokens, cards } = player;
-  const card = G.table[level].find((card) => card.id === cardId);
+  const card = G.table[level].find((card) => card && card.id === cardId);
 
   if (!canBuyCard(tokens, cards, card)) {
     return INVALID_MOVE;
