@@ -150,30 +150,33 @@ const MatchesListItem = React.memo(
 
     return (
       <Item>
-        <Item.Image as={Media} greaterThanOrEqual="computer" avatar size="tiny" src={game.image} />
-        <Item.Content>
-          <Item.Header style={{ display: "block" }}>
-            {game.name}
-            <span as={Media} greaterThanOrEqual="computer">
+        <Media greaterThanOrEqual="computer">
+          <Item.Content>
+            <Item.Image avatar size="tiny" src={game.image} />
+            <Item.Header style={{ display: "block" }}>
+              {game.name}
               <MatchLabels detailed labelsStyle={{ marginLeft: "1rem" }} />
               <JoinGameButton floated="right" />
-            </span>
-            <span as={Media} lessThan="computer">
-              <JoinGameButton style={{ marginLeft: "1rem" }} size="small" />
-            </span>
-          </Item.Header>
-          <Item.Description as={Media} lessThan="computer">
-            <MatchLabels />
-          </Item.Description>
-          <Item.Extra>
-            <span as={Media} greaterThanOrEqual="computer">
+            </Item.Header>
+            <Item.Extra>
               <MatchMembers detailed />
-            </span>
-            <span as={Media} lessThan="computer">
+            </Item.Extra>
+          </Item.Content>
+        </Media>
+        <Media lessThan="computer">
+          <Item.Content>
+            <Item.Header style={{ display: "block" }}>
+              {game.name}
+              <JoinGameButton style={{ marginLeft: "1rem" }} size="small" />
+            </Item.Header>
+            <Item.Description>
+              <MatchLabels />
+            </Item.Description>
+            <Item.Extra>
               <MatchMembers />
-            </span>
-          </Item.Extra>
-        </Item.Content>
+            </Item.Extra>
+          </Item.Content>
+        </Media>
       </Item>
     );
   }

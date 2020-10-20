@@ -153,8 +153,12 @@ const Toolbar = ({
 
   return (
     <>
-      <MenuWide as={Media} greaterThanOrEqual="wide_mobile" />
-      <MenuNarrow as={Media} lessThan="wide_mobile" />
+      <Media greaterThanOrEqual="wide_mobile">
+        <MenuWide />
+      </Media>
+      <Media lessThan="wide_mobile">
+        <MenuNarrow />
+      </Media>
     </>
   );
 };

@@ -5,6 +5,7 @@ import { withKnobs } from "@storybook/addon-knobs";
 import StoryRouter from "storybook-react-router";
 import { HelmetProvider } from "react-helmet-async";
 import UserContextMock from "./UserContextMock";
+import { MediaContextProvider } from "config/media";
 import "../src/i18n";
 
 import "semantic-ui-css/semantic.min.css";
@@ -13,6 +14,7 @@ import "../src/index.css";
 addDecorator(withKnobs);
 addDecorator(StoryRouter());
 addDecorator((storyFn) => <Suspense fallback="Loading...">{storyFn()}</Suspense>);
+addDecorator((storyFn) => <MediaContextProvider>{storyFn()}</MediaContextProvider>);
 addDecorator((storyFn) => <HelmetProvider>{storyFn()}</HelmetProvider>);
 addDecorator((storyFn) => <UserContextMock>{storyFn()}</UserContextMock>);
 addDecorator((storyFn) => <Suspense fallback="Loading">{storyFn()}</Suspense>);

@@ -22,7 +22,7 @@ const CredentialsLayout = ({ action, modalOptions, children, ...props }) => {
         <Modal.Content image>
           <Image
             as={Media}
-            greaterThanOrEqual="computer"
+            greaterThanOrEqual="tablet"
             wrapped
             size="medium"
             style={{ alignSelf: "center" }}

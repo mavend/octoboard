@@ -34,10 +34,14 @@ const OtherLoginOptions = ({ setError, setLoading }) => {
   return (
     <>
       <Divider />
-      <Buttons as={Media} greaterThanOrEqual="tablet" />
-      <Button.Group as={Media} lessThan="tablet" vertical fluid>
+      <Media greaterThanOrEqual="tablet">
         <Buttons />
-      </Button.Group>
+      </Media>
+      <Media lessThan="tablet">
+        <Button.Group vertical fluid>
+          <Buttons />
+        </Button.Group>
+      </Media>
     </>
   );
 };
