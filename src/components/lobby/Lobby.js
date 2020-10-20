@@ -8,7 +8,6 @@ import {
   Grid,
   Dimmer,
   Loader,
-  Responsive,
   Button,
   Icon,
 } from "semantic-ui-react";
@@ -19,6 +18,7 @@ import { routes } from "config/routes";
 import MatchesList from "components/lobby/MatchesList";
 import CreateMatchForm from "components/lobby/CreateMatchForm";
 import OctopusWrapper from "components/layout/OctopusWrapper";
+import { Media } from "config/media";
 
 const propTypes = {
   matches: arrayOf(MatchType).isRequired,
@@ -111,11 +111,11 @@ const Lobby = ({
 
   return (
     <Container>
-      <Responsive as={Grid} minWidth={Responsive.onlyComputer.minWidth}>
+      <Grid as={Media} greaterThanOrEqual="computer">
         <Grid.Column width="12">{matchesListSegment()}</Grid.Column>
         <Grid.Column width="4">{loggedIn ? createMatchSegment() : loginSegment()}</Grid.Column>
-      </Responsive>
-      <Responsive as={Grid} maxWidth={Responsive.onlyTablet.maxWidth}>
+      </Grid>
+      <Grid as={Media} lessThan="computer">
         {!currentMatch && (
           <Grid.Row>
             <Grid.Column>{loggedIn ? createMatchSegment() : loginSegment()}</Grid.Column>
@@ -124,7 +124,7 @@ const Lobby = ({
         <Grid.Row>
           <Grid.Column>{matchesListSegment()}</Grid.Column>
         </Grid.Row>
-      </Responsive>
+      </Grid>
     </Container>
   );
 };

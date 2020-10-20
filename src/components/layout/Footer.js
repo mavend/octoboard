@@ -1,6 +1,7 @@
 import React from "react";
-import { Menu, Icon, Dropdown, Responsive } from "semantic-ui-react";
+import { Menu, Icon, Dropdown } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
+import { breakpoints } from "config/media";
 
 const FooterLink = ({ text, children, ...props }) => (
   <a
@@ -35,7 +36,7 @@ const Footer = () => {
       secondary
       stackable
       as="footer"
-      style={window.innerWidth < Responsive.onlyTablet.minWidth ? { padding: "0 1rem" } : {}}
+      style={window.innerWidth < breakpoints.tablet ? { padding: "0 1rem" } : {}}
     >
       <FooterItem>
         <FooterLink href="https://github.com/mavend/octoboard">

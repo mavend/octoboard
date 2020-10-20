@@ -1,7 +1,7 @@
 import React from "react";
 
 import PropTypes from "prop-types";
-import { Responsive, Container, Grid, Image } from "semantic-ui-react";
+import { Container, Grid, Image } from "semantic-ui-react";
 import { ToastContainer, toast } from "react-toastify";
 
 import Sidebar from "components/game/Sidebar";
@@ -10,6 +10,7 @@ import MatchTypeBadge from "components/game/MatchTypeBadge";
 
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./Layout.module.css";
+import { Media } from "config/media";
 
 const propTypes = {
   gameName: PropTypes.string.isRequired,
@@ -54,7 +55,7 @@ const GameLayout = ({
       </div>
       <Container>
         {header}
-        <Responsive as={Grid} minWidth={Responsive.onlyComputer.minWidth}>
+        <Grid as={Media} greaterThanOrEqual="computer">
           <Grid.Column width={16 - sidebarSize}>
             <Grid.Row>{children}</Grid.Row>
           </Grid.Column>
@@ -68,8 +69,8 @@ const GameLayout = ({
               />
             </Grid.Row>
           </Grid.Column>
-        </Responsive>
-        <Responsive as={Grid} maxWidth={Responsive.onlyTablet.maxWidth}>
+        </Grid>
+        <Grid as={Media} lessThan="computer">
           <Grid.Row>
             <Grid.Column>{children}</Grid.Column>
           </Grid.Row>
@@ -83,7 +84,7 @@ const GameLayout = ({
               />
             </Grid.Column>
           </Grid.Row>
-        </Responsive>
+        </Grid>
         <ToastContainer toastClassName={styles.toast} position={toast.POSITION.TOP_CENTER} />
       </Container>
     </>

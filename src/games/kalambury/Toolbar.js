@@ -1,8 +1,9 @@
 import React from "react";
-import { Responsive, Icon, Menu, Popup } from "semantic-ui-react";
+import { Icon, Menu, Popup } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 import { string, func, bool } from "prop-types";
 import { COLORS } from "config/constants";
+import { Media } from "config/media";
 
 const propTypes = {
   currentColor: string.isRequired,
@@ -152,12 +153,8 @@ const Toolbar = ({
 
   return (
     <>
-      <Responsive minWidth={660}>
-        <MenuWide />
-      </Responsive>
-      <Responsive maxWidth={659}>
-        <MenuNarrow />
-      </Responsive>
+      <MenuWide as={Media} greaterThanOrEqual="wide_mobile" />
+      <MenuNarrow as={Media} lessThan="wide_mobile" />
     </>
   );
 };

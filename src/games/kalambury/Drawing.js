@@ -1,8 +1,9 @@
 import React from "react";
-import { Segment, Progress, Responsive } from "semantic-ui-react";
+import { Segment, Progress } from "semantic-ui-react";
 import { arrayOf, bool, number } from "prop-types";
 import { LineType } from "config/propTypes";
 import smooth_path from "./utils/smooth_path";
+import { breakpoints } from "config/media";
 
 const propTypes = {
   lines: arrayOf(LineType).isRequired,
@@ -50,9 +51,7 @@ const DrawingLine = ({ line: { points, color, width } }) => (
   <path
     fill="none"
     stroke={color}
-    strokeWidth={
-      window.innerWidth <= Responsive.onlyTablet.maxWidth && width < 10 ? width * 2 : width
-    }
+    strokeWidth={window.innerWidth < breakpoints.computer && width < 10 ? width * 2 : width}
     strokeLinecap="round"
     d={smooth_path(points, 0.12)}
   />

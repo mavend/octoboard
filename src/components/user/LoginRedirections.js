@@ -1,10 +1,11 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { func } from "prop-types";
-import { Button, Icon, Responsive, Divider } from "semantic-ui-react";
+import { Button, Icon, Divider } from "semantic-ui-react";
 import { routes } from "config/routes";
 import { useTranslation } from "react-i18next";
 import GoogleLoginOption from "./GoogleLogin";
+import { Media } from "config/media";
 
 const propTypes = {
   setError: func.isRequired,
@@ -33,12 +34,10 @@ const OtherLoginOptions = ({ setError, setLoading }) => {
   return (
     <>
       <Divider />
-      <Responsive minWidth={Responsive.onlyTablet.minWidth} as={Buttons} />
-      <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
-        <Button.Group vertical fluid>
-          <Buttons />
-        </Button.Group>
-      </Responsive>
+      <Buttons as={Media} greaterThanOrEqual="tablet" />
+      <Button.Group as={Media} lessThan="tablet" vertical fluid>
+        <Buttons />
+      </Button.Group>
     </>
   );
 };

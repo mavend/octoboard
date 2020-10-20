@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { string, func, bool, arrayOf, shape } from "prop-types";
 import { useTranslation } from "react-i18next";
-import { Item, Button, Pagination, Label, Icon, Responsive } from "semantic-ui-react";
+import { Item, Button, Pagination, Label, Icon } from "semantic-ui-react";
 import { MatchType, GameType } from "config/propTypes";
 import { paginate } from "utils/paginate";
 import { useUser, useProfiles } from "contexts/UserContext";
 import MatchTypeBadge from "components/game/MatchTypeBadge";
+import { Media } from "config/media";
 
 const matchesListPropTypes = {
   matches: arrayOf(MatchType).isRequired,
@@ -149,34 +150,28 @@ const MatchesListItem = React.memo(
 
     return (
       <Item>
-        <Responsive
-          as={Item.Image}
-          avatar
-          size="tiny"
-          src={game.image}
-          minWidth={Responsive.onlyComputer.minWidth}
-        />
+        <Item.Image as={Media} greaterThanOrEqual="computer" avatar size="tiny" src={game.image} />
         <Item.Content>
           <Item.Header style={{ display: "block" }}>
             {game.name}
-            <Responsive as={"span"} minWidth={Responsive.onlyComputer.minWidth}>
+            <span as={Media} greaterThanOrEqual="computer">
               <MatchLabels detailed labelsStyle={{ marginLeft: "1rem" }} />
               <JoinGameButton floated="right" />
-            </Responsive>
-            <Responsive as={"span"} maxWidth={Responsive.onlyTablet.maxWidth}>
+            </span>
+            <span as={Media} lessThan="computer">
               <JoinGameButton style={{ marginLeft: "1rem" }} size="small" />
-            </Responsive>
+            </span>
           </Item.Header>
-          <Responsive as={Item.Description} maxWidth={Responsive.onlyTablet.maxWidth}>
+          <Item.Description as={Media} lessThan="computer">
             <MatchLabels />
-          </Responsive>
+          </Item.Description>
           <Item.Extra>
-            <Responsive as={"span"} minWidth={Responsive.onlyComputer.minWidth}>
+            <span as={Media} greaterThanOrEqual="computer">
               <MatchMembers detailed />
-            </Responsive>
-            <Responsive as={"span"} maxWidth={Responsive.onlyTablet.maxWidth}>
+            </span>
+            <span as={Media} lessThan="computer">
               <MatchMembers />
-            </Responsive>
+            </span>
           </Item.Extra>
         </Item.Content>
       </Item>
