@@ -167,7 +167,7 @@ export const Kalambury = {
         order: {
           first: () => 0,
           next: (G, ctx) => {
-            const activeIdxs = keys(pickBy(ctx.gameMetadata, "isConnected"));
+            const activeIdxs = keys(pickBy(ctx.matchData, "isConnected"));
             const nextActiveIdx = (activeIdxs.indexOf(ctx.currentPlayer) + 1) % activeIdxs.length;
             return parseInt(activeIdxs[nextActiveIdx] || 0);
           },
