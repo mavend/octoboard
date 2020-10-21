@@ -7,6 +7,8 @@ import { WIDE_CONFETTI } from "config/confetti";
 import { useBoardGame } from "contexts/BoardGameContext";
 import filterActions from "utils/user/filterActions";
 
+import { socket } from "utils/socket";
+
 import DrawArea from "../DrawArea";
 import GuessingBoard from "./GuessingBoard";
 
@@ -16,7 +18,6 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
     moves,
     player: { isDrawing },
     playerID,
-    rawClient,
   } = useBoardGame();
   const [lines, setLines] = useState([]);
   const [remainingSeconds, setRemainingSeconds] = useState(G.turnEndTime - currentTime());
@@ -25,6 +26,14 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
     id: null,
     success: false,
   };
+  const [connectedSocket, setConnectedSocket] = useState(undefined);
+
+  useEffect(() => {
+    if (connectedSocket !== undefined) return;
+    var s = socket();
+    s.connect();
+    setConnectedSocket(s.socket);
+  }, [connectedSocket]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -44,6 +53,7 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
 
   useEffect(() => {
     const broadcastHandler = (matchID, data) => {
+      console.log("WOAH", matchID, data);
       if (data.type === "UpdateDrawing" && !isDrawing) {
         setLines(data.args[0]);
       }
@@ -51,18 +61,21 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
     if (isDrawing) {
       setLines([]);
     } else {
-      if (!rawClient.transport.socket) return; // TODO: we should show some error here
-      rawClient.transport.socket.on("broadcast", broadcastHandler);
+      if (!connectedSocket) return; // TODO: we should show some error here
+      connectedSocket.on("update", broadcastHandler);
     }
     return () => {
-      if (rawClient.transport.socket)
-        rawClient.transport.socket.removeListener("broadcast", broadcastHandler);
+      if (connectedSocket) connectedSocket.removeListener("update", broadcastHandler);
     };
-  }, [isDrawing, rawClient.transport.socket]);
+  }, [isDrawing, connectedSocket]);
 
   useEffect(() => {
-    if (isDrawing) moves.UpdateDrawing(lines);
-  }, [isDrawing, moves, lines]);
+    if (isDrawing) {
+      if (connectedSocket) {
+        connectedSocket.emit("update", "action", "stateID", "matchID", "playerID");
+      }
+    }
+  }, [isDrawing, lines, connectedSocket]);
 
   return (
     <>
