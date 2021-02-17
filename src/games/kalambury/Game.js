@@ -131,7 +131,7 @@ export const Kalambury = {
             moves: {
               SendText: {
                 move: SendText,
-                unsafe: true,
+                ignoreStaleStateID: true,
               },
               StartGame,
             },
@@ -140,7 +140,7 @@ export const Kalambury = {
             moves: {
               SendText: {
                 move: SendText,
-                unsafe: true,
+                ignoreStaleStateID: true,
               },
             },
           },
@@ -175,10 +175,6 @@ export const Kalambury = {
         stages: {
           draw: {
             moves: {
-              UpdateDrawing: {
-                move: (_G, _ctx, lines) => {},
-                broadcast: true,
-              },
               ChangePhrase: {
                 move: ChangePhrase,
                 client: false,
@@ -194,7 +190,7 @@ export const Kalambury = {
             moves: {
               Guess: {
                 move: Guess,
-                unsafe: true,
+                ignoreStaleStateID: true,
                 client: false,
               },
               NotifyTimeout,
