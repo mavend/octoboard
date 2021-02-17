@@ -8,7 +8,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^7.2.1",
-    "boardgame.io": "^0.41.1",
+    "boardgame.io": "^0.43.2",
     "esm": "^3.2.25",
     "firebase": "^7.24.0",
     "firebase-admin": "^9.2.0",
