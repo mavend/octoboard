@@ -29,7 +29,6 @@ const BoardGameContextMock = ({ children }) => {
       }}
       playerID={"0"}
       matchID={"qwe123"}
-      rawClient={{ transport: { socket: null } }}
       gameMetadata={[
         { id: 0, name: "user-0", isConnected: true },
         { id: 1, name: "user-1", isConnected: false },

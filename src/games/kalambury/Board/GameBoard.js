@@ -7,8 +7,6 @@ import { WIDE_CONFETTI } from "config/confetti";
 import { useBoardGame } from "contexts/BoardGameContext";
 import filterActions from "utils/user/filterActions";
 
-import { socket } from "utils/socket";
-
 import DrawArea from "../DrawArea";
 import GuessingBoard from "./GuessingBoard";
 
@@ -18,6 +16,8 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
     moves,
     player: { isDrawing },
     playerID,
+    chatMessages,
+    sendChatMessage,
   } = useBoardGame();
   const [lines, setLines] = useState([]);
   const [remainingSeconds, setRemainingSeconds] = useState(G.turnEndTime - currentTime());
@@ -26,14 +26,6 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
     id: null,
     success: false,
   };
-  const [connectedSocket, setConnectedSocket] = useState(undefined);
-
-  useEffect(() => {
-    if (connectedSocket !== undefined) return;
-    var s = socket();
-    s.connect();
-    setConnectedSocket(s.socket);
-  }, [connectedSocket]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -52,30 +44,24 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
   }, [lastUserGuess.id, lastUserGuess.success]);
 
   useEffect(() => {
-    const broadcastHandler = (matchID, data) => {
-      console.log("WOAH", matchID, data);
-      if (data.type === "UpdateDrawing" && !isDrawing) {
-        setLines(data.args[0]);
-      }
-    };
     if (isDrawing) {
       setLines([]);
-    } else {
-      if (!connectedSocket) return; // TODO: we should show some error here
-      connectedSocket.on("update", broadcastHandler);
     }
-    return () => {
-      if (connectedSocket) connectedSocket.removeListener("update", broadcastHandler);
-    };
-  }, [isDrawing, connectedSocket]);
+  }, [isDrawing]);
+
+  useEffect(() => {
+    if (isDrawing || chatMessages.length <= 0) return;
+    const lastMessage = chatMessages[chatMessages.length - 1].payload;
+    if (lastMessage.type == "UpdateDrawing") {
+      setLines(lastMessage.data);
+    }
+  }, [chatMessages]);
 
   useEffect(() => {
     if (isDrawing) {
-      if (connectedSocket) {
-        connectedSocket.emit("update", "action", "stateID", "matchID", "playerID");
-      }
+      sendChatMessage({ type: "UpdateDrawing", data: lines });
     }
-  }, [isDrawing, lines, connectedSocket]);
+  }, [isDrawing, lines]);
 
   return (
     <>

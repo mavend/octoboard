@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useParams, Redirect } from "react-router-dom";
 import { Client } from "boardgame.io/react";
-import { socket } from "utils/socket";
+import { SocketIO } from "boardgame.io/multiplayer";
+import { API_ROOT } from "config/api";
 import { intersection, pickBy, identity, find, some, keys, map } from "lodash";
 
 import { routes } from "config/routes";
@@ -112,7 +113,7 @@ const GamePage = () => {
         game: game,
         board: BoardGameProvider,
         loading: Loading,
-        multiplayer: socket,
+        multiplayer: SocketIO({ server: API_ROOT }),
         debug: document.location.hostname === "localhost" && getUrlParam("debug") === "true",
       }),
     [game]

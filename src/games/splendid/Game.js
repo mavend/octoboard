@@ -226,7 +226,7 @@ export const Splendid = {
             moves: {
               SendText: {
                 move: SendText,
-                unsafe: true,
+                ignoreStaleStateID: true,
               },
               StartGame,
             },
@@ -235,7 +235,7 @@ export const Splendid = {
             moves: {
               SendText: {
                 move: SendText,
-                unsafe: true,
+                ignoreStaleStateID: true,
               },
             },
           },

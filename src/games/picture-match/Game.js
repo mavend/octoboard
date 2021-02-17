@@ -138,7 +138,7 @@ export const PictureMatch = {
             moves: {
               SendText: {
                 move: SendText,
-                unsafe: true,
+                ignoreStaleStateID: true,
               },
               StartGame: {
                 move: StartGame,
@@ -150,7 +150,7 @@ export const PictureMatch = {
             moves: {
               SendText: {
                 move: SendText,
-                unsafe: true,
+                ignoreStaleStateID: true,
               },
             },
           },
