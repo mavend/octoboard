@@ -55,13 +55,13 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
     if (lastMessage.type === "UpdateDrawing") {
       setLines(lastMessage.data);
     }
-  }, [chatMessages]);
+  }, [isDrawing, chatMessages]);
 
   useEffect(() => {
     if (isDrawing) {
       sendChatMessage({ type: "UpdateDrawing", data: lines });
     }
-  }, [isDrawing, lines]);
+  }, [isDrawing, lines, sendChatMessage]);
 
   return (
     <>

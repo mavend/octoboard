@@ -1,6 +1,9 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Header, Form, Segment } from "semantic-ui-react";
+import { isEqual } from "lodash";
+
+import { useDeepCompareEffect } from "utils/hooks";
 
 import { useBoardGame } from "contexts/BoardGameContext";
 import GameLayout from "components/layout/GameLayout";
@@ -48,10 +51,11 @@ const Board = () => {
 
   const connectedPlayers = players.filter((p) => p.isConnected).map((p) => p.id);
 
-  useEffect(() => {
-    console.log("Updating connected players:", connectedPlayers);
-    UpdateConnectedPlayers(connectedPlayers);
-  }, [JSON.stringify(connectedPlayers)]);
+  useDeepCompareEffect(() => {
+    if (!isEqual(connectedPlayers, G.connectedPlayers)) {
+      UpdateConnectedPlayers(connectedPlayers);
+    }
+  }, [UpdateConnectedPlayers, connectedPlayers, G.connectedPlayers]);
 
   return (
     <GameLayout gameName={t("game.name")} handleActionClick={handleActionClick}>
