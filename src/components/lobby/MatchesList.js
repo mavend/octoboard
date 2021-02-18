@@ -149,33 +149,45 @@ const MatchesListItem = React.memo(
     );
 
     return (
-      <Item>
+      <Item style={{ width: "100%" }}>
         <Media greaterThanOrEqual="computer">
-          <Item.Content>
-            <Item.Image avatar size="tiny" src={game.image} />
-            <Item.Header style={{ display: "block" }}>
-              {game.name}
-              <MatchLabels detailed labelsStyle={{ marginLeft: "1rem" }} />
-              <JoinGameButton floated="right" />
-            </Item.Header>
-            <Item.Extra>
-              <MatchMembers detailed />
-            </Item.Extra>
-          </Item.Content>
+          {(mediaClassNames, renderChildren) => (
+            <Item.Content className={mediaClassNames}>
+              {renderChildren && (
+                <>
+                  <Item.Image avatar size="tiny" src={game.image} />
+                  <Item.Header style={{ display: "block" }}>
+                    {game.name}
+                    <MatchLabels detailed labelsStyle={{ marginLeft: "1rem" }} />
+                    <JoinGameButton floated="right" />
+                  </Item.Header>
+                  <Item.Extra>
+                    <MatchMembers detailed />
+                  </Item.Extra>
+                </>
+              )}
+            </Item.Content>
+          )}
         </Media>
         <Media lessThan="computer">
-          <Item.Content>
-            <Item.Header style={{ display: "block" }}>
-              {game.name}
-              <JoinGameButton style={{ marginLeft: "1rem" }} size="small" />
-            </Item.Header>
-            <Item.Description>
-              <MatchLabels />
-            </Item.Description>
-            <Item.Extra>
-              <MatchMembers />
-            </Item.Extra>
-          </Item.Content>
+          {(mediaClassNames, renderChildren) => (
+            <Item.Content className={mediaClassNames}>
+              {renderChildren && (
+                <>
+                  <Item.Header style={{ display: "block" }}>
+                    {game.name}
+                    <JoinGameButton style={{ marginLeft: "1rem" }} size="small" />
+                  </Item.Header>
+                  <Item.Description>
+                    <MatchLabels />
+                  </Item.Description>
+                  <Item.Extra>
+                    <MatchMembers />
+                  </Item.Extra>
+                </>
+              )}
+            </Item.Content>
+          )}
         </Media>
       </Item>
     );
