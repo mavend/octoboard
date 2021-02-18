@@ -75,11 +75,11 @@ const LobbyPage = ({ noRefetch }) => {
       }
 
       setLoading(true);
-      const freeSpotId = playerID || players.find((p) => !p.name).id;
+      const freeSpotId = (playerID || players.find((p) => !p.name).id).toString();
       lobbyClient
         .joinMatch(gameName, matchID, { playerID: freeSpotId, playerName: user.uid })
-        .then(async (response) => {
-          await DataStore.addCredentials(user.uid, matchID, response.playerCredentials);
+        .then(async ({ playerCredentials }) => {
+          await DataStore.addCredentials(user.uid, matchID, playerCredentials);
           setLoading(false);
           history.push(routes.game(gameName, matchID));
         })

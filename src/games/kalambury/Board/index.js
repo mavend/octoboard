@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Header, Form, Segment } from "semantic-ui-react";
 
@@ -12,8 +12,9 @@ const Board = () => {
   const {
     G,
     ctx: { phase },
+    players,
     player: { isDrawing, stage, phrase },
-    moves: { StartGame },
+    moves: { StartGame, UpdateConnectedPlayers },
   } = useBoardGame();
 
   const { t } = useTranslation("kalambury");
@@ -44,6 +45,13 @@ const Board = () => {
     },
     [isDrawing]
   );
+
+  const connectedPlayers = players.filter((p) => p.isConnected).map((p) => p.id);
+
+  useEffect(() => {
+    console.log("Updating connected players:", connectedPlayers);
+    UpdateConnectedPlayers(connectedPlayers);
+  }, [JSON.stringify(connectedPlayers)]);
 
   return (
     <GameLayout gameName={t("game.name")} handleActionClick={handleActionClick}>

@@ -46,7 +46,7 @@ const GamePage = () => {
     const currentCredentials = pickBy(credentials, identity);
     lobbyClient
       .listMatches(game.name)
-      .then((matches) => {
+      .then(({ matches }) => {
         const matchesWithUser = matches.filter((match) => find(match.players, { name: user.uid }));
         const currenMatches = intersection(
           keys(currentCredentials),

@@ -52,7 +52,7 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
   useEffect(() => {
     if (isDrawing || chatMessages.length <= 0) return;
     const lastMessage = chatMessages[chatMessages.length - 1].payload;
-    if (lastMessage.type == "UpdateDrawing") {
+    if (lastMessage.type === "UpdateDrawing") {
       setLines(lastMessage.data);
     }
   }, [chatMessages]);
