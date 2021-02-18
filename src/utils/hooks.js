@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { isEqual } from "lodash";
 
 function useDeepCompareMemoize(value) {
-  const ref = React.useRef();
+  const ref = useRef();
 
   if (!isEqual(value, ref.current)) {
     ref.current = value;
