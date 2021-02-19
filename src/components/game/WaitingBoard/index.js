@@ -23,7 +23,8 @@ const WaitingBoard = ({ guess, setGuess, onStartGame, children }) => {
     setGuess(e.target.value);
   };
 
-  const sendGuess = () => {
+  const sendGuess = (e) => {
+    e.preventDefault();
     if (guess) SendText(guess);
     setGuess("");
   };

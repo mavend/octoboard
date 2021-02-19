@@ -2,25 +2,25 @@ import React from "react";
 import { action } from "@storybook/addon-actions";
 import { boolean } from "@storybook/addon-knobs";
 
-import RoomsList from "./RoomsList";
+import MatchesList from "./MatchesList";
 
 export default {
-  component: RoomsList,
-  title: "Lobby/RoomsList",
+  component: MatchesList,
+  title: "Lobby/MatchesList",
   excludeStories: /.*Data$/,
 };
 
 export const Default = () => (
-  <RoomsList
-    rooms={[
-      { gameID: "qweasd1", gameName: "Kalambury", players: [{}, {}, {}], setupData: {} },
-      { gameID: "qweasd2", gameName: "Kalambury", players: [{}, {}, {}], setupData: {} },
-      { gameID: "qweasd3", gameName: "Kalambury", players: [{}, {}, {}], setupData: {} },
-      { gameID: "qweasd4", gameName: "Kalambury", players: [{}, {}, {}], setupData: {} },
+  <MatchesList
+    matches={[
+      { matchID: "qweasd1", gameName: "Kalambury", players: [{}, {}, {}], setupData: {} },
+      { matchID: "qweasd2", gameName: "Kalambury", players: [{}, {}, {}], setupData: {} },
+      { matchID: "qweasd3", gameName: "Kalambury", players: [{}, {}, {}], setupData: {} },
+      { matchID: "qweasd4", gameName: "Kalambury", players: [{}, {}, {}], setupData: {} },
     ]}
-    currentRoom={
+    currentMatch={
       boolean("Is in game?", true) && {
-        gameID: "qweasd0",
+        matchID: "qweasd0",
         gameName: "Kalambury",
         players: [
           { id: "0", name: "user-0" },
@@ -39,6 +39,6 @@ export const Default = () => (
         maxPlayers: 10,
       },
     ]}
-    onJoinRoom={action("onJoinRoom")}
+    onJoinMatch={action("onJoinMatch")}
   />
 );

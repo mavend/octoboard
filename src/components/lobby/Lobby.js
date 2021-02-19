@@ -8,45 +8,53 @@ import {
   Grid,
   Dimmer,
   Loader,
-  Responsive,
   Button,
   Icon,
 } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { GameType, RoomType } from "config/propTypes";
+import { GameType, MatchType } from "config/propTypes";
 import { routes } from "config/routes";
-import RoomsList from "components/lobby/RoomsList";
-import CreateRoomForm from "components/lobby/CreateRoomForm";
+import MatchesList from "components/lobby/MatchesList";
+import CreateMatchForm from "components/lobby/CreateMatchForm";
 import OctopusWrapper from "components/layout/OctopusWrapper";
+import { Media } from "config/media";
 
 const propTypes = {
-  rooms: arrayOf(RoomType).isRequired,
-  currentRoom: RoomType,
+  matches: arrayOf(MatchType).isRequired,
+  currentMatch: MatchType,
   games: arrayOf(GameType).isRequired,
-  handleJoinRoom: func.isRequired,
+  handleJoinMatch: func.isRequired,
   handleCreate: func.isRequired,
   loading: bool,
 };
 
-const Lobby = ({ rooms, currentRoom, games, handleJoinRoom, handleCreate, loading, loggedIn }) => {
+const Lobby = ({
+  matches,
+  currentMatch,
+  games,
+  handleJoinMatch,
+  handleCreate,
+  loading,
+  loggedIn,
+}) => {
   const { t } = useTranslation("lobby");
 
   const styles = {
-    noRoomImage: { margin: "0 auto" },
+    noMatchImage: { margin: "0 auto" },
   };
 
-  const createRoomSegment = () => (
+  const createMatchSegment = () => (
     <OctopusWrapper position="bottom-right" color="yellow" rotation="cw">
       <Segment>
         <Header as="h3" textAlign="center">
           {t("create.title")}
         </Header>
-        <CreateRoomForm
+        <CreateMatchForm
           loading={loading}
           games={games}
           onCreate={handleCreate}
-          disabled={!!currentRoom}
+          disabled={!!currentMatch}
           loggedIn={loggedIn}
         />
       </Segment>
@@ -68,19 +76,19 @@ const Lobby = ({ rooms, currentRoom, games, handleJoinRoom, handleCreate, loadin
     </OctopusWrapper>
   );
 
-  const roomsListSegment = () => (
+  const matchesListSegment = () => (
     <OctopusWrapper rotation="ccw">
       <Segment>
         <Header as="h3" textAlign="center">
           {t("list.title")}
         </Header>
         <div>
-          {rooms.length > 0 || currentRoom ? (
-            <RoomsList
-              rooms={rooms}
+          {matches.length > 0 || currentMatch ? (
+            <MatchesList
+              matches={matches}
               games={games}
-              currentRoom={currentRoom}
-              onJoinRoom={handleJoinRoom}
+              currentMatch={currentMatch}
+              onJoinMatch={handleJoinMatch}
               loggedIn={loggedIn}
             />
           ) : (
@@ -88,7 +96,7 @@ const Lobby = ({ rooms, currentRoom, games, handleJoinRoom, handleCreate, loadin
               <Header as="h4" textAlign="center" color="grey">
                 {t("list.empty")}
               </Header>
-              <Image style={styles.noRoomImage} src="/images/hugo-out.png" size="medium" />
+              <Image style={styles.noMatchImage} src="/images/hugo-out.png" size="medium" />
             </>
           )}
           {loading && (
@@ -103,20 +111,20 @@ const Lobby = ({ rooms, currentRoom, games, handleJoinRoom, handleCreate, loadin
 
   return (
     <Container>
-      <Responsive as={Grid} minWidth={Responsive.onlyComputer.minWidth}>
-        <Grid.Column width="12">{roomsListSegment()}</Grid.Column>
-        <Grid.Column width="4">{loggedIn ? createRoomSegment() : loginSegment()}</Grid.Column>
-      </Responsive>
-      <Responsive as={Grid} maxWidth={Responsive.onlyTablet.maxWidth}>
-        {!currentRoom && (
+      <Grid as={Media} greaterThanOrEqual="computer">
+        <Grid.Column width="12">{matchesListSegment()}</Grid.Column>
+        <Grid.Column width="4">{loggedIn ? createMatchSegment() : loginSegment()}</Grid.Column>
+      </Grid>
+      <Grid as={Media} lessThan="computer">
+        {!currentMatch && (
           <Grid.Row>
-            <Grid.Column>{loggedIn ? createRoomSegment() : loginSegment()}</Grid.Column>
+            <Grid.Column>{loggedIn ? createMatchSegment() : loginSegment()}</Grid.Column>
           </Grid.Row>
         )}
         <Grid.Row>
-          <Grid.Column>{roomsListSegment()}</Grid.Column>
+          <Grid.Column>{matchesListSegment()}</Grid.Column>
         </Grid.Row>
-      </Responsive>
+      </Grid>
     </Container>
   );
 };

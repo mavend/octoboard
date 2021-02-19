@@ -11,7 +11,7 @@ const CARDS_PER_LEVEL = 4;
 
 function setupGame(ctx, setupData) {
   const G = {
-    privateRoom: setupData && setupData.private,
+    privateMatch: setupData && setupData.private,
     actionsCount: 0,
     players: {},
     points: Array(ctx.numPlayers).fill(0),
@@ -113,7 +113,7 @@ function payForCard(player, card, publicTokens) {
 function BuyCard(G, ctx, level, cardId) {
   const player = G.players[ctx.currentPlayer];
   const { tokens, cards } = player;
-  const card = G.table[level].find((card) => card.id === cardId);
+  const card = G.table[level].find((card) => card && card.id === cardId);
 
   if (!canBuyCard(tokens, cards, card)) {
     return INVALID_MOVE;
@@ -226,7 +226,7 @@ export const Splendid = {
             moves: {
               SendText: {
                 move: SendText,
-                unsafe: true,
+                ignoreStaleStateID: true,
               },
               StartGame,
             },
@@ -235,7 +235,7 @@ export const Splendid = {
             moves: {
               SendText: {
                 move: SendText,
-                unsafe: true,
+                ignoreStaleStateID: true,
               },
             },
           },

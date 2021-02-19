@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useHistory, Redirect } from "react-router-dom";
 import { Button, Icon, Confirm } from "semantic-ui-react";
 import { useUser } from "contexts/UserContext";
-import { apiRequests } from "services/API";
+import { lobbyClient } from "services/LobbyClient";
 import DataStore from "services/DataStore";
 import { useBoardGame } from "contexts/BoardGameContext";
 import { routes } from "config/routes";
@@ -11,16 +11,16 @@ import { routes } from "config/routes";
 const LeaveButton = () => {
   const history = useHistory();
   const { t } = useTranslation();
-  const { playerID, gameID, gameName, credentials } = useBoardGame();
+  const { playerID, matchID, gameName, credentials } = useBoardGame();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [error, setError] = useState();
   const user = useUser();
 
   const handleLeave = () => {
-    apiRequests
-      .leaveGame(gameName, gameID, playerID, credentials)
+    lobbyClient
+      .leaveMatch(gameName, matchID, { playerID, credentials })
       .then(async () => {
-        await DataStore.deleteCredentials(user.uid, gameID);
+        await DataStore.deleteCredentials(user.uid, matchID);
         history.push(routes.lobby());
       })
       .catch((e) => {

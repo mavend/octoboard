@@ -1,9 +1,10 @@
 import React from "react";
 import { string, object } from "prop-types";
-import { Modal, Segment, Image, Header, Responsive } from "semantic-ui-react";
+import { Modal, Segment, Image, Header } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 import Footer from "./Footer";
 import LobbyPage from "views/lobby/LobbyPage";
+import { breakpoints, Media } from "config/media";
 
 const propTypes = {
   action: string.isRequired,
@@ -16,16 +17,12 @@ const CredentialsLayout = ({ action, modalOptions, children, ...props }) => {
   return (
     <>
       <LobbyPage noRefetch />
-      <Modal
-        open={true}
-        {...modalOptions}
-        centered={window.innerWidth > Responsive.onlyTablet.maxWidth}
-      >
+      <Modal open={true} {...modalOptions} centered={window.innerWidth >= breakpoints.computer}>
         <Modal.Header>{t(`${action}.title`)}</Modal.Header>
         <Modal.Content image>
-          <Responsive
-            as={Image}
-            minWidth={Responsive.onlyComputer.minWidth}
+          <Image
+            as={Media}
+            greaterThanOrEqual="tablet"
             wrapped
             size="medium"
             style={{ alignSelf: "center" }}

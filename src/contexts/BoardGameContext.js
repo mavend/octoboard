@@ -10,7 +10,7 @@ export const BoardGameProvider = ({ children, ...props }) => {
   const {
     G: { points, actions, players: playersData },
     ctx: { activePlayers, currentPlayer },
-    gameMetadata,
+    matchData,
     playerID,
   } = props;
   const [players, setPlayers] = useState([]);
@@ -24,7 +24,7 @@ export const BoardGameProvider = ({ children, ...props }) => {
   // Set players list
   useEffect(() => {
     const maxPoints = Math.max(...points);
-    const newPlayers = gameMetadata.map(({ id, name: uid, isConnected }) => {
+    const newPlayers = matchData.map(({ id, name: uid, isConnected }) => {
       const stage = activePlayers && activePlayers[id];
       const profile = profiles.get(uid);
       return {
@@ -45,7 +45,7 @@ export const BoardGameProvider = ({ children, ...props }) => {
     });
     setPlayers((players) => (isEqual(players, newPlayers) ? players : newPlayers));
   }, [
-    gameMetadata,
+    matchData,
     points,
     activePlayers,
     actions,

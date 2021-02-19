@@ -1,19 +1,20 @@
 import React from "react";
 
 import PropTypes from "prop-types";
-import { Responsive, Container, Grid, Image } from "semantic-ui-react";
+import { Container, Grid, Image } from "semantic-ui-react";
 import { ToastContainer, toast } from "react-toastify";
 
 import Sidebar from "components/game/Sidebar";
 import UserMenu from "components/user/UserMenu";
-import RoomTypeBadge from "components/game/RoomTypeBadge";
+import MatchTypeBadge from "components/game/MatchTypeBadge";
 
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./Layout.module.css";
+import { Media } from "config/media";
 
 const propTypes = {
   gameName: PropTypes.string.isRequired,
-  privateRoom: PropTypes.bool,
+  privateMatch: PropTypes.bool,
   header: PropTypes.node,
   handleActionClick: PropTypes.func,
   extraPlayerContent: PropTypes.func,
@@ -23,7 +24,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  privateRoom: false,
+  privateMatch: false,
   header: null,
   sidebarSize: 4,
   showCurrentPlayer: true,
@@ -31,7 +32,7 @@ const defaultProps = {
 
 const GameLayout = ({
   gameName,
-  privateRoom,
+  privateMatch,
   header,
   handleActionClick,
   sidebarHeader,
@@ -48,13 +49,13 @@ const GameLayout = ({
             <Image src="/images/octoboard-small.svg" slt="Octoboard logo" />
           </span>
           <span className={styles.gameName}>{gameName}</span>
-          <RoomTypeBadge privateRoom={privateRoom} detailed />
+          <MatchTypeBadge privateMatch={privateMatch} detailed />
           <UserMenu className={styles.userMenu} />
         </Container>
       </div>
       <Container>
         {header}
-        <Responsive as={Grid} minWidth={Responsive.onlyComputer.minWidth}>
+        <Grid as={Media} greaterThanOrEqual="computer">
           <Grid.Column width={16 - sidebarSize}>
             <Grid.Row>{children}</Grid.Row>
           </Grid.Column>
@@ -68,8 +69,8 @@ const GameLayout = ({
               />
             </Grid.Row>
           </Grid.Column>
-        </Responsive>
-        <Responsive as={Grid} maxWidth={Responsive.onlyTablet.maxWidth}>
+        </Grid>
+        <Grid as={Media} lessThan="computer">
           <Grid.Row>
             <Grid.Column>{children}</Grid.Column>
           </Grid.Row>
@@ -83,7 +84,7 @@ const GameLayout = ({
               />
             </Grid.Column>
           </Grid.Row>
-        </Responsive>
+        </Grid>
         <ToastContainer toastClassName={styles.toast} position={toast.POSITION.TOP_CENTER} />
       </Container>
     </>

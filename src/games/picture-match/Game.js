@@ -36,7 +36,7 @@ function setupGame(ctx, setupData) {
       deck: [],
       used: [],
     },
-    privateRoom: setupData && setupData.private,
+    privateMatch: setupData && setupData.private,
     currentCard: { pictures: [], layout: 0, rotation: 0 },
     styles: Object.keys(styles),
     style: "color",
@@ -138,7 +138,7 @@ export const PictureMatch = {
             moves: {
               SendText: {
                 move: SendText,
-                unsafe: true,
+                ignoreStaleStateID: true,
               },
               StartGame: {
                 move: StartGame,
@@ -150,7 +150,7 @@ export const PictureMatch = {
             moves: {
               SendText: {
                 move: SendText,
-                unsafe: true,
+                ignoreStaleStateID: true,
               },
             },
           },

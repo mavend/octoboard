@@ -16,7 +16,8 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
     moves,
     player: { isDrawing },
     playerID,
-    rawClient,
+    chatMessages,
+    sendChatMessage,
   } = useBoardGame();
   const [lines, setLines] = useState([]);
   const [remainingSeconds, setRemainingSeconds] = useState(G.turnEndTime - currentTime());
@@ -43,26 +44,24 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
   }, [lastUserGuess.id, lastUserGuess.success]);
 
   useEffect(() => {
-    const broadcastHandler = (gameID, data) => {
-      if (data.type === "UpdateDrawing" && !isDrawing) {
-        setLines(data.args[0]);
-      }
-    };
     if (isDrawing) {
       setLines([]);
-    } else {
-      if (!rawClient.transport.socket) return; // TODO: we should show some error here
-      rawClient.transport.socket.on("broadcast", broadcastHandler);
     }
-    return () => {
-      if (rawClient.transport.socket)
-        rawClient.transport.socket.removeListener("broadcast", broadcastHandler);
-    };
-  }, [isDrawing, rawClient.transport.socket]);
+  }, [isDrawing]);
 
   useEffect(() => {
-    if (isDrawing) moves.UpdateDrawing(lines);
-  }, [isDrawing, moves, lines]);
+    if (isDrawing || chatMessages.length <= 0) return;
+    const lastMessage = chatMessages[chatMessages.length - 1].payload;
+    if (lastMessage.type === "UpdateDrawing") {
+      setLines(lastMessage.data);
+    }
+  }, [isDrawing, chatMessages]);
+
+  useEffect(() => {
+    if (isDrawing) {
+      sendChatMessage({ type: "UpdateDrawing", data: lines });
+    }
+  }, [isDrawing, lines, sendChatMessage]);
 
   return (
     <>

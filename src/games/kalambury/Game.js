@@ -14,7 +14,7 @@ function setupGame(ctx, setupData) {
       phrase: "",
       phrases: ctx.random.Shuffle([...proverbs, ...idioms, ...nounPhrases]),
     },
-    privateRoom: setupData && setupData.private,
+    privateMatch: setupData && setupData.private,
     actionsCount: 0,
     startTime: new Date(),
     timePerTurn: 120,
@@ -25,6 +25,7 @@ function setupGame(ctx, setupData) {
     points: Array(ctx.numPlayers).fill(0),
     maxPoints: 0,
     actions: [],
+    connectedPlayers: [],
   };
 
   for (let i = 0; i < ctx.numPlayers; i++) {
@@ -103,6 +104,10 @@ function StartGame(G, ctx, mode, maxPoints = 0) {
 
 function NotifyTimeout(G, ctx) {}
 
+function UpdateConnectedPlayers(G, ctx, connectedPlayers) {
+  G.connectedPlayers = connectedPlayers;
+}
+
 function indexOfMax(array) {
   const maxValue = Math.max(...array);
   return keys(pickBy(array, (p) => p === maxValue)).map(Number);
@@ -131,16 +136,24 @@ export const Kalambury = {
             moves: {
               SendText: {
                 move: SendText,
-                unsafe: true,
+                ignoreStaleStateID: true,
               },
               StartGame,
+              UpdateConnectedPlayers: {
+                move: UpdateConnectedPlayers,
+                ignoreStaleStateID: true,
+              },
             },
           },
           wait: {
             moves: {
               SendText: {
                 move: SendText,
-                unsafe: true,
+                ignoreStaleStateID: true,
+              },
+              UpdateConnectedPlayers: {
+                move: UpdateConnectedPlayers,
+                ignoreStaleStateID: true,
               },
             },
           },
@@ -167,18 +180,18 @@ export const Kalambury = {
         order: {
           first: () => 0,
           next: (G, ctx) => {
-            const activeIdxs = keys(pickBy(ctx.gameMetadata, "isConnected"));
-            const nextActiveIdx = (activeIdxs.indexOf(ctx.currentPlayer) + 1) % activeIdxs.length;
-            return parseInt(activeIdxs[nextActiveIdx] || 0);
+            const currentPlayer = parseInt(ctx.currentPlayer);
+            if (G.connectedPlayers && G.connectedPlayers.length > 0) {
+              const nextActiveIdx =
+                (G.connectedPlayers.indexOf(currentPlayer) + 1) % G.connectedPlayers.length;
+              return G.connectedPlayers[nextActiveIdx] || 0;
+            }
+            return (currentPlayer + 1) % ctx.numPlayers;
           },
         },
         stages: {
           draw: {
             moves: {
-              UpdateDrawing: {
-                move: (_G, _ctx, lines) => {},
-                broadcast: true,
-              },
               ChangePhrase: {
                 move: ChangePhrase,
                 client: false,
@@ -188,16 +201,24 @@ export const Kalambury = {
                 client: false,
               },
               NotifyTimeout,
+              UpdateConnectedPlayers: {
+                move: UpdateConnectedPlayers,
+                ignoreStaleStateID: true,
+              },
             },
           },
           guess: {
             moves: {
               Guess: {
                 move: Guess,
-                unsafe: true,
+                ignoreStaleStateID: true,
                 client: false,
               },
               NotifyTimeout,
+              UpdateConnectedPlayers: {
+                move: UpdateConnectedPlayers,
+                ignoreStaleStateID: true,
+              },
             },
           },
         },

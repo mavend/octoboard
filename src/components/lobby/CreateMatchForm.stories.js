@@ -2,16 +2,16 @@ import React from "react";
 import { action } from "@storybook/addon-actions";
 import { boolean } from "@storybook/addon-knobs";
 
-import CreateRoomForm from "./CreateRoomForm";
+import CreateMatchForm from "./CreateMatchForm";
 
 export default {
-  component: CreateRoomForm,
-  title: "Lobby/CreateRoomForm",
+  component: CreateMatchForm,
+  title: "Lobby/CreateMatchForm",
   excludeStories: /.*Data$/,
 };
 
 export const Default = () => (
-  <CreateRoomForm
+  <CreateMatchForm
     loading={boolean("Loading?", false)}
     disabled={boolean("Disabled?", false)}
     games={[

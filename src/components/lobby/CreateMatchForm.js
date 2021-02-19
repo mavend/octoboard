@@ -11,10 +11,10 @@ const propTypes = {
   loading: bool,
 };
 
-const CreateRoomForm = ({ games, onCreate, disabled, loading }) => {
+const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
   const [game, setGame] = useState(games[0]);
   const [players, setPlayers] = useState();
-  const [privateRoom, setPrivateRoom] = useState(true);
+  const [privateMatch, setPrivateMatch] = useState(true);
   const [playersOptions, setPlayersOptions] = useState([]);
   const { t } = useTranslation("lobby");
 
@@ -35,7 +35,10 @@ const CreateRoomForm = ({ games, onCreate, disabled, loading }) => {
   }, [game, setPlayersOptions, setPlayers]);
 
   return (
-    <Form onSubmit={() => onCreate(game.name, players, { private: privateRoom })} loading={loading}>
+    <Form
+      onSubmit={() => onCreate(game.name, players, { private: privateMatch })}
+      loading={loading}
+    >
       <Form.Select
         fluid
         label={t("create.game_type")}
@@ -52,9 +55,9 @@ const CreateRoomForm = ({ games, onCreate, disabled, loading }) => {
       />
       <Form.Checkbox
         toggle
-        label={t(`create.private.${privateRoom}`)}
-        checked={privateRoom}
-        onChange={(_, { checked }) => setPrivateRoom(checked)}
+        label={t(`create.private.${privateMatch}`)}
+        checked={privateMatch}
+        onChange={(_, { checked }) => setPrivateMatch(checked)}
       />
       <Button fluid color="orange" type="submit" disabled={disabled}>
         {t("create.button")}
@@ -63,6 +66,6 @@ const CreateRoomForm = ({ games, onCreate, disabled, loading }) => {
   );
 };
 
-CreateRoomForm.propTypes = propTypes;
+CreateMatchForm.propTypes = propTypes;
 
-export default CreateRoomForm;
+export default CreateMatchForm;

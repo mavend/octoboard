@@ -1,6 +1,9 @@
 import React, { useState, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Header, Form, Segment } from "semantic-ui-react";
+import { isEqual } from "lodash";
+
+import { useDeepCompareEffect } from "utils/hooks";
 
 import { useBoardGame } from "contexts/BoardGameContext";
 import GameLayout from "components/layout/GameLayout";
@@ -12,8 +15,9 @@ const Board = () => {
   const {
     G,
     ctx: { phase },
+    players,
     player: { isDrawing, stage, phrase },
-    moves: { StartGame },
+    moves: { StartGame, UpdateConnectedPlayers },
   } = useBoardGame();
 
   const { t } = useTranslation("kalambury");
@@ -44,6 +48,14 @@ const Board = () => {
     },
     [isDrawing]
   );
+
+  const connectedPlayers = players.filter((p) => p.isConnected).map((p) => p.id);
+
+  useDeepCompareEffect(() => {
+    if (!isEqual(connectedPlayers, G.connectedPlayers)) {
+      UpdateConnectedPlayers(connectedPlayers);
+    }
+  }, [UpdateConnectedPlayers, connectedPlayers, G.connectedPlayers]);
 
   return (
     <GameLayout gameName={t("game.name")} handleActionClick={handleActionClick}>

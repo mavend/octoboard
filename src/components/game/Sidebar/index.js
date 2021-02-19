@@ -5,7 +5,7 @@ import { Header, Segment } from "semantic-ui-react";
 import Player from "./Player";
 import { useBoardGame } from "contexts/BoardGameContext";
 import LeaveButton from "components/game/LeaveButton";
-import RoomTypeBadge from "components/game/RoomTypeBadge";
+import MatchTypeBadge from "components/game/MatchTypeBadge";
 
 const propTypes = {
   handleActionClick: PropTypes.func,
@@ -54,7 +54,7 @@ const SidebarHeader = () => {
   return (
     <Header as="h2" textAlign="center" style={{ marginBottom: "-5px" }}>
       {t("game.players")}
-      <RoomTypeBadge privateRoom={G.privateRoom} detailed />
+      <MatchTypeBadge privateMatch={G.privateMatch} detailed />
     </Header>
   );
 };

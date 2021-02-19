@@ -1,10 +1,11 @@
 import React, { Suspense } from "react";
 import { Router, Switch, Route } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Dimmer, Loader } from "semantic-ui-react";
 
 import { routes } from "config/routes";
 import history from "config/history";
+import { mediaStyle, MediaContextProvider } from "config/media";
 
 import { UserProvider } from "contexts/UserContext";
 import { PrivateRoute } from "utils/router/Private";
@@ -27,34 +28,39 @@ const Loading = () => (
 const App = () => {
   return (
     <Suspense fallback={<Loading />}>
-      <ErrorBoundary>
-        <UserProvider>
-          <HelmetProvider>
-            <Router history={history}>
-              <Switch>
-                <Route exact path={routes.lobby()}>
-                  <LobbyPage />
-                </Route>
-                <NotLoggedInRoute exact path={routes.login()}>
-                  <LoginPage />
-                </NotLoggedInRoute>
-                <NotLoggedInRoute exact path={routes.login_guest()}>
-                  <AnonymousLoginPage />
-                </NotLoggedInRoute>
-                <NotLoggedInRoute exact path={routes.register()}>
-                  <RegisterPage />
-                </NotLoggedInRoute>
-                <PrivateRoute path={routes.game()}>
-                  <GamePage />
-                </PrivateRoute>
-                <PrivateRoute path={routes.change_password()}>
-                  <ChangePassword />
-                </PrivateRoute>
-              </Switch>
-            </Router>
-          </HelmetProvider>
-        </UserProvider>
-      </ErrorBoundary>
+      <MediaContextProvider>
+        <ErrorBoundary>
+          <UserProvider>
+            <HelmetProvider>
+              <Helmet>
+                <style type="text/css">{mediaStyle}</style>
+              </Helmet>
+              <Router history={history}>
+                <Switch>
+                  <Route exact path={routes.lobby()}>
+                    <LobbyPage />
+                  </Route>
+                  <NotLoggedInRoute exact path={routes.login()}>
+                    <LoginPage />
+                  </NotLoggedInRoute>
+                  <NotLoggedInRoute exact path={routes.login_guest()}>
+                    <AnonymousLoginPage />
+                  </NotLoggedInRoute>
+                  <NotLoggedInRoute exact path={routes.register()}>
+                    <RegisterPage />
+                  </NotLoggedInRoute>
+                  <PrivateRoute path={routes.game()}>
+                    <GamePage />
+                  </PrivateRoute>
+                  <PrivateRoute path={routes.change_password()}>
+                    <ChangePassword />
+                  </PrivateRoute>
+                </Switch>
+              </Router>
+            </HelmetProvider>
+          </UserProvider>
+        </ErrorBoundary>
+      </MediaContextProvider>
     </Suspense>
   );
 };

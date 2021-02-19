@@ -13,9 +13,9 @@ import BonusCard from "./BonusCard";
 import styles from "./GameCard.module.css";
 
 const LEVEL_CLASS = {
-  "1": styles.cardYellow,
-  "2": styles.cardRed,
-  "3": styles.cardBlue,
+  1: styles.cardYellow,
+  2: styles.cardRed,
+  3: styles.cardBlue,
 };
 
 const propTypes = {

@@ -6,9 +6,9 @@
   },
   "game": {
     "leave": {
-      "button": "Leave Room",
+      "button": "Leave Match",
       "modal": {
-        "content": "Do you really want to leave this room?",
+        "content": "Do you really want to leave this match?",
         "confirm": "Yes",
         "cancel": "No"
       }

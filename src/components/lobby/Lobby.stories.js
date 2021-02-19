@@ -13,24 +13,24 @@ export default {
 export const Default = () => (
   <Lobby
     loading={boolean("Loading?", false)}
-    rooms={[]}
+    matches={[]}
     games={[{ name: "Kalambury", image: "", minPlayers: 0, maxPlayers: 10 }]}
     handleCreate={action("handleCreate")}
   />
 );
 
-export const WithRooms = () => (
+export const WithMatches = () => (
   <Lobby
     loading={boolean("Loading?", false)}
-    rooms={[
-      { gameID: "qweasd1", gameName: "Kalambury", players: [{}, {}, {}], setupData: {} },
-      { gameID: "qweasd2", gameName: "Kalambury", players: [{}, {}, {}], setupData: {} },
-      { gameID: "qweasd3", gameName: "Kalambury", players: [{}, {}, {}], setupData: {} },
-      { gameID: "qweasd4", gameName: "Kalambury", players: [{}, {}, {}], setupData: {} },
+    matches={[
+      { matchID: "qweasd1", gameName: "Kalambury", players: [{}, {}, {}], setupData: {} },
+      { matchID: "qweasd2", gameName: "Kalambury", players: [{}, {}, {}], setupData: {} },
+      { matchID: "qweasd3", gameName: "Kalambury", players: [{}, {}, {}], setupData: {} },
+      { matchID: "qweasd4", gameName: "Kalambury", players: [{}, {}, {}], setupData: {} },
     ]}
-    currentRoom={
+    currentMatch={
       boolean("Is in game?", true) && {
-        gameID: "qweasd0",
+        matchID: "qweasd0",
         gameName: "Kalambury",
         players: [
           { id: "0", name: "user-0" },
@@ -50,6 +50,6 @@ export const WithRooms = () => (
         maxPlayers: 10,
       },
     ]}
-    handleJoinRoom={action("handleJoinRoom")}
+    handleJoinMatch={action("handleJoinMatch")}
   />
 );
