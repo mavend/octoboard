@@ -58,7 +58,11 @@ const Board = () => {
   }, [UpdateConnectedPlayers, connectedPlayers, G.connectedPlayers]);
 
   return (
-    <GameLayout gameName={t("game.name")} handleActionClick={handleActionClick}>
+    <GameLayout
+      gameName={t("game.name")}
+      privateMatch={G.privateMatch}
+      handleActionClick={handleActionClick}
+    >
       <Header as="h2" textAlign="center">
         {hasGameStarted ? t(`header.${phase}.${stage}`) : t(`header.${phase}`)}
         <Header.Subheader>{isDrawing ? phrase : t(`subheader.${phase}.${stage}`)}</Header.Subheader>
