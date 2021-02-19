@@ -24,7 +24,7 @@ const Board = () => {
   const hasGameStarted = phase === "play";
 
   return (
-    <GameLayout gameName={t("game.name")} showCurrentPlayer={false}>
+    <GameLayout gameName={t("game.name")} privateMatch={G.privateMatch} showCurrentPlayer={false}>
       <Header as="h2" textAlign="center">
         {t(`header.${phase}`)}
         <Header.Subheader>{t(`subheader.${phase}.${stage}`)}</Header.Subheader>

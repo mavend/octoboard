@@ -1,4 +1,5 @@
 import React from "react";
+import { action } from "@storybook/addon-actions";
 import { boolean, number, text, select } from "@storybook/addon-knobs";
 import { BoardGameProvider } from "contexts/BoardGameContext";
 
@@ -29,12 +30,14 @@ const BoardGameContextMock = ({ children }) => {
       }}
       playerID={"0"}
       matchID={"qwe123"}
-      gameMetadata={[
+      matchData={[
         { id: 0, name: "user-0", isConnected: true },
         { id: 1, name: "user-1", isConnected: false },
         { id: 2, name: "user-2", isConnected: true },
         { id: 3 },
       ]}
+      chatMessages={[]}
+      sendChatMessage={action("sendChatMessage")}
     >
       {children}
     </BoardGameProvider>

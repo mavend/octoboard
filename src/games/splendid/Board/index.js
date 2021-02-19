@@ -192,6 +192,7 @@ const Board = () => {
   return (
     <GameLayout
       gameName={"Splendid"}
+      privateMatch={G.privateMatch}
       header={
         <Segment className={styles.topBar}>
           <BonusCards bonuses={G.bonuses || []} />

@@ -49,6 +49,7 @@ const GameLayout = ({
             <Image src="/images/octoboard-small.svg" slt="Octoboard logo" />
           </span>
           <span className={styles.gameName}>{gameName}</span>
+          <span>{privateMatch}</span>
           <MatchTypeBadge privateMatch={privateMatch} detailed />
           <UserMenu className={styles.userMenu} />
         </Container>
