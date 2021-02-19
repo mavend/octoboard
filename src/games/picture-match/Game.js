@@ -1,6 +1,5 @@
 import { PlayerView } from "boardgame.io/core";
 import cards from "./data/cards/8.json";
-import removeAccents from "remove-accents";
 
 // This dictionary keeps track of number of pictures for each style
 const styles = {
@@ -59,10 +58,6 @@ function setupGame(ctx, setupData) {
   return G;
 }
 
-function stripPhrase(phrase) {
-  return removeAccents(phrase).toLowerCase().replace(/\W/g, "");
-}
-
 function LogAction(G, ctx, playerID, action, params = {}, clear = false) {
   if (clear) {
     G.actions = [];
@@ -74,11 +69,6 @@ function LogAction(G, ctx, playerID, action, params = {}, clear = false) {
     action,
     ...params,
   });
-}
-
-function SendText(G, ctx, text) {
-  if (!stripPhrase(text)) return;
-  LogAction(G, ctx, ctx.playerID, "message", { text: text });
 }
 
 function StartGame(G, ctx, style, mode) {
@@ -136,10 +126,6 @@ export const PictureMatch = {
         stages: {
           manage: {
             moves: {
-              SendText: {
-                move: SendText,
-                ignoreStaleStateID: true,
-              },
               StartGame: {
                 move: StartGame,
                 client: false,
@@ -147,12 +133,7 @@ export const PictureMatch = {
             },
           },
           wait: {
-            moves: {
-              SendText: {
-                move: SendText,
-                ignoreStaleStateID: true,
-              },
-            },
+            moves: {},
           },
         },
       },
