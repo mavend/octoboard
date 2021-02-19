@@ -23,7 +23,8 @@ const GuessingBoard = ({
 
   const lastUserGuessID = lastUserGuess ? lastUserGuess.id : null;
 
-  const sendGuess = () => {
+  const sendGuess = (e) => {
+    e.preventDefault();
     if (guess) moves.Guess(guess);
     setGuess("");
   };

@@ -1,0 +1,28 @@
+.chat {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.header {
+  height: 45px;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: scroll;
+}
+
+.inputBox {
+  padding: 0 !important;
+  height: 38px;
+}
+
+.avatar {
+  margin-top: 0 !important;
+}
+
+.closeIcon {
+  float: right;
+  cursor: pointer;
+}

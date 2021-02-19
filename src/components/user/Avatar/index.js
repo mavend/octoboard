@@ -8,7 +8,7 @@ import { glasses, DefaultGlasses } from "./parts/glasses";
 import { borders, DefaultBorder } from "./parts/borders";
 
 const propTypes = {
-  uid: PropTypes.string.isRequired,
+  uid: PropTypes.string,
   small: PropTypes.bool,
   style: PropTypes.object,
   color: PropTypes.number,
@@ -52,7 +52,7 @@ const hashFn = (string) =>
 
 const Avatar = ({ uid, empty, small, ...props }) => {
   const find = (name, attributes, emptyAttribute) => {
-    if (empty) return emptyAttribute || attributes[0];
+    if (empty || uid === undefined) return emptyAttribute || attributes[0];
 
     if (props[name] !== null && props[name] !== undefined) {
       return attributes[Math.abs(props[name]) % attributes.length];
@@ -93,7 +93,7 @@ const Avatar = ({ uid, empty, small, ...props }) => {
         }}
       >
         <g style={{ fill: color, stroke: color, ...bodyStyle }}>
-          <Body />}
+          <Body />
         </g>
         <Eyes />
         <Features />
