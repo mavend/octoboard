@@ -99,7 +99,7 @@ function Match(G, ctx, picture) {
     G.secret.deck = ctx.random
       .Shuffle(G.secret.used)
       .map(({ pictures }) => randomizeCardLayout(ctx, pictures));
-    G.secter.used = [];
+    G.secret.used = [];
   }
 
   LogAction(G, ctx, ctx.playerID, "match", { picture: picture, style: G.style }, true);
