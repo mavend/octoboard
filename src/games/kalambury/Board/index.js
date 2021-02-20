@@ -71,11 +71,7 @@ const Board = () => {
           envokeLastAnswer={envokeLastAnswer}
         />
       ) : (
-        <WaitingBoard
-          guess={guess}
-          setGuess={setGuess}
-          onStartGame={() => StartGame(gameMode, maxPoints)}
-        >
+        <WaitingBoard onStartGame={() => StartGame(gameMode, maxPoints)}>
           <Segment style={{ minWidth: "260px" }}>
             <Header>{t("game.settings.mode")}</Header>
             <Form>

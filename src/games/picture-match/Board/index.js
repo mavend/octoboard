@@ -17,7 +17,6 @@ const Board = () => {
   } = useBoardGame();
 
   const { t } = useTranslation("picture-match");
-  const [guess, setGuess] = useState("");
   const [chosenStyle, setChosenStyle] = useState(G.style);
   const [gameMode, setGameMode] = useState(G.mode);
 
@@ -32,11 +31,7 @@ const Board = () => {
       {hasGameStarted ? (
         <MatchingBoard />
       ) : (
-        <WaitingBoard
-          guess={guess}
-          setGuess={setGuess}
-          onStartGame={() => StartGame(chosenStyle, gameMode)}
-        >
+        <WaitingBoard onStartGame={() => StartGame(chosenStyle, gameMode)}>
           <Segment>
             <Header>{t("game.settings.style")}</Header>
             <Image.Group>

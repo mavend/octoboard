@@ -4,7 +4,6 @@ import cards from "./data/cards.json";
 import bonuses from "./data/bonuses.json";
 import { canBuyCard, canTakeBonus, fromEntries } from "./utils";
 import { RESOURCES, RESOURCES_CONFIG, WINNING_POINTS } from "./config";
-import { stripPhrase } from "../../utils/strings";
 
 const REGULAR_RESOURCES = RESOURCES.filter((res) => res !== "gold");
 const CARDS_PER_LEVEL = 4;
@@ -45,11 +44,6 @@ function LogAction(G, ctx, playerID, action, params = {}, clear = false) {
     action,
     ...params,
   });
-}
-
-function SendText(G, ctx, text) {
-  if (!stripPhrase(text)) return;
-  LogAction(G, ctx, ctx.playerID, "message", { text: text });
 }
 
 function StartGame(G, ctx) {
@@ -224,20 +218,11 @@ export const Splendid = {
         stages: {
           manage: {
             moves: {
-              SendText: {
-                move: SendText,
-                ignoreStaleStateID: true,
-              },
               StartGame,
             },
           },
           wait: {
-            moves: {
-              SendText: {
-                move: SendText,
-                ignoreStaleStateID: true,
-              },
-            },
+            moves: {},
           },
         },
       },

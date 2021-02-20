@@ -11,6 +11,7 @@ import MatchTypeBadge from "components/game/MatchTypeBadge";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./Layout.module.css";
 import { Media } from "config/media";
+import { StickyChat } from "components/game/Chat";
 
 const propTypes = {
   gameName: PropTypes.string.isRequired,
@@ -85,6 +86,7 @@ const GameLayout = ({
             </Grid.Column>
           </Grid.Row>
         </Grid>
+        <StickyChat />
         <ToastContainer toastClassName={styles.toast} position={toast.POSITION.TOP_CENTER} />
       </Container>
     </>

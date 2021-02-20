@@ -54,11 +54,6 @@ function LogAction(G, ctx, playerID, action, params = {}, clear = false) {
   });
 }
 
-function SendText(G, ctx, text) {
-  if (!stripPhrase(text)) return;
-  LogAction(G, ctx, ctx.playerID, "message", { text: text });
-}
-
 function Guess(G, ctx, phrase) {
   if (!stripPhrase(phrase)) return;
 
@@ -134,10 +129,6 @@ export const Kalambury = {
         stages: {
           manage: {
             moves: {
-              SendText: {
-                move: SendText,
-                ignoreStaleStateID: true,
-              },
               StartGame,
               UpdateConnectedPlayers: {
                 move: UpdateConnectedPlayers,
@@ -147,10 +138,6 @@ export const Kalambury = {
           },
           wait: {
             moves: {
-              SendText: {
-                move: SendText,
-                ignoreStaleStateID: true,
-              },
               UpdateConnectedPlayers: {
                 move: UpdateConnectedPlayers,
                 ignoreStaleStateID: true,

@@ -12,20 +12,10 @@ export default {
   decorators: [gameDecorator],
 };
 
-export const Default = () => (
-  <WaitingBoard
-    setGuess={action("SetGuess")}
-    guess={text("Message", "Dzień dobry")}
-    onStartGame={action("onStartGame")}
-  />
-);
+export const Default = () => <WaitingBoard onStartGame={action("onStartGame")} />;
 
 export const WithSettings = () => (
-  <WaitingBoard
-    setGuess={action("SetGuess")}
-    guess={text("Message", "Dzień dobry")}
-    onStartGame={action("onStartGame")}
-  >
+  <WaitingBoard onStartGame={action("onStartGame")}>
     <h1>Some form or whatever</h1>
   </WaitingBoard>
 );
