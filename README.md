@@ -8,15 +8,20 @@ This is a collection of games that may help you and your friends kill the boredo
 
 ## Development
 
-Install dependencies `npm install`.
+Install dependencies `npm install`. To run firebase emulator in development you also need to install Java Development Kit `jdk`.
 
-Run react dev server with `npm start`.
-
-Run game server with: `node -r esm src/server.js`.
+Run development stack (react client, node server, firebase emulators, storybook) with `npm start`
 
 Setting `debug=true` in URL query will show debug overlay.
 
-We also have some storybooks. See them with `npm run storybook`.
+### Running individual services
+
+Sometimes you may want to run parts of application on their own. You can do this like this:
+
+- Run firebase emulators with `npx firebase emulators:start`.
+- Run react dev server with `npm run start:client`.
+- Run game server with: `node -r esm src/server.js`.
+- Run storybook wiht: `npm run storybook`.
 
 ## Note
 
