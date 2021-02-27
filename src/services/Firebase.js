@@ -13,6 +13,11 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_CORONA_FIREBASE_MEASURMENT_ID,
 };
 
+if (process.env.NODE_ENV === "development") {
+  firebaseConfig.projectId = "octoboard-development";
+  firebaseConfig.apiKey = "development-key";
+}
+
 firebase.initializeApp(firebaseConfig);
 const FirebaseClient = firebase;
 

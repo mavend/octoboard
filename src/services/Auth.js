@@ -9,6 +9,10 @@ async function initUserProfile(user, { displayName }) {
 
 const FirebaseAuth = FirebaseClient.auth();
 
+if (process.env.NODE_ENV === "development") {
+  FirebaseAuth.useEmulator("http://localhost:9099/");
+}
+
 const AuthProvider = {
   logInAnonymously: async (displayName) => {
     const { user } = await FirebaseAuth.signInAnonymously();

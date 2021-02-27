@@ -27,3 +27,5 @@ serviceAccountKey.json
 .env
 
 .DS_Store
+
+*.log

@@ -1,6 +1,14 @@
 import FirebaseClient from "./Firebase";
 
 const DB = FirebaseClient.firestore();
+if (process.env.NODE_ENV === "development") {
+  DB.settings({
+    host: "localhost:8080",
+    ssl: false,
+  });
+  // Initialize collection - otherwise auth fails
+  DB.collection("users").doc("public_profiles").set({});
+}
 
 const DataStore = {
   // Public users' profiles

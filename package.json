@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^7.2.1",
     "boardgame.io": "^0.43.2",
     "classnames": "^2.2.6",
+    "concurrently": "^6.0.0",
     "esm": "^3.2.25",
     "firebase": "^7.24.0",
     "firebase-admin": "^9.2.0",
@@ -36,7 +37,7 @@
     "semantic-ui-react": "^2.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently -p \"{time} [{name}]\" -t \"HH:mm:ss.SSS\" -n \"client,server,firebase,storybook\" -c \"green.bold,blue.bold,yellow.bold,magenta.bold\" \"npm:start:client\" \"npm:start:server\" \"npm:start:firebase\" \"npm:start:storybook\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -44,7 +45,11 @@
     "prettier-check": "pretty-quick --staged",
     "prettier-ci": "pretty-quick --check",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "start:server": "node -r esm src/server.js",
+    "start:client": "react-scripts start",
+    "start:firebase": "firebase emulators:start",
+    "start:storybook": "start-storybook -p 9009 -s public --quiet"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -71,6 +76,7 @@
     "@storybook/cli": "^6.0.26",
     "@storybook/preset-create-react-app": "^3.1.4",
     "@storybook/react": "^6.0.26",
+    "firebase-tools": "^9.5.0",
     "prettier": "^2.1.2",
     "storybook": "^6.0.26",
     "storybook-react-router": "^1.0.8"
