@@ -19,7 +19,7 @@
     "i18next-browser-languagedetector": "^4.0.2",
     "i18next-xhr-backend": "^3.2.2",
     "lodash": "^4.17.20",
-    "moment": "^2.24.0",
+    "moment": "^2.29.1",
     "mongodb": "^3.5.5",
     "pretty-quick": "^2.0.1",
     "prop-types": "^15.7.2",
