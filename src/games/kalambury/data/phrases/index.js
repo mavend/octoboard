@@ -8,6 +8,7 @@ export const languagesList = [
     key: "pl",
     name: "polski",
     sets: [
+      { key: "easy", name: "Proste słowa" },
       { key: "idioms", name: "Idiomy" },
       { key: "noun_phrases", name: "Frazy" },
       { key: "proverbs", name: "Przysłowia" },
