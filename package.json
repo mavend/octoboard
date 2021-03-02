@@ -12,7 +12,7 @@
     "classnames": "^2.2.6",
     "concurrently": "^6.0.0",
     "esm": "^3.2.25",
-    "firebase": "^7.24.0",
+    "firebase": "^8.2.9",
     "firebase-admin": "^9.2.0",
     "husky": "^4.2.3",
     "i18next": "^19.3.4",
