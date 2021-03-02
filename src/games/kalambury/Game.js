@@ -1,8 +1,8 @@
 import { PlayerView, Stage, INVALID_MOVE } from "boardgame.io/core";
 import { keys, pickBy } from "lodash";
-import proverbs from "./data/phrases/pl/proverbs.json";
-import idioms from "./data/phrases/pl/idioms.json";
-import nounPhrases from "./data/phrases/pl/noun_phrases.json";
+
+import { getPhrases } from "./data/phrases";
+
 import { currentTime } from "./utils/time";
 import removeAccents from "remove-accents";
 
@@ -10,9 +10,10 @@ const modes = ["regular", "infinite"];
 
 function setupGame(ctx, setupData) {
   const G = {
+    started: false,
     secret: {
       phrase: "",
-      phrases: ctx.random.Shuffle([...proverbs, ...idioms, ...nounPhrases]),
+      phrases: [],
     },
     privateMatch: setupData && setupData.private,
     actionsCount: 0,
@@ -89,11 +90,13 @@ function Forfeit(G, ctx) {
   ctx.events.endTurn();
 }
 
-function StartGame(G, ctx, mode, maxPoints = 0) {
-  G.mode = mode;
-  if (G.mode !== "infinite") {
-    G.maxPoints = maxPoints;
+function StartGame(G, ctx, gameMode, maxPoints, language, category) {
+  G.started = true;
+  G.mode = gameMode;
+  if (G.gameMode !== "infinite") {
+    G.maxPoints = maxPoints || 0;
   }
+  G.secret.phrases = ctx.random.Shuffle(getPhrases(language, category));
   ctx.events.setPhase("play");
 }
 
@@ -110,6 +113,7 @@ function indexOfMax(array) {
 
 export const Kalambury = {
   name: "Kalambury",
+  displayName: "Pictionary",
   image: "/images/games/kalambury/icon.png",
   minPlayers: 2,
   maxPlayers: 10,
@@ -129,7 +133,10 @@ export const Kalambury = {
         stages: {
           manage: {
             moves: {
-              StartGame,
+              StartGame: {
+                move: StartGame,
+                client: false,
+              },
               UpdateConnectedPlayers: {
                 move: UpdateConnectedPlayers,
                 ignoreStaleStateID: true,
@@ -214,7 +221,7 @@ export const Kalambury = {
   },
 
   endIf: (G, ctx) => {
-    if (G.secret.phrases.length === 0 && !G.secret.phrase) {
+    if (G.started && G.secret.phrases.length === 0 && !G.secret.phrase) {
       ctx.events.setActivePlayers({ all: Stage.NULL });
       return { winners: indexOfMax(G.points) };
     }

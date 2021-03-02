@@ -43,7 +43,7 @@ export const Chat = ({ messages, onSend, onClose }) => {
   return (
     <Segment.Group className={styles.chat}>
       <Segment compact className={styles.header}>
-        Chat
+        Game chat
         <span className={styles.closeIcon} onClick={onClose}>
           <Icon name="close" />
         </span>
