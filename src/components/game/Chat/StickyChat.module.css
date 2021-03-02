@@ -14,7 +14,7 @@
   color: white;
   cursor: pointer;
   background-color: #f1c761;
-  background-image: url("/images/chat.png");
+  background-image: url("../../../assets/images/chat.png");
   background-position: center center;
   background-size: 50% 50%;
   background-repeat: no-repeat;
