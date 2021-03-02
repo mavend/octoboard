@@ -16,7 +16,7 @@ function setupGame(ctx, setupData) {
     },
     privateMatch: setupData && setupData.private,
     actionsCount: 0,
-    startTime: new Date(),
+    startTime: currentTime(),
     timePerTurn: 120,
     canChangePhrase: true,
     players: {},
@@ -46,7 +46,7 @@ function LogAction(G, ctx, playerID, action, params = {}, clear = false) {
     G.actions = [];
   }
   G.actions.push({
-    time: Date.now(),
+    time: new Date().toISOString(),
     id: G.actionsCount++,
     playerID,
     action,
@@ -150,7 +150,7 @@ export const Kalambury = {
     play: {
       turn: {
         onBegin: (G, ctx) => {
-          G.startTime = new Date();
+          G.startTime = currentTime();
           G.canChangePhrase = true;
           SetNewPhrase(G, ctx);
           G.turnEndTime = currentTime() + G.timePerTurn;
