@@ -1,13 +1,20 @@
 import FirebaseClient from "./Firebase";
 
 const DB = FirebaseClient.firestore();
+
 if (process.env.NODE_ENV === "development") {
   DB.settings({
     host: "localhost:8080",
     ssl: false,
   });
+
   // Initialize collection - otherwise auth fails
-  DB.collection("users").doc("public_profiles").set({});
+  const profiles = DB.collection("users").doc("public_profiles");
+  profiles.get().then((doc) => {
+    if (!doc.exists) {
+      profiles.set({});
+    }
+  });
 }
 
 const DataStore = {
@@ -16,7 +23,7 @@ const DataStore = {
   updateProfile: async (uid, profileData) =>
     await DataStore.profiles.update({ [uid]: profileData }),
   subscribeProfiles: (callback) => {
-    return DataStore.profiles.onSnapshot((doc) => callback(doc.data()));
+    return DataStore.profiles.onSnapshot((doc) => doc.exists && callback(doc.data()));
   },
   // Game credentials
   credentials: DB.collection("game_credentials"),
