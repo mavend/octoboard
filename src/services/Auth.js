@@ -10,6 +10,7 @@ async function initUserProfile(user, { displayName }) {
 const FirebaseAuth = FirebaseClient.auth();
 
 if (process.env.NODE_ENV === "development") {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   FirebaseAuth.useEmulator("http://localhost:9099/");
 }
 
