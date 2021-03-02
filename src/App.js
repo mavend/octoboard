@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { Router, Switch, Route } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Dimmer, Loader } from "semantic-ui-react";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 import { routes } from "config/routes";
 import history from "config/history";
@@ -26,39 +27,43 @@ const Loading = () => (
 );
 
 const App = () => {
+  const queryClient = new QueryClient();
+
   return (
     <Suspense fallback={<Loading />}>
       <MediaContextProvider>
         <ErrorBoundary>
-          <UserProvider>
-            <HelmetProvider>
-              <Helmet>
-                <style type="text/css">{mediaStyle}</style>
-              </Helmet>
-              <Router history={history}>
-                <Switch>
-                  <Route exact path={routes.lobby()}>
-                    <LobbyPage />
-                  </Route>
-                  <NotLoggedInRoute exact path={routes.login()}>
-                    <LoginPage />
-                  </NotLoggedInRoute>
-                  <NotLoggedInRoute exact path={routes.login_guest()}>
-                    <AnonymousLoginPage />
-                  </NotLoggedInRoute>
-                  <NotLoggedInRoute exact path={routes.register()}>
-                    <RegisterPage />
-                  </NotLoggedInRoute>
-                  <PrivateRoute path={routes.game()}>
-                    <GamePage />
-                  </PrivateRoute>
-                  <PrivateRoute path={routes.change_password()}>
-                    <ChangePassword />
-                  </PrivateRoute>
-                </Switch>
-              </Router>
-            </HelmetProvider>
-          </UserProvider>
+          <QueryClientProvider client={queryClient}>
+            <UserProvider>
+              <HelmetProvider>
+                <Helmet>
+                  <style type="text/css">{mediaStyle}</style>
+                </Helmet>
+                <Router history={history}>
+                  <Switch>
+                    <Route exact path={routes.lobby()}>
+                      <LobbyPage />
+                    </Route>
+                    <NotLoggedInRoute exact path={routes.login()}>
+                      <LoginPage />
+                    </NotLoggedInRoute>
+                    <NotLoggedInRoute exact path={routes.login_guest()}>
+                      <AnonymousLoginPage />
+                    </NotLoggedInRoute>
+                    <NotLoggedInRoute exact path={routes.register()}>
+                      <RegisterPage />
+                    </NotLoggedInRoute>
+                    <PrivateRoute path={routes.game()}>
+                      <GamePage />
+                    </PrivateRoute>
+                    <PrivateRoute path={routes.change_password()}>
+                      <ChangePassword />
+                    </PrivateRoute>
+                  </Switch>
+                </Router>
+              </HelmetProvider>
+            </UserProvider>
+          </QueryClientProvider>
         </ErrorBoundary>
       </MediaContextProvider>
     </Suspense>
