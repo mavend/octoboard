@@ -63,7 +63,7 @@ function LogAction(G, ctx, playerID, action, params = {}, clear = false) {
     G.actions = [];
   }
   G.actions.push({
-    time: Date.now(),
+    time: new Date().toISOString(),
     id: G.actionsCount++,
     playerID,
     action,

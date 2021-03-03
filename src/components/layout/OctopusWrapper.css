@@ -7,18 +7,18 @@
   display: block;
   width: 80px;
   height: 90px;
-  background: url("/images/octopus-red.svg");
+  background: url("../../assets/images/octopus-red.svg");
   background-size: cover;
   z-index: -1;
 }
 .octopus-red::after {
-  background-image: url("/images/octopus-red.svg");
+  background-image: url("../../assets/images/octopus-red.svg");
 }
 .octopus-blue::after {
-  background-image: url("/images/octopus-blue.svg");
+  background-image: url("../../assets/images/octopus-blue.svg");
 }
 .octopus-yellow::after {
-  background-image: url("/images/octopus-yellow.svg");
+  background-image: url("../../assets/images/octopus-yellow.svg");
 }
 .octopus-cw::after {
   transform: rotateZ(25deg);
