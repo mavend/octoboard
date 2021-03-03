@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Header } from "semantic-ui-react";
 import { isEqual } from "lodash";
@@ -26,9 +26,16 @@ const Board = () => {
 
   const hasGameStarted = phase === "play";
 
-  const handleStartGame = ({ gameMode, maxPoints, language, category }) => {
-    StartGame(gameMode, maxPoints, language, category);
-  };
+  const handleStartGame = useCallback(
+    ({ gameMode, maxPoints, language, category }) => {
+      StartGame(gameMode, maxPoints, language, category);
+    },
+    [StartGame]
+  );
+
+  useEffect(() => {
+    setGuess("");
+  }, [isDrawing]);
 
   const handleActionClick = useCallback(
     ({ action, phrase }) => {
@@ -77,7 +84,7 @@ const Board = () => {
           envokeLastAnswer={envokeLastAnswer}
         />
       ) : (
-        <SettingsBoard G={G} onStartGame={handleStartGame} />
+        <SettingsBoard modes={G.modes} defaultMode={G.mode} onStartGame={handleStartGame} />
       )}
     </GameLayout>
   );

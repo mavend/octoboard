@@ -25,7 +25,7 @@ export const propTypes = {
   onSend: PropTypes.func,
 };
 
-export const Chat = ({ messages, onSend, onClose }) => {
+export const Chat = React.memo(({ messages, onSend, onClose }) => {
   const [text, setText] = useState("");
   const messagesList = useRef(null);
   const { t } = useTranslation();
@@ -81,6 +81,6 @@ export const Chat = ({ messages, onSend, onClose }) => {
       </Segment>
     </Segment.Group>
   );
-};
+});
 
 Chat.propTypes = propTypes;

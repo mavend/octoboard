@@ -5,7 +5,7 @@ import styles from "./StickyChat.module.css";
 import { Chat } from "./Chat";
 import { useBoardGame } from "contexts/BoardGameContext";
 
-export const StickyChat = () => {
+export const StickyChat = React.memo(() => {
   const { player, players, chatMessages, sendChatMessage } = useBoardGame();
   const [open, setOpen] = useState(true);
   const [seenMessages, setSeenMessages] = useState(0);
@@ -80,4 +80,4 @@ export const StickyChat = () => {
       </div>
     </div>
   );
-};
+});

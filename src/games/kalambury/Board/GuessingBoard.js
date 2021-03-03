@@ -8,7 +8,6 @@ import Drawing from "../Drawing";
 const GuessingBoard = ({
   guess,
   setGuess,
-  remainingSeconds,
   guessInputRef,
   lastUserGuess,
   envokeLastAnswer,
@@ -19,7 +18,7 @@ const GuessingBoard = ({
   const [lastGuessID, setLastGuessID] = useState(null);
   const [lastSuccess, setLastSuccess] = useState(true);
   const { t } = useTranslation("kalambury");
-  const { G, moves } = useBoardGame();
+  const { moves } = useBoardGame();
 
   const lastUserGuessID = lastUserGuess ? lastUserGuess.id : null;
 
@@ -36,6 +35,7 @@ const GuessingBoard = ({
   };
 
   const handleChange = (e) => {
+    e.preventDefault();
     setGuess(e.target.value);
   };
 
@@ -89,7 +89,7 @@ const GuessingBoard = ({
           </Form.Field>
         </Transition>
       </Form>
-      <Drawing lines={lines} remainingSeconds={remainingSeconds} totalTime={G.timePerTurn} />
+      <Drawing lines={lines} />
     </div>
   );
 };

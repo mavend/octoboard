@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, Redirect } from "react-router-dom";
 import { Button, Icon, Confirm } from "semantic-ui-react";
@@ -16,7 +16,7 @@ const LeaveButton = () => {
   const [error, setError] = useState();
   const user = useUser();
 
-  const handleLeave = () => {
+  const handleLeave = useCallback(() => {
     lobbyClient
       .leaveMatch(gameName, matchID, { playerID, credentials })
       .then(async () => {
@@ -26,7 +26,11 @@ const LeaveButton = () => {
       .catch((e) => {
         setError(e.message);
       });
-  };
+  }, [gameName, matchID, playerID, credentials, user.uid, history]);
+
+  const handleCancel = useCallback(() => {
+    setConfirmOpen(false);
+  }, [setConfirmOpen]);
 
   return (
     <>
@@ -37,7 +41,7 @@ const LeaveButton = () => {
       </Button>
       <Confirm
         open={confirmOpen}
-        onCancel={() => setConfirmOpen(false)}
+        onCancel={handleCancel}
         onConfirm={handleLeave}
         cancelButton={t("game.leave.modal.cancel")}
         confirmButton={t("game.leave.modal.confirm")}

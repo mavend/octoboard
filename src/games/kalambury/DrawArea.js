@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { arrayOf, func } from "prop-types";
 import { LineType } from "config/propTypes";
 import { useBoardGame } from "contexts/BoardGameContext";
@@ -10,11 +10,21 @@ const propTypes = {
   setLines: func.isRequired,
 };
 
-const DrawArea = ({ lines, setLines, remainingSeconds }) => {
+const DrawArea = ({ lines, setLines }) => {
   const [isDrawing, setIsDrawing] = useState(false);
   const [penColor, setPenColor] = useState("#1b1c1d");
   const [penSize, setPenSize] = useState(3);
-  const { G, moves } = useBoardGame();
+  const {
+    G,
+    moves: { Forfeit, ChangePhrase },
+  } = useBoardGame();
+
+  const handleMouseUp = useCallback(
+    (e) => {
+      setIsDrawing(false);
+    },
+    [setIsDrawing]
+  );
 
   useEffect(() => {
     document.addEventListener("mouseup", handleMouseUp);
@@ -23,7 +33,7 @@ const DrawArea = ({ lines, setLines, remainingSeconds }) => {
       document.removeEventListener("mouseup", handleMouseUp);
       document.removeEventListener("touchend", handleMouseUp);
     };
-  }, []);
+  }, [handleMouseUp]);
 
   const addPointFromEvent = (event, addLine = false) => {
     const point = relativeCoordsForEvent(event);
@@ -55,28 +65,23 @@ const DrawArea = ({ lines, setLines, remainingSeconds }) => {
     }
   };
 
-  const handleMouseUp = (e) => {
-    setIsDrawing(false);
-  };
-
-  const handleClearAll = () => {
+  const handleClearAll = useCallback(() => {
     setLines([]);
-  };
+  }, [setLines]);
 
-  const handleUndo = () => {
-    lines.pop();
-    setLines([...lines]);
-  };
+  const handleUndo = useCallback(() => {
+    setLines((lines) => lines.slice(0, -1));
+  }, [setLines]);
 
-  const handlePhraseChange = () => {
-    moves.ChangePhrase([]);
+  const handlePhraseChange = useCallback(() => {
+    ChangePhrase([]);
     setLines([]);
-  };
+  }, [setLines, ChangePhrase]);
 
-  const handleForfeit = () => {
+  const handleForfeit = useCallback(() => {
     setLines([]);
-    moves.Forfeit();
-  };
+    Forfeit();
+  }, [setLines, Forfeit]);
 
   return (
     <div>
@@ -93,8 +98,6 @@ const DrawArea = ({ lines, setLines, remainingSeconds }) => {
       />
       <Drawing
         lines={lines}
-        remainingSeconds={remainingSeconds}
-        totalTime={G.timePerTurn}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onTouchStart={handleMouseDown}
@@ -107,4 +110,4 @@ const DrawArea = ({ lines, setLines, remainingSeconds }) => {
 
 DrawArea.propTypes = propTypes;
 
-export default DrawArea;
+export default React.memo(DrawArea);

@@ -7,6 +7,8 @@ import { useBoardGame } from "contexts/BoardGameContext";
 import LeaveButton from "components/game/LeaveButton";
 import MatchTypeBadge from "components/game/MatchTypeBadge";
 
+import styles from "./Sidebar.module.css";
+
 const propTypes = {
   handleActionClick: PropTypes.func,
   extraPlayerContent: PropTypes.func,
@@ -40,7 +42,7 @@ const Sidebar = ({ handleActionClick, header, extraPlayerContent, showCurrentPla
           />
         ))}
       </Segment.Group>
-      <Segment basic textAlign="center" style={{ marginTop: "-1rem" }}>
+      <Segment basic textAlign="center" className={styles.leaveSegment}>
         <LeaveButton />
       </Segment>
     </>
@@ -62,4 +64,4 @@ const SidebarHeader = () => {
 Sidebar.propTypes = propTypes;
 Sidebar.defaultProps = defaultProps;
 
-export default Sidebar;
+export default React.memo(Sidebar);
