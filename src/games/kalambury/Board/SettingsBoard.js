@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Header, Form, Segment } from "semantic-ui-react";
+import { Header, Form, Segment, Dropdown } from "semantic-ui-react";
 
 import WaitingBoard from "components/game/WaitingBoard";
-import { languagesList } from "../data/phrases";
+import { phrasesSets } from "../data/phrases";
 
 const SettingsBoard = ({ G, onStartGame }) => {
   const { t, i18n } = useTranslation("kalambury");
 
-  const languages = languagesList.map((lang) => ({
+  const languages = phrasesSets.map((lang) => ({
     key: lang.key,
     value: lang.key,
     text: lang.name,
@@ -18,28 +18,23 @@ const SettingsBoard = ({ G, onStartGame }) => {
   const [gameMode, setGameMode] = useState(G.mode);
   const [maxPoints, setMaxPoints] = useState(10);
   const [language, setLanguage] = useState(defaultLanguage.value);
-  const [category, setCategory] = useState("all");
+  const [category, setCategory] = useState([]);
 
   useEffect(() => {
     if (language) {
-      setCategory("all");
+      setCategory([]);
     }
   }, [language, setCategory]);
 
   const categories = language
-    ? [
-        { key: "all", value: "all", text: t("game.settings.all") },
-        ...languagesList
-          .find(({ key }) => key === language)
-          .sets.map((set) => ({
-            key: set.key,
-            value: set.key,
-            text: set.name,
-          })),
-      ]
+    ? phrasesSets
+        .find(({ key }) => key === language)
+        .categories.map((set) => ({
+          key: set.key,
+          value: set.key,
+          text: set.name,
+        }))
     : [];
-
-  console.log();
 
   const handleStartGame = () => {
     onStartGame({
@@ -52,7 +47,7 @@ const SettingsBoard = ({ G, onStartGame }) => {
 
   return (
     <WaitingBoard onStartGame={handleStartGame}>
-      <Segment style={{ minWidth: "260px" }}>
+      <Segment style={{ minWidth: "320px" }}>
         <Form>
           <Header>{t("game.settings.mode")}</Header>
           {G.modes.map((mode) => (
@@ -95,7 +90,11 @@ const SettingsBoard = ({ G, onStartGame }) => {
             onChange={(e, { value }) => setLanguage(value)}
           />
           <Header>{t("game.settings.category")}</Header>
-          <Form.Select
+          <Dropdown
+            selection
+            multiple
+            fluid
+            placeholder="All categories"
             options={categories}
             value={category}
             onChange={(e, { value }) => setCategory(value)}

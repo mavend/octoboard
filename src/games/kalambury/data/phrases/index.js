@@ -1,33 +1,22 @@
-import * as en from "./en";
-import * as pl from "./pl";
+import { omit } from "lodash";
+import en from "./en";
+import pl from "./pl";
 
 const languages = { pl, en };
 
-export const languagesList = [
-  {
-    key: "pl",
-    name: "polski",
-    sets: [
-      { key: "easy", name: "Proste słowa" },
-      { key: "idioms", name: "Idiomy" },
-      { key: "noun_phrases", name: "Frazy" },
-      { key: "proverbs", name: "Przysłowia" },
-    ],
-  },
-  {
-    key: "en",
-    name: "English",
-    sets: [
-      { key: "easy", name: "Easy" },
-      { key: "medium", name: "Medium" },
-      { key: "hard", name: "Hard" },
-    ],
-  },
-];
+// list of languages and categories without actual phrases data
+export const phrasesSets = Object.values(languages).map(({ key, name, categories }) => ({
+  key,
+  name,
+  categories: categories.map((c) => omit(c, "phrases")),
+}));
 
-export function getPhrases(language = "en", set = null) {
-  if (languages[language][set]) {
-    return languages[language][set];
+export function getPhrases(language = "en", categories = null) {
+  let selectedCategories = languages[language].categories;
+
+  if (categories || categories.length > 0) {
+    selectedCategories = selectedCategories.filter(({ key }) => categories.includes(key));
   }
-  return Object.values(languages[language]).flat();
+
+  return selectedCategories.map((c) => c.phrases).flat();
 }
