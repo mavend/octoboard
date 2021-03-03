@@ -15,7 +15,7 @@
     "firebase": "^8.2.9",
     "firebase-admin": "^9.5.0",
     "i18next": "^19.9.1",
-    "i18next-browser-languagedetector": "^4.0.2",
+    "i18next-browser-languagedetector": "^6.0.1",
     "i18next-xhr-backend": "^3.2.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
