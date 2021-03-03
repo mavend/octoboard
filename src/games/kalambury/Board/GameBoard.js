@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Header } from "semantic-ui-react";
 import Confetti from "react-dom-confetti";
 
-import { timerFormat, currentTime } from "../utils/time";
+import { currentTime } from "../utils/time";
 import { WIDE_CONFETTI } from "config/confetti";
 import { useBoardGame } from "contexts/BoardGameContext";
 import filterActions from "utils/user/filterActions";
 
 import DrawArea from "../DrawArea";
 import GuessingBoard from "./GuessingBoard";
+import Countdown from "./Countdown";
 
 const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
   const {
     G,
     moves,
-    player: { isDrawing },
+    player: { isDrawing, phrase },
     playerID,
     chatMessages,
     sendChatMessage,
@@ -47,7 +47,7 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
     if (isDrawing) {
       setLines([]);
     }
-  }, [isDrawing]);
+  }, [isDrawing, phrase]);
 
   useEffect(() => {
     if (isDrawing || chatMessages.length <= 0) return;
@@ -66,7 +66,7 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
   return (
     <>
       {isDrawing ? (
-        <DrawArea lines={lines} setLines={setLines} remainingSeconds={remainingSeconds} />
+        <DrawArea lines={lines} setLines={setLines} />
       ) : (
         <GuessingBoard
           lastUserGuess={lastUserGuess}
@@ -78,9 +78,7 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
           remainingSeconds={remainingSeconds}
         />
       )}
-      <Header as="h3" attached="bottom" textAlign="center">
-        {timerFormat(remainingSeconds)}
-      </Header>
+      <Countdown remainingSeconds={remainingSeconds} totalTime={G.timePerTurn} />
       <Confetti active={lastSuccess} config={WIDE_CONFETTI} className="confetti" />
     </>
   );

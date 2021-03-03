@@ -176,4 +176,4 @@ const ColorBox = ({ color }) => (
 
 Toolbar.propTypes = propTypes;
 
-export default Toolbar;
+export default React.memo(Toolbar);

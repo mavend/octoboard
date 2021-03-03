@@ -5,7 +5,7 @@ import { Header, Form, Segment, Dropdown } from "semantic-ui-react";
 import WaitingBoard from "components/game/WaitingBoard";
 import { phrasesSets } from "../data/phrases";
 
-const SettingsBoard = ({ G, onStartGame }) => {
+const SettingsBoard = ({ modes, defaultMode, onStartGame }) => {
   const { t, i18n } = useTranslation("kalambury");
 
   const languages = phrasesSets.map((lang) => ({
@@ -15,7 +15,7 @@ const SettingsBoard = ({ G, onStartGame }) => {
   }));
   const defaultLanguage = languages.find(({ value }) => value === i18n.language) || languages[0];
 
-  const [gameMode, setGameMode] = useState(G.mode);
+  const [gameMode, setGameMode] = useState(defaultMode);
   const [maxPoints, setMaxPoints] = useState(10);
   const [language, setLanguage] = useState(defaultLanguage.value);
   const [category, setCategory] = useState([]);
@@ -50,7 +50,7 @@ const SettingsBoard = ({ G, onStartGame }) => {
       <Segment style={{ minWidth: "320px" }}>
         <Form>
           <Header>{t("game.settings.mode")}</Header>
-          {G.modes.map((mode) => (
+          {modes.map((mode) => (
             <Form.Field key={mode}>
               <Form.Radio
                 toggle
@@ -106,4 +106,4 @@ const SettingsBoard = ({ G, onStartGame }) => {
   );
 };
 
-export default SettingsBoard;
+export default React.memo(SettingsBoard);

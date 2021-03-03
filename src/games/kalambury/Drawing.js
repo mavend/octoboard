@@ -1,18 +1,16 @@
 import React from "react";
-import { Segment, Progress } from "semantic-ui-react";
-import { arrayOf, bool, number } from "prop-types";
+import { Segment } from "semantic-ui-react";
+import PropTypes from "prop-types";
 import { LineType } from "config/propTypes";
 import smooth_path from "./utils/smooth_path";
 import { breakpoints } from "config/media";
 
 const propTypes = {
-  lines: arrayOf(LineType).isRequired,
-  drawable: bool,
-  remainingSeconds: number,
-  totalTime: number,
+  lines: PropTypes.arrayOf(LineType).isRequired,
+  drawable: PropTypes.bool,
 };
 
-const Drawing = ({ lines, drawable, remainingSeconds, totalTime, ...props }) => {
+const Drawing = ({ lines, drawable, ...props }) => {
   const styles = {
     wrapper: drawable
       ? {
@@ -42,7 +40,6 @@ const Drawing = ({ lines, drawable, remainingSeconds, totalTime, ...props }) => 
           <DrawingLine key={id} line={scaleToViewBox(line)} viewBoxWidth />
         ))}
       </svg>
-      <Progress indicating percent={(100 * remainingSeconds) / totalTime} attached="bottom" />
     </Segment>
   );
 };
