@@ -14,7 +14,6 @@
     "esm": "^3.2.25",
     "firebase": "^8.2.9",
     "firebase-admin": "^9.2.0",
-    "husky": "^5.1.3",
     "i18next": "^19.3.4",
     "i18next-browser-languagedetector": "^4.0.2",
     "i18next-xhr-backend": "^3.2.2",
@@ -49,7 +48,8 @@
     "start:server": "node -r esm src/server.js",
     "start:client": "react-scripts start",
     "start:firebase": "firebase emulators:start",
-    "start:storybook": "start-storybook -p 9009 -s public --quiet"
+    "start:storybook": "start-storybook -p 9009 -s public --quiet",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -77,13 +77,9 @@
     "@storybook/preset-create-react-app": "^3.1.6",
     "@storybook/react": "^6.0.26",
     "firebase-tools": "^9.5.0",
+    "husky": "^5.1.3",
     "prettier": "^2.1.2",
     "storybook": "^6.0.26",
     "storybook-react-router": "^1.0.8"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run prettier-check"
-    }
   }
 }
