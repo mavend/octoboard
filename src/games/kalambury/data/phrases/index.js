@@ -14,7 +14,7 @@ export const phrasesSets = Object.values(languages).map(({ key, name, categories
 export function getPhrases(language = "en", categories = null) {
   let selectedCategories = languages[language].categories;
 
-  if (categories || categories.length > 0) {
+  if (categories && categories.length > 0) {
     selectedCategories = selectedCategories.filter(({ key }) => categories.includes(key));
   }
 
