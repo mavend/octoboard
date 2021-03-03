@@ -20,7 +20,7 @@
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
     "mongodb": "^3.5.5",
-    "pretty-quick": "^2.0.1",
+    "pretty-quick": "^3.1.0",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
