@@ -18,9 +18,9 @@ Setting `debug=true` in URL query will show debug overlay.
 
 Sometimes you may want to run parts of application on their own. You can do this like this:
 
-- Run firebase emulators with `npx firebase emulators:start`.
+- Run firebase emulators with `npm run start:firebase`.
 - Run react dev server with `npm run start:client`.
-- Run game server with: `node -r esm src/server.js`.
+- Run game server with: `npm run start:server`.
 - Run storybook wiht: `npm run start:storybook`.
 
 ## Note

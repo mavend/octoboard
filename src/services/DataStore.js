@@ -7,14 +7,6 @@ if (process.env.NODE_ENV === "development") {
     host: "localhost:8080",
     ssl: false,
   });
-
-  // Initialize collection - otherwise auth fails
-  const profiles = DB.collection("users").doc("public_profiles");
-  profiles.get().then((doc) => {
-    if (!doc.exists) {
-      profiles.set({});
-    }
-  });
 }
 
 const DataStore = {
