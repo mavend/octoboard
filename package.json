@@ -8,6 +8,8 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.1",
+    "bgio-firebase": "^0.3.1",
+    "bgio-storage-cache": "^0.3.0",
     "boardgame.io": "^0.43.3",
     "classnames": "^2.2.6",
     "concurrently": "^6.0.0",
@@ -36,7 +38,7 @@
     "semantic-ui-react": "^2.0.3"
   },
   "scripts": {
-    "start": "concurrently -p \"{time} [{name}]\" -t \"HH:mm:ss.SSS\" -n \"client,server,firebase,storybook\" -c \"green.bold,blue.bold,yellow.bold,magenta.bold\" \"npm:start:client\" \"npm:start:server\" \"npm:start:firebase\" \"npm:start:storybook\"",
+    "start": "NODE_ENV=development concurrently -p \"{time} [{name}]\" -t \"HH:mm:ss.SSS\" -n \"client,server,firebase,storybook\" -c \"green.bold,blue.bold,yellow.bold,magenta.bold\" \"npm:start:client\" \"npm:start:server\" \"npm:start:firebase\" \"npm:start:storybook\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -45,9 +47,9 @@
     "prettier-ci": "pretty-quick --check",
     "storybook-ci": "start-storybook --ci --smoke-test --quiet",
     "build-storybook": "build-storybook -s public",
-    "start:server": "node -r esm src/server.js",
+    "start:server": "NODE_ENV=development node -r esm src/server.js",
     "start:client": "react-scripts start",
-    "start:firebase": "firebase emulators:start",
+    "start:firebase": "firebase emulators:start --import=./emulators.backup",
     "start:storybook": "start-storybook -p 9009 -s public --quiet",
     "prepare": "husky install"
   },

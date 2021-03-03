@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isUpdateToOwnedField(attr, auth) {
+      return (auth != null) && attr.diff(resource.data).affectedKeys().hasOnly([auth.uid]);
+    }
+    match /users/public_profiles {
+      allow read;
+      allow update: if isUpdateToOwnedField(request.resource.data, request.auth);
+    }
+    match /game_credentials/{userId} {
+      allow read, write: if request.auth.uid == userId;
+    }
+  }
+}
