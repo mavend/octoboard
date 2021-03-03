@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import moment from "moment";
 import classNames from "classnames";
@@ -27,6 +28,7 @@ export const propTypes = {
 export const Chat = ({ messages, onSend, onClose }) => {
   const [text, setText] = useState("");
   const messagesList = useRef(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     messagesList.current.scrollTop = messagesList.current.scrollHeight;
@@ -43,7 +45,7 @@ export const Chat = ({ messages, onSend, onClose }) => {
   return (
     <Segment.Group className={styles.chat}>
       <Segment compact className={styles.header}>
-        Chat
+        {t("game.chat.header")}
         <span className={styles.closeIcon} onClick={onClose}>
           <Icon name="close" />
         </span>
@@ -71,7 +73,7 @@ export const Chat = ({ messages, onSend, onClose }) => {
           <Input
             fluid
             icon="send"
-            placeholder="Send message..."
+            placeholder={t("game.chat.sendMessage")}
             value={text}
             onChange={(e) => setText(e.target.value)}
           />

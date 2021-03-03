@@ -18,10 +18,10 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
   const [playersOptions, setPlayersOptions] = useState([]);
   const { t } = useTranslation("lobby");
 
-  const gamesOptions = games.map(({ name, image }) => ({
+  const gamesOptions = games.map(({ name, displayName, image }) => ({
     key: name,
     value: name,
-    text: name,
+    text: displayName || name,
     image: { avatar: true, src: image },
   }));
 

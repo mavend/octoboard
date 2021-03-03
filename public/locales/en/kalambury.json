@@ -7,7 +7,10 @@
       "modes": {
         "regular": "Regular",
         "infinite": "Infinite"
-      }
+      },
+      "language": "Language",
+      "category": "Category",
+      "all": "All"
     }
   },
   "tools": {
