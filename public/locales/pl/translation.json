@@ -17,5 +17,9 @@
   "footer": {
     "github": "Jesteśmy na GitHubie",
     "graphics": "Grafiki od"
+  },
+  "chat": {
+    "header": "Czat",
+    "sendMessage": "Wyślij wiadomość"
   }
 }

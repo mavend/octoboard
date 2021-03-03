@@ -12,6 +12,10 @@
         "confirm": "Yes",
         "cancel": "No"
       }
+    },
+    "chat": {
+      "header": "Game chat",
+      "sendMessage": "Send message"
     }
   },
   "footer": {
