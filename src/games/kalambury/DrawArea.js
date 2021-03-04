@@ -4,13 +4,14 @@ import { LineType } from "config/propTypes";
 import { useBoardGame } from "contexts/BoardGameContext";
 import Drawing from "./Drawing";
 import Toolbar from "./Toolbar";
+import { UpdateTypes } from "./utils/update_lines";
 
 const propTypes = {
   lines: arrayOf(LineType).isRequired,
-  updateLines: func.isRequired,
+  onLinesUpdate: func.isRequired,
 };
 
-const DrawArea = ({ lines, updateLines }) => {
+const DrawArea = ({ lines, onLinesUpdate }) => {
   const [isDrawing, setIsDrawing] = useState(false);
   const [penColor, setPenColor] = useState("#1b1c1d");
   const [penSize, setPenSize] = useState(3);
@@ -35,9 +36,9 @@ const DrawArea = ({ lines, updateLines }) => {
   const addPointFromEvent = (event, addLine = false) => {
     const point = relativeCoordsForEvent(event);
     if (addLine) {
-      updateLines("add", { points: [point], color: penColor, width: penSize });
+      onLinesUpdate(UpdateTypes.add, { points: [point], color: penColor, width: penSize });
     } else {
-      updateLines("append", [point]);
+      onLinesUpdate(UpdateTypes.append, [point]);
     }
   };
 
@@ -64,22 +65,22 @@ const DrawArea = ({ lines, updateLines }) => {
   };
 
   const handleUndo = useCallback(() => {
-    updateLines("delete");
-  }, [updateLines]);
+    onLinesUpdate(UpdateTypes.delete);
+  }, [onLinesUpdate]);
 
   const handleClearAll = useCallback(() => {
-    updateLines("replace", []);
-  }, [updateLines]);
+    onLinesUpdate(UpdateTypes.replace, []);
+  }, [onLinesUpdate]);
 
   const handlePhraseChange = useCallback(() => {
-    updateLines("replace", []);
+    onLinesUpdate(UpdateTypes.replace, []);
     ChangePhrase([]);
-  }, [updateLines, ChangePhrase]);
+  }, [onLinesUpdate, ChangePhrase]);
 
   const handleForfeit = useCallback(() => {
-    updateLines("replace", []);
+    onLinesUpdate(UpdateTypes.replace, []);
     Forfeit();
-  }, [updateLines, Forfeit]);
+  }, [onLinesUpdate, Forfeit]);
 
   return (
     <div>

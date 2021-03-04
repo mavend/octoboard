@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState, useMemo } from "react";
 import Confetti from "react-dom-confetti";
 
 import { currentTime } from "../utils/time";
+import { updateLines, UpdateTypes } from "../utils/update_lines";
 import { WIDE_CONFETTI } from "config/confetti";
 import { useBoardGame } from "contexts/BoardGameContext";
 import filterActions from "utils/user/filterActions";
@@ -37,28 +38,6 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
         },
       ]),
     [sendChatMessage]
-  );
-
-  const updateLines = useCallback(
-    (type, data = null) => {
-      setLines((lines) => {
-        if (type === "add" && lines) {
-          return [...lines, data];
-        }
-        if (type === "append" && lines.length > 0) {
-          const last = lines[lines.length - 1];
-          return [...lines.slice(0, -1), { ...last, points: [...last.points, ...data] }];
-        }
-        if (type === "delete" && lines.length > 0) {
-          return lines.slice(0, -1);
-        }
-        if (type === "replace" && data) {
-          return data;
-        }
-        return lines;
-      });
-    },
-    [setLines]
   );
 
   // send full drawing every 1sec
@@ -101,27 +80,27 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
 
     if (lastMessage.type && lastMessage.type.startsWith("UpdateDrawing")) {
       const updateType = lastMessage.type.split(":")[1];
-      updateLines(updateType, lastMessage.data);
+      setLines((lines) => updateLines(lines, updateType, lastMessage.data));
     }
-  }, [isDrawing, chatMessages, updateLines]);
+  }, [isDrawing, chatMessages, setLines]);
 
   const handleLinesUpdate = useCallback(
     (type, data) => {
-      updateLines(type, data);
-      if (type === "append") {
+      setLines((lines) => updateLines(lines, type, data));
+      if (type === UpdateTypes.add) {
         throttledSendAppend({ type: `UpdateDrawing:${type}`, data });
       } else {
         throttledSendAppend.flush();
         sendChatMessage({ type: `UpdateDrawing:${type}`, data });
       }
     },
-    [updateLines, sendChatMessage, throttledSendAppend]
+    [setLines, sendChatMessage, throttledSendAppend]
   );
 
   return (
     <>
       {isDrawing ? (
-        <DrawArea lines={lines} updateLines={handleLinesUpdate} />
+        <DrawArea lines={lines} onLinesUpdate={handleLinesUpdate} />
       ) : (
         <GuessingBoard
           lastUserGuess={lastUserGuess}
