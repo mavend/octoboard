@@ -4,13 +4,14 @@ import { LineType } from "config/propTypes";
 import { useBoardGame } from "contexts/BoardGameContext";
 import Drawing from "./Drawing";
 import Toolbar from "./Toolbar";
+import { UpdateTypes } from "./utils/update_lines";
 
 const propTypes = {
   lines: arrayOf(LineType).isRequired,
-  setLines: func.isRequired,
+  onLinesUpdate: func.isRequired,
 };
 
-const DrawArea = ({ lines, setLines }) => {
+const DrawArea = ({ lines, onLinesUpdate }) => {
   const [isDrawing, setIsDrawing] = useState(false);
   const [penColor, setPenColor] = useState("#1b1c1d");
   const [penSize, setPenSize] = useState(3);
@@ -19,12 +20,9 @@ const DrawArea = ({ lines, setLines }) => {
     moves: { Forfeit, ChangePhrase },
   } = useBoardGame();
 
-  const handleMouseUp = useCallback(
-    (e) => {
-      setIsDrawing(false);
-    },
-    [setIsDrawing]
-  );
+  const handleMouseUp = useCallback(() => {
+    setIsDrawing(false);
+  }, [setIsDrawing]);
 
   useEffect(() => {
     document.addEventListener("mouseup", handleMouseUp);
@@ -37,10 +35,11 @@ const DrawArea = ({ lines, setLines }) => {
 
   const addPointFromEvent = (event, addLine = false) => {
     const point = relativeCoordsForEvent(event);
-    const newLines = [...lines];
-    if (addLine) newLines.push({ points: [], color: penColor, width: penSize });
-    newLines[newLines.length - 1].points.push(point);
-    setLines(newLines);
+    if (addLine) {
+      onLinesUpdate(UpdateTypes.add, { points: [point], color: penColor, width: penSize });
+    } else {
+      onLinesUpdate(UpdateTypes.append, [point]);
+    }
   };
 
   const relativeCoordsForEvent = ({ currentTarget, clientX, clientY, touches }) => {
@@ -65,23 +64,23 @@ const DrawArea = ({ lines, setLines }) => {
     }
   };
 
-  const handleClearAll = useCallback(() => {
-    setLines([]);
-  }, [setLines]);
-
   const handleUndo = useCallback(() => {
-    setLines((lines) => lines.slice(0, -1));
-  }, [setLines]);
+    onLinesUpdate(UpdateTypes.delete);
+  }, [onLinesUpdate]);
+
+  const handleClearAll = useCallback(() => {
+    onLinesUpdate(UpdateTypes.replace, []);
+  }, [onLinesUpdate]);
 
   const handlePhraseChange = useCallback(() => {
+    onLinesUpdate(UpdateTypes.replace, []);
     ChangePhrase([]);
-    setLines([]);
-  }, [setLines, ChangePhrase]);
+  }, [onLinesUpdate, ChangePhrase]);
 
   const handleForfeit = useCallback(() => {
-    setLines([]);
+    onLinesUpdate(UpdateTypes.replace, []);
     Forfeit();
-  }, [setLines, Forfeit]);
+  }, [onLinesUpdate, Forfeit]);
 
   return (
     <div>

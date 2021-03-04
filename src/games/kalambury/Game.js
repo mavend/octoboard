@@ -194,7 +194,10 @@ export const Kalambury = {
                 move: Forfeit,
                 client: false,
               },
-              NotifyTimeout,
+              NotifyTimeout: {
+                move: NotifyTimeout,
+                ignoreStaleStateID: true,
+              },
               UpdateConnectedPlayers: {
                 move: UpdateConnectedPlayers,
                 ignoreStaleStateID: true,
