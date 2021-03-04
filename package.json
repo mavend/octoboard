@@ -43,7 +43,7 @@
     "prettier": "prettier --write .",
     "prettier-check": "pretty-quick --staged",
     "prettier-ci": "pretty-quick --check",
-    "storybook": "start-storybook -p 9009 -s public",
+    "storybook-ci": "start-storybook --ci --smoke-test --quiet",
     "build-storybook": "build-storybook -s public",
     "start:server": "node -r esm src/server.js",
     "start:client": "react-scripts start",
@@ -52,7 +52,17 @@
     "prepare": "husky install"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.js"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
   },
   "browserslist": {
     "production": [
@@ -69,11 +79,14 @@
   "devDependencies": {
     "@prettier/plugin-xml": "^0.13.1",
     "@storybook/addon-actions": "^6.1.21",
+    "@storybook/addon-essentials": "^6.1.21",
     "@storybook/addon-knobs": "^6.1.21",
+    "@storybook/addon-links": "^6.1.21",
     "@storybook/addon-storysource": "^6.1.21",
     "@storybook/addon-viewport": "^6.1.21",
     "@storybook/addons": "^6.1.21",
     "@storybook/cli": "^6.1.21",
+    "@storybook/node-logger": "^6.1.21",
     "@storybook/preset-create-react-app": "^3.1.6",
     "@storybook/react": "^6.1.21",
     "firebase-tools": "^9.5.0",
