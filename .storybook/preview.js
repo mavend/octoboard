@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
 import { addParameters, addDecorator } from "@storybook/react";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { MINIMAL_VIEWPORTS } from "@storybook/addon-viewport";
 import { withKnobs } from "@storybook/addon-knobs";
 import StoryRouter from "storybook-react-router";
@@ -11,12 +12,17 @@ import "../src/i18n";
 import "semantic-ui-css/semantic.min.css";
 import "../src/index.css";
 
+const queryClient = new QueryClient();
+
 addDecorator(withKnobs);
 addDecorator(StoryRouter());
 addDecorator((storyFn) => <Suspense fallback="Loading...">{storyFn()}</Suspense>);
 addDecorator((storyFn) => <MediaContextProvider>{storyFn()}</MediaContextProvider>);
 addDecorator((storyFn) => <HelmetProvider>{storyFn()}</HelmetProvider>);
 addDecorator((storyFn) => <UserContextMock>{storyFn()}</UserContextMock>);
+addDecorator((storyFn) => (
+  <QueryClientProvider client={queryClient}>{storyFn()}</QueryClientProvider>
+));
 addDecorator((storyFn) => <Suspense fallback="Loading">{storyFn()}</Suspense>);
 
 const customViewports = {
@@ -46,3 +52,7 @@ addParameters({
     },
   },
 });
+
+export const parameters = {
+  actions: { argTypesRegex: "^on[A-Z].*" },
+};

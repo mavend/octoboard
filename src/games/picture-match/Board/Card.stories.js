@@ -1,3 +1,5 @@
+/* eslint react/style-prop-object: 0 */
+
 import React from "react";
 import Card from "./Card";
 import { number } from "@storybook/addon-knobs";

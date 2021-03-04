@@ -21,7 +21,7 @@ Sometimes you may want to run parts of application on their own. You can do this
 - Run firebase emulators with `npx firebase emulators:start`.
 - Run react dev server with `npm run start:client`.
 - Run game server with: `node -r esm src/server.js`.
-- Run storybook wiht: `npm run storybook`.
+- Run storybook wiht: `npm run start:storybook`.
 
 ## Note
 
