@@ -12,10 +12,4 @@ export default {
   decorators: [kalamburyDecorator],
 };
 
-export const Default = () => (
-  <DrawArea
-    lines={lines}
-    setLines={action("setLines")}
-    remainingSeconds={number("remainingSeconds", 40)}
-  />
-);
+export const Default = () => <DrawArea lines={lines} updateLines={action("updateLines")} />;

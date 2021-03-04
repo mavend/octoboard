@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useMemo } from "react";
 import Confetti from "react-dom-confetti";
 
 import { currentTime } from "../utils/time";
 import { WIDE_CONFETTI } from "config/confetti";
 import { useBoardGame } from "contexts/BoardGameContext";
 import filterActions from "utils/user/filterActions";
+import { throttleAccumulate } from "utils/throttle";
 
 import DrawArea from "../DrawArea";
 import GuessingBoard from "./GuessingBoard";
@@ -27,6 +28,29 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
     success: false,
   };
 
+  const throttledSendAppend = useMemo(
+    () =>
+      throttleAccumulate(sendChatMessage, 200, ([acc], [args]) => [
+        {
+          type: acc.type,
+          data: [...acc.data, ...args.data],
+        },
+      ]),
+    [sendChatMessage]
+  );
+
+  // send full drawing every 1sec
+  useEffect(() => {
+    if (isDrawing) {
+      const interval = setInterval(() => {
+        throttledSendAppend.flush();
+        sendChatMessage({ type: "UpdateDrawing:replace", data: lines });
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [isDrawing, lines, sendChatMessage, throttledSendAppend]);
+
+  // countdown timer
   useEffect(() => {
     const interval = setInterval(() => {
       const seconds = G.turnEndTime - currentTime();
@@ -52,21 +76,52 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
   useEffect(() => {
     if (isDrawing || chatMessages.length <= 0) return;
     const lastMessage = chatMessages[chatMessages.length - 1].payload;
-    if (lastMessage.type === "UpdateDrawing") {
-      setLines(lastMessage.data);
-    }
-  }, [isDrawing, chatMessages]);
 
-  useEffect(() => {
-    if (isDrawing) {
-      sendChatMessage({ type: "UpdateDrawing", data: lines });
+    if (lastMessage.type && lastMessage.type.startsWith("UpdateDrawing")) {
+      const updateType = lastMessage.type.split(":")[1];
+      updateLines(updateType, lastMessage.data);
     }
-  }, [isDrawing, lines, sendChatMessage]);
+  }, [isDrawing, chatMessages, updateLines]);
+
+  const updateLines = useCallback(
+    (type, data = null) => {
+      setLines((lines) => {
+        if (type === "add" && lines) {
+          return [...lines, data];
+        }
+        if (type === "append" && lines.length > 0) {
+          const last = lines[lines.length - 1];
+          return [...lines.slice(0, -1), { ...last, points: [...last.points, ...data] }];
+        }
+        if (type === "delete" && lines.length > 0) {
+          return lines.slice(0, -1);
+        }
+        if (type === "replace" && data) {
+          return data;
+        }
+        return lines;
+      });
+    },
+    [setLines]
+  );
+
+  const handleLinesUpdate = useCallback(
+    (type, data) => {
+      updateLines(type, data);
+      if (type === "append") {
+        throttledSendAppend({ type: `UpdateDrawing:${type}`, data });
+      } else {
+        throttledSendAppend.flush();
+        sendChatMessage({ type: `UpdateDrawing:${type}`, data });
+      }
+    },
+    [updateLines, sendChatMessage, throttledSendAppend]
+  );
 
   return (
     <>
       {isDrawing ? (
-        <DrawArea lines={lines} setLines={setLines} />
+        <DrawArea lines={lines} updateLines={handleLinesUpdate} />
       ) : (
         <GuessingBoard
           lastUserGuess={lastUserGuess}

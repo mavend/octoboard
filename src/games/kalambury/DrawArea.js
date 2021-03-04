@@ -7,10 +7,10 @@ import Toolbar from "./Toolbar";
 
 const propTypes = {
   lines: arrayOf(LineType).isRequired,
-  setLines: func.isRequired,
+  updateLines: func.isRequired,
 };
 
-const DrawArea = ({ lines, setLines }) => {
+const DrawArea = ({ lines, updateLines }) => {
   const [isDrawing, setIsDrawing] = useState(false);
   const [penColor, setPenColor] = useState("#1b1c1d");
   const [penSize, setPenSize] = useState(3);
@@ -19,12 +19,9 @@ const DrawArea = ({ lines, setLines }) => {
     moves: { Forfeit, ChangePhrase },
   } = useBoardGame();
 
-  const handleMouseUp = useCallback(
-    (e) => {
-      setIsDrawing(false);
-    },
-    [setIsDrawing]
-  );
+  const handleMouseUp = useCallback(() => {
+    setIsDrawing(false);
+  }, [setIsDrawing]);
 
   useEffect(() => {
     document.addEventListener("mouseup", handleMouseUp);
@@ -37,10 +34,11 @@ const DrawArea = ({ lines, setLines }) => {
 
   const addPointFromEvent = (event, addLine = false) => {
     const point = relativeCoordsForEvent(event);
-    const newLines = [...lines];
-    if (addLine) newLines.push({ points: [], color: penColor, width: penSize });
-    newLines[newLines.length - 1].points.push(point);
-    setLines(newLines);
+    if (addLine) {
+      updateLines("add", { points: [point], color: penColor, width: penSize });
+    } else {
+      updateLines("append", [point]);
+    }
   };
 
   const relativeCoordsForEvent = ({ currentTarget, clientX, clientY, touches }) => {
@@ -65,23 +63,23 @@ const DrawArea = ({ lines, setLines }) => {
     }
   };
 
-  const handleClearAll = useCallback(() => {
-    setLines([]);
-  }, [setLines]);
-
   const handleUndo = useCallback(() => {
-    setLines((lines) => lines.slice(0, -1));
-  }, [setLines]);
+    updateLines("delete");
+  }, [updateLines]);
+
+  const handleClearAll = useCallback(() => {
+    updateLines("replace", []);
+  }, [updateLines]);
 
   const handlePhraseChange = useCallback(() => {
+    updateLines("replace", []);
     ChangePhrase([]);
-    setLines([]);
-  }, [setLines, ChangePhrase]);
+  }, [updateLines, ChangePhrase]);
 
   const handleForfeit = useCallback(() => {
-    setLines([]);
+    updateLines("replace", []);
     Forfeit();
-  }, [setLines, Forfeit]);
+  }, [updateLines, Forfeit]);
 
   return (
     <div>
