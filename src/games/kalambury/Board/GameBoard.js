@@ -31,7 +31,7 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
 
   const throttledSendAppend = useMemo(
     () =>
-      throttleAccumulate(sendChatMessage, 200, ([acc], [args]) => [
+      throttleAccumulate(sendChatMessage, 50, ([acc], [args]) => [
         {
           type: acc.type,
           data: [...acc.data, ...args.data],
