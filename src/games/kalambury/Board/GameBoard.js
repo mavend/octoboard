@@ -73,16 +73,6 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
     }
   }, [isDrawing, phrase]);
 
-  useEffect(() => {
-    if (isDrawing || chatMessages.length <= 0) return;
-    const lastMessage = chatMessages[chatMessages.length - 1].payload;
-
-    if (lastMessage.type && lastMessage.type.startsWith("UpdateDrawing")) {
-      const updateType = lastMessage.type.split(":")[1];
-      updateLines(updateType, lastMessage.data);
-    }
-  }, [isDrawing, chatMessages, updateLines]);
-
   const updateLines = useCallback(
     (type, data = null) => {
       setLines((lines) => {
@@ -104,6 +94,16 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
     },
     [setLines]
   );
+
+  useEffect(() => {
+    if (isDrawing || chatMessages.length <= 0) return;
+    const lastMessage = chatMessages[chatMessages.length - 1].payload;
+
+    if (lastMessage.type && lastMessage.type.startsWith("UpdateDrawing")) {
+      const updateType = lastMessage.type.split(":")[1];
+      updateLines(updateType, lastMessage.data);
+    }
+  }, [isDrawing, chatMessages, updateLines]);
 
   const handleLinesUpdate = useCallback(
     (type, data) => {
