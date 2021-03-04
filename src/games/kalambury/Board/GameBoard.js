@@ -39,6 +39,28 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
     [sendChatMessage]
   );
 
+  const updateLines = useCallback(
+    (type, data = null) => {
+      setLines((lines) => {
+        if (type === "add" && lines) {
+          return [...lines, data];
+        }
+        if (type === "append" && lines.length > 0) {
+          const last = lines[lines.length - 1];
+          return [...lines.slice(0, -1), { ...last, points: [...last.points, ...data] }];
+        }
+        if (type === "delete" && lines.length > 0) {
+          return lines.slice(0, -1);
+        }
+        if (type === "replace" && data) {
+          return data;
+        }
+        return lines;
+      });
+    },
+    [setLines]
+  );
+
   // send full drawing every 1sec
   useEffect(() => {
     if (isDrawing) {
@@ -72,28 +94,6 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
       setLines([]);
     }
   }, [isDrawing, phrase]);
-
-  const updateLines = useCallback(
-    (type, data = null) => {
-      setLines((lines) => {
-        if (type === "add" && lines) {
-          return [...lines, data];
-        }
-        if (type === "append" && lines.length > 0) {
-          const last = lines[lines.length - 1];
-          return [...lines.slice(0, -1), { ...last, points: [...last.points, ...data] }];
-        }
-        if (type === "delete" && lines.length > 0) {
-          return lines.slice(0, -1);
-        }
-        if (type === "replace" && data) {
-          return data;
-        }
-        return lines;
-      });
-    },
-    [setLines]
-  );
 
   useEffect(() => {
     if (isDrawing || chatMessages.length <= 0) return;

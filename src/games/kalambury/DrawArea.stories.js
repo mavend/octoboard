@@ -1,6 +1,5 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
-import { number } from "@storybook/addon-knobs";
 import lines from "games/kalambury/data/stories/lines";
 import { kalamburyDecorator } from "./GameContextMock";
 import DrawArea from "./DrawArea";
