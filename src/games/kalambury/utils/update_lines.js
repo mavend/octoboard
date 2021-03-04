@@ -15,7 +15,7 @@ export function updateLines(lines, updateType, updateData = null) {
     case UpdateTypes.delete:
       return lines.slice(0, -1);
     case UpdateTypes.replace:
-      return updateType;
+      return updateData;
     default:
       return lines;
   }
