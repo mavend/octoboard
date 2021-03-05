@@ -10,3 +10,10 @@
     max-age=2592000,
     public,
     immutable'''
+[[headers]]
+  for = "/static/*"
+  [headers.values]
+    cache-control = '''
+    max-age=31536000,
+    public,
+    immutable'''
