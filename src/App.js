@@ -11,7 +11,7 @@ import { mediaStyle, MediaContextProvider } from "config/media";
 import { UserProvider } from "contexts/UserContext";
 import { PrivateRoute } from "utils/router/Private";
 import { NotLoggedInRoute } from "utils/router/NotLoggedInRoute";
-import { ErrorBoundary } from "services/Airbrake";
+import { ErrorBoundary } from "services/ErrorBoundary";
 
 import AnonymousLoginPage from "views/user/AnonymousLogin";
 import GamePage from "views/game/GamePage";

@@ -1,9 +1,5 @@
-import React from "react";
-import { Notifier } from "@airbrake/browser";
-
-export class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
+export class GenericAirbrakeNotifier {
+  constructor(notifier) {
     const {
       REACT_APP_AIRBRAKE_PROJECT_ID: projectId,
       REACT_APP_AIRBRAKE_PROJECT_KEY: projectKey,
@@ -11,25 +7,19 @@ export class ErrorBoundary extends React.Component {
     } = process.env;
 
     if (projectId && projectKey) {
-      this.airbrake = new Notifier({ projectId, projectKey, environment });
+      this.airbrake = new notifier({ projectId, projectKey, environment });
     } else {
       this.airbrake = {
         notify: (error) => {
+          console.log("[Airbrake not configured]");
           console.error(error);
         },
       };
     }
   }
 
-  componentDidCatch(error, info) {
-    // Send error to Airbrake
-    this.airbrake.notify({
-      error: error,
-      params: { info: info },
-    });
-  }
-
-  render() {
-    return this.props.children;
+  notify(error) {
+    console.log("[Notifying Airbrake]");
+    this.airbrake.notify(error);
   }
 }
