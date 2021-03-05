@@ -3,3 +3,10 @@
   to = "/index.html"
   status = 200
   force = false
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    cache-control = '''
+    max-age=2592000,
+    public,
+    immutable'''
