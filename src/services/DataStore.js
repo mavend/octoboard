@@ -2,12 +2,16 @@ import FirebaseClient from "./Firebase";
 
 const DB = FirebaseClient.firestore();
 
+let settings = {
+  experimentalAutoDetectLongPolling: true,
+};
+
 if (process.env.NODE_ENV === "development") {
-  DB.settings({
-    host: "localhost:8080",
-    ssl: false,
-  });
+  settings.host = "localhost:8080";
+  settings.ssl = false;
 }
+
+DB.settings(settings);
 
 const DataStore = {
   // Public users' profiles
