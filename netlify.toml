@@ -17,3 +17,10 @@
     max-age=31536000,
     public,
     immutable'''
+[[headers]]
+  for = "/locales/*"
+  [headers.values]
+    cache-control = '''
+    max-age=3600,
+    public,
+    must-revalidate'''
