@@ -5,6 +5,8 @@ const { PictureMatch } = require("./games/picture-match/Game");
 const { Server } = require("boardgame.io/server");
 const { StorageCache } = require("bgio-storage-cache");
 const { Firestore } = require("bgio-firebase");
+const { Notifier } = require("@airbrake/node");
+const { GenericAirbrakeNotifier } = require("./services/Airbrake");
 
 let config = {};
 
@@ -22,4 +24,22 @@ const server = Server({
   games: [Kalambury, PictureMatch, Splendid],
   db: dbWithCaching,
 });
+
+server.run(process.env.PORT || 8000, () => {
+  const notifier = new GenericAirbrakeNotifier(Notifier);
+  server.app.on("error", (err, ctx) => {
+    const req = ctx.request;
+
+    err.url = req.url;
+    err.action = req.url;
+    err.component = err.component || "server";
+    err.httpMethod = req.method;
+    err.params = req.body;
+    err.session = req.session;
+    err.ua = req.headers["User-Agent"];
+
+    notifier.notify(err);
+  });
+});
+
 server.run(process.env.PORT || 8000);
