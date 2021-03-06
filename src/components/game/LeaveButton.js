@@ -21,7 +21,7 @@ const LeaveButton = ({ handleLeave, ...props }) => {
 
   return (
     <>
-      <Button {...props} color="red" onClick={() => setConfirmOpen(true)}>
+      <Button icon labelPosition="left" {...props} color="red" onClick={() => setConfirmOpen(true)}>
         <Icon name="close" />
         {t("game.leave.button")}
       </Button>

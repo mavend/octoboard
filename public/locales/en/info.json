@@ -1,0 +1,35 @@
+{
+  "games": {
+    "kalambury": {
+      "description": {
+        "short": "One person draws a picture, everybody else guesses the phrase.",
+        "rules": [
+          "If you're drawing: your goal is to draw presented phrase in a way that lets other players guess it",
+          "If you're guessing: your goal is to guess the phrase being drawn",
+          "When the phrase is guessed correctly, both drawing and guessing players get 1 point each",
+          "When the time runs out and nobody guesses correctly, the player who was drawing loses 1 point",
+          "You can send as many guesses as you want - there is no penalty for wrong guesses",
+          "You should never write any hints while drawing - others should be able to guess the phrase from your drawing only"
+        ]
+      }
+    },
+    "picturematch": {
+      "description": {
+        "short": "You see two cards full of pictures, but only one of them is on both cards. Be the first to find it.",
+        "rules": [
+          "You can see two cards with pictures on in. The card on the left is only visible to you (each player has a different one), while the one on the right is visible by everyone",
+          "Your goal is to find the picture that is on both cards - there is always such a picture, and there is exactly one for any two cards",
+          "When you find the picture just click it (you can click it on any of the cards)",
+          "If you click the correct picture you'll receive 1 point and your card from the left will replace the card on the right visible by every player. You'll get a new card on the left",
+          "If you click the incorrect picture you won't loose any points, but there is a short time penalty that prevents you from guessing for a while"
+        ]
+      }
+    },
+    "splendid": {
+      "description": {
+        "short": "Become an investor, buy new technologies and outgrow your opponents.",
+        "rules": []
+      }
+    }
+  }
+}

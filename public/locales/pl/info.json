@@ -1,0 +1,35 @@
+{
+  "games": {
+    "kalambury": {
+      "description": {
+        "short": "Jedna osoba rysuje, pozostali próbują odgadnąć hasło.",
+        "rules": [
+          "Jeśli rysujesz: Twoim celem jest narysowanie podanego hasła w taki sposób, aby inni gracze mogli je odgadnąć",
+          "Jeśli zgadujesz: Twoim celem jest odgadnięcie rysowanego hasła",
+          "Gdy hasło zostanie odgadnięte zarówno osoba rysujaca jak i osoba zgadująca otrzymają po 1 punkcie",
+          "Gdy upłynie dostępny czas i nikt nie odgadnie hasła gracz rysujący straci 1 punkt",
+          "Możesz bez obaw odgadywać hasło wielokrotnie - nie ma żadnej kary za nieudane próby",
+          "Podczas rysowania staraj się nie pisać żadnych podpowiedzi - inni gracze powinni odgadnąć hasło tylko na podstawie Twojego rysunku, bez potrzeby dodawania napisów"
+        ]
+      }
+    },
+    "picturematch": {
+      "description": {
+        "short": "Masz dwie karty pełne obrazków i tylko jeden z nich występuje dwa razy. Znajdź go szybciej niż inni.",
+        "rules": [
+          "Na ekranie gry masz dwie karty z obrazkami. Karta po lewej jest widoczna tylko dla Ciebie (każdy gracz ma inną kartę), a karta po prawiej jest ta sama dla wszysktich graczy",
+          "Celem gry jest odnalezienie obrazka, który znajduje się na obydwu kartach - taki obrazek zawsze istnieje i jest dokładnie jeden dla dowolnych dwóch kart",
+          "Gdy znajdziesz pasujący obrazek wystarczy go kliknąć (możesz kliknąć obrazek na dowolnej z kart)",
+          "Jeśli wskazany obrazek jest prawidłowy otrzymasz 1 punkt i Twoja karta z lewej strony zastąpi wspólną kartę z prawej strony. Otrzymasz nową kartę, którą zobaczysz po lewej stronie",
+          "Jeśli wskazany obrazek nie jest prawidłowy nie stracisz żadnych punktów, ale na krótką chwilę stracisz możliwość ponownego odgadywania"
+        ]
+      }
+    },
+    "splendid": {
+      "description": {
+        "short": "Zostań inwestorem, kupuj nowe technologie i wzbogać się szybiej niż przeciwnicy.",
+        "rules": []
+      }
+    }
+  }
+}

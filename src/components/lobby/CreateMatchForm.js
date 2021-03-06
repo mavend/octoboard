@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { func, bool, arrayOf } from "prop-types";
 import { useTranslation } from "react-i18next";
-import { Button, Form } from "semantic-ui-react";
+import { Button, Form, Popup, Icon } from "semantic-ui-react";
 import { GameType } from "config/propTypes";
 
 const propTypes = {
@@ -16,12 +16,20 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
   const [players, setPlayers] = useState();
   const [privateMatch, setPrivateMatch] = useState(true);
   const [playersOptions, setPlayersOptions] = useState([]);
-  const { t } = useTranslation("lobby");
+  const { t } = useTranslation(["lobby", "info"]);
 
   const gamesOptions = games.map(({ name, displayName, image }) => ({
     key: name,
     value: name,
     text: displayName || name,
+    description: (
+      <Popup
+        position="top right"
+        offset={[14, 3]}
+        content={t(`info:games.${name.toLowerCase()}.description.short`)}
+        trigger={<Icon fitted color="grey" name="info circle" className="right floated" />}
+      />
+    ),
     image: { avatar: true, src: image },
   }));
 

@@ -5,6 +5,10 @@
     "logout": "Log Out"
   },
   "game": {
+    "rules": {
+      "header": "Game Rules",
+      "confirm": "OK"
+    },
     "leave": {
       "button": "Leave Match",
       "modal": {
@@ -21,5 +25,12 @@
   "footer": {
     "github": "We are on GitHub",
     "graphics": "Graphics from"
+  },
+  "board": {
+    "wait": {
+      "actions": {
+        "start": "Start game"
+      }
+    }
   }
 }

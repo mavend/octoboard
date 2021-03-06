@@ -5,6 +5,10 @@
     "logout": "Wyloguj"
   },
   "game": {
+    "rules": {
+      "header": "Zasady gry",
+      "confirm": "OK"
+    },
     "leave": {
       "button": "Opuść pokój",
       "modal": {
@@ -21,5 +25,12 @@
   "chat": {
     "header": "Czat",
     "sendMessage": "Wyślij wiadomość"
+  },
+  "board": {
+    "wait": {
+      "actions": {
+        "start": "Rozpocznij grę"
+      }
+    }
   }
 }

@@ -5,6 +5,7 @@ import { Header, Segment } from "semantic-ui-react";
 import Player from "./Player";
 import { useBoardGame } from "contexts/BoardGameContext";
 import LeaveButton from "components/game/LeaveButton";
+import GameRulesButton from "components/game/GameRulesButton";
 import MatchTypeBadge from "components/game/MatchTypeBadge";
 import { useUser } from "contexts/UserContext";
 import { useHistory } from "react-router-dom";
@@ -51,6 +52,9 @@ const Sidebar = ({ handleActionClick, header, extraPlayerContent, showCurrentPla
           />
         ))}
       </Segment.Group>
+      <Segment basic textAlign="center" className={styles.leaveSegment}>
+        <GameRulesButton />
+      </Segment>
       <Segment basic textAlign="center" className={styles.leaveSegment}>
         <LeaveButton handleLeave={handleLeave} />
       </Segment>
