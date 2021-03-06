@@ -28,9 +28,6 @@
       "input": {
         "placeholder": "Talk to other players while waiting...",
         "action": "Send"
-      },
-      "actions": {
-        "start": "Start game"
       }
     }
   }

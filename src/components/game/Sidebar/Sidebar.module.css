@@ -1,3 +1,4 @@
 .leaveSegment {
-  margin-top: -1rem;
+  margin-top: -1rem !important;
+  margin-bottom: 0 !important;
 }

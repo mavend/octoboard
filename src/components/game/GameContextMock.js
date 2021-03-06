@@ -17,7 +17,7 @@ const BoardGameContextMock = ({ children }) => {
         ],
         privateMatch: boolean("Private", true, ref),
         players: {
-          0: {},
+          0: { canManageGame: true },
           1: {},
         },
       }}

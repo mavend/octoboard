@@ -7,7 +7,7 @@ const WaitingBoard = ({ onStartGame, children }) => {
   const {
     player: { canManageGame },
   } = useBoardGame();
-  const { t } = useTranslation("kalambury");
+  const { t } = useTranslation();
 
   return (
     <>

@@ -49,9 +49,6 @@
       "input": {
         "placeholder": "Porozmawiaj z innymi graczami...",
         "action": "Wyślij"
-      },
-      "actions": {
-        "start": "Rozpocznij grę"
       }
     }
   },
