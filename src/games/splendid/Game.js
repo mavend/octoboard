@@ -85,6 +85,14 @@ function TakeTokens(G, ctx, requestedTokens) {
   checkBonusAndEndTurn(G, ctx);
 }
 
+function findCardOnTheTable(G, level, cardId) {
+  return G.table[level].find((card) => card && card.id === cardId);
+}
+
+function removeCardFromTheTable(G, level, cardId) {
+  G.table[level] = G.table[level].map((card) => (card && card.id === cardId ? null : card));
+}
+
 function payForCard(player, card, publicTokens) {
   for (const [res, cost] of Object.entries(card.cost)) {
     const tokens = player.tokens[res];
@@ -107,7 +115,7 @@ function payForCard(player, card, publicTokens) {
 function BuyCard(G, ctx, level, cardId) {
   const player = G.players[ctx.currentPlayer];
   const { tokens, cards } = player;
-  const card = G.table[level].find((card) => card && card.id === cardId);
+  const card = findCardOnTheTable(G, level, cardId);
 
   if (!canBuyCard(tokens, cards, card)) {
     return INVALID_MOVE;
@@ -117,7 +125,7 @@ function BuyCard(G, ctx, level, cardId) {
 
   player.cards[card.resource] += 1;
   G.points[ctx.currentPlayer] += card.points;
-  G.table[level] = G.table[level].map((card) => (card && card.id === cardId ? null : card));
+  removeCardFromTheTable(G, level, cardId);
 
   checkBonusAndEndTurn(G, ctx);
 }
@@ -142,7 +150,7 @@ function BuyReserved(G, ctx, cardId) {
 
 function ReserveCard(G, ctx, level, cardId) {
   const player = G.players[ctx.currentPlayer];
-  const card = G.table[level].find((card) => card && card.id === cardId);
+  const card = findCardOnTheTable(G, level, cardId);
 
   if (!card || player.reservedCards.length >= 3) {
     return INVALID_MOVE;
@@ -153,7 +161,7 @@ function ReserveCard(G, ctx, level, cardId) {
     G.tokens.gold -= 1;
   }
   player.reservedCards.push(card);
-  G.table[level] = G.table[level].map((card) => (card && card.id === cardId ? null : card));
+  removeCardFromTheTable(G, level, cardId);
 
   checkBonusAndEndTurn(G, ctx);
 }
