@@ -6,6 +6,9 @@ import Player from "./Player";
 import { useBoardGame } from "contexts/BoardGameContext";
 import LeaveButton from "components/game/LeaveButton";
 import MatchTypeBadge from "components/game/MatchTypeBadge";
+import { useUser } from "contexts/UserContext";
+import { useHistory } from "react-router-dom";
+import { leaveGame } from "utils/game/leave";
 
 import styles from "./Sidebar.module.css";
 
@@ -25,7 +28,13 @@ const defaultProps = {
 };
 
 const Sidebar = ({ handleActionClick, header, extraPlayerContent, showCurrentPlayer }) => {
-  const { G, players } = useBoardGame();
+  const { G, players, playerID, matchID, gameName, credentials } = useBoardGame();
+  const user = useUser();
+  const history = useHistory();
+
+  const handleLeave = () => {
+    leaveGame(gameName, matchID, playerID, user.uid, credentials, history);
+  };
 
   return (
     <>
@@ -43,7 +52,7 @@ const Sidebar = ({ handleActionClick, header, extraPlayerContent, showCurrentPla
         ))}
       </Segment.Group>
       <Segment basic textAlign="center" className={styles.leaveSegment}>
-        <LeaveButton />
+        <LeaveButton handleLeave={handleLeave} />
       </Segment>
     </>
   );
