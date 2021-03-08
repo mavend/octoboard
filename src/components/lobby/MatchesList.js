@@ -4,9 +4,12 @@ import { useTranslation } from "react-i18next";
 import { Item, Button, Pagination, Label, Icon } from "semantic-ui-react";
 import { MatchType, GameType } from "config/propTypes";
 import { paginate } from "utils/paginate";
-import { useUser, useProfiles } from "contexts/UserContext";
+import { useUser, useCredentials, useProfiles } from "contexts/UserContext";
 import MatchTypeBadge from "components/game/MatchTypeBadge";
 import { Media } from "config/media";
+import LeaveButton from "components/game/LeaveButton";
+import { useHistory } from "react-router-dom";
+import { leaveGame } from "utils/game/leave";
 
 const matchesListPropTypes = {
   matches: arrayOf(MatchType).isRequired,
@@ -78,18 +81,40 @@ const matchesListItemPropTypes = {
 };
 
 const MatchesListItem = React.memo(
-  ({ match, match: { matchID, players, setupData }, game, onJoin, current, disabled }) => {
-    const { t } = useTranslation("lobby");
+  ({
+    match,
+    match: { matchID, gameName, players, setupData },
+    game,
+    onJoin,
+    current,
+    disabled,
+  }) => {
+    const { t } = useTranslation("lobby", "translation");
+    const user = useUser();
+    const credentials = useCredentials();
+    const history = useHistory();
 
     if (!game) return null;
 
-    const maxPlayers = players.length;
+    const gameCredentials = credentials && credentials[matchID];
     const currentPlayers = players.filter((p) => p.name);
+    const maxPlayers = players.length;
     const isFull = currentPlayers.length === maxPlayers;
     const canJoin = !disabled && (!isFull || current);
 
-    const handleClick = () => {
+    const handleJoin = () => {
       if (canJoin) onJoin(match);
+    };
+
+    const handleLeave = () => {
+      leaveGame(
+        gameName,
+        matchID,
+        currentPlayers.find(({ name }) => name === user.uid).id.toString(),
+        user.uid,
+        gameCredentials,
+        history
+      );
     };
 
     const buttonLabel = () => {
@@ -111,7 +136,7 @@ const MatchesListItem = React.memo(
           color: isFull ? "red" : null,
         }}
         labelPosition="left"
-        onClick={handleClick}
+        onClick={handleJoin}
       />
     );
 
@@ -163,6 +188,7 @@ const MatchesListItem = React.memo(
                   </Item.Header>
                   <Item.Extra>
                     <MatchMembers detailed />
+                    {current && <LeaveButton handleLeave={handleLeave} compact size="tiny" />}
                   </Item.Extra>
                 </>
               )}
@@ -183,6 +209,14 @@ const MatchesListItem = React.memo(
                   </Item.Description>
                   <Item.Extra>
                     <MatchMembers />
+                    {current && (
+                      <LeaveButton
+                        handleLeave={handleLeave}
+                        compact
+                        style={{ marginLeft: "1rem" }}
+                        size="tiny"
+                      />
+                    )}
                   </Item.Extra>
                 </>
               )}
