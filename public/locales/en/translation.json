@@ -20,6 +20,12 @@
     "chat": {
       "header": "Game chat",
       "sendMessage": "Send message"
+    },
+    "gameover": {
+      "header": "Game Over",
+      "subheader": "How about a rematch?",
+      "rematch": "Play again",
+      "winners": "Winners:"
     }
   },
   "footer": {

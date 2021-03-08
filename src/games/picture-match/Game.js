@@ -168,7 +168,7 @@ export const PictureMatch = {
   endIf: (G, ctx) => {
     let winner = G.points.findIndex((points) => points >= G.maxPoints);
     if (G.mode !== "infinite" && G.maxPoints > 0 && winner >= 0) {
-      return { winner: winner };
+      return { winners: [winner] };
     }
   },
 

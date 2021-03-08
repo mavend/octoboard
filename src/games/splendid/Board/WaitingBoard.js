@@ -6,7 +6,7 @@ import styles from "./Board.module.css";
 
 const WaitingBoard = ({ canManageGame, onStartGame, currentPlayers, totalPlayers }) => (
   <GameLayout gameName={"Splendid"} header={<></>} sidebarHeader={<></>} sidebarSize={5}>
-    <Segment className={styles.waitBoard}>
+    <Segment basic textAlign="center">
       <Image src="/images/hugo-waiting.png" className={styles.waitImage} />
       <p className={styles.waitInfo}>
         <Label as="span">

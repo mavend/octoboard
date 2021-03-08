@@ -16,15 +16,21 @@
         "confirm": "Tak",
         "cancel": "Nie"
       }
+    },
+    "chat": {
+      "header": "Czat",
+      "sendMessage": "Wyślij wiadomość"
+    },
+    "gameover": {
+      "header": "Koniec gry",
+      "subheader": "Może zagracie jeszcze raz?",
+      "rematch": "Zagraj jeszcze raz",
+      "winners": "Zwycięzcy:"
     }
   },
   "footer": {
     "github": "Jesteśmy na GitHubie",
     "graphics": "Grafiki od"
-  },
-  "chat": {
-    "header": "Czat",
-    "sendMessage": "Wyślij wiadomość"
   },
   "board": {
     "wait": {
