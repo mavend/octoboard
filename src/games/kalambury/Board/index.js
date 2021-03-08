@@ -10,11 +10,12 @@ import GameLayout from "components/layout/GameLayout";
 
 import SettingsBoard from "./SettingsBoard";
 import GameBoard from "./GameBoard";
+import GameEndingBoard from "components/game/GameEndingBoard";
 
 const Board = () => {
   const {
     G,
-    ctx: { phase },
+    ctx: { phase, gameover },
     players,
     player: { isDrawing, stage, phrase },
     moves: { StartGame, UpdateConnectedPlayers },
@@ -72,24 +73,29 @@ const Board = () => {
       privateMatch={G.privateMatch}
       handleActionClick={handleActionClick}
     >
-      <Header as="h2" textAlign="center">
-        {hasGameStarted ? t(`header.${phase}.${stage}`) : t(`header.${phase}`)}
-        <Header.Subheader>{isDrawing ? phrase : t(`subheader.${phase}.${stage}`)}</Header.Subheader>
-      </Header>
-      {hasGameStarted ? (
-        <GameBoard
-          guess={guess}
-          setGuess={setGuess}
-          guessInputRef={guessInputRef}
-          envokeLastAnswer={envokeLastAnswer}
-        />
+      {phase ? (
+        <>
+          <Header as="h2" textAlign="center">
+            {hasGameStarted ? t(`header.${phase}.${stage}`) : t(`header.${phase}`)}
+            <Header.Subheader>
+              {isDrawing ? phrase : t(`subheader.${phase}.${stage}`)}
+            </Header.Subheader>
+          </Header>
+          {hasGameStarted ? (
+            <GameBoard
+              guess={guess}
+              setGuess={setGuess}
+              guessInputRef={guessInputRef}
+              envokeLastAnswer={envokeLastAnswer}
+            />
+          ) : (
+            <SettingsBoard modes={G.modes} defaultMode={G.mode} defaultTimePerTurn={G.timePerTurn} onStartGame={handleStartGame} />
+          )}
+        </>
       ) : (
-        <SettingsBoard
-          modes={G.modes}
-          defaultMode={G.mode}
-          defaultTimePerTurn={G.timePerTurn}
-          onStartGame={handleStartGame}
-        />
+        <>
+          <GameEndingBoard winners={gameover.winners} players={players} />
+        </>
       )}
     </GameLayout>
   );

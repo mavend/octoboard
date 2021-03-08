@@ -32,14 +32,14 @@ const Board = () => {
         <MatchingBoard />
       ) : (
         <WaitingBoard onStartGame={() => StartGame(chosenStyle, gameMode)}>
-          <Segment>
+          <Segment compact>
             <Header>{t("game.settings.style")}</Header>
             <Image.Group>
               {G.styles.map((style) => (
                 <Image
                   bordered
                   key={style}
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", background: "white" }}
                   src={`/images/games/picture-match/styles/${style}.png`}
                   label={
                     chosenStyle === style

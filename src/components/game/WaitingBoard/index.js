@@ -10,31 +10,28 @@ const WaitingBoard = ({ onStartGame, children }) => {
   const { t } = useTranslation();
 
   return (
-    <>
-      <Segment
-        style={{
-          background: "transparent",
-          widht: 800,
-          height: 600,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {canManageGame ? (
-          <>
-            {children}
-            <Button icon labelPosition="right" color="green" onClick={onStartGame}>
-              {t("board.wait.actions.start")}
-              <Icon name="pencil" />
-            </Button>
-          </>
-        ) : (
-          <Image src="/images/hugo-waiting.png" style={{ width: 400, margin: "0 auto" }} />
-        )}
-      </Segment>
-    </>
+    <Segment
+      basic
+      textAlign="center"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {canManageGame ? (
+        <>
+          {children}
+          <Button icon labelPosition="right" color="green" onClick={onStartGame}>
+            {t("board.wait.actions.start")}
+            <Icon name="pencil" />
+          </Button>
+        </>
+      ) : (
+        <Image src="/images/hugo-waiting.png" style={{ width: 400, margin: "0 auto" }} />
+      )}
+    </Segment>
   );
 };
 

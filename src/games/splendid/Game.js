@@ -273,7 +273,7 @@ export const Splendid = {
           cardsCount(a) - cardsCount(b) ||
           bonusesCount(b) - bonusesCount(a)
       )[0];
-      return { winner };
+      return { winners: [winner] };
     }
   },
 };
