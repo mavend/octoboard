@@ -41,5 +41,3 @@ server.run(process.env.PORT || 8000, () => {
     notifier.notify(err);
   });
 });
-
-server.run(process.env.PORT || 8000);
