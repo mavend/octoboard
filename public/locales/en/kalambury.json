@@ -4,6 +4,7 @@
     "settings": {
       "mode": "Game mode",
       "maxPoints": "Points limit",
+      "timePerTurn": "Guessing time limit",
       "modes": {
         "regular": "Regular",
         "infinite": "Infinite"

@@ -90,13 +90,14 @@ function Forfeit(G, ctx) {
   ctx.events.endTurn();
 }
 
-function StartGame(G, ctx, gameMode, maxPoints, language, category) {
+function StartGame(G, ctx, gameMode, maxPoints, language, category, timePerTurn) {
   G.started = true;
   G.mode = gameMode;
   if (G.gameMode !== "infinite") {
-    G.maxPoints = maxPoints || 0;
+    G.maxPoints = Number(maxPoints) || 0;
   }
   G.secret.phrases = ctx.random.Shuffle(getPhrases(language, category));
+  G.timePerTurn = Number(timePerTurn);
   ctx.events.setPhase("play");
 }
 
