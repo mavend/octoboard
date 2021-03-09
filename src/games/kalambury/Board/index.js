@@ -27,8 +27,8 @@ const Board = () => {
   const hasGameStarted = phase === "play";
 
   const handleStartGame = useCallback(
-    ({ gameMode, maxPoints, language, category }) => {
-      StartGame(gameMode, maxPoints, language, category);
+    ({ gameMode, maxPoints, language, category, timePerTurn }) => {
+      StartGame(gameMode, maxPoints, language, category, timePerTurn);
     },
     [StartGame]
   );
@@ -84,7 +84,12 @@ const Board = () => {
           envokeLastAnswer={envokeLastAnswer}
         />
       ) : (
-        <SettingsBoard modes={G.modes} defaultMode={G.mode} onStartGame={handleStartGame} />
+        <SettingsBoard
+          modes={G.modes}
+          defaultMode={G.mode}
+          defaultTimePerTurn={G.timePerTurn}
+          onStartGame={handleStartGame}
+        />
       )}
     </GameLayout>
   );

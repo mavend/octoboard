@@ -4,6 +4,7 @@
     "settings": {
       "mode": "Rodzaj gry",
       "maxPoints": "Limit punktów",
+      "timePerTurn": "Czas na odgadnięcie",
       "modes": {
         "regular": "Zwykły",
         "infinite": "Bez końca"

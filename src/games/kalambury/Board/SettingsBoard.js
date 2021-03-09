@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Header, Form, Segment, Dropdown } from "semantic-ui-react";
+import { Header, Form, Segment, Dropdown, Label } from "semantic-ui-react";
 
 import WaitingBoard from "components/game/WaitingBoard";
 import { phrasesSets } from "../data/phrases";
+import moment from "moment";
 
-const SettingsBoard = ({ modes, defaultMode, onStartGame }) => {
+const SettingsBoard = ({ modes, defaultMode, defaultTimePerTurn, onStartGame }) => {
   const { t, i18n } = useTranslation("kalambury");
 
   const languages = phrasesSets.map((lang) => ({
@@ -19,6 +20,7 @@ const SettingsBoard = ({ modes, defaultMode, onStartGame }) => {
   const [maxPoints, setMaxPoints] = useState(10);
   const [language, setLanguage] = useState(defaultLanguage.value);
   const [category, setCategory] = useState([]);
+  const [timePerTurn, setTimePerTurn] = useState(defaultTimePerTurn);
 
   useEffect(() => {
     if (language) {
@@ -42,7 +44,12 @@ const SettingsBoard = ({ modes, defaultMode, onStartGame }) => {
       maxPoints,
       language,
       category,
+      timePerTurn,
     });
+  };
+
+  const formatTime = (seconds) => {
+    return moment.unix(seconds).format("m[min] ss[s]");
   };
 
   return (
@@ -61,7 +68,9 @@ const SettingsBoard = ({ modes, defaultMode, onStartGame }) => {
               />
             </Form.Field>
           ))}
-          <Header style={{ marginBottom: 5 }}>{t("game.settings.maxPoints")}</Header>
+          <Header disabled={gameMode === "infinite"} style={{ marginBottom: 5 }}>
+            {t("game.settings.maxPoints")} <Label size="large">{maxPoints}</Label>
+          </Header>
           <Form.Input
             fluid
             type="range"
@@ -72,16 +81,17 @@ const SettingsBoard = ({ modes, defaultMode, onStartGame }) => {
             value={maxPoints}
             onChange={(e, { value }) => setMaxPoints(value)}
           />
+          <Header style={{ marginBottom: 5 }}>
+            {t("game.settings.timePerTurn")} <Label size="large">{formatTime(timePerTurn)}</Label>
+          </Header>
           <Form.Input
             fluid
-            type="number"
-            min="1"
-            max="50"
-            step="1"
-            disabled={gameMode === "infinite"}
-            value={maxPoints}
-            onChange={(e, { value }) => setMaxPoints(value)}
-            style={{ marginTop: -10 }}
+            type="range"
+            min="30"
+            max="600"
+            step="10"
+            value={timePerTurn}
+            onChange={(e, { value }) => setTimePerTurn(value)}
           />
           <Header>{t("game.settings.language")}</Header>
           <Form.Select
