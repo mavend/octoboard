@@ -28,7 +28,18 @@
     "splendid": {
       "description": {
         "short": "Zostań inwestorem, kupuj nowe technologie i wzbogać się szybiej niż przeciwnicy.",
-        "rules": []
+        "rules": [
+          "Celem gry jest zdobycie jak największej liczby punktów przez kupowanie kart rozwoju technologii.",
+          "Każda karta kosztuje pewną ilość zasobów rónych typów.",
+          "Każda kupiona karta, poza punktami, zastępuje też 1 żeton surowca danego typu przez resztę gry.",
+          "W swojej turze możesz wykonać 1 z 4 akcji:",
+          "1. Weź 3 surowce różnego typu",
+          "2. Weź 2 surowce tego samego typu (jeśli dostępne są conajmniej 4)",
+          "3. Zarezerwuj 1 kartę technologi ze stołu lub losową z góry stosu. Weź 1 złoty żeton (zastępuje każdy inny).",
+          "4. Kup 1 kartę technologii ze stołu lub z wcześniej zarezerwowanych",
+          "Gracze automatycznie otrzymują 1 bonusowy patent (warty 3 punkty) kiedy spełnią kryteria posiadania odpowiedniej ilości kart w danych kolorach.",
+          "Gra kończy się kiedy któryś z graczy zdobędzie >= 15 punktów - po tym pozostali gracze mogą wykonać jeszcze 1 ruch. Grę wygrywa gracz z największą ilością punktów."
+        ]
       }
     }
   }

@@ -28,7 +28,18 @@
     "splendid": {
       "description": {
         "short": "Become an investor, buy new technologies and outgrow your opponents.",
-        "rules": []
+        "rules": [
+          "The goal of the game is to get the highest number of points by buying technology development cards.",
+          "Each technology card on the table costs specific amount of resources.",
+          "Each card you buy gives you not only points, but also substitutes 1 resource of the given type later in the game.",
+          "On your turn take 1 of 4 actions:",
+          "1. Take 3 resources of different types",
+          "2. Take 2 resources of same types (if there are at least 4 available of that type)",
+          "3. Reserve 1 technology development card from the table or top one from the deck. Take 1 gold resource (replaces any other resource type).",
+          "4. Buy 1 technology development card from the table or from previously reserved ones.",
+          "Players automatically get 1 bonus patent (worth 3 points) when they meet requirements of number of owned cards in specific colors.",
+          "The game ends when one of the players scores >= 15 points - after this every other player has one more turn and then the player with most points wins."
+        ]
       }
     }
   }
