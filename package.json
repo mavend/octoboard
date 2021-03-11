@@ -15,7 +15,7 @@
     "classnames": "^2.2.6",
     "concurrently": "^6.0.0",
     "esm": "^3.2.25",
-    "firebase": "^8.2.9",
+    "firebase": "^8.3.0",
     "firebase-admin": "^9.5.0",
     "i18next": "^19.9.1",
     "i18next-browser-languagedetector": "^6.0.1",
