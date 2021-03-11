@@ -2,7 +2,7 @@
 
 import React from "react";
 import Card from "./Card";
-import { number } from "@storybook/addon-knobs";
+import { number, boolean } from "@storybook/addon-knobs";
 import { action } from "@storybook/addon-actions";
 
 export default {
@@ -27,13 +27,45 @@ const pictureKnobs = (id) => {
 
 export const Default = () => (
   <Card
-    card={{ pictures: [1, 2, 3, 4, 5, 6, 7, 8], layout: number("Layout", 0) }}
+    card={{
+      pictures: Array(boolean("Small card", false) ? 6 : 8)
+        .fill()
+        .map((item, idx) => idx),
+      layout: number("Layout", 0),
+    }}
     style="color"
     handleClick={action("handleClick")}
   />
 );
 
-export const LayoutDesign = () => {
+export const LayoutDesignSmall = () => {
+  const customLayout = [
+    pictureKnobs("0"),
+    pictureKnobs("1"),
+    pictureKnobs("2"),
+    pictureKnobs("3"),
+    pictureKnobs("4"),
+    pictureKnobs("5"),
+  ];
+
+  return (
+    <div>
+      <Card
+        card={{
+          pictures: [0, 1, 2, 3, 4, 5],
+          layout: 0,
+          rotation: number("Card Rotation", 0, { range: true, min: 0, max: 359, step: 1 }),
+        }}
+        style="color"
+        customLayout={customLayout}
+        handleClick={action("handleClick")}
+      />
+      <p>{JSON.stringify(customLayout)}</p>
+    </div>
+  );
+};
+
+export const LayoutDesignMedium = () => {
   const customLayout = [
     pictureKnobs("0"),
     pictureKnobs("1"),
@@ -49,7 +81,7 @@ export const LayoutDesign = () => {
     <div>
       <Card
         card={{
-          pictures: [43, 43, 43, 43, 43, 43, 43, 43],
+          pictures: [0, 1, 2, 3, 4, 5, 6, 7],
           layout: 0,
           rotation: number("Card Rotation", 0, { range: true, min: 0, max: 359, step: 1 }),
         }}

@@ -6,7 +6,8 @@ const Card = ({ card, style, customLayout, handleClick }) => {
   if (!card) {
     return <></>;
   }
-  const layout = customLayout || layouts[card.layout % layouts.length];
+  const cardSpecificLayouts = card.pictures.length > 0 ? layouts[card.pictures.length] : [];
+  const layout = customLayout || cardSpecificLayouts[card.layout % cardSpecificLayouts.length];
 
   return (
     <Segment

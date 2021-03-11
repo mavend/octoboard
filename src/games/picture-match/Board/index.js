@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { Header, Image, Segment, Form } from "semantic-ui-react";
+import { Header } from "semantic-ui-react";
 
 import { useBoardGame } from "contexts/BoardGameContext";
 import GameLayout from "components/layout/GameLayout";
 
-import WaitingBoard from "components/game/WaitingBoard";
 import MatchingBoard from "./MatchingBoard";
+import SettingsBoard from "./SettingsBoard";
 
 const Board = () => {
   const {
@@ -17,8 +17,6 @@ const Board = () => {
   } = useBoardGame();
 
   const { t } = useTranslation("picture-match");
-  const [chosenStyle, setChosenStyle] = useState(G.style);
-  const [gameMode, setGameMode] = useState(G.mode);
 
   const hasGameStarted = phase === "play";
 
@@ -31,41 +29,14 @@ const Board = () => {
       {hasGameStarted ? (
         <MatchingBoard />
       ) : (
-        <WaitingBoard onStartGame={() => StartGame(chosenStyle, gameMode)}>
-          <Segment compact>
-            <Header>{t("game.settings.style")}</Header>
-            <Image.Group>
-              {G.styles.map((style) => (
-                <Image
-                  bordered
-                  key={style}
-                  style={{ cursor: "pointer", background: "white" }}
-                  src={`/images/games/picture-match/styles/${style}.png`}
-                  label={
-                    chosenStyle === style
-                      ? { as: "a", color: "green", corner: "left", icon: "check", size: "mini" }
-                      : null
-                  }
-                  onClick={() => setChosenStyle(style)}
-                />
-              ))}
-            </Image.Group>
-            <Header>{t("game.settings.mode")}</Header>
-            <Form>
-              {G.modes.map((mode) => (
-                <Form.Field key={mode}>
-                  <Form.Radio
-                    toggle
-                    label={t(`game.settings.modes.${mode}`)}
-                    value={mode}
-                    checked={gameMode === mode}
-                    onChange={(e, { value }) => setGameMode(value)}
-                  />
-                </Form.Field>
-              ))}
-            </Form>
-          </Segment>
-        </WaitingBoard>
+        <SettingsBoard
+          modes={G.modes}
+          defaultMode={G.mode}
+          styles={G.styles}
+          defaultStyle={G.style}
+          defaultPicturesCount={G.picturesCount}
+          StartGame={StartGame}
+        />
       )}
     </GameLayout>
   );

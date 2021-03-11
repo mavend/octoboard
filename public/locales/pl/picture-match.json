@@ -7,6 +7,11 @@
       "modes": {
         "regular": "Zwykły",
         "infinite": "Bez końca"
+      },
+      "difficulty": "Trudność gry",
+      "difficulties": {
+        "regular": "Standardowa (8 obrazków)",
+        "easy": "Łatwa (6 obrazków)"
       }
     }
   },
