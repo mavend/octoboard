@@ -1,5 +1,5 @@
 import { PlayerView } from "boardgame.io/core";
-import cards from "./data/cards/8.json";
+import { getCardsDeck } from "./data/cards";
 
 // This dictionary keeps track of number of pictures for each style
 const styles = {
@@ -19,14 +19,17 @@ function randomizeCardLayout(ctx, pictures) {
   };
 }
 
-function prepareDeck(ctx, mapping) {
+function prepareDeck(ctx, mapping, picturesCount) {
   let shuffleAndMapPictures = (pictures) => {
     return ctx.random.Shuffle(pictures).map((number) => mapping[number]);
   };
   let picturesToCards = (pictures) => {
     return randomizeCardLayout(ctx, pictures);
   };
-  return ctx.random.Shuffle(cards).map(shuffleAndMapPictures).map(picturesToCards);
+  return ctx.random
+    .Shuffle(getCardsDeck(picturesCount))
+    .map(shuffleAndMapPictures)
+    .map(picturesToCards);
 }
 
 function setupGame(ctx, setupData) {
@@ -42,6 +45,7 @@ function setupGame(ctx, setupData) {
     pictures: [],
     modes: modes,
     mode: modes[0],
+    picturesCount: 8,
     actionsCount: 0,
     players: {},
     points: Array(ctx.numPlayers).fill(0),
@@ -71,13 +75,14 @@ function LogAction(G, ctx, playerID, action, params = {}, clear = false) {
   });
 }
 
-function StartGame(G, ctx, style, mode) {
+function StartGame(G, ctx, style, mode, picturesCount) {
   G.style = style;
   G.mode = mode;
+  G.picturesCount = picturesCount;
   G.pictures = ctx.random.Shuffle([...Array(styles[style]).keys()]).slice(0, 57);
   // Once this gets resolved https://github.com/nicolodavis/boardgame.io/issues/588
   // we could remove `client: false` from `StartGame` and perform deck setup in phase onBegin
-  G.secret.deck = prepareDeck(ctx, G.pictures);
+  G.secret.deck = prepareDeck(ctx, G.pictures, G.picturesCount);
   G.secret.used = [];
   ctx.events.setPhase("play");
 }

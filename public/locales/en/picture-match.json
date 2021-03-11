@@ -7,6 +7,11 @@
       "modes": {
         "regular": "Regular",
         "infinite": "Infinite"
+      },
+      "difficulty": "Game difficulty",
+      "difficulties": {
+        "regular": "Regular (8 pictures)",
+        "easy": "Easy (6 pictures)"
       }
     }
   },
