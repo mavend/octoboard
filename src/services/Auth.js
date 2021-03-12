@@ -1,5 +1,6 @@
-import FirebaseClient from "./Firebase";
+import firebase from "firebase/app";
 import DataStore from "./DataStore";
+import "firebase/auth";
 
 async function initUserProfile(user, { displayName }) {
   await DataStore.updateProfile(user.uid, { displayName });
@@ -7,7 +8,7 @@ async function initUserProfile(user, { displayName }) {
   await user.updateProfile({ displayName });
 }
 
-const FirebaseAuth = FirebaseClient.auth();
+const FirebaseAuth = firebase.auth();
 
 if (process.env.NODE_ENV === "development") {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -27,7 +28,7 @@ const AuthProvider = {
     return user;
   },
   logInGoogle: async () => {
-    const provider = new FirebaseClient.auth.GoogleAuthProvider();
+    const provider = new firebase.auth.GoogleAuthProvider();
     provider.addScope("email");
     provider.addScope("profile");
     provider.setCustomParameters({ prompt: "select_account" });
@@ -50,10 +51,7 @@ const AuthProvider = {
   changePassword: async (currentPassword, newPassword) => {
     const user = FirebaseAuth.currentUser;
     if (user) {
-      const credential = FirebaseClient.auth.EmailAuthProvider.credential(
-        user.email,
-        currentPassword
-      );
+      const credential = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
       await user.reauthenticateWithCredential(credential);
       await user.updatePassword(newPassword);
     } else {

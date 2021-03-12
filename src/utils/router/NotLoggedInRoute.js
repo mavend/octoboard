@@ -29,10 +29,7 @@ export function NotLoggedInRoute({ children, ...rest }) {
                   />
                 )}
                 {from && (
-                  <meta
-                    property="og:url"
-                    content={`https://octoboard.netlify.com${from.pathname}`}
-                  />
+                  <meta property="og:url" content={`https://octo-board.web.app${from.pathname}`} />
                 )}
               </Helmet>
               {children}
