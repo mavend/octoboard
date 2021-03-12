@@ -1,6 +1,14 @@
-import FirebaseClient from "./Firebase";
+import firebase from "firebase/app";
+import "firebase/firestore";
 
-const DB = FirebaseClient.firestore();
+if (firebase.apps.length === 0) {
+  // Force firebase initialization for local development
+  firebase.initializeApp({
+    projectId: "octoboard-development",
+    apiKey: "development-key",
+  });
+}
+const DB = firebase.firestore();
 
 let settings = {
   experimentalAutoDetectLongPolling: true,
