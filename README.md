@@ -1,5 +1,5 @@
 [![Build status](https://github.com/mavend/octoboard/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/mavend/octoboard/actions/workflows/ci.yaml)
-[![Deploy status](https://github.com/mavend/octoboard/actions/workflows/firebase-hosting-merge.yml/badge.svg)](https://octo-board.web.app/)
+[![Deploy status](https://github.com/mavend/octoboard/actions/workflows/deploy-master.yml/badge.svg)](https://octo-board.web.app/)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 # Octoboard

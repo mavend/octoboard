@@ -52,7 +52,7 @@
     "start:client": "react-scripts start",
     "start:firebase": "firebase emulators:start --import=./emulators.backup",
     "start:storybook": "start-storybook -p 9009 -s public --quiet",
-    "prepare": "husky install"
+    "prepare": "if test \"$NODE_ENV\" != production ; then husky install ; fi"
   },
   "eslintConfig": {
     "extends": "react-app",
