@@ -1,0 +1,47 @@
+name: Deploy PR to octoboard-development
+
+on:
+  pull_request:
+    types: [labeled, opened, synchronize, reopened]
+
+jobs:
+  deploy:
+    name: Deploy server
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.id, 2818529465)
+    environment:
+      name: octoboard-development-server
+      url: https://${{ github.head_ref }}-dot-octoboard-development.appspot.com
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.2.0
+        with:
+          project_id: octoboard-development
+          service_account_key: ${{ secrets.APP_ENGINE_SERVICE_ACCOUNT_OCTOBOARD_DEVELOPMENT }}
+      - name: Deploy to App Engine
+        run: gcloud app deploy --quiet --no-promote --version=${{ github.head_ref }}
+  build_and_preview:
+    name: Deploy client
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.id, 2818529465)
+    environment:
+      name: octoboard-development-client
+      url: ${{ steps.preview.outputs.details_url }}
+    env:
+      REACT_APP_API_ROOT: https://${{ github.head_ref }}-dot-octoboard-development.appspot.com
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        run: npm ci && npm run build
+      - name: Preview
+        id: preview
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_OCTOBOARD_DEVELOPMENT }}"
+          projectId: octoboard-development
+        env:
+          FIREBASE_CLI_PREVIEWS: hostingchannels

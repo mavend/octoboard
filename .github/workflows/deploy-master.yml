@@ -1,0 +1,44 @@
+name: Deploy Production to octoboard
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    name: Deploy server
+    runs-on: ubuntu-latest
+    environment:
+      name: octoboard-server
+      url: https://octo-board.appspot.com/
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.2.0
+        with:
+          project_id: octo-board
+          service_account_key: ${{ secrets.APP_ENGINE_SERVICE_ACCOUNT_OCTO_BOARD }}
+      - name: Deploy to App Engine
+        run: gcloud app deploy --quiet --version=${GITHUB_SHA}
+  build_and_deploy:
+    name: Deploy client
+    runs-on: ubuntu-latest
+    environment:
+      name: octoboard-client
+      url: https://octo-board.web.app/
+    env:
+      REACT_APP_API_ROOT: https://octo-board.appspot.com/
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        run: npm ci && npm run build
+      - name: Deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_OCTO_BOARD }}"
+          channelId: live
+          projectId: octo-board
+        env:
+          FIREBASE_CLI_PREVIEWS: hostingchannels
