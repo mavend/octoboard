@@ -19,6 +19,7 @@ import LobbyPage from "views/lobby/LobbyPage";
 import LoginPage from "views/user/LoginPage";
 import RegisterPage from "views/user/RegisterPage";
 import ChangePassword from "views/user/ChangePassword";
+import { CLIENT_URL } from "config/constants";
 
 const Loading = () => (
   <Dimmer active inverted>
@@ -37,6 +38,7 @@ const App = () => {
             <UserProvider>
               <HelmetProvider>
                 <Helmet>
+                  <meta property="og:image" content={`${CLIENT_URL}/images/game-hugo.png`} />
                   <style type="text/css">{mediaStyle}</style>
                 </Helmet>
                 <Router history={history}>

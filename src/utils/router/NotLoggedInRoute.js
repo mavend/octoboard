@@ -3,6 +3,7 @@ import React from "react";
 import { useUser } from "contexts/UserContext";
 import { routes } from "config/routes";
 import { Helmet } from "react-helmet-async";
+import { CLIENT_URL } from "config/constants";
 
 export function NotLoggedInRoute({ children, ...rest }) {
   const user = useUser();
@@ -28,9 +29,7 @@ export function NotLoggedInRoute({ children, ...rest }) {
                     content={`Your friend wants to play ${gameName} with you. They wait for you in match #${matchID}`}
                   />
                 )}
-                {from && (
-                  <meta property="og:url" content={`https://octo-board.web.app${from.pathname}`} />
-                )}
+                {from && <meta property="og:url" content={`${CLIENT_URL}${from.pathname}`} />}
               </Helmet>
               {children}
             </>
