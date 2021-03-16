@@ -24,7 +24,7 @@ const LeaveButton = ({ handleLeave, icon, ...props }) => {
     <>
       <Button
         icon={icon}
-        labelPosition={icon && "left"}
+        labelPosition={icon ? "left" : undefined}
         color="red"
         onClick={() => setConfirmOpen(true)}
         {...props}
