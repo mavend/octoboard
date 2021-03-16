@@ -8,10 +8,11 @@ const propTypes = {
 };
 
 const defaultProps = {
+  icon: true,
   handleLeave: () => {},
 };
 
-const LeaveButton = ({ handleLeave, ...props }) => {
+const LeaveButton = ({ handleLeave, icon, ...props }) => {
   const { t } = useTranslation();
   const [confirmOpen, setConfirmOpen] = useState(false);
 
@@ -21,8 +22,14 @@ const LeaveButton = ({ handleLeave, ...props }) => {
 
   return (
     <>
-      <Button icon labelPosition="left" {...props} color="red" onClick={() => setConfirmOpen(true)}>
-        <Icon name="close" />
+      <Button
+        icon={icon}
+        labelPosition={icon ? "left" : undefined}
+        color="red"
+        onClick={() => setConfirmOpen(true)}
+        {...props}
+      >
+        {icon && <Icon name="close" />}
         {t("game.leave.button")}
       </Button>
       <Confirm
