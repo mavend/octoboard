@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { Button, Icon } from "semantic-ui-react";
@@ -41,6 +41,60 @@ const JoinGameButton = ({ current, isFull, canJoin, ...props }) => {
   );
 };
 
+const MatchDetails = React.memo(({ gameName, playerNames, current, handleLeave }) => {
+  const { t } = useTranslation(["lobby", "info"]);
+
+  return (
+    <div className={styles.details}>
+      <table className={styles.detailsTable}>
+        <tr>
+          <td className={styles.detailsTableLabel}>{t("lobby:list.game.description")}:</td>
+          <td>{t(`info:games.${gameName.toLowerCase()}.description.short`)}</td>
+        </tr>
+        <tr>
+          <td className={styles.detailsTableLabel}>{t("lobby:list.game.players")}:</td>
+          <td>{playerNames.join(", ")}</td>
+          {current && (
+            <td className={styles.detailsTableActions}>
+              <LeaveButton
+                handleLeave={handleLeave}
+                icon={false}
+                basic
+                size="tiny"
+                style={{ fontWeight: "bold" }}
+              />
+            </td>
+          )}
+        </tr>
+      </table>
+    </div>
+  );
+});
+
+const MatchRow = React.memo(
+  ({ game, match: { matchID, setupData, players }, current, disabled, handleJoin }) => {
+    const isPrivate = setupData && setupData.private;
+    const maxPlayers = players.length;
+    const currentPlayers = players.filter((p) => p.name);
+    const isFull = currentPlayers.length === maxPlayers;
+    const canJoin = !disabled && (!isFull || current);
+
+    return (
+      <div className={styles.row}>
+        <img className={styles.image} src={game.image} alt="game icon" />
+        <h3 className={styles.gameName}>{game.displayName || game.name}</h3>
+        <h4 className={styles.matchName}>#{matchID}</h4>
+        {isPrivate && <Icon name="lock" className={styles.private} size="small" />}
+        <span className={styles.filler} />
+
+        {current && <span className={styles.yourGame}>Your game</span>}
+        <PlayersCounter count={currentPlayers.length} total={maxPlayers} />
+        <JoinGameButton current={current} isFull={isFull} canJoin={canJoin} onClick={handleJoin} />
+      </div>
+    );
+  }
+);
+
 const matchItemPropTypes = {
   match: MatchType.isRequired,
   game: GameType,
@@ -49,34 +103,23 @@ const matchItemPropTypes = {
   disabled: PropTypes.bool,
 };
 
-const MatchesItem = React.memo(
-  ({
-    match,
-    match: { matchID, gameName, players, setupData },
-    game,
-    onJoin,
-    current,
-    disabled,
-  }) => {
-    const { t } = useTranslation(["translation", "info"]);
+const MatchItem = React.memo(
+  ({ match, match: { matchID, gameName, players }, game, onJoin, current, disabled }) => {
+    const { t } = useTranslation("lobby");
     const history = useHistory();
     const user = useUser();
     const profiles = useProfiles();
     const credentials = useCredentials();
     const [open, setOpen] = useState(false);
 
+    const handleJoin = useCallback(() => {
+      onJoin(match);
+    }, [onJoin, match]);
+
     if (!game) return null;
 
     const gameCredentials = credentials && credentials[matchID];
     const currentPlayers = players.filter((p) => p.name);
-    const maxPlayers = players.length;
-    const isFull = currentPlayers.length === maxPlayers;
-    const isPrivate = setupData && setupData.private;
-    const canJoin = !disabled && (!isFull || current);
-
-    const handleJoin = () => {
-      if (canJoin) onJoin(match);
-    };
 
     const handleLeave = () => {
       leaveGame(
@@ -96,56 +139,27 @@ const MatchesItem = React.memo(
 
     return (
       <div className={classNames(styles.matchItem, { [styles.detailsOpen]: open })}>
-        <div className={styles.row}>
-          <span className={styles.showDetails} onClick={() => setOpen((open) => !open)}>
-            {open
-              ? `${t("lobby:list.game.less_details")} ▲`
-              : `${t("lobby:list.game.more_details")} ▼`}
-          </span>
-
-          <img className={styles.image} src={game.image} alt="game icon" />
-          <h3 className={styles.gameName}>{game.displayName || game.name}</h3>
-          <h4 className={styles.matchName}>#{matchID}</h4>
-          {isPrivate && <Icon name="lock" className={styles.private} size="small" />}
-          <span className={styles.filler} />
-
-          {current && <span className={styles.yourGame}>Your game</span>}
-          <PlayersCounter count={currentPlayers.length} total={maxPlayers} />
-          <JoinGameButton
-            current={current}
-            isFull={isFull}
-            canJoin={canJoin}
-            onClick={handleJoin}
-          />
-        </div>
-        <div className={styles.details}>
-          <table className={styles.detailsTable}>
-            <tr>
-              <td className={styles.detailsTableLabel}>{t("lobby:list.game.description")}:</td>
-              <td>{t(`info:games.${gameName.toLowerCase()}.description.short`)}</td>
-            </tr>
-            <tr>
-              <td className={styles.detailsTableLabel}>{t("lobby:list.game.players")}:</td>
-              <td>{playerNames.join(", ")}</td>
-              {current && (
-                <td className={styles.detailsTableActions}>
-                  <LeaveButton
-                    handleLeave={handleLeave}
-                    icon={false}
-                    basic
-                    size="tiny"
-                    style={{ fontWeight: "bold" }}
-                  />
-                </td>
-              )}
-            </tr>
-          </table>
-        </div>
+        <MatchRow
+          game={game}
+          match={match}
+          current={current}
+          disabled={disabled}
+          handleJoin={handleJoin}
+        />
+        <span className={styles.showDetails} onClick={() => setOpen((open) => !open)}>
+          {open ? `${t("list.game.less_details")} ▲` : `${t("list.game.more_details")} ▼`}
+        </span>
+        <MatchDetails
+          playerNames={playerNames}
+          current={current}
+          gameName={gameName}
+          handleLeave={handleLeave}
+        />
       </div>
     );
   }
 );
 
-MatchesItem.propTypes = matchItemPropTypes;
+MatchItem.propTypes = matchItemPropTypes;
 
-export default MatchesItem;
+export default MatchItem;
