@@ -3,6 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Container, Grid, Image } from "semantic-ui-react";
 import { ToastContainer, toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 import Sidebar from "components/game/Sidebar";
 import UserMenu from "components/user/UserMenu";
@@ -33,9 +34,9 @@ const defaultProps = {
 const MainMenu = React.memo(({ gameName, privateMatch }) => (
   <div className={styles.mainMenu}>
     <Container>
-      <span className={styles.logo}>
+      <Link className={styles.logo} to="/">
         <Image src="/images/octoboard-small.svg" slt="Octoboard logo" />
-      </span>
+      </Link>
       <span className={styles.gameName}>{gameName}</span>
       <MatchTypeBadge privateMatch={privateMatch} detailed />
       <UserMenu className={styles.userMenu} />
