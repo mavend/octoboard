@@ -47,25 +47,27 @@ const MatchDetails = React.memo(({ gameName, playerNames, current, handleLeave }
   return (
     <div className={styles.details}>
       <table className={styles.detailsTable}>
-        <tr>
-          <td className={styles.detailsTableLabel}>{t("lobby:list.game.description")}:</td>
-          <td>{t(`info:games.${gameName.toLowerCase()}.description.short`)}</td>
-        </tr>
-        <tr>
-          <td className={styles.detailsTableLabel}>{t("lobby:list.game.players")}:</td>
-          <td>{playerNames.join(", ")}</td>
-          {current && (
-            <td className={styles.detailsTableActions}>
-              <LeaveButton
-                handleLeave={handleLeave}
-                icon={false}
-                basic
-                size="tiny"
-                style={{ fontWeight: "bold" }}
-              />
-            </td>
-          )}
-        </tr>
+        <tbody>
+          <tr>
+            <td className={styles.detailsTableLabel}>{t("lobby:list.game.description")}:</td>
+            <td>{t(`info:games.${gameName.toLowerCase()}.description.short`)}</td>
+          </tr>
+          <tr>
+            <td className={styles.detailsTableLabel}>{t("lobby:list.game.players")}:</td>
+            <td>{playerNames.join(", ")}</td>
+            {current && (
+              <td className={styles.detailsTableActions}>
+                <LeaveButton
+                  handleLeave={handleLeave}
+                  icon={false}
+                  basic
+                  size="tiny"
+                  style={{ fontWeight: "bold" }}
+                />
+              </td>
+            )}
+          </tr>
+        </tbody>
       </table>
     </div>
   );
