@@ -89,7 +89,12 @@ const Board = () => {
               envokeLastAnswer={envokeLastAnswer}
             />
           ) : (
-            <SettingsBoard modes={G.modes} defaultMode={G.mode} defaultTimePerTurn={G.timePerTurn} onStartGame={handleStartGame} />
+            <SettingsBoard
+              modes={G.modes}
+              defaultMode={G.mode}
+              defaultTimePerTurn={G.timePerTurn}
+              onStartGame={handleStartGame}
+            />
           )}
         </>
       ) : (

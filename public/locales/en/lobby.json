@@ -14,7 +14,11 @@
       "full": "Full",
       "join": "Join",
       "play": "Play",
-      "your_game": "Your game"
+      "your_game": "Your game",
+      "more_details": "More details",
+      "less_details": "Less details",
+      "description": "Description",
+      "players": "Players"
     }
   },
   "create": {

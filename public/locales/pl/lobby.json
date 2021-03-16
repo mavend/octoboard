@@ -14,7 +14,11 @@
       "full": "Pełny",
       "join": "Dołącz",
       "play": "Graj",
-      "your_game": "Twoja gra"
+      "your_game": "Twoja gra",
+      "more_details": "Szczegóły",
+      "less_details": "Szczegóły",
+      "description": "Opis",
+      "players": "Gracze"
     }
   },
   "create": {

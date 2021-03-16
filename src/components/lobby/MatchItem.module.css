@@ -1,0 +1,140 @@
+.matchItem {
+  margin: 20px 0;
+  box-shadow: 0 1px 2px 0 rgba(34, 34, 34, 0.15);
+  border-radius: 4px;
+}
+
+.row {
+  width: 100%;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  background-color: #f2f2f2;
+  position: relative;
+}
+
+.row:hover::after {
+  display: block;
+  opacity: 1;
+}
+
+.row .image {
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  margin-left: 5px;
+}
+
+.row .gameName {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0 5px;
+  padding-right: 10px;
+  border-right: 1px solid #a9a9a9;
+}
+
+.row .matchName {
+  font-size: 12px;
+  font-weight: normal;
+  margin: 0 5px;
+}
+
+.row .private {
+  color: #a9a9a9;
+}
+
+.row .filler {
+  flex: 1;
+}
+
+.row .players {
+  display: flex;
+  align-items: center;
+  margin: 0 5px;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.row .playersIcon {
+  line-height: 18px;
+  font-size: 18px;
+}
+
+.row .button {
+  width: 80px;
+  height: 100%;
+  margin-right: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.row .yourGame {
+  color: #2cc06a;
+  font-weight: bold;
+  font-size: 12px;
+  margin: 0 5px;
+  padding-right: 10px;
+  border-right: 1px solid #a9a9a9;
+}
+
+.row .showDetails {
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  display: block;
+  height: 20px;
+  width: 100px;
+  margin-left: -50px;
+  text-align: center;
+  font-size: 11px;
+  line-height: 20px;
+  color: #7b7b7b;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px 0 rgba(34, 34, 34, 0.15);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.row:hover .showDetails {
+  opacity: 0.5;
+}
+
+.row:hover .showDetails:hover {
+  opacity: 1;
+}
+
+.details {
+  display: flex;
+  font-size: 12px;
+  background-color: #f9f9f9;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+  max-height: 0;
+}
+
+.detailsOpen .details {
+  max-height: 200px;
+}
+
+.detailsTable {
+  width: 100%;
+  border-spacing: 10px;
+  margin: 0 10px;
+}
+
+.detailsTableRow {
+  margin: 10px 0;
+}
+
+.detailsTableLabel {
+  color: #848484;
+  font-weight: bold;
+  text-align: right;
+  padding: 0 10px;
+}
+
+.detailsTableActions {
+  text-align: right;
+}
