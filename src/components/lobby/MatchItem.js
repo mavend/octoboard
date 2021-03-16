@@ -86,7 +86,7 @@ const MatchRow = React.memo(
       <div className={styles.row}>
         <img className={styles.image} src={game.image} alt="game icon" />
         <h3 className={styles.gameName}>{game.displayName || game.name}</h3>
-        <h4 className={styles.matchName}>#{matchID}</h4>
+        <h4 className={styles.matchName}>{setupData?.name || `#${matchID}`}</h4>
         {isPrivate && <Icon name="lock" className={styles.private} size="small" />}
         <span className={styles.filler} />
 
