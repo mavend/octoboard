@@ -104,7 +104,7 @@ const MatchesItem = React.memo(
 
           <img className={styles.image} src={game.image} alt="game icon" />
           <h3 className={styles.gameName}>{game.displayName || game.name}</h3>
-          <h4 className={styles.matchName}>Super game room</h4>
+          <h4 className={styles.matchName}>#{matchID}</h4>
           {isPrivate && <Icon name="lock" className={styles.private} size="small" />}
           <span className={styles.filler} />
 
