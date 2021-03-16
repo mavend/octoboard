@@ -19,23 +19,24 @@ const PlayersCounter = ({ count, total }) => (
 );
 
 const JoinGameButton = ({ current, isFull, canJoin, ...props }) => {
-  const { t } = useTranslation("lobby", "translation");
+  const { t } = useTranslation("lobby");
+  const type = current ? "play" : isFull ? "full" : "join";
 
-  const buttonText = () => {
-    if (current) return t("list.game.play");
-    if (isFull) return t("list.game.full");
-    return t("list.game.join");
+  const buttonText = {
+    play: t("list.game.play"),
+    full: t("list.game.full"),
+    join: t("list.game.join"),
   };
 
-  const buttonColor = () => {
-    if (current) return "green";
-    if (isFull) return "grey";
-    return "yellow";
+  const buttonColor = {
+    play: "green",
+    full: "grey",
+    join: "yellow",
   };
 
   return (
-    <Button {...props} className={styles.button} disabled={!canJoin} color={buttonColor()}>
-      {buttonText()}
+    <Button {...props} className={styles.button} disabled={!canJoin} color={buttonColor[type]}>
+      {buttonText[type]}
     </Button>
   );
 };
