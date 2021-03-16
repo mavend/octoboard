@@ -39,6 +39,8 @@
   display: flex;
   align-items: center;
   background-color: #f2f2f2;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .row:hover::after {
@@ -92,8 +94,7 @@
   width: 80px;
   height: 100%;
   margin-right: 0;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+  border-radius: 0;
 }
 
 .row .yourGame {

@@ -73,6 +73,7 @@ const MatchDetails = React.memo(({ gameName, playerNames, current, handleLeave }
 
 const MatchRow = React.memo(
   ({ game, match: { matchID, setupData, players }, current, disabled, handleJoin }) => {
+    const { t } = useTranslation("lobby");
     const isPrivate = setupData && setupData.private;
     const maxPlayers = players.length;
     const currentPlayers = players.filter((p) => p.name);
@@ -87,7 +88,7 @@ const MatchRow = React.memo(
         {isPrivate && <Icon name="lock" className={styles.private} size="small" />}
         <span className={styles.filler} />
 
-        {current && <span className={styles.yourGame}>Your game</span>}
+        {current && <span className={styles.yourGame}>{t("list.game.your_match")}</span>}
         <PlayersCounter count={currentPlayers.length} total={maxPlayers} />
         <JoinGameButton current={current} isFull={isFull} canJoin={canJoin} onClick={handleJoin} />
       </div>
