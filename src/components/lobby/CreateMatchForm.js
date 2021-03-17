@@ -58,7 +58,7 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
   };
 
   return (
-    <Form loading={loading}>
+    <Form loading={loading} onSubmit={onSubmit}>
       <Form.Select
         fluid
         label={t("create.game_type")}
@@ -75,8 +75,9 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
       />
       <Form.Input
         fluid
-        label={`${t("create.match_name")} (${t("create.optional")})`}
+        label={t("create.match_name")}
         value={name}
+        required
         onChange={(_, { value }) => setName(value)}
         placeholder={t("create.generate") + "..."}
         icon={<Icon name="sync" link onClick={() => setName(generateName(i18n.language))} />}
@@ -87,7 +88,7 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
         checked={privateMatch}
         onChange={(_, { checked }) => setPrivateMatch(checked)}
       />
-      <Button fluid color="orange" type="submit" disabled={disabled} onClick={onSubmit}>
+      <Button fluid color="orange" type="submit" disabled={disabled || !name}>
         {t("create.button")}
       </Button>
     </Form>
