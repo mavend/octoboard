@@ -5,6 +5,8 @@ import { Button, Form, Popup, Icon } from "semantic-ui-react";
 import { GameType } from "config/propTypes";
 import { generateName } from "utils/generators/names";
 
+import styles from "./CreateMatchForm.module.css";
+
 const propTypes = {
   games: arrayOf(GameType).isRequired,
   onCreate: func.isRequired,
@@ -62,7 +64,7 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
   const valid = name && players && game;
 
   return (
-    <Form loading={loading} onSubmit={onSubmit}>
+    <Form className={styles.createMatch} loading={loading} onSubmit={onSubmit}>
       <Form.Select
         fluid
         label={t("create.game_type")}
@@ -86,20 +88,13 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
         placeholder={t("create.enter_your_own") + "..."}
       />
       {!name && (
-        <p style={{ fontSize: 11, margin: "-10px 0 15px" }}>
+        <div className={styles.nameProposalPrompt}>
           {t("create.or_use")}:{" "}
-          <a
-            href="#"
-            style={{ fontWeight: "bold" }}
-            onClick={(e) => {
-              e.preventDefault();
-              setName(nameProposal);
-            }}
-          >
-            {nameProposal}{" "}
-          </a>
+          <button className={styles.nameProposalButton} onClick={() => setName(nameProposal)}>
+            {nameProposal}
+          </button>{" "}
           <Icon name="sync" link onClick={() => setNameProposal(generateName(i18n.language))} />
-        </p>
+        </div>
       )}
       <Form.Checkbox
         toggle
