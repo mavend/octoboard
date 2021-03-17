@@ -27,7 +27,8 @@
     "max_players": "Maksymalna liczba graczy",
     "button": "Stwórz",
     "match_name": "Nazwa pokoju",
-    "generate": "Kliknij aby wygenerować",
+    "enter_your_own": "Wymyśl własną nazwę",
+    "or_use": "Albo użyj",
     "private": {
       "true": "Pokój prywatny 🙈",
       "false": "Pokój publiczny 🐵"

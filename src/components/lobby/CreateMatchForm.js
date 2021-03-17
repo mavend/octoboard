@@ -13,6 +13,8 @@ const propTypes = {
 };
 
 const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
+  const { t, i18n } = useTranslation(["lobby", "info"]);
+
   const defaults = JSON.parse(localStorage.getItem("lastGame") || "{}");
   const defaultGame = games.find((g) => g.name === defaults.gameName) || games[0];
 
@@ -21,7 +23,7 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
   const [privateMatch, setPrivateMatch] = useState(defaults.private ?? true);
   const [playersOptions, setPlayersOptions] = useState([]);
   const [name, setName] = useState();
-  const { t, i18n } = useTranslation(["lobby", "info"]);
+  const [nameProposal, setNameProposal] = useState(generateName(i18n.language));
 
   const gamesOptions = games.map(({ name, displayName, image }) => ({
     key: name,
@@ -81,9 +83,24 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
         value={name}
         required
         onChange={(_, { value }) => setName(value)}
-        placeholder={t("create.generate") + "..."}
-        icon={<Icon name="sync" link onClick={() => setName(generateName(i18n.language))} />}
+        placeholder={t("create.enter_your_own") + "..."}
       />
+      {!name && (
+        <p style={{ fontSize: 11, margin: "-10px 0 15px" }}>
+          {t("create.or_use")}:{" "}
+          <a
+            href=""
+            style={{ fontWeight: "bold" }}
+            onClick={(e) => {
+              e.preventDefault();
+              setName(nameProposal);
+            }}
+          >
+            {nameProposal}{" "}
+          </a>
+          <Icon name="sync" link onClick={() => setNameProposal(generateName(i18n.language))} />
+        </p>
+      )}
       <Form.Checkbox
         toggle
         label={t(`create.private.${privateMatch}`)}

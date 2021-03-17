@@ -27,7 +27,8 @@
     "max_players": "Maximum number of players",
     "button": "Create",
     "match_name": "Match name",
-    "generate": "Click to generate",
+    "enter_your_own": "Enter your own",
+    "or_use": "Or use",
     "private": {
       "true": "Private match 🙈",
       "false": "Public match 🐵"
