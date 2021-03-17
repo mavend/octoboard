@@ -89,7 +89,7 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
         <p style={{ fontSize: 11, margin: "-10px 0 15px" }}>
           {t("create.or_use")}:{" "}
           <a
-            href=""
+            href="#"
             style={{ fontWeight: "bold" }}
             onClick={(e) => {
               e.preventDefault();
