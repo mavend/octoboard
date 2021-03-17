@@ -57,6 +57,8 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
     }
   };
 
+  const valid = name && players && game;
+
   return (
     <Form loading={loading} onSubmit={onSubmit}>
       <Form.Select
@@ -88,7 +90,7 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
         checked={privateMatch}
         onChange={(_, { checked }) => setPrivateMatch(checked)}
       />
-      <Button fluid color="orange" type="submit" disabled={disabled || !name}>
+      <Button fluid color="orange" type="submit" disabled={disabled || !valid}>
         {t("create.button")}
       </Button>
     </Form>
