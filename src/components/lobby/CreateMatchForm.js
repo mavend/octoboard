@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { func, bool, arrayOf } from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Button, Form, Popup, Icon } from "semantic-ui-react";
@@ -14,8 +14,46 @@ const propTypes = {
   loading: bool,
 };
 
+const GameSelect = ({ games, value, onChange }) => {
+  const { t } = useTranslation(["lobby", "info"]);
+
+  const gamesOptions = useMemo(
+    () =>
+      games.map(({ name, displayName, image }) => ({
+        key: name,
+        value: name,
+        text: displayName || name,
+        description: (
+          <Popup
+            position="top right"
+            offset={[14, 3]}
+            content={t(`info:games.${name.toLowerCase()}.description.short`)}
+            trigger={<Icon fitted color="grey" name="info circle" className="right floated" />}
+          />
+        ),
+        image: { avatar: true, src: image },
+      })),
+    [games, t]
+  );
+
+  const handleChange = (_, { value }) => {
+    const game = games.find(({ name }) => name === value);
+    onChange(game);
+  };
+
+  return (
+    <Form.Select
+      fluid
+      label={t("create.game_type")}
+      options={gamesOptions}
+      value={value && value.name}
+      onChange={handleChange}
+    />
+  );
+};
+
 const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
-  const { t, i18n } = useTranslation(["lobby", "info"]);
+  const { t, i18n } = useTranslation("lobby");
 
   const defaults = JSON.parse(localStorage.getItem("lastGame") || "{}");
   const defaultGame = games.find((g) => g.name === defaults.gameName) || games[0];
@@ -27,21 +65,6 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
   const [name, setName] = useState();
   const [nameProposal, setNameProposal] = useState(generateName(i18n.language));
 
-  const gamesOptions = games.map(({ name, displayName, image }) => ({
-    key: name,
-    value: name,
-    text: displayName || name,
-    description: (
-      <Popup
-        position="top right"
-        offset={[14, 3]}
-        content={t(`info:games.${name.toLowerCase()}.description.short`)}
-        trigger={<Icon fitted color="grey" name="info circle" className="right floated" />}
-      />
-    ),
-    image: { avatar: true, src: image },
-  }));
-
   useEffect(() => {
     if (game) {
       const { minPlayers, maxPlayers } = game;
@@ -51,8 +74,10 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
     }
   }, [game, setPlayersOptions, setPlayers]);
 
+  const valid = !disabled && game && players && name;
+
   const onSubmit = () => {
-    if (!disabled) {
+    if (valid) {
       onCreate(game.name, players, { private: privateMatch, name });
       localStorage.setItem(
         "lastGame",
@@ -61,17 +86,9 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
     }
   };
 
-  const valid = name && players && game;
-
   return (
     <Form className={styles.createMatch} loading={loading} onSubmit={onSubmit}>
-      <Form.Select
-        fluid
-        label={t("create.game_type")}
-        options={gamesOptions}
-        value={game && game.name}
-        onChange={(_, { value }) => setGame(games.find((g) => g.name === value))}
-      />
+      <GameSelect games={games} value={game} onChange={setGame} />
       <Form.Select
         fluid
         label={t("create.max_players")}
@@ -102,7 +119,7 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
         checked={privateMatch}
         onChange={(_, { checked }) => setPrivateMatch(checked)}
       />
-      <Button fluid color="orange" type="submit" disabled={disabled || !valid}>
+      <Button fluid color="orange" type="submit" disabled={!valid}>
         {t("create.button")}
       </Button>
     </Form>
