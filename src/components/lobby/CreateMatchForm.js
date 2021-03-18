@@ -5,7 +5,7 @@ import { Button, Form, Popup, Icon } from "semantic-ui-react";
 import { GameType } from "config/propTypes";
 import { generateName } from "utils/generators/names";
 
-import styles from "./CreateMatchForm.module.css";
+import styles from "./CreateMatchForm.module.scss";
 
 const propTypes = {
   games: arrayOf(GameType).isRequired,

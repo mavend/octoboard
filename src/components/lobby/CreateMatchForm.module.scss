@@ -1,0 +1,19 @@
+.createMatch {
+  .nameProposalPrompt {
+    font-size: 11px;
+    margin: -10px 0 15px 0;
+  }
+
+  .nameProposalButton {
+    padding: 0;
+    border: none;
+    background: none;
+    color: #4183c4;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      color: #1e70bf;
+    }
+  }
+}

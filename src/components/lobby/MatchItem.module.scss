@@ -23,14 +23,10 @@
   opacity: 0;
   transition: opacity 0.3s ease;
   cursor: pointer;
-}
 
-.row:hover + .showDetails {
-  opacity: 0.5;
-}
-
-.showDetails:hover {
-  opacity: 1;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .row {
@@ -41,69 +37,73 @@
   background-color: #f2f2f2;
   border-radius: 4px;
   overflow: hidden;
-}
 
-.row:hover::after {
-  display: block;
-  opacity: 1;
-}
+  &:hover::after {
+    display: block;
+    opacity: 1;
+  }
 
-.row .image {
-  width: 35px;
-  height: 35px;
-  border-radius: 100%;
-  margin-left: 5px;
-}
+  &:hover + .showDetails {
+    opacity: 0.5;
+  }
 
-.row .gameName {
-  font-size: 14px;
-  font-weight: bold;
-  margin: 0 5px;
-  padding-right: 10px;
-  border-right: 1px solid #a9a9a9;
-}
+  .image {
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    margin-left: 5px;
+  }
 
-.row .matchName {
-  font-size: 12px;
-  font-weight: normal;
-  margin: 0 5px;
-}
+  .gameName {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0 5px;
+    padding-right: 10px;
+    border-right: 1px solid #a9a9a9;
+  }
 
-.row .private {
-  color: #a9a9a9;
-}
+  .matchName {
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0 5px;
+  }
 
-.row .filler {
-  flex: 1;
-}
+  .private {
+    color: #a9a9a9;
+  }
 
-.row .players {
-  display: flex;
-  align-items: center;
-  margin: 0 5px;
-  font-weight: bold;
-  font-size: 12px;
-}
+  .filler {
+    flex: 1;
+  }
 
-.row .playersIcon {
-  line-height: 18px;
-  font-size: 18px;
-}
+  .players {
+    display: flex;
+    align-items: center;
+    margin: 0 5px;
+    font-weight: bold;
+    font-size: 12px;
+  }
 
-.row .button {
-  width: 80px;
-  height: 100%;
-  margin-right: 0;
-  border-radius: 0;
-}
+  .playersIcon {
+    line-height: 18px;
+    font-size: 18px;
+  }
 
-.row .yourGame {
-  color: #2cc06a;
-  font-weight: bold;
-  font-size: 12px;
-  margin: 0 5px;
-  padding-right: 10px;
-  border-right: 1px solid #a9a9a9;
+  .button {
+    width: 80px;
+    height: 100%;
+    margin-right: 0;
+    border-radius: 0;
+  }
+
+  .yourGame {
+    color: #2cc06a;
+    font-weight: bold;
+    font-size: 12px;
+    margin: 0 5px;
+    padding-right: 10px;
+    border-right: 1px solid #a9a9a9;
+  }
 }
 
 .details {
