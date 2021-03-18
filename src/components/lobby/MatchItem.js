@@ -9,7 +9,7 @@ import { useUser, useCredentials, useProfiles } from "contexts/UserContext";
 import { leaveGame } from "utils/game/leave";
 import LeaveButton from "components/game/LeaveButton";
 
-import styles from "./MatchItem.module.css";
+import styles from "./MatchItem.module.scss";
 
 const PlayersCounter = ({ count, total }) => (
   <span className={styles.players}>
