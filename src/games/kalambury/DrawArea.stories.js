@@ -11,4 +11,4 @@ export default {
   decorators: [kalamburyDecorator],
 };
 
-export const Default = () => <DrawArea lines={lines} updateLines={action("updateLines")} />;
+export const Default = () => <DrawArea lines={lines} onLinesUpdate={action("onLinesUpdate")} />;

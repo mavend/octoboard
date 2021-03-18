@@ -43,6 +43,8 @@ const BoardGameContextMock = ({ children }) => {
         Ping: action("Ping"),
         NotifyTimeout: action("NotifyTimeout"),
         UpdateConnectedPlayers: action("UpdateConnectedPlayers"),
+        ChangePhrase: action("ChangePhrase"),
+        Forfeit: action("Forfeit"),
       }}
       ctx={{
         activePlayers: [

@@ -11,7 +11,7 @@ const propTypes = {
     previous: PropTypes.string,
     success: PropTypes.bool,
   }),
-  handleActionClick: PropTypes.func,
+  handleActionClick: PropTypes.func.isRequired,
 };
 
 const Action = ({ action, handleActionClick }) => {
