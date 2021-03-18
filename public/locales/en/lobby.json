@@ -26,6 +26,9 @@
     "game_type": "Game",
     "max_players": "Maximum number of players",
     "button": "Create",
+    "match_name": "Match name",
+    "enter_your_own": "Enter your own",
+    "or_use": "Or use",
     "private": {
       "true": "Private match 🙈",
       "false": "Public match 🐵"
