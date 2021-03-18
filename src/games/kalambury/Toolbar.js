@@ -1,20 +1,20 @@
 import React from "react";
 import { Icon, Menu, Popup } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
-import { string, func, bool } from "prop-types";
+import PropTypes from "prop-types";
 import { COLORS } from "config/constants";
 import { Media } from "config/media";
 
 const propTypes = {
-  currentColor: string.isRequired,
-  canChangePhrase: bool.isRequired,
-  onColorChange: func.isRequired,
-  onSizeChange: func.isRequired,
-  onClearAll: func.isRequired,
-  onUndoDrawing: func.isRequired,
-  onPhraseChange: func.isRequired,
-  onForfeit: func.isRequired,
-  canUndo: bool,
+  currentColor: PropTypes.string.isRequired,
+  canChangePhrase: PropTypes.bool.isRequired,
+  onColorChange: PropTypes.func.isRequired,
+  onSizeChange: PropTypes.func.isRequired,
+  onClearAll: PropTypes.func.isRequired,
+  onUndoDrawing: PropTypes.func.isRequired,
+  onPhraseChange: PropTypes.func.isRequired,
+  onForfeit: PropTypes.func.isRequired,
+  canUndo: PropTypes.bool,
 };
 
 const Toolbar = ({
@@ -173,6 +173,7 @@ const ColorBox = ({ color }) => (
     }}
   ></div>
 );
+ColorBox.propTypes = { color: PropTypes.string };
 
 Toolbar.propTypes = propTypes;
 

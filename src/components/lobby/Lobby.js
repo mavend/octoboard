@@ -1,5 +1,5 @@
 import React from "react";
-import { func, bool, arrayOf } from "prop-types";
+import PropTypes from "prop-types";
 import {
   Container,
   Header,
@@ -21,12 +21,13 @@ import OctopusWrapper from "components/layout/OctopusWrapper";
 import { Media } from "config/media";
 
 const propTypes = {
-  matches: arrayOf(MatchType).isRequired,
+  matches: PropTypes.arrayOf(MatchType).isRequired,
   currentMatch: MatchType,
-  games: arrayOf(GameType).isRequired,
-  handleJoinMatch: func.isRequired,
-  handleCreate: func.isRequired,
-  loading: bool,
+  games: PropTypes.arrayOf(GameType).isRequired,
+  handleJoinMatch: PropTypes.func.isRequired,
+  handleCreate: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  loggedIn: PropTypes.bool,
 };
 
 const Lobby = ({

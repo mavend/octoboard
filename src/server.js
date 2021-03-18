@@ -6,7 +6,7 @@ const { Server } = require("boardgame.io/server");
 const { StorageCache } = require("bgio-storage-cache");
 const { Firestore } = require("bgio-firebase");
 
-let config = {};
+const config = {};
 
 if (process.env.NODE_ENV === "production") {
   config.credential = admin.credential.applicationDefault();

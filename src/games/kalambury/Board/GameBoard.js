@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useState, useMemo } from "react";
+import PropTypes from "prop-types";
 import Confetti from "react-dom-confetti";
 
 import { currentTime } from "../utils/time";
-import { updateLines, UpdateTypes } from "../utils/update_lines";
+import { updateLines, UpdateTypes } from "../utils/updateLines";
 import { WIDE_CONFETTI } from "config/confetti";
 import { useBoardGame } from "contexts/BoardGameContext";
 import filterActions from "utils/user/filterActions";
@@ -11,6 +12,13 @@ import { throttleAccumulate } from "utils/throttle";
 import DrawArea from "../DrawArea";
 import GuessingBoard from "./GuessingBoard";
 import Countdown from "./Countdown";
+
+const propTypes = {
+  guess: PropTypes.string,
+  setGuess: PropTypes.func,
+  envokeLastAnswer: PropTypes.func,
+  guessInputRef: PropTypes.object,
+};
 
 const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
   const {
@@ -117,5 +125,6 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
     </>
   );
 };
+GameBoard.propTypes = propTypes;
 
 export default GameBoard;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import PropTypes from "prop-types";
 import { useHistory, useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 import { useTranslation } from "react-i18next";
@@ -14,6 +15,10 @@ import { gameComponents } from "games";
 
 import Layout from "components/layout/Layout";
 import Lobby from "components/lobby/Lobby";
+
+const propTypes = {
+  noRefetch: PropTypes.bool,
+};
 
 const LobbyPage = ({ noRefetch }) => {
   const [error, setError] = useState();
@@ -153,5 +158,6 @@ const LobbyPage = ({ noRefetch }) => {
     </Layout>
   );
 };
+LobbyPage.propTypes = propTypes;
 
 export default LobbyPage;

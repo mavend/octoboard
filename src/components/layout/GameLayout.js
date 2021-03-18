@@ -31,19 +31,6 @@ const defaultProps = {
   showCurrentPlayer: true,
 };
 
-const MainMenu = React.memo(({ gameName, privateMatch }) => (
-  <div className={styles.mainMenu}>
-    <Container>
-      <Link className={styles.logo} to="/">
-        <Image src="/images/octoboard-small.svg" slt="Octoboard logo" />
-      </Link>
-      <span className={styles.gameName}>{gameName}</span>
-      <MatchTypeBadge privateMatch={privateMatch} detailed />
-      <UserMenu className={styles.userMenu} />
-    </Container>
-  </div>
-));
-
 const GameLayout = ({
   gameName,
   privateMatch,
@@ -81,8 +68,25 @@ const GameLayout = ({
     </>
   );
 };
-
 GameLayout.propTypes = propTypes;
 GameLayout.defaultProps = defaultProps;
+
+const MainMenu = React.memo(({ gameName, privateMatch }) => (
+  <div className={styles.mainMenu}>
+    <Container>
+      <Link className={styles.logo} to="/">
+        <Image src="/images/octoboard-small.svg" slt="Octoboard logo" />
+      </Link>
+      <span className={styles.gameName}>{gameName}</span>
+      <MatchTypeBadge privateMatch={privateMatch} detailed />
+      <UserMenu className={styles.userMenu} />
+    </Container>
+  </div>
+));
+MainMenu.displayName = "MainMenu";
+MainMenu.propTypes = {
+  gameName: PropTypes.string.isRequired,
+  privateMatch: PropTypes.bool,
+};
 
 export default GameLayout;

@@ -58,7 +58,7 @@ function LogAction(G, ctx, playerID, action, params = {}, clear = false) {
 function Guess(G, ctx, phrase) {
   if (!stripPhrase(phrase)) return;
 
-  let success = stripPhrase(phrase).includes(stripPhrase(G.secret.phrase));
+  const success = stripPhrase(phrase).includes(stripPhrase(G.secret.phrase));
 
   if (success) {
     G.points[ctx.playerID] += 1;
@@ -229,7 +229,7 @@ export const Kalambury = {
       ctx.events.setActivePlayers({ all: Stage.NULL });
       return { winners: indexOfMax(G.points) };
     }
-    let winner = G.points.findIndex((points) => points >= G.maxPoints);
+    const winner = G.points.findIndex((points) => points >= G.maxPoints);
     if (G.mode !== "infinite" && G.maxPoints > 0 && winner >= 0) {
       ctx.events.setActivePlayers({ all: Stage.NULL });
       return { winners: indexOfMax(G.points) };

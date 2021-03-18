@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { func } from "prop-types";
+import PropTypes from "prop-types";
 import { Button, Icon, Divider } from "semantic-ui-react";
 import { routes } from "config/routes";
 import { useTranslation } from "react-i18next";
@@ -8,13 +8,13 @@ import GoogleLoginOption from "./GoogleLogin";
 import { Media } from "config/media";
 
 const propTypes = {
-  setError: func.isRequired,
-  setLoading: func.isRequired,
+  setError: PropTypes.func.isRequired,
+  setLoading: PropTypes.func.isRequired,
 };
 
 const OtherLoginOptions = ({ setError, setLoading }) => {
   const { t } = useTranslation("credentials");
-  let location = useLocation();
+  const location = useLocation();
 
   const links = [
     { link: routes.login_guest(), icon: "user secret", text: t("actions.guest_login") },
@@ -45,6 +45,7 @@ const OtherLoginOptions = ({ setError, setLoading }) => {
     </>
   );
 };
+OtherLoginOptions.propTypes = propTypes;
 
 const OtherLoginOption = ({ link, current }) => {
   const location = useLocation();
@@ -64,7 +65,13 @@ const OtherLoginOption = ({ link, current }) => {
     </Button>
   );
 };
-
-OtherLoginOptions.propTypes = propTypes;
+OtherLoginOption.propTypes = {
+  link: PropTypes.shape({
+    link: PropTypes.string,
+    icon: PropTypes.string,
+    text: PropTypes.string,
+  }).isRequired,
+  current: PropTypes.bool,
+};
 
 export default OtherLoginOptions;

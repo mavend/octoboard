@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Header, Segment, Card, Button, Icon, Dimmer } from "semantic-ui-react";
 
@@ -9,9 +10,15 @@ import DataStore from "services/DataStore";
 import { useUser } from "contexts/UserContext";
 import { useHistory } from "react-router-dom";
 import { routes } from "config/routes";
+import { PlayerType } from "config/propTypes";
 
 import { useBoardGame } from "contexts/BoardGameContext";
 import Loading from "components/game/Loading";
+
+const propTypes = {
+  winners: PropTypes.arrayOf(PropTypes.number).isRequired,
+  players: PropTypes.arrayOf(PlayerType).isRequired,
+};
 
 const GameEndingBoard = ({ winners, players }) => {
   const { t } = useTranslation(["translation", "lobby"]);
@@ -77,5 +84,6 @@ const GameEndingBoard = ({ winners, players }) => {
     </>
   );
 };
+GameEndingBoard.propTypes = propTypes;
 
 export default React.memo(GameEndingBoard);

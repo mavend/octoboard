@@ -18,6 +18,7 @@ const propTypes = {
   glasses: PropTypes.number,
   features: PropTypes.number,
   border: PropTypes.number,
+  empty: PropTypes.bool,
 };
 
 const colors = [

@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 import { Button, Icon, Confirm } from "semantic-ui-react";
 
 const propTypes = {
-  handleLeave: PropTypes.func,
+  icon: PropTypes.bool,
+  handleLeave: PropTypes.func.isRequired,
 };
 
 const defaultProps = {

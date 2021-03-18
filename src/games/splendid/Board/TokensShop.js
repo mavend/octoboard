@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { Header, Button, Label } from "semantic-ui-react";
 import { sum } from "lodash";
 
@@ -8,6 +9,14 @@ import ResourceToken from "../ResourceToken";
 import styles from "./Board.module.css";
 
 const emptyTokens = Object.fromEntries(RESOURCES.map((res) => [res, 0]));
+
+const propTypes = {
+  tokens: PropTypes.objectOf(PropTypes.number).isRequired,
+  active: PropTypes.bool,
+  loading: PropTypes.bool,
+  onTakeTokens: PropTypes.func.isRequired,
+  playerTokensCount: PropTypes.number.isRequired,
+};
 
 const TokensShop = ({ tokens, active, loading, onTakeTokens, playerTokensCount }) => {
   const [selected, setSelected] = useState({ ...emptyTokens });
@@ -93,11 +102,12 @@ const TokensShop = ({ tokens, active, loading, onTakeTokens, playerTokensCount }
           </Button>
         )}
         {active && tooMuchTokens && (
-          <p className={styles.tokensShopError}>You can't have more than 10 tokens</p>
+          <p className={styles.tokensShopError}>You can&apos;t have more than 10 tokens</p>
         )}
       </div>
     </div>
   );
 };
+TokensShop.propTypes = propTypes;
 
 export default TokensShop;

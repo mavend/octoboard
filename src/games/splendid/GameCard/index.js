@@ -114,6 +114,8 @@ const GameCard = ({
     </Card>
   );
 };
+GameCard.propTypes = propTypes;
+GameCard.defaultProps = defaultProps;
 
 const Action = ({ name, icon, loading, disabled, color, onClick }) => (
   <Button
@@ -129,11 +131,16 @@ const Action = ({ name, icon, loading, disabled, color, onClick }) => (
     <Icon name={icon} /> {name}
   </Button>
 );
+Action.propTypes = {
+  name: PropTypes.string,
+  icon: PropTypes.string,
+  loading: PropTypes.bool,
+  disabled: PropTypes.bool,
+  color: PropTypes.string,
+  onClick: PropTypes.func,
+};
 
 const PlaceholderCard = () => <Card className={styles.cardPlaceholder}></Card>;
-
-GameCard.propTypes = propTypes;
-GameCard.defaultProps = defaultProps;
 
 export default GameCard;
 export { PlaceholderCard, BonusCard };

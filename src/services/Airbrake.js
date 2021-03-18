@@ -1,5 +1,5 @@
 export class GenericAirbrakeNotifier {
-  constructor(notifier) {
+  constructor(Notifier) {
     const {
       REACT_APP_AIRBRAKE_PROJECT_ID: projectId,
       REACT_APP_AIRBRAKE_PROJECT_KEY: projectKey,
@@ -7,7 +7,7 @@ export class GenericAirbrakeNotifier {
     } = process.env;
 
     if (projectId && projectKey) {
-      this.airbrake = new notifier({ projectId, projectKey, environment });
+      this.airbrake = new Notifier({ projectId, projectKey, environment });
     } else {
       this.airbrake = {
         notify: (error) => {

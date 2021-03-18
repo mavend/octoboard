@@ -2,7 +2,7 @@
 // I:  - points (array) [[x, y]]: array of coordinates
 //     - smoothing (float) : smoothing factor
 // O:  - (string) : SVG path description
-function smooth_path(points, smoothing = 0.2) {
+function smoothPath(points, smoothing = 0.2) {
   return points.reduce(
     (acc, point, i, a) =>
       i === 0 ? `M ${point[0]},${point[1]}` : `${acc} ${bezierCommand(point, i, a, smoothing)}`,
@@ -65,4 +65,4 @@ const bezierCommand = (point, i, a, smoothing) => {
   return `C ${cps[0]},${cps[1]} ${cpe[0]},${cpe[1]} ${point[0]},${point[1]}`;
 };
 
-export default smooth_path;
+export default smoothPath;

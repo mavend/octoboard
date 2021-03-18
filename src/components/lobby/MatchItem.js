@@ -17,6 +17,10 @@ const PlayersCounter = ({ count, total }) => (
     <Icon name="male" className={styles.playersIcon} />
   </span>
 );
+PlayersCounter.propTypes = {
+  count: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
+};
 
 const JoinGameButton = ({ current, isFull, canJoin, ...props }) => {
   const { t } = useTranslation("lobby");
@@ -40,8 +44,13 @@ const JoinGameButton = ({ current, isFull, canJoin, ...props }) => {
     </Button>
   );
 };
+JoinGameButton.propTypes = {
+  current: PropTypes.bool,
+  isFull: PropTypes.bool,
+  canJoin: PropTypes.bool,
+};
 
-const MatchDetails = React.memo(({ gameName, playerNames, current, handleLeave }) => {
+const MatchDetails = React.memo(({ gameName, playerNames, current, onLeave }) => {
   const { t } = useTranslation(["lobby", "info"]);
 
   return (
@@ -58,7 +67,7 @@ const MatchDetails = React.memo(({ gameName, playerNames, current, handleLeave }
             {current && (
               <td className={styles.detailsTableActions}>
                 <LeaveButton
-                  handleLeave={handleLeave}
+                  handleLeave={onLeave}
                   icon={false}
                   basic
                   size="tiny"
@@ -72,9 +81,24 @@ const MatchDetails = React.memo(({ gameName, playerNames, current, handleLeave }
     </div>
   );
 });
+MatchDetails.displayName = "MatchDetails";
+MatchDetails.propTypes = {
+  gameName: PropTypes.string.isRequired,
+  playerNames: PropTypes.arrayOf(PropTypes.string).isRequired,
+  current: PropTypes.bool,
+  onLeave: PropTypes.func.isRequired,
+};
+
+const matchItemPropTypes = {
+  match: MatchType.isRequired,
+  game: GameType.isRequired,
+  current: PropTypes.bool,
+  disabled: PropTypes.bool,
+  onJoin: PropTypes.func.isRequired,
+};
 
 const MatchRow = React.memo(
-  ({ game, match: { matchID, setupData, players }, current, disabled, handleJoin }) => {
+  ({ game, match: { matchID, setupData, players }, current, disabled, onJoin }) => {
     const { t } = useTranslation("lobby");
     const isPrivate = setupData && setupData.private;
     const maxPlayers = players.length;
@@ -92,19 +116,13 @@ const MatchRow = React.memo(
 
         {current && <span className={styles.yourGame}>{t("list.game.your_match")}</span>}
         <PlayersCounter count={currentPlayers.length} total={maxPlayers} />
-        <JoinGameButton current={current} isFull={isFull} canJoin={canJoin} onClick={handleJoin} />
+        <JoinGameButton current={current} isFull={isFull} canJoin={canJoin} onClick={onJoin} />
       </div>
     );
   }
 );
-
-const matchItemPropTypes = {
-  match: MatchType.isRequired,
-  game: GameType,
-  onJoin: PropTypes.func.isRequired,
-  current: PropTypes.bool,
-  disabled: PropTypes.bool,
-};
+MatchRow.displayName = "MatchRow";
+MatchRow.propTypes = matchItemPropTypes;
 
 const MatchItem = React.memo(
   ({ match, match: { matchID, gameName, players }, game, onJoin, current, disabled }) => {
@@ -147,7 +165,7 @@ const MatchItem = React.memo(
           match={match}
           current={current}
           disabled={disabled}
-          handleJoin={handleJoin}
+          onJoin={handleJoin}
         />
         <span className={styles.showDetails} onClick={() => setOpen((open) => !open)}>
           {open ? `${t("list.game.less_details")} ▲` : `${t("list.game.more_details")} ▼`}
@@ -156,13 +174,13 @@ const MatchItem = React.memo(
           playerNames={playerNames}
           current={current}
           gameName={gameName}
-          handleLeave={handleLeave}
+          onLeave={handleLeave}
         />
       </div>
     );
   }
 );
-
+MatchItem.displayName = "MatchItem";
 MatchItem.propTypes = matchItemPropTypes;
 
 export default MatchItem;

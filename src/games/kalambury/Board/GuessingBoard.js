@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { Transition, Form, Input } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 
 import { useBoardGame } from "contexts/BoardGameContext";
 import Drawing from "../Drawing";
+import { LineType } from "config/propTypes";
+
+const propTypes = {
+  guess: PropTypes.string,
+  setGuess: PropTypes.func,
+  lastUserGuess: PropTypes.string,
+  envokeLastAnswer: PropTypes.func,
+  guessInputRef: PropTypes.object,
+  lines: PropTypes.arrayOf(LineType),
+};
 
 const GuessingBoard = ({
   guess,
@@ -39,7 +50,7 @@ const GuessingBoard = ({
     setGuess(e.target.value);
   };
 
-  var guessInput = (
+  const guessInput = (
     <Input
       fluid
       autoFocus
@@ -93,5 +104,6 @@ const GuessingBoard = ({
     </div>
   );
 };
+GuessingBoard.propTypes = propTypes;
 
 export default GuessingBoard;

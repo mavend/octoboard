@@ -1,5 +1,5 @@
 import React from "react";
-import { oneOf, string, bool, number } from "prop-types";
+import PropTypes from "prop-types";
 import { compact } from "lodash";
 import { RESOURCES, RESOURCES_CONFIG } from "../config";
 import ResourceIcon from "../ResourceIcon";
@@ -7,10 +7,11 @@ import ResourceIcon from "../ResourceIcon";
 import styles from "./CardSymbol.module.css";
 
 const propTypes = {
-  resource: oneOf(RESOURCES).isRequired,
-  color: string,
-  raised: bool,
-  count: number,
+  resource: PropTypes.oneOf(RESOURCES).isRequired,
+  color: PropTypes.string,
+  raised: PropTypes.bool,
+  disabled: PropTypes.bool,
+  count: PropTypes.number,
 };
 
 const CardSymbol = ({ resource, count, raised, disabled }) => {
@@ -22,7 +23,7 @@ const CardSymbol = ({ resource, count, raised, disabled }) => {
       )}
       style={{ backgroundColor: color }}
     >
-      <ResourceIcon type={resource} color="#fff" size={18} />
+      <ResourceIcon type={resource} color="#ffffff" size={18} />
       {count}
     </div>
   );

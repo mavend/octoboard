@@ -10,7 +10,7 @@ if (firebase.apps.length === 0) {
 }
 const DB = firebase.firestore();
 
-let settings = {
+const settings = {
   experimentalAutoDetectLongPolling: true,
 };
 
