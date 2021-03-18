@@ -4,7 +4,7 @@ import { LineType } from "config/propTypes";
 import { useBoardGame } from "contexts/BoardGameContext";
 import Drawing from "./Drawing";
 import Toolbar from "./Toolbar";
-import { UpdateTypes } from "./utils/update_lines";
+import { UpdateTypes } from "./utils/updateLines";
 
 const propTypes = {
   lines: arrayOf(LineType).isRequired,

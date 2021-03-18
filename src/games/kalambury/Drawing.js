@@ -2,7 +2,7 @@ import React from "react";
 import { Segment } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { LineType } from "config/propTypes";
-import smooth_path from "./utils/smooth_path";
+import smoothPath from "./utils/smoothPath";
 import { breakpoints } from "config/media";
 
 const propTypes = {
@@ -25,8 +25,8 @@ const Drawing = ({ lines, drawable, ...props }) => {
       backgroundColor: "#FFF",
     },
   };
-  const vbWidth = 800,
-    vbHeight = 600;
+  const vbWidth = 800;
+  const vbHeight = 600;
 
   const scaleToViewBox = ({ points, ...line }) => ({
     ...line,
@@ -50,9 +50,10 @@ const DrawingLine = ({ line: { points, color, width } }) => (
     stroke={color}
     strokeWidth={window.innerWidth < breakpoints.computer && width < 10 ? width * 2 : width}
     strokeLinecap="round"
-    d={smooth_path(points, 0.12)}
+    d={smoothPath(points, 0.12)}
   />
 );
+DrawingLine.propTypes = { line: LineType };
 
 Drawing.propTypes = propTypes;
 

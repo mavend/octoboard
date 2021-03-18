@@ -1,7 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Image, Icon, Segment, Button } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 import { useBoardGame } from "contexts/BoardGameContext";
+
+const propTypes = {
+  onStartGame: PropTypes.func.isRequired,
+};
 
 const WaitingBoard = ({ onStartGame, children }) => {
   const {
@@ -34,5 +39,6 @@ const WaitingBoard = ({ onStartGame, children }) => {
     </Segment>
   );
 };
+WaitingBoard.propTypes = propTypes;
 
 export default WaitingBoard;

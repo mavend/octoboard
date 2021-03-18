@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import { Popup, Icon, Header } from "semantic-ui-react";
 

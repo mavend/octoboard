@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { func, bool, arrayOf } from "prop-types";
+import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Button, Form, Popup, Icon } from "semantic-ui-react";
 import { GameType } from "config/propTypes";
@@ -8,48 +8,10 @@ import { generateName } from "utils/generators/names";
 import styles from "./CreateMatchForm.module.scss";
 
 const propTypes = {
-  games: arrayOf(GameType).isRequired,
-  onCreate: func.isRequired,
-  disabled: bool,
-  loading: bool,
-};
-
-const GameSelect = ({ games, value, onChange }) => {
-  const { t } = useTranslation(["lobby", "info"]);
-
-  const gamesOptions = useMemo(
-    () =>
-      games.map(({ name, displayName, image }) => ({
-        key: name,
-        value: name,
-        text: displayName || name,
-        description: (
-          <Popup
-            position="top right"
-            offset={[14, 3]}
-            content={t(`info:games.${name.toLowerCase()}.description.short`)}
-            trigger={<Icon fitted color="grey" name="info circle" className="right floated" />}
-          />
-        ),
-        image: { avatar: true, src: image },
-      })),
-    [games, t]
-  );
-
-  const handleChange = (_, { value }) => {
-    const game = games.find(({ name }) => name === value);
-    onChange(game);
-  };
-
-  return (
-    <Form.Select
-      fluid
-      label={t("create.game_type")}
-      options={gamesOptions}
-      value={value && value.name}
-      onChange={handleChange}
-    />
-  );
+  games: PropTypes.arrayOf(GameType).isRequired,
+  onCreate: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+  loading: PropTypes.bool,
 };
 
 const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
@@ -125,7 +87,49 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
     </Form>
   );
 };
-
 CreateMatchForm.propTypes = propTypes;
+
+const GameSelect = ({ games, value, onChange }) => {
+  const { t } = useTranslation(["lobby", "info"]);
+
+  const gamesOptions = useMemo(
+    () =>
+      games.map(({ name, displayName, image }) => ({
+        key: name,
+        value: name,
+        text: displayName || name,
+        description: (
+          <Popup
+            position="top right"
+            offset={[14, 3]}
+            content={t(`info:games.${name.toLowerCase()}.description.short`)}
+            trigger={<Icon fitted color="grey" name="info circle" className="right floated" />}
+          />
+        ),
+        image: { avatar: true, src: image },
+      })),
+    [games, t]
+  );
+
+  const handleChange = (_, { value }) => {
+    const game = games.find(({ name }) => name === value);
+    onChange(game);
+  };
+
+  return (
+    <Form.Select
+      fluid
+      label={t("create.game_type")}
+      options={gamesOptions}
+      value={value && value.name}
+      onChange={handleChange}
+    />
+  );
+};
+GameSelect.propTypes = {
+  games: PropTypes.arrayOf(GameType).isRequired,
+  value: GameType,
+  onChange: PropTypes.func.isRequired,
+};
 
 export default CreateMatchForm;

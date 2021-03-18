@@ -7,7 +7,7 @@ on:
     branches: [master]
 
 jobs:
-  prettier:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -16,6 +16,7 @@ jobs:
           node-version: "14"
       - run: npm ci
       - run: npm run prettier-ci
+      - run: npm run lint
 
   storybook:
     runs-on: ubuntu-latest

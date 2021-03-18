@@ -35,7 +35,7 @@ const Board = () => {
           styles={G.styles}
           defaultStyle={G.style}
           defaultPicturesCount={G.picturesCount}
-          StartGame={StartGame}
+          onStartGame={StartGame}
         />
       )}
     </GameLayout>

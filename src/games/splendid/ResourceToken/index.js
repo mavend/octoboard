@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { oneOf, number, bool } from "prop-types";
+import PropTypes from "prop-types";
 import { Icon, Confirm } from "semantic-ui-react";
 import { compact } from "lodash";
 
@@ -9,9 +9,13 @@ import ResourceIcon from "../ResourceIcon";
 import styles from "./ResourceToken.module.css";
 
 const propTypes = {
-  type: oneOf(RESOURCES).isRequired,
-  count: number,
-  raised: bool,
+  type: PropTypes.oneOf(RESOURCES).isRequired,
+  count: PropTypes.number,
+  raised: PropTypes.bool,
+  big: PropTypes.bool,
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func,
+  onDelete: PropTypes.func,
 };
 
 const ResourceToken = ({ type, count, raised, big, disabled, onClick, onDelete }) => {

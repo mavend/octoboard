@@ -1,7 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Container } from "semantic-ui-react";
 import UserMenu from "components/user/UserMenu";
 import Footer from "./Footer";
+
+const propTypes = {
+  hideUserMenu: PropTypes.bool,
+};
 
 const Layout = ({ hideUserMenu, children }) => (
   <Container style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
@@ -10,5 +15,6 @@ const Layout = ({ hideUserMenu, children }) => (
     <Footer />
   </Container>
 );
+Layout.propTypes = propTypes;
 
 export default Layout;

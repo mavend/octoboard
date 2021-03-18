@@ -1,6 +1,13 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Icon, Label } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
+
+const propTypes = {
+  privateMatch: PropTypes.bool,
+  detailed: PropTypes.bool,
+  style: PropTypes.object,
+};
 
 const MatchTypeBadge = ({ privateMatch, detailed, style }) => {
   const { t } = useTranslation("lobby");
@@ -14,5 +21,6 @@ const MatchTypeBadge = ({ privateMatch, detailed, style }) => {
     </Label>
   );
 };
+MatchTypeBadge.propTypes = propTypes;
 
 export default MatchTypeBadge;

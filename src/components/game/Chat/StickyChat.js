@@ -81,3 +81,5 @@ export const StickyChat = React.memo(() => {
     </div>
   );
 });
+
+StickyChat.displayName = "StickyChat";

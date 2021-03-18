@@ -23,7 +23,6 @@ const BonusCards = ({ bonuses }) => (
     </Card.Group>
   </>
 );
-
-BonusCard.propTypes = propTypes;
+BonusCards.propTypes = propTypes;
 
 export default BonusCards;

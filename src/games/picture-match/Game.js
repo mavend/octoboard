@@ -20,12 +20,9 @@ function randomizeCardLayout(ctx, pictures) {
 }
 
 function prepareDeck(ctx, mapping, picturesCount) {
-  let shuffleAndMapPictures = (pictures) => {
-    return ctx.random.Shuffle(pictures).map((number) => mapping[number]);
-  };
-  let picturesToCards = (pictures) => {
-    return randomizeCardLayout(ctx, pictures);
-  };
+  const shuffleAndMapPictures = (pictures) =>
+    ctx.random.Shuffle(pictures).map((number) => mapping[number]);
+  const picturesToCards = (pictures) => randomizeCardLayout(ctx, pictures);
   return ctx.random
     .Shuffle(getCardsDeck(picturesCount))
     .map(shuffleAndMapPictures)
@@ -171,7 +168,7 @@ export const PictureMatch = {
   },
 
   endIf: (G, ctx) => {
-    let winner = G.points.findIndex((points) => points >= G.maxPoints);
+    const winner = G.points.findIndex((points) => points >= G.maxPoints);
     if (G.mode !== "infinite" && G.maxPoints > 0 && winner >= 0) {
       return { winners: [winner] };
     }

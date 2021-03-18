@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Dropdown, Menu } from "semantic-ui-react";
@@ -35,6 +36,14 @@ const UserDropdown = React.memo(({ displayName, uid, email, isAnonymous, onLogou
     </Dropdown>
   );
 });
+UserDropdown.displayName = "UserDropdown";
+UserDropdown.propTypes = {
+  displayName: PropTypes.string.isRequired,
+  uid: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  isAnonymous: PropTypes.bool,
+  onLogout: PropTypes.func.isRequired,
+};
 
 const UserMenu = ({ className }) => {
   const user = useUser();
@@ -57,6 +66,9 @@ const UserMenu = ({ className }) => {
       </Menu.Menu>
     </Menu>
   );
+};
+UserMenu.propTypes = {
+  className: PropTypes.string,
 };
 
 export default UserMenu;

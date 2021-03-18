@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import { Form, Message } from "semantic-ui-react";
 import { withTranslation } from "react-i18next";

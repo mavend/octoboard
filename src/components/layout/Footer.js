@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Menu, Icon, Dropdown } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 import { breakpoints } from "config/media";
@@ -13,6 +14,7 @@ const FooterLink = ({ text, children, ...props }) => (
     {children || text}
   </a>
 );
+FooterLink.propTypes = { text: PropTypes.string };
 
 const FooterItem = ({ children }) => {
   return <Menu.Item style={{ color: "#aaa" }}>{children}</Menu.Item>;

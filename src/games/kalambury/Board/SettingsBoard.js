@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Header, Form, Segment, Dropdown, Label } from "semantic-ui-react";
 
 import WaitingBoard from "components/game/WaitingBoard";
 import { phrasesSets } from "../data/phrases";
 import moment from "moment";
+
+const propTypes = {
+  modes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  defaultMode: PropTypes.string,
+  defaultTimePerTurn: PropTypes.number,
+  onStartGame: PropTypes.func,
+};
 
 const SettingsBoard = ({ modes, defaultMode, defaultTimePerTurn, onStartGame }) => {
   const { t, i18n } = useTranslation("kalambury");
@@ -115,5 +123,6 @@ const SettingsBoard = ({ modes, defaultMode, defaultTimePerTurn, onStartGame }) 
     </WaitingBoard>
   );
 };
+SettingsBoard.propTypes = propTypes;
 
 export default React.memo(SettingsBoard);

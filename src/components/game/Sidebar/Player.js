@@ -13,6 +13,7 @@ const propTypes = {
   handleActionClick: PropTypes.func,
   extraContent: PropTypes.func,
   showCurrentPlayer: PropTypes.bool,
+  maxPoints: PropTypes.number,
 };
 
 const defaultProps = {
@@ -99,6 +100,10 @@ const ActionsList = ({ actions, handleActionClick }) => (
     ))}
   </List>
 );
+ActionsList.propTypes = {
+  actions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handleActionClick: PropTypes.func,
+};
 
 Player.propTypes = propTypes;
 Player.defaultProps = defaultProps;

@@ -83,4 +83,5 @@ export const Chat = React.memo(({ messages, onSend, onClose }) => {
   );
 });
 
+Chat.displayName = "Chat";
 Chat.propTypes = propTypes;

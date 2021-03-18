@@ -1,8 +1,16 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Segment, Button, Image, Label, Icon } from "semantic-ui-react";
 import GameLayout from "components/layout/GameLayout";
 
 import styles from "./Board.module.css";
+
+const propTypes = {
+  canManageGame: PropTypes.bool,
+  onStartGame: PropTypes.func.isRequired,
+  currentPlayers: PropTypes.number.isRequired,
+  totalPlayers: PropTypes.number.isRequired,
+};
 
 const WaitingBoard = ({ canManageGame, onStartGame, currentPlayers, totalPlayers }) => (
   <GameLayout gameName={"Splendid"} header={<></>} sidebarHeader={<></>} sidebarSize={5}>
@@ -23,5 +31,6 @@ const WaitingBoard = ({ canManageGame, onStartGame, currentPlayers, totalPlayers
     </Segment>
   </GameLayout>
 );
+WaitingBoard.propTypes = propTypes;
 
 export default WaitingBoard;

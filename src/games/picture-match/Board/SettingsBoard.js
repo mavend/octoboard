@@ -1,8 +1,18 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Header, Image, Segment, Form } from "semantic-ui-react";
 
 import WaitingBoard from "components/game/WaitingBoard";
+
+const propTypes = {
+  modes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  defaultMode: PropTypes.string,
+  styles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  defaultStyle: PropTypes.string,
+  defaultPicturesCount: PropTypes.number,
+  onStartGame: PropTypes.func,
+};
 
 const SettingsBoard = ({
   modes,
@@ -10,7 +20,7 @@ const SettingsBoard = ({
   styles,
   defaultStyle,
   defaultPicturesCount,
-  StartGame,
+  onStartGame,
 }) => {
   const { t } = useTranslation("picture-match");
 
@@ -19,7 +29,7 @@ const SettingsBoard = ({
   const [picturesCount, setPicturesCount] = useState(defaultPicturesCount);
 
   return (
-    <WaitingBoard onStartGame={() => StartGame(chosenStyle, gameMode, picturesCount)}>
+    <WaitingBoard onStartGame={() => onStartGame(chosenStyle, gameMode, picturesCount)}>
       <Segment compact>
         <Form>
           <Header>{t("game.settings.style")}</Header>
@@ -75,5 +85,6 @@ const SettingsBoard = ({
     </WaitingBoard>
   );
 };
+SettingsBoard.propTypes = propTypes;
 
 export default React.memo(SettingsBoard);
