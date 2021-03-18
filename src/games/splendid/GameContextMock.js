@@ -34,7 +34,11 @@ const BoardGameContextMock = ({ children }) => {
         },
         bonuses: shuffle(bonuses).slice(0, 5),
       }}
-      moves={{}}
+      moves={{
+        BuyCard: action("BuyCard"),
+        ReserveCard: action("ReserveCard"),
+        TakeTokens: action("TakeTokens"),
+      }}
       ctx={{
         activePlayers: [],
         currentPlayer: "0",

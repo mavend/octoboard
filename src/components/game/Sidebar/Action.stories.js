@@ -13,6 +13,7 @@ export default {
 export const ActionMessage = () => (
   <Action
     action={{ action: "message", text: text("Message text", "Hello there, shall we begin?") }}
+    handleActionClick={action("handleActionClick")}
   />
 );
 export const ActionGuess = () => (
@@ -28,6 +29,7 @@ export const ActionGuess = () => (
 export const ActionChange = () => (
   <Action
     action={{ action: "change", previous: text("Phrase before change", "Baba z wozu koniom lżej") }}
+    handleActionClick={action("click")}
   />
 );
 export const ActionForfeit = () => (
@@ -36,6 +38,7 @@ export const ActionForfeit = () => (
       action: "forfeit",
       previous: text("Phrase before forfeit", "Baba z wozu koniom lżej"),
     }}
+    handleActionClick={action("handleActionClick")}
   />
 );
 export const ActionManage = () => <Action action={{ action: "manage" }} />;
@@ -46,6 +49,7 @@ export const ActionTimeout = () => (
       action: "timeout",
       previous: text("Phrase before timeout", "Baba z wozu koniom lżej"),
     }}
+    handleActionClick={action("handleActionClick")}
   />
 );
 export const ActionMatch = () => (
@@ -55,5 +59,6 @@ export const ActionMatch = () => (
       picture: number("Picture number", 0),
       style: select("Picture style", ["emoji", "color", "circle", "lines"], "emoji"),
     }}
+    handleActionClick={action("handleActionClick")}
   />
 );
