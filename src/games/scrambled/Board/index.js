@@ -72,7 +72,7 @@ const Board = () => {
   }, [PlayTiles, playerLetters]);
 
   const canBeClicked = (x, y) => {
-    if (selectedLetterIdx !== null) return true;
+    if (selectedLetterIdx !== null) return !G.board[y].row[x].letter;
     if (playerLetters.find((tile) => tile.x === x && tile.y === y)) return true;
     return false;
   };
@@ -118,6 +118,7 @@ const Board = () => {
               {playerLetters &&
                 playerLetters.map((letter, idx) => (
                   <Tile
+                    separate
                     key={idx}
                     onClick={() => selectLetter(idx)}
                     raised={selectedLetterIdx === idx}
@@ -143,6 +144,7 @@ const Board = () => {
         clickable={canBeClicked}
         handleFieldClick={clickBoard}
         playerLetters={playerLetters}
+        selectionEnabled={selectedLetterIdx !== null}
       />
     </GameLayout>
   );

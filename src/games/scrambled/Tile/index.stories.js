@@ -14,5 +14,6 @@ export const Default = () => (
     letter={text("Letter", "L")}
     points={number("Points", 5)}
     raised={boolean("Raised?", false)}
+    highlighted={boolean("Highlighted?", false)}
   />
 );
