@@ -51,7 +51,7 @@
     "storybook-ci": "start-storybook --ci --smoke-test --quiet",
     "test-ci": "react-scripts test --coverage --ci --coverageReporters=lcov",
     "build-storybook": "build-storybook -s public",
-    "start:server": "NODE_ENV=development node -r esm src/server.js",
+    "start:server": "NODE_ENV=development nodemon -r esm src/server.js",
     "start:client": "react-scripts start",
     "start:firebase": "firebase emulators:start --import=./emulators.backup",
     "start:storybook": "start-storybook -p 9009 -s public --quiet",
@@ -108,6 +108,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "firebase-tools": "^9.8.0",
     "husky": "^5.2.0",
+    "nodemon": "^2.0.7",
     "prettier": "^2.2.1",
     "storybook": "^6.1.21",
     "storybook-react-router": "^1.0.8"
