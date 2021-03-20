@@ -15,44 +15,39 @@ const baseStyle = {
   textAlign: "center",
   fontSize: 12,
   lineHeight: 1,
-  color: "rgba(0,0,0,0.8)",
+  color: "#FFFFFF",
+  borderRadius: 5,
+  border: "0px solid #FFFFFF",
+  background: "#FFFFFF",
   fontWeight: 500,
-  border: "2px solid rgb(14, 53, 25)",
 };
 
-const higlighterPropTypes = {
+const dimmerPropTypes = {
   enabled: PropTypes.bool,
-  color: PropTypes.string,
-  strong: PropTypes.bool,
 };
-const Highlighter = ({ enabled, color, strong }) => {
-  if (!enabled) return <></>;
-
-  return (
-    <div
-      style={{
-        position: "absolute",
-        left: 0,
-        top: 0,
-        width: "100%",
-        height: "100%",
-        border: baseStyle.border,
-        boxShadow: `${color || "rgba(245, 214, 93, 0.65) "} 0px 0px ${
-          strong ? "20px 12px" : "2px 2px"
-        } inset`,
-      }}
-    ></div>
-  );
-};
-Highlighter.propTypes = higlighterPropTypes;
+const Dimmer = ({ enabled }) => (
+  <div
+    style={{
+      ...baseStyle,
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      background: "#000000",
+      opacity: enabled ? 0.2 : 0,
+    }}
+  ></div>
+);
+Dimmer.propTypes = dimmerPropTypes;
 
 const fieldPropTypes = {
   base: PropTypes.object.isRequired,
   overlay: PropTypes.object,
   clickable: PropTypes.bool,
   handleFieldClick: PropTypes.func.isRequired,
+  selectionEnabled: PropTypes.bool,
 };
-const Field = ({ base, overlay, clickable, handleFieldClick }) => {
+const Field = ({ base, overlay, clickable, handleFieldClick, selectionEnabled }) => {
+  // Permanently placed letter
   if (base.letter) {
     return (
       <div
@@ -61,54 +56,56 @@ const Field = ({ base, overlay, clickable, handleFieldClick }) => {
         }}
       >
         <Tile {...base} />
-        <Highlighter enabled={clickable} />
-      </div>
-    );
-  }
-  if (base.bonus) {
-    const opacity = base.bonus.multiply === 3 ? "0.8" : "0.4";
-    const content = base.start ? (
-      <Icon name="star" size="big" disabled fitted />
-    ) : (
-      <>
-        {base.bonus.multiply}x<br />
-        {base.bonus.type}
-      </>
-    );
-    return (
-      <div
-        style={{
-          cursor: clickable ? "pointer" : "auto",
-          ...baseStyle,
-        }}
-        onClick={handleFieldClick}
-      >
-        <Highlighter
-          enabled
-          strong
-          color={
-            base.bonus.type === "word"
-              ? `hsla(3, 86%, 52%, ${opacity})`
-              : `hsla(199, 55%, 53%, ${opacity})`
-          }
-        />
-        <div style={{ position: "absolute" }}>{content}</div>
-        {overlay && <Tile {...overlay} />}
-        <Highlighter enabled={clickable} color={overlay && "rgba(50, 196, 38, 0.3)"} />
       </div>
     );
   }
 
+  // Empty field with a bonus
+  if (base.bonus) {
+    const colors = {
+      word: {
+        3: "#BB5C66",
+        2: "#F9C54A",
+      },
+      letter: {
+        3: "#16919F",
+        2: "#21C4D8",
+      },
+    };
+    const content = base.start ? (
+      <Icon name="star" size="big" disabled fitted />
+    ) : (
+      <div style={{ fontWeight: 600 }}>
+        <div style={{ marginBottom: 3, fontSize: 12 }}>{base.bonus.multiply}x</div>
+        <div style={{ textTransform: "uppercase", fontSize: 8 }}>{base.bonus.type}</div>
+      </div>
+    );
+    return (
+      <div
+        style={{
+          ...baseStyle,
+          cursor: clickable ? "pointer" : "auto",
+          background: colors[base.bonus.type][base.bonus.multiply],
+        }}
+        onClick={handleFieldClick}
+      >
+        {overlay ? <Tile highlighted {...overlay} /> : content}
+        {selectionEnabled && <Dimmer enabled={!clickable} />}
+      </div>
+    );
+  }
+
+  // Empty field
   return (
     <div
       style={{
-        cursor: clickable ? "pointer" : "auto",
         ...baseStyle,
+        cursor: clickable ? "pointer" : "auto",
       }}
       onClick={handleFieldClick}
     >
-      {overlay && <Tile {...overlay} />}
-      <Highlighter enabled={clickable} color={overlay && "rgba(50, 196, 38, 0.6) "} />
+      {overlay ? <Tile highlighted {...overlay} /> : <></>}
+      {selectionEnabled && <Dimmer enabled={!clickable} />}
     </div>
   );
 };

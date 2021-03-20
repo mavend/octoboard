@@ -7,36 +7,35 @@ const propTypes = {
   letter: PropTypes.string,
   points: PropTypes.number,
   raised: PropTypes.bool,
+  separate: PropTypes.bool,
+  highlighted: PropTypes.bool,
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
 };
-const Tile = ({ letter, points, raised, disabled, onClick }) => (
+const Tile = ({ letter, points, raised, separate, highlighted, disabled, onClick }) => (
   <div
     onClick={onClick}
     style={{
-      cursor: onClick && !disabled ? "pointer" : "auto",
+      cursor: (onClick && !disabled) || highlighted ? "pointer" : "auto",
       opacity: onClick && disabled ? 0.5 : 1,
       userSelect: "none",
-      borderStyle: "solid",
-      borderTopWidth: 1,
-      borderLeftWidth: 3,
-      borderRightWidth: 3,
-      borderBottomWidth: 2,
-      borderTopColor: "rgba(255, 255, 255, 0.45)",
-      borderLeftColor: "rgba(255, 255, 255, 0.25)",
-      borderRightColor: "rgba(0, 0, 0, 0.15)",
-      borderBottomColor: "rgba(0, 0, 0, 0.3)",
       borderRadius: 5,
-      boxShadow: raised ? "2px 6px 4px -1px rgba(0, 0, 0, 0.35)" : "",
-      top: raised ? "-5px" : "0",
-      background:
-        "linear-gradient(95deg, rgba(255,214,152,1) 0%, rgba(254,212,150,1) 63%, rgba(255,227,167,1) 100%)",
-      width: 40,
-      height: 40,
+      boxShadow: `3px 3px 0 0 #393434, 2px 2px 0 0 #393434, 1px 1px 0 0 #393434 ${
+        raised ? ", rgba(0, 0, 0, 0.25) 3px 8px 4px 1px" : ""
+      }`,
+      background: highlighted ? "#B5A696" : "#655D5D",
+      color: "#FFFFFF",
+      width: 46,
+      height: 46,
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
       position: "relative",
+      top: raised ? "-8px" : "-3px",
+      left: "-3px",
+      fontWeight: 600,
+      margin: separate ? "0 5px 0 0" : 0,
+      transition: "top 0.3s, box-shadow 0.3s, opacity 0.3s",
     }}
   >
     <div style={{ fontSize: 24 }}>{letter}</div>

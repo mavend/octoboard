@@ -8,28 +8,33 @@ const propTypes = {
   playerLetters: PropTypes.array.isRequired,
   clickable: PropTypes.func,
   handleFieldClick: PropTypes.func,
+  selectionEnabled: PropTypes.bool,
 };
-const Grid = ({ board, playerLetters, clickable, handleFieldClick }) => {
-  const size = 48;
+const Grid = ({ board, playerLetters, clickable, handleFieldClick, selectionEnabled }) => {
+  const size = 46;
+  const bordersColor = selectionEnabled ? "#b1b1b1" : "#E4E4E4";
 
   return (
     <div
       style={{
-        background: "rgb(188, 196, 206)",
+        background: "#717171",
         userSelect: "none",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        width: 17 * size,
-        height: 17 * size,
+        width: 18.5 * size,
+        height: 18.5 * size,
         borderRadius: 3,
       }}
     >
       <table
         style={{
-          border: "2px solid rgb(14, 53, 25)",
-          borderCollapse: "collapse",
-          background: "rgb(226, 233, 242)",
+          border: `2px solid ${bordersColor}`,
+          borderRadius: 5,
+          background: bordersColor,
+          boxShadow: "rgba(0, 0, 0, 0.4) 0px 0px 10px 2px",
+          borderSpacing: 5,
+          transition: "background 0.3s 0.08s, border-color 0.3s 0.08s",
         }}
       >
         <tbody>
@@ -55,6 +60,7 @@ const Grid = ({ board, playerLetters, clickable, handleFieldClick }) => {
                         }
                         handleFieldClick={() => handleFieldClick(x, y)}
                         clickable={clickable(x, y)}
+                        selectionEnabled={selectionEnabled}
                       />
                     </td>
                   );
