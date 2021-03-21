@@ -3,13 +3,27 @@
     "name": "Scrambled",
     "settings": {
       "language": "Język"
+    },
+    "errors": {
+      "invalid_player": "Nie możesz wykładać płytek podczas ruchu przeciwników",
+      "non_player_tiles": "Nie posiadasz niektórych z ułożonych płytek. Spróbuj odświeżyć stronę gry, żeby pobrać aktualne zmiany",
+      "initial_word_too_short": "Słowo początkowe musi mieć przynajmniej 2 litery długości",
+      "initial_word_not_on_start": "Słowo początkowe musi przechodzić przez start (pole oznaczone gwiazdką)",
+      "not_a_row_or_column": "Wszystkie płytki muszą być ułożone w jednym wierszu lub w jednej kolumnie",
+      "replace_existing_tiles": "Niektóre płytki leżą na zajętych polach. Spróbuj odświeżyć stronę gry, żeby pobrać aktualne zmiany",
+      "tiles_not_connected": "Nowe płytki muszą stykać się z wyłożonymi w poprzednich turach",
+      "word_has_gaps": "Pomiędzy nowymi płytkami nie może być pustych pól",
+      "empty_blank": "Pusta płytka (blank) została zagrana bez przypisania jej litery. Spróbuj zagrać ją jeszcze raz",
+      "ok": "Nowe słowa:"
     }
   },
   "header": {
     "wait": "Oczekiwanie na innych graczy",
     "play": {
       "play": "Twoja kolej",
-      "wait": "Poczekaj na ruch przeciwnika"
+      "wait": "Poczekaj na ruch przeciwnika",
+      "approve": "Zatwierdź ruch przeciwnika",
+      "wait_for_approval": "Poczekaj na zatwierdzenie"
     }
   },
   "subheader": {
@@ -19,7 +33,9 @@
     },
     "play": {
       "play": "Wybierz litery do zagrania i zatwierdź swój ruch",
-      "wait": "Zagrane litery będą wymagały Twojej weryfikacji"
+      "wait": "Zagrane litery będą wymagały Twojej weryfikacji",
+      "approve": "Sprawdź czy przesłane słowa są prawidłowe",
+      "wait_for_approval": "Pozostali gracze muszą zaakceptować Twoje słowa"
     }
   }
 }

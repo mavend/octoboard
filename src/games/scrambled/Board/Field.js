@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Icon } from "semantic-ui-react";
 
 import Tile from "../Tile";
+import { BONUSES } from "../config";
 
 const baseStyle = {
   width: "100%",
@@ -33,7 +34,8 @@ const Dimmer = ({ enabled }) => (
       width: "100%",
       height: "100%",
       background: "#000000",
-      opacity: enabled ? 0.2 : 0,
+      opacity: enabled ? 0.15 : 0,
+      transition: "opacity 0.3s",
     }}
   ></div>
 );
@@ -48,7 +50,7 @@ const fieldPropTypes = {
 };
 const Field = ({ base, overlay, clickable, handleFieldClick, selectionEnabled }) => {
   // Permanently placed letter
-  if (base.letter) {
+  if (base.letter || base.replacement) {
     return (
       <div
         style={{
@@ -62,16 +64,6 @@ const Field = ({ base, overlay, clickable, handleFieldClick, selectionEnabled })
 
   // Empty field with a bonus
   if (base.bonus) {
-    const colors = {
-      word: {
-        3: "#BB5C66",
-        2: "#F9C54A",
-      },
-      letter: {
-        3: "#16919F",
-        2: "#21C4D8",
-      },
-    };
     const content = base.start ? (
       <Icon name="star" size="big" disabled fitted />
     ) : (
@@ -85,12 +77,13 @@ const Field = ({ base, overlay, clickable, handleFieldClick, selectionEnabled })
         style={{
           ...baseStyle,
           cursor: clickable ? "pointer" : "auto",
-          background: colors[base.bonus.type][base.bonus.multiply],
+          background: BONUSES[base.bonus.type][base.bonus.multiply],
         }}
         onClick={handleFieldClick}
+        ref={overlay ? overlay.popupRef : undefined}
       >
-        {overlay ? <Tile highlighted {...overlay} /> : content}
-        {selectionEnabled && <Dimmer enabled={!clickable} />}
+        {overlay ? <Tile highlighted bonus={base.bonus} {...overlay} /> : content}
+        <Dimmer enabled={selectionEnabled && !clickable} />
       </div>
     );
   }
@@ -103,9 +96,10 @@ const Field = ({ base, overlay, clickable, handleFieldClick, selectionEnabled })
         cursor: clickable ? "pointer" : "auto",
       }}
       onClick={handleFieldClick}
+      ref={overlay ? overlay.popupRef : undefined}
     >
       {overlay ? <Tile highlighted {...overlay} /> : <></>}
-      {selectionEnabled && <Dimmer enabled={!clickable} />}
+      <Dimmer enabled={selectionEnabled && !clickable} />
     </div>
   );
 };
