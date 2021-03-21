@@ -10,7 +10,7 @@ describe("scrambled getTiles", () => {
     it("returns 2 blanks", () => {
       expect.hasAssertions();
       const tiles = getTiles("en");
-      expect(tiles.filter(({ letter }) => letter === " ")).toHaveLength(2);
+      expect(tiles.filter(({ letter }) => letter === null)).toHaveLength(2);
     });
     it("returns tiles with valid number of points", () => {
       expect.hasAssertions();
@@ -28,7 +28,7 @@ describe("scrambled getTiles", () => {
     it("returns 2 blanks", () => {
       expect.hasAssertions();
       const tiles = getTiles("pl");
-      expect(tiles.filter(({ letter }) => letter === " ")).toHaveLength(2);
+      expect(tiles.filter(({ letter }) => letter === null)).toHaveLength(2);
     });
     it("returns tiles with valid number of points", () => {
       expect.hasAssertions();

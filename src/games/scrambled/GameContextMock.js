@@ -10,13 +10,15 @@ const BoardGameContextMock = ({ children }) => {
     <BoardGameProvider
       gameName="Scrambled"
       G={{
+        language: select("Language", ["en", "pl"], "en", ref),
+        initialWordPlayed: true,
         board: [
           {
             row: [
               { bonus: { type: "word", multiply: 3 } },
               { letter: "L", points: 2 },
               { letter: "O", points: 1 },
-              { letter: "L", points: 2 },
+              { letter: null, replacement: "L", points: 0 },
             ],
           },
           { row: [{}, { bonus: { type: "letter", multiply: 2 } }, {}, {}] },
@@ -41,11 +43,11 @@ const BoardGameContextMock = ({ children }) => {
         players: {
           0: {
             letters: [
-              { letter: "A", points: 1 },
-              { letter: "B", points: 2 },
-              { letter: " ", points: 0 },
-              { letter: "Ż", points: 9 },
-              { letter: "Ó", points: 7 },
+              { letter: "A", points: 1, id: 0 },
+              { letter: "B", points: 2, id: 1 },
+              { letter: null, points: 0, id: 2 },
+              { letter: "Ż", points: 9, id: 3 },
+              { letter: "Ó", points: 7, id: 4 },
             ],
             stage: select("stage", ["play", "wait"], "play", ref),
           },
@@ -54,6 +56,8 @@ const BoardGameContextMock = ({ children }) => {
       }}
       moves={{
         PlayTiles: action("PlayTiles"),
+        SwapTiles: action("SwapTiles"),
+        SkipTurn: action("SkipTurn"),
       }}
       ctx={{
         activePlayers: [],

@@ -46,7 +46,7 @@ const GameLayout = ({
     <>
       <Container>
         <MainMenu gameName={gameName} privateMatch={privateMatch} />
-        {header}
+        <Container>{header}</Container>
         <Grid>
           <Grid.Column mobile={16} computer={16 - sidebarSize}>
             <Grid.Row>{children}</Grid.Row>

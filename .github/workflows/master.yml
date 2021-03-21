@@ -1,12 +1,51 @@
 name: Deploy Production to octoboard
+
 on:
   push:
-    branches:
-      - master
+    branches: [master]
+    tags:
+      - "!*" # Do not execute on tags
+
 jobs:
-  deploy:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - run: npm ci
+      - run: npm run prettier-ci
+      - run: npm run lint
+  storybook:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - run: npm ci
+      - run: npm run storybook-ci
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - run: npm ci
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: "${{ secrets.CC_TEST_REPORTER_ID }}"
+        with:
+          coverageCommand: npm run test-ci
+  deploy_server:
     name: Deploy server
     runs-on: ubuntu-latest
+    needs: [test, storybook]
     environment:
       name: octoboard-server
       url: https://octo-board.appspot.com/
@@ -24,9 +63,10 @@ jobs:
           service_account_key: ${{ secrets.APP_ENGINE_SERVICE_ACCOUNT_OCTO_BOARD }}
       - name: Deploy to App Engine
         run: gcloud app deploy --quiet --version=${GITHUB_SHA}
-  build_and_deploy:
+  deploy_client:
     name: Deploy client
     runs-on: ubuntu-latest
+    needs: deploy_server
     environment:
       name: octoboard-client
       url: https://octo-board.web.app/

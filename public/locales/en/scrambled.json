@@ -3,13 +3,27 @@
     "name": "Scrambled",
     "settings": {
       "language": "Language"
+    },
+    "errors": {
+      "invalid_player": "You can't play tiles during your opponents turn",
+      "non_player_tiles": "You don't own some of the played tiles. Try refreshing game window to fetch latest data",
+      "initial_word_too_short": "Starting word must be at least 2 letters long",
+      "initial_word_not_on_start": "Starting word must be placed over starting field (marked with a star)",
+      "not_a_row_or_column": "All tiles must be placed in a single row or a single column",
+      "replace_existing_tiles": "You've placed some tiles on occupied fields. Try refreshing game window to fetch latest data",
+      "tiles_not_connected": "New tiles must connect to existing ones",
+      "word_has_gaps": "There is an enpty space between your tiles",
+      "empty_blank": "Blank tile was played without settings it's letter. Try plying it again",
+      "ok": "New words:"
     }
   },
   "header": {
     "wait": "Waiting for other players",
     "play": {
       "play": "It's your turn",
-      "wait": "Waiting for other player"
+      "wait": "Waiting for other player",
+      "approve": "Confirm other player submission",
+      "wait_for_approval": "Wait for approval"
     }
   },
   "subheader": {
@@ -19,7 +33,9 @@
     },
     "play": {
       "play": "Place some tiles and submit your move",
-      "wait": "Once they place some tiles you'd be able to review them"
+      "wait": "Once they place some tiles you'd be able to review them",
+      "approve": "Check if those are all valid words",
+      "wait_for_approval": "Other players must approve your words"
     }
   }
 }

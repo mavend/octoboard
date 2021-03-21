@@ -5,9 +5,45 @@ on:
     types: [labeled, opened, synchronize, reopened]
 
 jobs:
-  deploy:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - run: npm ci
+      - run: npm run prettier-ci
+      - run: npm run lint
+  storybook:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - run: npm ci
+      - run: npm run storybook-ci
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - run: npm ci
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: "${{ secrets.CC_TEST_REPORTER_ID }}"
+        with:
+          coverageCommand: npm run test-ci
+  deploy_server:
     name: Deploy server
     runs-on: ubuntu-latest
+    needs: [test, storybook]
     if: contains(github.event.pull_request.labels.*.id, 2818529465)
     environment:
       name: octoboard-development-server
@@ -26,9 +62,10 @@ jobs:
           service_account_key: ${{ secrets.APP_ENGINE_SERVICE_ACCOUNT_OCTOBOARD_DEVELOPMENT }}
       - name: Deploy to App Engine
         run: gcloud app deploy --quiet --no-promote --version=${{ github.head_ref }}
-  build_and_preview:
+  deploy_client:
     name: Deploy client
     runs-on: ubuntu-latest
+    needs: deploy_server
     if: contains(github.event.pull_request.labels.*.id, 2818529465)
     environment:
       name: octoboard-development-client

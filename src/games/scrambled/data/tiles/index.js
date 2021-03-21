@@ -1,12 +1,14 @@
-import { flattenDeep } from "lodash";
+import { flattenDeep, fill } from "lodash";
 import en from "./en";
 import pl from "./pl";
 
 const languages = { pl, en };
 
-export const availableLaguages = Object.values(languages).map(({ key, name }) => ({
+export const availableLaguages = Object.values(languages).map(({ key, name, letters, shorts }) => ({
   key,
   name,
+  letters,
+  shorts,
 }));
 
 export function getTiles(language = "en") {
@@ -14,10 +16,10 @@ export function getTiles(language = "en") {
   return flattenDeep(
     Object.keys(tiles).map((points) => {
       return tiles[points].map(([letter, count]) => {
-        return letter
-          .repeat(count)
-          .split("")
-          .map((letter) => ({ letter: letter, points: Number(points) }));
+        return fill(Array(count), letter).map((letter) => ({
+          letter: letter,
+          points: Number(points),
+        }));
       });
     })
   ).map((val, idx) => {
