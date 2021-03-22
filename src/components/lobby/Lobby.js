@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Container,
@@ -15,10 +15,11 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { GameType, MatchType } from "config/propTypes";
 import { routes } from "config/routes";
-import MatchesList from "components/lobby/MatchesList";
-import CreateMatchForm from "components/lobby/CreateMatchForm";
-import OctopusWrapper from "components/layout/OctopusWrapper";
 import { Media } from "config/media";
+import OctopusWrapper from "components/layout/OctopusWrapper";
+import MatchesList from "./MatchesList";
+import CreateMatchForm from "./CreateMatchForm";
+import FilterBox from "./FilterBox";
 
 const propTypes = {
   matches: PropTypes.arrayOf(MatchType).isRequired,
@@ -40,6 +41,22 @@ const Lobby = ({
   loggedIn,
 }) => {
   const { t } = useTranslation("lobby");
+  const [filters, setFilters] = useState({
+    query: "",
+    games: [...games],
+  });
+  const [filteredMatches, setFilteredMatches] = useState([...matches]);
+
+  useEffect(() => {
+    const gameNames = filters.games.map((g) => g.name);
+    setFilteredMatches(
+      matches.filter(
+        ({ gameName, setupData }) =>
+          gameNames.includes(gameName) &&
+          (!setupData.name || setupData.name.toLowerCase().includes(filters.query.toLowerCase()))
+      )
+    );
+  }, [filters, matches, setFilteredMatches]);
 
   const styles = {
     noMatchImage: { margin: "0 auto" },
@@ -83,10 +100,11 @@ const Lobby = ({
         <Header as="h3" textAlign="center">
           {t("list.title")}
         </Header>
+        <FilterBox games={games} filters={filters} onChange={setFilters} />
         <div>
-          {matches.length > 0 || currentMatch ? (
+          {filteredMatches.length > 0 || currentMatch ? (
             <MatchesList
-              matches={matches}
+              matches={filteredMatches}
               games={games}
               currentMatch={currentMatch}
               onJoinMatch={handleJoinMatch}
@@ -129,7 +147,6 @@ const Lobby = ({
     </Container>
   );
 };
-
 Lobby.propTypes = propTypes;
 
 export default Lobby;
