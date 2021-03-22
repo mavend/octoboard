@@ -5,6 +5,7 @@ import { Popup, Input, Icon } from "semantic-ui-react";
 
 import styles from "./FilterBox.module.scss";
 import { GameType } from "config/propTypes";
+import { useTranslation } from "react-i18next";
 
 const sameWidthModifier = {
   name: "sameWidth",
@@ -26,6 +27,7 @@ const propTypes = {
 };
 
 const FilterBox = ({ games, filters, onChange }) => {
+  const { t } = useTranslation("lobby");
   const [open, setOpen] = useState(false);
   const searchRef = useRef();
 
@@ -66,7 +68,7 @@ const FilterBox = ({ games, filters, onChange }) => {
     <form className={styles.filterBox} onSubmit={handleSubmit}>
       <Input
         ref={searchRef}
-        placeholder="Search..."
+        placeholder={`${t("filter.search")}...`}
         onFocus={() => setTimeout(() => setOpen(true), 300)}
         value={filters.query}
         onChange={handleQueryChange}
@@ -74,7 +76,7 @@ const FilterBox = ({ games, filters, onChange }) => {
       />
       <div className={styles.filterStatus}>
         {selectedGames.length === games.length ? (
-          <span className={styles.statusLabel}>All games</span>
+          <span className={styles.statusLabel}>{t("filter.all_games")}</span>
         ) : (
           <span className={styles.gamesStatus}>
             {selectedGames.map(({ name, image }) => (
@@ -90,10 +92,10 @@ const FilterBox = ({ games, filters, onChange }) => {
   const popupContent = (
     <div style={{ width: "100%", padding: 0 }}>
       <h3 className={styles.filterName}>
-        Games{" "}
+        {t("filter.games") + " "}
         {selectedGames.length < games.length && (
           <button className={styles.labelSmall} onClick={handleSelectAllGames}>
-            Select all
+            {t("filter.select_all")}
           </button>
         )}
       </h3>

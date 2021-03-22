@@ -21,6 +21,12 @@
       "players": "Gracze"
     }
   },
+  "filter": {
+    "search": "Szukaj",
+    "games": "Gry",
+    "all_games": "Wszystkie gry",
+    "select_all": "Zaznacz wszystkie"
+  },
   "create": {
     "title": "Stwórz pokój",
     "game_type": "Gra",
