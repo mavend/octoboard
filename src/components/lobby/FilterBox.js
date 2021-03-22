@@ -12,6 +12,7 @@ const sameWidthModifier = {
   enabled: true,
   fn({ state }) {
     state.styles.popper.width = `${state.rects.reference.width}px`;
+    state.styles.popper.top = "10px";
   },
   phase: "beforeWrite",
   requires: ["computeStyles"],
@@ -45,19 +46,22 @@ const FilterBox = ({ games, filters, onChange }) => {
     }
   };
 
+  const handleSelectAllGames = () => {
+    onChange({ ...filters, games: [...games] });
+  };
+
   const handleToggleGame = (game) => {
     let { games } = filters;
     if (selectedGames.includes(game)) {
-      if (selectedGames.length === 1) return;
+      if (games.length === 1) {
+        handleSelectAllGames();
+        return;
+      }
       games = games.filter((g) => g !== game);
     } else {
       games = [...games, game];
     }
     onChange({ ...filters, games });
-  };
-
-  const handleSelectAllGames = () => {
-    onChange({ ...filters, games: [...games] });
   };
 
   const handleQueryChange = (_, { value }) => {
@@ -124,7 +128,7 @@ const FilterBox = ({ games, filters, onChange }) => {
       offset={[0, -10]}
       position="bottom left"
       popperModifiers={[sameWidthModifier]}
-      style={{ width: "100%", maxWidth: "none" }}
+      style={{ width: "100%", maxWidth: "none", marginTop: 0 }}
     />
   );
 };
