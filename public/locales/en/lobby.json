@@ -21,6 +21,12 @@
       "players": "Players"
     }
   },
+  "filter": {
+    "search": "Search",
+    "games": "Games",
+    "all_games": "All games",
+    "select_all": "Select all"
+  },
   "create": {
     "title": "Create match",
     "game_type": "Game",

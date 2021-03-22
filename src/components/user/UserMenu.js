@@ -38,9 +38,9 @@ const UserDropdown = React.memo(({ displayName, uid, email, isAnonymous, onLogou
 });
 UserDropdown.displayName = "UserDropdown";
 UserDropdown.propTypes = {
-  displayName: PropTypes.string.isRequired,
-  uid: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
+  displayName: PropTypes.string,
+  uid: PropTypes.string,
+  email: PropTypes.string,
   isAnonymous: PropTypes.bool,
   onLogout: PropTypes.func.isRequired,
 };

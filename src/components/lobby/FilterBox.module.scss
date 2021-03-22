@@ -1,0 +1,100 @@
+.filterBox {
+  margin: 0 auto 20px;
+  max-width: 600px;
+  box-shadow: 0 1px 2px 0 rgba(34, 34, 34, 0.15);
+  position: relative;
+  border-radius: 4px;
+}
+
+.filterStatus {
+  position: absolute;
+  right: 6px;
+  top: 1px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  background: white;
+  padding-left: 6px;
+
+  :global(.icon) {
+    line-height: 15px;
+  }
+}
+
+.statusLabel {
+  background-color: #f2f2f2;
+  border-radius: 4px;
+  margin: 0 4px;
+  padding: 2px 4px;
+  font-weight: bold;
+  font-size: 10px;
+  color: #555;
+  border: none;
+  outline: none;
+}
+
+.gamesStatus {
+  margin: 0 4px;
+  img {
+    height: 30px;
+    margin-left: -15px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+.filterName {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin: 10px 5px 5px;
+}
+
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  min-width: 40px;
+  margin: 5px;
+  padding: 0 10px;
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  font-size: 12px;
+  font-weight: bold;
+  color: #555;
+  cursor: pointer;
+  opacity: 0.8;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &.active {
+    opacity: 1;
+    border-color: #21ba45;
+  }
+
+  .labelIcon {
+    height: 35px;
+    margin-right: 5px;
+    margin-left: -5px;
+  }
+}
+
+.labelSmall {
+  @extend .statusLabel;
+  cursor: pointer;
+}
