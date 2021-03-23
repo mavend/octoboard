@@ -13,8 +13,6 @@ Sentry.init({
   tracesSampleRate: 1.0,
 });
 
-console.log(process.env.SENTRY_DSN);
-
 const config = {};
 
 if (process.env.NODE_ENV === "production") {

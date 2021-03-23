@@ -4,33 +4,20 @@ on:
     branches:
       - master
 jobs:
-  generate_app_yaml:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "14"
-      - run: npx gae-yaml-env > app.yaml
-      - uses: actions/upload-artifact@v2
-        with:
-          name: app-yaml
-          path: app.yaml
   deploy:
     name: Deploy server
     runs-on: ubuntu-latest
     environment:
       name: octoboard-server
       url: https://octo-board.appspot.com/
-    needs: generate_app_yaml
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Download generated app.yaml
-        uses: actions/download-artifact@v2
-        with:
-          name: app-yaml
+      - uses: ikuanyshbekov/app-yaml-env-compiler@v1.0
+        env:
+          SENTRY_DSN: ${{ secrets.APP_SENTRY_DSN }}
+          NODE_ENV: production
+          ENVIRONMENT: production
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@v0.2.0
         with:

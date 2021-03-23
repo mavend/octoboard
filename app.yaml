@@ -7,6 +7,6 @@ automatic_scaling:
   min_instances: 0
 
 env_variables:
-  NODE_ENV: "production"
+  NODE_ENV: $NODE_ENV
   SENTRY_DSN: $SENTRY_DSN
   ENVIRONMENT: $ENVIRONMENT
