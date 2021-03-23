@@ -8,3 +8,5 @@ automatic_scaling:
 
 env_variables:
   NODE_ENV: "production"
+  SENTRY_DSN: $SENTRY_DSN
+  ENVIRONMENT: $ENVIRONMENT

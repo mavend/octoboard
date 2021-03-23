@@ -75,7 +75,7 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
           <Icon
             name="sync"
             link
-            onClick={() => setNameProposal(generateName(i18n.languages.foo))}
+            onClick={() => setNameProposal(generateName(i18n.languagesdd.foo))}
           />
         </div>
       )}
