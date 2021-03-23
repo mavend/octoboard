@@ -5,23 +5,31 @@ on:
       - master
 jobs:
   generate_app_yaml:
-    image: node:14-alpine
-    script:
-      - npx gae-yaml-env > app.yaml
-    artifacts:
-      paths:
-        - app.yaml
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - run: npx gae-yaml-env > app.yaml
+      - uses: actions/upload-artifact@v2
+        with:
+          name: app-yaml
+          path: app.yaml
   deploy:
     name: Deploy server
     runs-on: ubuntu-latest
-    dependencies:
-      - generate_app_yaml
     environment:
       name: octoboard-server
       url: https://octo-board.appspot.com/
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Download generated app.yaml
+        uses: actions/download-artifact@v2
+        with:
+          name: app-yaml
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@v0.2.0
         with:
