@@ -72,11 +72,7 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
           <button className={styles.nameProposalButton} onClick={() => setName(nameProposal)}>
             {nameProposal}
           </button>{" "}
-          <Icon
-            name="sync"
-            link
-            onClick={() => setNameProposal(generateName(i18n.languages.ldd.sss))}
-          />
+          <Icon name="sync" link onClick={() => setNameProposal(generateName(i18n.language))} />
         </div>
       )}
       <Form.Checkbox
