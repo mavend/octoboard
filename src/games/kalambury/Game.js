@@ -15,7 +15,7 @@ function setupGame(ctx, setupData) {
       phrase: "",
       phrases: [],
     },
-    privateMatch: setupData && setupData.private,
+    privateMatch: setupData.test.abc && setupData.private,
     actionsCount: 0,
     startTime: currentTime(),
     timePerTurn: 120,
