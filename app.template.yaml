@@ -1,6 +1,10 @@
 runtime: nodejs14
 entrypoint: node -r esm src/server.js
 instance_class: F1
+
 automatic_scaling:
   max_instances: 1
   min_instances: 0
+
+env_variables:
+  NODE_ENV: "production"

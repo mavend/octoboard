@@ -24,7 +24,7 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
   const [players, setPlayers] = useState(defaults.players);
   const [privateMatch, setPrivateMatch] = useState(defaults.private ?? true);
   const [playersOptions, setPlayersOptions] = useState([]);
-  const [name, setName] = useState();
+  const [name, setName] = useState("");
   const [nameProposal, setNameProposal] = useState(generateName(i18n.language));
 
   useEffect(() => {
@@ -72,7 +72,11 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
           <button className={styles.nameProposalButton} onClick={() => setName(nameProposal)}>
             {nameProposal}
           </button>{" "}
-          <Icon name="sync" link onClick={() => setNameProposal(generateName(i18n.language))} />
+          <Icon
+            name="sync"
+            link
+            onClick={() => setNameProposal(generateName(i18n.languages.ldd.sss))}
+          />
         </div>
       )}
       <Form.Checkbox

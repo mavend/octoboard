@@ -4,9 +4,18 @@ on:
     branches:
       - master
 jobs:
+  generate_app_yaml:
+    image: node:14-alpine
+    script:
+      - npx gae-yaml-env > app.yaml
+    artifacts:
+      paths:
+        - app.yaml
   deploy:
     name: Deploy server
     runs-on: ubuntu-latest
+    dependencies:
+      - generate_app_yaml
     environment:
       name: octoboard-server
       url: https://octo-board.appspot.com/
@@ -28,6 +37,7 @@ jobs:
       url: https://octo-board.web.app/
     env:
       REACT_APP_API_ROOT: https://octo-board.appspot.com/
+      REACT_APP_SENTRY_DSN: ${{ secrets.REACT_APP_SENTRY_DSN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2

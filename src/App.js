@@ -11,7 +11,6 @@ import { mediaStyle, MediaContextProvider } from "config/media";
 import { UserProvider } from "contexts/UserContext";
 import { PrivateRoute } from "utils/router/Private";
 import { NotLoggedInRoute } from "utils/router/NotLoggedInRoute";
-import { ErrorBoundary } from "services/ErrorBoundary";
 
 import AnonymousLoginPage from "views/user/AnonymousLogin";
 import GamePage from "views/game/GamePage";
@@ -33,40 +32,38 @@ const App = () => {
   return (
     <Suspense fallback={<Loading />}>
       <MediaContextProvider>
-        <ErrorBoundary>
-          <QueryClientProvider client={queryClient}>
-            <UserProvider>
-              <HelmetProvider>
-                <Helmet>
-                  <meta property="og:image" content={`${CLIENT_URL}/images/game-hugo.png`} />
-                  <style type="text/css">{mediaStyle}</style>
-                </Helmet>
-                <Router history={history}>
-                  <Switch>
-                    <Route exact path={routes.lobby()}>
-                      <LobbyPage />
-                    </Route>
-                    <NotLoggedInRoute exact path={routes.login()}>
-                      <LoginPage />
-                    </NotLoggedInRoute>
-                    <NotLoggedInRoute exact path={routes.login_guest()}>
-                      <AnonymousLoginPage />
-                    </NotLoggedInRoute>
-                    <NotLoggedInRoute exact path={routes.register()}>
-                      <RegisterPage />
-                    </NotLoggedInRoute>
-                    <PrivateRoute path={routes.game()}>
-                      <GamePage />
-                    </PrivateRoute>
-                    <PrivateRoute path={routes.change_password()}>
-                      <ChangePassword />
-                    </PrivateRoute>
-                  </Switch>
-                </Router>
-              </HelmetProvider>
-            </UserProvider>
-          </QueryClientProvider>
-        </ErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+          <UserProvider>
+            <HelmetProvider>
+              <Helmet>
+                <meta property="og:image" content={`${CLIENT_URL}/images/game-hugo.png`} />
+                <style type="text/css">{mediaStyle}</style>
+              </Helmet>
+              <Router history={history}>
+                <Switch>
+                  <Route exact path={routes.lobby()}>
+                    <LobbyPage />
+                  </Route>
+                  <NotLoggedInRoute exact path={routes.login()}>
+                    <LoginPage />
+                  </NotLoggedInRoute>
+                  <NotLoggedInRoute exact path={routes.login_guest()}>
+                    <AnonymousLoginPage />
+                  </NotLoggedInRoute>
+                  <NotLoggedInRoute exact path={routes.register()}>
+                    <RegisterPage />
+                  </NotLoggedInRoute>
+                  <PrivateRoute path={routes.game()}>
+                    <GamePage />
+                  </PrivateRoute>
+                  <PrivateRoute path={routes.change_password()}>
+                    <ChangePassword />
+                  </PrivateRoute>
+                </Switch>
+              </Router>
+            </HelmetProvider>
+          </UserProvider>
+        </QueryClientProvider>
       </MediaContextProvider>
     </Suspense>
   );
