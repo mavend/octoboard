@@ -23,6 +23,7 @@ jobs:
     environment:
       name: octoboard-server
       url: https://octo-board.appspot.com/
+    needs: generate_app_yaml
     steps:
       - name: Checkout
         uses: actions/checkout@v2

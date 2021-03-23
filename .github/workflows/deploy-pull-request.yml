@@ -25,6 +25,7 @@ jobs:
     environment:
       name: octoboard-development-server
       url: https://${{ github.head_ref }}-dot-octoboard-development.appspot.com
+    needs: generate_app_yaml
     steps:
       - name: Checkout
         uses: actions/checkout@v2
