@@ -24,7 +24,7 @@ const CreateMatchForm = ({ games, onCreate, disabled, loading }) => {
   const [players, setPlayers] = useState(defaults.players);
   const [privateMatch, setPrivateMatch] = useState(defaults.private ?? true);
   const [playersOptions, setPlayersOptions] = useState([]);
-  const [name, setName] = useState();
+  const [name, setName] = useState("");
   const [nameProposal, setNameProposal] = useState(generateName(i18n.language));
 
   useEffect(() => {

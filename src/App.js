@@ -1,4 +1,5 @@
 import React, { Suspense } from "react";
+import * as Sentry from "@sentry/react";
 import { Router, Switch, Route } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Dimmer, Loader } from "semantic-ui-react";
@@ -11,7 +12,6 @@ import { mediaStyle, MediaContextProvider } from "config/media";
 import { UserProvider } from "contexts/UserContext";
 import { PrivateRoute } from "utils/router/Private";
 import { NotLoggedInRoute } from "utils/router/NotLoggedInRoute";
-import { ErrorBoundary } from "services/ErrorBoundary";
 
 import AnonymousLoginPage from "views/user/AnonymousLogin";
 import GamePage from "views/game/GamePage";
@@ -19,6 +19,7 @@ import LobbyPage from "views/lobby/LobbyPage";
 import LoginPage from "views/user/LoginPage";
 import RegisterPage from "views/user/RegisterPage";
 import ChangePassword from "views/user/ChangePassword";
+import ErrorPage from "views/ErrorPage";
 import { CLIENT_URL } from "config/constants";
 
 const Loading = () => (
@@ -32,8 +33,8 @@ const App = () => {
 
   return (
     <Suspense fallback={<Loading />}>
-      <MediaContextProvider>
-        <ErrorBoundary>
+      <Sentry.ErrorBoundary showDialog fallback={ErrorPage}>
+        <MediaContextProvider>
           <QueryClientProvider client={queryClient}>
             <UserProvider>
               <HelmetProvider>
@@ -66,8 +67,8 @@ const App = () => {
               </HelmetProvider>
             </UserProvider>
           </QueryClientProvider>
-        </ErrorBoundary>
-      </MediaContextProvider>
+        </MediaContextProvider>
+      </Sentry.ErrorBoundary>
     </Suspense>
   );
 };

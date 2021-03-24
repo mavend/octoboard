@@ -13,6 +13,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - uses: ikuanyshbekov/app-yaml-env-compiler@v1.0
+        env:
+          SENTRY_DSN: ${{ secrets.APP_SENTRY_DSN }}
+          ENVIRONMENT: production
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@v0.2.0
         with:
@@ -28,6 +32,7 @@ jobs:
       url: https://octo-board.web.app/
     env:
       REACT_APP_API_ROOT: https://octo-board.appspot.com/
+      REACT_APP_SENTRY_DSN: ${{ secrets.REACT_APP_SENTRY_DSN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
