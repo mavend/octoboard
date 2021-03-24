@@ -16,7 +16,6 @@ jobs:
       - uses: ikuanyshbekov/app-yaml-env-compiler@v1.0
         env:
           SENTRY_DSN: ${{ secrets.APP_SENTRY_DSN }}
-          NODE_ENV: production
           ENVIRONMENT: production
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@v0.2.0
