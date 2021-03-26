@@ -7,7 +7,7 @@
     "@sentry/node": "^6.2.3",
     "@sentry/react": "^6.2.2",
     "@sentry/tracing": "^6.2.3",
-    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^13.0.16",
     "bgio-firebase": "^0.3.1",
