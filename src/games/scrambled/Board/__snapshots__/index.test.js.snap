@@ -1,0 +1,681 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`scrambled Board component renders correctly 1`] = `
+<div>
+  <div
+    className="ui container"
+  >
+    <div
+      className="mainMenu"
+    >
+      <div
+        className="ui container"
+      >
+        <a
+          className="logo"
+          href="/"
+          onClick={[Function]}
+        >
+          <img
+            className="ui image"
+            slt="Octoboard logo"
+            src="/images/octoboard-small.svg"
+          />
+        </a>
+        <span
+          className="gameName"
+        >
+          game.name
+        </span>
+        <span
+          className="ui small label"
+          onClick={[Function]}
+          style={Object {}}
+        >
+          <i
+            aria-hidden="true"
+            className="open lock icon"
+            onClick={[Function]}
+          />
+          <div
+            className="detail"
+          >
+            game.public
+          </div>
+        </span>
+      </div>
+    </div>
+    <div
+      className="ui container"
+    >
+      <div
+        style={
+          Object {
+            "marginBottom": "14px",
+          }
+        }
+      >
+        <h2
+          className="ui center aligned header"
+        >
+          header.play.wait
+          <div
+            className="sub header"
+          >
+            subheader.play.wait
+          </div>
+        </h2>
+        <div
+          className=""
+        >
+          <div
+            style={Object {}}
+          />
+          <div
+            className="ui sticky"
+          >
+            <div
+              className="ui disabled segment"
+            >
+              <span
+                className="ui green ribbon label"
+                onClick={[Function]}
+              >
+                <i
+                  aria-hidden="true"
+                  className="star icon"
+                  onClick={[Function]}
+                />
+                panel.tiles
+              </span>
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "paddingTop": 10,
+                  }
+                }
+              >
+                <button
+                  className="ui red disabled button"
+                  disabled={true}
+                  onClick={[Function]}
+                  tabIndex={-1}
+                >
+                  <i
+                    aria-hidden="true"
+                    className="undo icon"
+                    onClick={[Function]}
+                  />
+                  panel.actions.return
+                </button>
+                <button
+                  className="ui orange disabled button"
+                  disabled={true}
+                  onClick={[Function]}
+                  tabIndex={-1}
+                >
+                  <i
+                    aria-hidden="true"
+                    className="refresh icon"
+                    onClick={[Function]}
+                  />
+                  panel.actions.swap
+                </button>
+                <button
+                  className="ui yellow disabled button"
+                  disabled={true}
+                  onClick={[Function]}
+                  tabIndex={-1}
+                >
+                  <i
+                    aria-hidden="true"
+                    className="forward icon"
+                    onClick={[Function]}
+                  />
+                  panel.actions.skip
+                </button>
+                <button
+                  className="ui green disabled button"
+                  disabled={true}
+                  onClick={[Function]}
+                  tabIndex={-1}
+                >
+                  <i
+                    aria-hidden="true"
+                    className="check icon"
+                    onClick={[Function]}
+                  />
+                  panel.actions.play
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ui grid"
+    >
+      <div
+        className="twelve wide computer sixteen wide mobile column"
+      >
+        <div
+          className="row"
+        >
+          <div
+            className="grid"
+          >
+            <table>
+              <tbody>
+                <tr
+                  style={
+                    Object {
+                      "height": 46,
+                    }
+                  }
+                >
+                  <td
+                    className="cell"
+                  >
+                    <div
+                      className="field"
+                      onClick={[Function]}
+                      style={
+                        Object {
+                          "background": "#BB5C66",
+                        }
+                      }
+                    >
+                      <div
+                        className="bonus"
+                      >
+                        <div
+                          className="bonus_multiply"
+                        >
+                          3
+                          x
+                        </div>
+                        <div
+                          className="bonus_type"
+                        >
+                          word
+                        </div>
+                      </div>
+                      <div
+                        className="field dimmer"
+                      />
+                    </div>
+                  </td>
+                  <td
+                    className="cell"
+                  >
+                    <div
+                      className="field"
+                    >
+                      <div
+                        className="tile"
+                      >
+                        <div
+                          className="letter"
+                        >
+                          L
+                        </div>
+                        <div
+                          className="points"
+                        >
+                          2
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td
+                    className="cell"
+                  >
+                    <div
+                      className="field"
+                    >
+                      <div
+                        className="tile"
+                      >
+                        <div
+                          className="letter"
+                        >
+                          O
+                        </div>
+                        <div
+                          className="points"
+                        >
+                          1
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td
+                    className="cell"
+                  >
+                    <div
+                      className="field"
+                    >
+                      <div
+                        className="tile"
+                      >
+                        <div
+                          className="letter letter_replacement"
+                        >
+                          L
+                        </div>
+                        <div
+                          className="points"
+                        >
+                          0
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr
+                  style={
+                    Object {
+                      "height": 46,
+                    }
+                  }
+                >
+                  <td
+                    className="cell"
+                  >
+                    <div
+                      className="field"
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="field dimmer"
+                      />
+                    </div>
+                  </td>
+                  <td
+                    className="cell"
+                  >
+                    <div
+                      className="field"
+                      onClick={[Function]}
+                      style={
+                        Object {
+                          "background": "#21C4D8",
+                        }
+                      }
+                    >
+                      <div
+                        className="bonus"
+                      >
+                        <div
+                          className="bonus_multiply"
+                        >
+                          2
+                          x
+                        </div>
+                        <div
+                          className="bonus_type"
+                        >
+                          letter
+                        </div>
+                      </div>
+                      <div
+                        className="field dimmer"
+                      />
+                    </div>
+                  </td>
+                  <td
+                    className="cell"
+                  >
+                    <div
+                      className="field"
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="field dimmer"
+                      />
+                    </div>
+                  </td>
+                  <td
+                    className="cell"
+                  >
+                    <div
+                      className="field"
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="field dimmer"
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr
+                  style={
+                    Object {
+                      "height": 46,
+                    }
+                  }
+                >
+                  <td
+                    className="cell"
+                  >
+                    <div
+                      className="field"
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="field dimmer"
+                      />
+                    </div>
+                  </td>
+                  <td
+                    className="cell"
+                  >
+                    <div
+                      className="field"
+                      onClick={[Function]}
+                      style={
+                        Object {
+                          "background": "#16919F",
+                        }
+                      }
+                    >
+                      <div
+                        className="bonus"
+                      >
+                        <div
+                          className="bonus_multiply"
+                        >
+                          3
+                          x
+                        </div>
+                        <div
+                          className="bonus_type"
+                        >
+                          letter
+                        </div>
+                      </div>
+                      <div
+                        className="field dimmer"
+                      />
+                    </div>
+                  </td>
+                  <td
+                    className="cell"
+                  >
+                    <div
+                      className="field"
+                      onClick={[Function]}
+                      style={
+                        Object {
+                          "background": "#F9C54A",
+                        }
+                      }
+                    >
+                      <div
+                        className="bonus"
+                      >
+                        <div
+                          className="bonus_multiply"
+                        >
+                          2
+                          x
+                        </div>
+                        <div
+                          className="bonus_type"
+                        >
+                          word
+                        </div>
+                      </div>
+                      <div
+                        className="field dimmer"
+                      />
+                    </div>
+                  </td>
+                  <td
+                    className="cell"
+                  >
+                    <div
+                      className="field"
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="field dimmer"
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr
+                  style={
+                    Object {
+                      "height": 46,
+                    }
+                  }
+                >
+                  <td
+                    className="cell"
+                  >
+                    <div
+                      className="field"
+                      onClick={[Function]}
+                      style={
+                        Object {
+                          "background": "#F9C54A",
+                        }
+                      }
+                    >
+                      <div
+                        className="bonus"
+                      >
+                        <div
+                          className="bonus_multiply"
+                        >
+                          2
+                          x
+                        </div>
+                        <div
+                          className="bonus_type"
+                        >
+                          word
+                        </div>
+                      </div>
+                      <div
+                        className="field dimmer"
+                      />
+                    </div>
+                  </td>
+                  <td
+                    className="cell"
+                  >
+                    <div
+                      className="field"
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="field dimmer"
+                      />
+                    </div>
+                  </td>
+                  <td
+                    className="cell"
+                  >
+                    <div
+                      className="field"
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="field dimmer"
+                      />
+                    </div>
+                  </td>
+                  <td
+                    className="cell"
+                  >
+                    <div
+                      className="field"
+                      onClick={[Function]}
+                      style={
+                        Object {
+                          "background": "#F9C54A",
+                        }
+                      }
+                    >
+                      <i
+                        aria-hidden="true"
+                        className="star big disabled fitted icon"
+                        onClick={[Function]}
+                      />
+                      <div
+                        className="field dimmer"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div
+        className="four wide computer sixteen wide mobile column"
+      >
+        <div
+          className="row"
+        >
+          <h2
+            className="ui center aligned header"
+            style={
+              Object {
+                "marginBottom": "-5px",
+              }
+            }
+          >
+            game.players
+            <span
+              className="ui small label"
+              onClick={[Function]}
+              style={Object {}}
+            >
+              <i
+                aria-hidden="true"
+                className="open lock icon"
+                onClick={[Function]}
+              />
+              <div
+                className="detail"
+              >
+                game.public
+              </div>
+            </span>
+          </h2>
+          <div
+            className="ui segments"
+          />
+          <div
+            className="ui basic center aligned segment leaveSegment"
+          >
+            <button
+              className="ui blue icon disabled left labeled button"
+              disabled={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              tabIndex={-1}
+            >
+              <i
+                aria-hidden="true"
+                className="info circle icon"
+                onClick={[Function]}
+              />
+              game.rules.header
+            </button>
+          </div>
+          <div
+            className="ui basic center aligned segment leaveSegment"
+          >
+            <button
+              className="ui red icon left labeled button"
+              onClick={[Function]}
+            >
+              <i
+                aria-hidden="true"
+                className="close icon"
+                onClick={[Function]}
+              />
+              game.leave.button
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="wrapper"
+    >
+      <span
+        className="triggerButton"
+        data-unread={0}
+        onClick={[Function]}
+      />
+      <div
+        className="popupChat"
+      >
+        <div
+          className="ui segments chat"
+        >
+          <div
+            className="ui compact segment header"
+          >
+            game.chat.header
+            <span
+              className="closeIcon"
+              onClick={[Function]}
+            >
+              <i
+                aria-hidden="true"
+                className="close icon"
+                onClick={[Function]}
+              />
+            </span>
+          </div>
+          <div
+            className="ui segment messages"
+          >
+            <div
+              className="ui comments"
+            />
+          </div>
+          <div
+            className="ui segment inputBox"
+          >
+            <form
+              onSubmit={[Function]}
+            >
+              <div
+                className="ui fluid icon input"
+              >
+                <input
+                  onChange={[Function]}
+                  placeholder="game.chat.sendMessage"
+                  type="text"
+                  value=""
+                />
+                <i
+                  aria-hidden="true"
+                  className="send icon"
+                  onClick={[Function]}
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="Toastify"
+    />
+  </div>
+</div>
+`;

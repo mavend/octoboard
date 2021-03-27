@@ -41,6 +41,24 @@
           "The game ends when one of the players scores >= 15 points - after this every other player has one more turn and then the player with most points wins."
         ]
       }
+    },
+    "scrambled": {
+      "description": {
+        "short": "Form new words using tiles with letters.",
+        "rules": [
+          "Each player holds 7 tiles with letters and points on them. After playing some tiles they will be replaced with new, random ones.",
+          "Form new words by placing your tiles on the board. All placed tiles must be within the same row or the same column.",
+          "Apart from tiles with letters there are a few blank tiles. They can be used as a substitute for any letter, but are worth 0 points",
+          "All new words created while playing new tiles (there can be many of them) increase your score:",
+          "- Each tile in each word adds it's number of points to the score. The same tile can be used in multiple words",
+          "- Tiles placed on letter bonuses have their number of points multiplied by 2 or by 3, depending on bonus field",
+          "- Words with a letter placed on a word bonus field will have their score multiplied accordingly, after all letter points have been counted",
+          "- Bonuses are only counted when the tile is being placed on them. They won't have more effects in the future",
+          "- Play all 7 tiles in a single turn to get bonus 50 points",
+          "The game ends once the first player runs out of tiles.",
+          "The game may also end when all players skip turn twice in a row."
+        ]
+      }
     }
   }
 }

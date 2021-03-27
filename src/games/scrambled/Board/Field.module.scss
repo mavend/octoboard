@@ -1,0 +1,51 @@
+.field {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1;
+  color: #ffffff;
+  border-radius: 5px;
+  border: 0px solid #ffffff;
+  background: #ffffff;
+  font-weight: 500;
+  cursor: auto;
+
+  &_clickable {
+    .dimmer {
+      cursor: pointer;
+    }
+  }
+
+  .dimmer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #000000;
+    opacity: 0;
+    transition: opacity 0.3s;
+
+    &_enabled {
+      opacity: 0.15;
+    }
+  }
+
+  & .bonus {
+    font-weight: 600;
+
+    &_multiply {
+      margin-bottom: 3px;
+      font-size: 12px;
+    }
+
+    &_type {
+      text-transform: uppercase;
+      font-size: 8px;
+    }
+  }
+}

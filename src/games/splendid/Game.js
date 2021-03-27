@@ -4,6 +4,7 @@ import cards from "./data/cards.json";
 import bonuses from "./data/bonuses.json";
 import { canBuyCard, canTakeBonus, fromEntries } from "./utils";
 import { RESOURCES, RESOURCES_CONFIG, WINNING_POINTS } from "./config";
+import { LogAction } from "../../utils/game/moves/LogAction";
 
 const REGULAR_RESOURCES = RESOURCES.filter((res) => res !== "gold");
 const CARDS_PER_LEVEL = 4;
@@ -31,19 +32,6 @@ function setupGame(ctx, setupData) {
   }
 
   return G;
-}
-
-function LogAction(G, ctx, playerID, action, params = {}, clear = false) {
-  if (clear) {
-    G.actions = [];
-  }
-  G.actions.push({
-    time: new Date().toISOString(),
-    id: G.actionsCount++,
-    playerID,
-    action,
-    ...params,
-  });
 }
 
 function StartGame(G, ctx) {
@@ -220,7 +208,7 @@ export const Splendid = {
       next: "play",
       turn: {
         onBegin: (G, ctx) => {
-          LogAction(G, ctx, ctx.currentPlayer, "manage");
+          LogAction(G, ctx.currentPlayer, "manage");
           ctx.events.setActivePlayers({ currentPlayer: "manage", others: "wait" });
         },
         stages: {

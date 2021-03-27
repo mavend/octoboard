@@ -1,31 +1,9 @@
 import { INVALID_MOVE, PlayerView, TurnOrder } from "boardgame.io/core";
-import { intersectionBy, keys, pickBy, reduce } from "lodash";
+import { intersectionBy, keys, pickBy, reduce, remove } from "lodash";
 import { getTiles } from "./data/tiles";
+import { getBoard } from "./data/boards";
 import { tilesPlacementErrors, newWords, filterPlayedTiles } from "./utils";
-
-const A = { bonus: { type: "letter", multiply: 2 } };
-const B = { bonus: { type: "letter", multiply: 3 } };
-const C = { bonus: { type: "word", multiply: 2 } };
-const D = { bonus: { type: "word", multiply: 3 } };
-const S = { ...C, start: true };
-
-const board = [
-  { row: [D, 0, 0, A, 0, 0, 0, D, 0, 0, 0, A, 0, 0, D] },
-  { row: [0, C, 0, 0, 0, B, 0, 0, 0, B, 0, 0, 0, C, 0] },
-  { row: [0, 0, C, 0, 0, 0, A, 0, A, 0, 0, 0, C, 0, 0] },
-  { row: [A, 0, 0, C, 0, 0, 0, A, 0, 0, 0, C, 0, 0, A] },
-  { row: [0, 0, 0, 0, C, 0, 0, 0, 0, 0, C, 0, 0, 0, 0] },
-  { row: [0, B, 0, 0, 0, B, 0, 0, 0, B, 0, 0, 0, B, 0] },
-  { row: [0, 0, A, 0, 0, 0, A, 0, A, 0, 0, 0, A, 0, 0] },
-  { row: [D, 0, 0, A, 0, 0, 0, S, 0, 0, 0, A, 0, 0, D] },
-  { row: [0, 0, A, 0, 0, 0, A, 0, A, 0, 0, 0, A, 0, 0] },
-  { row: [0, B, 0, 0, 0, B, 0, 0, 0, B, 0, 0, 0, B, 0] },
-  { row: [0, 0, 0, 0, C, 0, 0, 0, 0, 0, C, 0, 0, 0, 0] },
-  { row: [A, 0, 0, C, 0, 0, 0, A, 0, 0, 0, C, 0, 0, A] },
-  { row: [0, 0, C, 0, 0, 0, A, 0, A, 0, 0, 0, C, 0, 0] },
-  { row: [0, C, 0, 0, 0, B, 0, 0, 0, B, 0, 0, 0, C, 0] },
-  { row: [D, 0, 0, A, 0, 0, 0, D, 0, 0, 0, A, 0, 0, D] },
-];
+import { LogAction } from "../../utils/game/moves/LogAction";
 
 function indexOfMax(array) {
   const maxValue = Math.max(...array);
@@ -35,11 +13,11 @@ function indexOfMax(array) {
 function setupGame(ctx, setupData) {
   const G = {
     secret: {
-      letters: [],
+      tiles: [],
     },
     privateRoom: setupData && setupData.private,
     language: "en",
-    board: board,
+    board: getBoard(),
     actionsCount: 0,
     players: {},
     actions: [],
@@ -52,35 +30,23 @@ function setupGame(ctx, setupData) {
 
   for (let i = 0; i < ctx.numPlayers; i++) {
     G.players[i] = {
-      letters: [],
+      tiles: [],
     };
   }
 
   return G;
 }
 
-function LogAction(G, ctx, playerID, action, params = {}, clear = false) {
-  if (clear) {
-    G.actions = [];
-  }
-  G.actions.push({
-    time: new Date().toISOString(),
-    id: G.actionsCount++,
-    playerID,
-    action,
-    ...params,
-  });
-}
-
-function SendText(G, ctx, text) {
-  if (!text) return;
-  LogAction(G, ctx, ctx.playerID, "message", { text: text });
-}
-
-function StartGame(G, ctx, language) {
+export function StartGame(G, ctx, language) {
   G.language = language;
-  G.secret.letters = ctx.random.Shuffle(getTiles(language));
+  G.secret.tiles = ctx.random.Shuffle(getTiles(language));
   ctx.events.setPhase("play");
+}
+
+function LogWords(G, currentPlayer, words, success) {
+  words.forEach((word) =>
+    LogAction(G, currentPlayer, "guess", { phrase: word.letters.join(""), success: success }, false)
+  );
 }
 
 export function PlayTiles(G, ctx, tiles) {
@@ -95,9 +61,35 @@ export function PlayTiles(G, ctx, tiles) {
   ctx.events.setActivePlayers({ currentPlayer: "wait_for_approval", others: "approve" });
 }
 
+function FinalizePlayTiles(G, ctx) {
+  G.initialWordPlayed = true;
+
+  // Calculate points before modifying board
+  G.points[ctx.currentPlayer] += reduce(
+    newWords(G.board, G.pendingTiles),
+    (acc, { points }) => acc + points,
+    0
+  );
+
+  // Give bonus points for playing all tiles
+  if (G.pendingTiles.length === 7) {
+    G.points[ctx.currentPlayer] += 50;
+  }
+
+  G.pendingTiles.forEach(({ id, x, y, replacement }) => {
+    G.board[y].row[x] = remove(G.players[ctx.currentPlayer].tiles, (tile) => tile.id === id)[0];
+    if (!G.board[y].row[x].letter) G.board[y].row[x].replacement = replacement;
+  });
+
+  LogWords(G, ctx.currentPlayer, newWords(G.board, G.pendingTiles), true);
+
+  ctx.events.endTurn();
+}
+
 export function Approve(G, ctx, decision) {
   // If anyone disagrees - word is marked invalid
   if (decision === false) {
+    LogWords(G, ctx.currentPlayer, newWords(G.board, G.pendingTiles), false);
     ctx.events.endTurn();
   } else {
     if (G.approvals.includes(ctx.playerID)) return INVALID_MOVE; // can't approve twice
@@ -105,48 +97,28 @@ export function Approve(G, ctx, decision) {
     G.approvals.push(ctx.playerID);
     // If everyone agrees - word is played
     if (G.approvals.length === ctx.numPlayers - 1) {
-      G.initialWordPlayed = true;
-
-      // Calculate points before modifying board
-      G.points[ctx.currentPlayer] += reduce(
-        newWords(G.board, G.pendingTiles),
-        (acc, { points }) => acc + points,
-        0
-      );
-
-      // Give bonus points for playing all tiles
-      if (G.pendingTiles.length === 7) {
-        G.points[ctx.currentPlayer] += 50;
-      }
-
-      G.pendingTiles.forEach(({ id, x, y, replacement }) => {
-        const letterIdx = G.players[ctx.currentPlayer].letters.findIndex((tile) => tile.id === id);
-        G.board[y].row[x] = G.players[ctx.currentPlayer].letters.splice(letterIdx, 1)[0];
-        if (!G.board[y].row[x].letter) G.board[y].row[x].replacement = replacement;
-      });
-
-      ctx.events.endTurn();
+      FinalizePlayTiles(G, ctx);
     }
   }
 }
 
 export function SwapTiles(G, ctx, tiles) {
   // Not enough tiles left to make a swap
-  if (G.secret.letters.length < 7) return INVALID_MOVE;
+  if (G.secret.tiles.length < 7) return INVALID_MOVE;
 
   // Some tiles don't belong to player (illegal move)
-  if (intersectionBy(tiles, G.players[ctx.currentPlayer].letters, "id").length !== tiles.length) {
+  if (intersectionBy(tiles, G.players[ctx.currentPlayer].tiles, "id").length !== tiles.length) {
     return INVALID_MOVE;
   }
 
   const newTiles = [];
   tiles.forEach(({ id }) => {
-    const letterIdx = G.players[ctx.currentPlayer].letters.findIndex((tile) => tile.id === id);
-    G.players[ctx.currentPlayer].letters.splice(letterIdx, 1);
-    newTiles.push(G.secret.letters.shift());
+    remove(G.players[ctx.currentPlayer].tiles, (tile) => tile.id === id);
+    newTiles.push(G.secret.tiles.shift());
   });
   G.skipCount = 0;
-  G.secret.letters.push(...tiles);
+  G.secret.tiles.push(...tiles);
+  G.secret.tiles = ctx.random.Shuffle(G.secret.tiles);
   ctx.events.endTurn();
 }
 
@@ -161,10 +133,10 @@ export function SkipTurn(G, ctx) {
 
 export function DistributeTilesToPlayers(G, ctx) {
   for (let i = 0; i < ctx.numPlayers; i++) {
-    while (G.secret.letters.length > 0 && G.players[i].letters.length < 7) {
-      G.players[i].letters.push(G.secret.letters.shift());
+    while (G.secret.tiles.length > 0 && G.players[i].tiles.length < 7) {
+      G.players[i].tiles.push(G.secret.tiles.shift());
     }
-    if (G.players[i].letters.length === 0) ctx.events.endGame({ winners: indexOfMax(G.points) });
+    if (G.players[i].tiles.length === 0) ctx.events.endGame({ winners: indexOfMax(G.points) });
   }
 }
 
@@ -183,16 +155,12 @@ export const Scrambled = {
       next: "play",
       turn: {
         onBegin: (G, ctx) => {
-          LogAction(G, ctx, ctx.currentPlayer, "manage");
+          LogAction(G, ctx.currentPlayer, "manage");
           ctx.events.setActivePlayers({ currentPlayer: "manage", others: "wait" });
         },
         stages: {
           manage: {
             moves: {
-              SendText: {
-                move: SendText,
-                unsafe: true,
-              },
               StartGame: {
                 move: StartGame,
                 client: false,
@@ -200,12 +168,7 @@ export const Scrambled = {
             },
           },
           wait: {
-            moves: {
-              SendText: {
-                move: SendText,
-                unsafe: true,
-              },
-            },
+            moves: {},
           },
         },
       },

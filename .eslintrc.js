@@ -10,6 +10,7 @@ module.exports = {
     "standard",
     "prettier",
     "plugin:jest/all",
+    "plugin:json/recommended",
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -18,7 +19,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: "module",
   },
-  plugins: ["react", "react-hooks", "prettier", "jest"],
+  plugins: ["react", "react-hooks", "prettier", "jest", "json"],
   rules: {
     "react/prop-types": [2, { ignore: ["children"] }],
   },

@@ -7,13 +7,10 @@
     "@sentry/node": "^6.2.3",
     "@sentry/react": "^6.2.3",
     "@sentry/tracing": "^6.2.3",
-    "@testing-library/jest-dom": "^5.11.10",
-    "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^13.0.16",
     "bgio-firebase": "^0.3.1",
     "bgio-storage-cache": "^0.3.0",
     "boardgame.io": "^0.43.3",
-    "classnames": "^2.2.6",
+    "clsx": "^1.1.1",
     "concurrently": "^6.0.0",
     "esm": "^3.2.25",
     "firebase": "^8.3.1",
@@ -43,8 +40,9 @@
     "start": "NODE_ENV=development concurrently -p \"{time} [{name}]\" -t \"HH:mm:ss.SSS\" -n \"client,server,firebase,storybook,test\" -c \"green.bold,blue.bold,yellow.bold,magenta.bold,red.bold\" \"npm:start:client\" \"npm:start:server\" \"npm:start:firebase\" \"npm:start:storybook\" \"npm:test\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "coverage": "react-scripts test --coverage --watchAll",
     "eject": "react-scripts eject",
-    "lint": "eslint '**/*.{js,jsx}'",
+    "lint": "eslint '**/*.{js,jsx,json}'",
     "prettier": "prettier --write .",
     "prettier-check": "pretty-quick --staged",
     "prettier-ci": "pretty-quick --check",
@@ -82,6 +80,13 @@
       "last 1 safari version"
     ]
   },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      ".stories.js",
+      "GameContextMock.js"
+    ]
+  },
   "devDependencies": {
     "@prettier/plugin-xml": "^0.13.1",
     "@storybook/addon-actions": "^6.1.21",
@@ -95,11 +100,15 @@
     "@storybook/node-logger": "^6.1.21",
     "@storybook/preset-create-react-app": "^3.1.7",
     "@storybook/react": "^6.1.21",
-    "eslint": "^7.22.0",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^13.0.16",
+    "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.3.2",
+    "eslint-plugin-json": "^2.1.2",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.3.1",
@@ -110,6 +119,7 @@
     "husky": "^5.2.0",
     "nodemon": "^2.0.7",
     "prettier": "^2.2.1",
+    "react-test-renderer": "^16.14.0",
     "storybook": "^6.1.21",
     "storybook-react-router": "^1.0.8"
   }

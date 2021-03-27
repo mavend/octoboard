@@ -41,6 +41,24 @@
           "Gra kończy się kiedy któryś z graczy zdobędzie >= 15 punktów - po tym pozostali gracze mogą wykonać jeszcze 1 ruch. Grę wygrywa gracz z największą ilością punktów."
         ]
       }
+    },
+    "scrambled": {
+      "description": {
+        "short": "Układaj nowe słowa przy pomocy płytek z literami.",
+        "rules": [
+          "Każdy z graczy zaczyna rozgrywkę z 7 płytkami na ręku. Po zagraniu płytek, pobierane są nowe losowe w celu uzupełnienia do 7.",
+          "Celem gry jest zdobywanie punktów przez tworzenie nowych słów przy pomocy płytek z literami. Wszystkie płytki w ruchu muszą być wyłożone w jednym wierszu bądź jednej kolumnie",
+          "Oprócz płytek z literami dostępne jest kilka płytek pustych (\"blank\"), które mogą zastąpić dowolną literę, ale są warte 0 puntków",
+          "Wszystkie nowe słowa utworzone przez wyłożenie płtyek (może ich być kilka) zwiększają wynik:",
+          "- Każda wyłożona płtyka zwiększa wynik słowa o jej wartość punktową. Ta sama płytka może liczyć się do więcej niż jednego słowa",
+          "- Płytki położone na premii literowej dają 2 lub 3 razy więcej punktów, zależnie on pola premii",
+          "- Słowa zawierające płytkę położoną na polu premii słownej mają wynik, po uwzględnieniu wszystkich premii literowych, pomnożony przez wartość premii",
+          "- Premie są uwzględniane tylko w momencie wyłożenia na nie płytek. W kojenych turach nie będą już miały żadnego efektu",
+          "- Wyłóż wszystkie 7 płytek w jednym ruchu aby otrzymać bonusowe 50 punktów",
+          "Gra kończy się gdy któryś z graczy wyłoży wszystkie płytki i nie będą już dostępne nowe płytki.",
+          "Gra kończy się także gdy wszyscy gracze dwa razy z rzędu ominą kolejkę."
+        ]
+      }
     }
   }
 }

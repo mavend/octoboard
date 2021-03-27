@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`scrambled Tile component renders correctly 1`] = `
+<div
+  className="tile tile_separate tile_raised tile_highlighted tile_clickable"
+>
+  <div
+    className="letter"
+  >
+    X
+  </div>
+  <div
+    className="bonus"
+    style={
+      Object {
+        "background": "#16919F",
+      }
+    }
+  />
+  <div
+    className="points"
+    style={
+      Object {
+        "WebkitTextStroke": "2px #16919F",
+      }
+    }
+  >
+    15
+  </div>
+</div>
+`;

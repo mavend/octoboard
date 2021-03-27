@@ -42,7 +42,7 @@ const BoardGameContextMock = ({ children }) => {
         points: [10, 3],
         players: {
           0: {
-            letters: [
+            tiles: [
               { letter: "A", points: 1, id: 0 },
               { letter: "B", points: 2, id: 1 },
               { letter: null, points: 0, id: 2 },

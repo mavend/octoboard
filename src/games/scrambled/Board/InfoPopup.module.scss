@@ -1,0 +1,28 @@
+.letter_wrapper {
+  text-transform: uppercase;
+  font-size: 16px;
+  margin: 15px 0;
+  line-height: 1;
+  font-weight: 600;
+
+  .letter {
+    margin: 3px;
+    font-size: 18px;
+  }
+}
+
+.bonus_wrapper {
+  margin: 5px;
+  color: #ffffff;
+  text-transform: "lowercase";
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.points_wrapper {
+  margin: 5px;
+  background: #bbbbbb;
+  padding: 5px 10px;
+  color: #ffffff;
+  border-radius: 5px;
+}

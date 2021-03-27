@@ -2,7 +2,7 @@
   "game": {
     "name": "Scrambled",
     "settings": {
-      "language": "Język"
+      "language": "Zestaw płytek"
     },
     "errors": {
       "invalid_player": "Nie możesz wykładać płytek podczas ruchu przeciwników",
@@ -14,7 +14,32 @@
       "tiles_not_connected": "Nowe płytki muszą stykać się z wyłożonymi w poprzednich turach",
       "word_has_gaps": "Pomiędzy nowymi płytkami nie może być pustych pól",
       "empty_blank": "Pusta płytka (blank) została zagrana bez przypisania jej litery. Spróbuj zagrać ją jeszcze raz",
-      "ok": "Nowe słowa:"
+      "ok": "Nowe słowa",
+      "header": "Nie możesz zagrać takiego układu płytek"
+    },
+    "info": {
+      "bonus": "Bonus"
+    },
+    "modals": {
+      "approval": {
+        "header": "Sprawdź poprawność ułożonych słów",
+        "reject": "Odrzuć",
+        "approve": "Zatwierdź"
+      },
+      "swap": {
+        "header": "Wybierz płytki do wymiany",
+        "confirm": "Potwierdź",
+        "cancel": "Zrezygnuj"
+      },
+      "blank": {
+        "header": "Wybierz literę, którą chcesz zagrać",
+        "confirm": "Potwierdź"
+      },
+      "skip": {
+        "content": "Czy na pewno chcesz pominąć swoją kolejkę?",
+        "confirm": "Tak",
+        "cancel": "Nie"
+      }
     }
   },
   "header": {
@@ -36,6 +61,15 @@
       "wait": "Zagrane litery będą wymagały Twojej weryfikacji",
       "approve": "Sprawdź czy przesłane słowa są prawidłowe",
       "wait_for_approval": "Pozostali gracze muszą zaakceptować Twoje słowa"
+    }
+  },
+  "panel": {
+    "tiles": "Twoje płytki:",
+    "actions": {
+      "return": "Zwróć wyłożone płytki",
+      "swap": "Wymień płytki",
+      "skip": "Pomiń kolejkę",
+      "play": "Wykonaj ruch"
     }
   }
 }
