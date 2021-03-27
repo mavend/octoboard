@@ -11,7 +11,7 @@ const propTypes = {
     previous: PropTypes.string,
     success: PropTypes.bool,
   }),
-  handleActionClick: PropTypes.func.isRequired,
+  handleActionClick: PropTypes.func,
 };
 
 const Action = ({ action, handleActionClick }) => {
@@ -26,13 +26,19 @@ const Action = ({ action, handleActionClick }) => {
     match: ActionMatch,
     timeout: ActionTimeout,
   }[action.action];
-  return <ActionType action={action} onClick={() => handleActionClick(action)} t={t} />;
+  return (
+    <ActionType
+      action={action}
+      onClick={() => handleActionClick && handleActionClick(action)}
+      t={t}
+    />
+  );
 };
 
 const singleActionPropTypes = {
   ...propTypes,
   onClick: PropTypes.func,
-  t: PropTypes.object,
+  t: PropTypes.func,
 };
 
 const ActionMessage = ({ action: { text }, onClick }) => (

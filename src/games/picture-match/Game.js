@@ -1,5 +1,6 @@
 import { PlayerView } from "boardgame.io/core";
 import { getCardsDeck } from "./data/cards";
+import { LogAction } from "../../utils/game/moves/LogAction";
 
 // This dictionary keeps track of number of pictures for each style
 const styles = {
@@ -59,19 +60,6 @@ function setupGame(ctx, setupData) {
   return G;
 }
 
-function LogAction(G, ctx, playerID, action, params = {}, clear = false) {
-  if (clear) {
-    G.actions = [];
-  }
-  G.actions.push({
-    time: new Date().toISOString(),
-    id: G.actionsCount++,
-    playerID,
-    action,
-    ...params,
-  });
-}
-
 function StartGame(G, ctx, style, mode, picturesCount) {
   G.style = style;
   G.mode = mode;
@@ -104,7 +92,7 @@ function Match(G, ctx, picture) {
     G.secret.used = [];
   }
 
-  LogAction(G, ctx, ctx.playerID, "match", { picture: picture, style: G.style }, true);
+  LogAction(G, ctx.playerID, "match", { picture: picture, style: G.style }, true);
 }
 
 export const PictureMatch = {
@@ -122,7 +110,7 @@ export const PictureMatch = {
       next: "play",
       turn: {
         onBegin: (G, ctx) => {
-          LogAction(G, ctx, ctx.currentPlayer, "manage");
+          LogAction(G, ctx.currentPlayer, "manage");
           ctx.events.setActivePlayers({ currentPlayer: "manage", others: "wait" });
         },
         stages: {

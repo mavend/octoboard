@@ -2,7 +2,7 @@
   "game": {
     "name": "Scrambled",
     "settings": {
-      "language": "Language"
+      "language": "Tiles set"
     },
     "errors": {
       "invalid_player": "You can't play tiles during your opponents turn",
@@ -12,9 +12,34 @@
       "not_a_row_or_column": "All tiles must be placed in a single row or a single column",
       "replace_existing_tiles": "You've placed some tiles on occupied fields. Try refreshing game window to fetch latest data",
       "tiles_not_connected": "New tiles must connect to existing ones",
-      "word_has_gaps": "There is an enpty space between your tiles",
+      "word_has_gaps": "There is an empty space between your tiles",
       "empty_blank": "Blank tile was played without settings it's letter. Try plying it again",
-      "ok": "New words:"
+      "ok": "New words",
+      "header": "Your tiles can't be played like this"
+    },
+    "info": {
+      "bonus": "Bonus"
+    },
+    "modals": {
+      "approval": {
+        "header": "Are those words valid?",
+        "reject": "Reject",
+        "approve": "Approve"
+      },
+      "swap": {
+        "header": "What letters do you want to swap?",
+        "confirm": "Confirm",
+        "cancel": "Cancel"
+      },
+      "blank": {
+        "header": "What letter do you want to use for this tile?",
+        "confirm": "Confirm"
+      },
+      "skip": {
+        "content": "Are you sure you want to skip turn without playing any tiles?",
+        "confirm": "Yes",
+        "cancel": "No"
+      }
     }
   },
   "header": {
@@ -36,6 +61,15 @@
       "wait": "Once they place some tiles you'd be able to review them",
       "approve": "Check if those are all valid words",
       "wait_for_approval": "Other players must approve your words"
+    }
+  },
+  "panel": {
+    "tiles": "Your tiles:",
+    "actions": {
+      "return": "Return tiles",
+      "swap": "Swap tiles",
+      "skip": "Skip turn",
+      "play": "Play tiles"
     }
   }
 }

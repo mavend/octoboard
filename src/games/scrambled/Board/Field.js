@@ -5,38 +5,19 @@ import { Icon } from "semantic-ui-react";
 import Tile from "../Tile";
 import { BONUSES } from "../config";
 
-const baseStyle = {
-  width: "100%",
-  height: "100%",
-  margin: 0,
-  padding: 0,
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  textAlign: "center",
-  fontSize: 12,
-  lineHeight: 1,
-  color: "#FFFFFF",
-  borderRadius: 5,
-  border: "0px solid #FFFFFF",
-  background: "#FFFFFF",
-  fontWeight: 500,
-};
+import styles from "./Field.module.scss";
+import clsx from "clsx";
 
 const dimmerPropTypes = {
   enabled: PropTypes.bool,
 };
 const Dimmer = ({ enabled }) => (
   <div
-    style={{
-      ...baseStyle,
-      position: "absolute",
-      width: "100%",
-      height: "100%",
-      background: "#000000",
-      opacity: enabled ? 0.15 : 0,
-      transition: "opacity 0.3s",
-    }}
+    className={clsx({
+      [styles.field]: true,
+      [styles.dimmer]: true,
+      [styles.dimmer_enabled]: enabled,
+    })}
   ></div>
 );
 Dimmer.propTypes = dimmerPropTypes;
@@ -52,11 +33,7 @@ const Field = ({ base, overlay, clickable, handleFieldClick, selectionEnabled })
   // Permanently placed letter
   if (base.letter || base.replacement) {
     return (
-      <div
-        style={{
-          ...baseStyle,
-        }}
-      >
+      <div className={styles.field}>
         <Tile {...base} />
       </div>
     );
@@ -67,16 +44,15 @@ const Field = ({ base, overlay, clickable, handleFieldClick, selectionEnabled })
     const content = base.start ? (
       <Icon name="star" size="big" disabled fitted />
     ) : (
-      <div style={{ fontWeight: 600 }}>
-        <div style={{ marginBottom: 3, fontSize: 12 }}>{base.bonus.multiply}x</div>
-        <div style={{ textTransform: "uppercase", fontSize: 8 }}>{base.bonus.type}</div>
+      <div className={styles.bonus}>
+        <div className={styles.bonus_multiply}>{base.bonus.multiply}x</div>
+        <div className={styles.bonus_type}>{base.bonus.type}</div>
       </div>
     );
     return (
       <div
+        className={clsx({ [styles.field]: true, [styles.field_clickable]: clickable })}
         style={{
-          ...baseStyle,
-          cursor: clickable ? "pointer" : "auto",
           background: BONUSES[base.bonus.type][base.bonus.multiply],
         }}
         onClick={handleFieldClick}
@@ -91,10 +67,7 @@ const Field = ({ base, overlay, clickable, handleFieldClick, selectionEnabled })
   // Empty field
   return (
     <div
-      style={{
-        ...baseStyle,
-        cursor: clickable ? "pointer" : "auto",
-      }}
+      className={clsx({ [styles.field]: true, [styles.field_clickable]: clickable })}
       onClick={handleFieldClick}
       ref={overlay ? overlay.popupRef : undefined}
     >
