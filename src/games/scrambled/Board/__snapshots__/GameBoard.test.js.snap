@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`scrambled Board component renders correctly 1`] = `
+exports[`scrambled GameBoard component renders correctly 1`] = `
 <div>
   <div
     className="ui container"
@@ -58,11 +58,11 @@ exports[`scrambled Board component renders correctly 1`] = `
         <h2
           className="ui center aligned header"
         >
-          header.play.wait
+          header.play.play
           <div
             className="sub header"
           >
-            subheader.play.wait
+            subheader.play.play
           </div>
         </h2>
         <div
@@ -96,6 +96,79 @@ exports[`scrambled Board component renders correctly 1`] = `
                   }
                 }
               >
+                <div
+                  className="tile tile_separate tile_clickable"
+                  onClick={[Function]}
+                >
+                  <div
+                    className="letter"
+                  >
+                    A
+                  </div>
+                  <div
+                    className="points"
+                  >
+                    1
+                  </div>
+                </div>
+                <div
+                  className="tile tile_separate tile_clickable"
+                  onClick={[Function]}
+                >
+                  <div
+                    className="letter"
+                  >
+                    B
+                  </div>
+                  <div
+                    className="points"
+                  >
+                    2
+                  </div>
+                </div>
+                <div
+                  className="tile tile_separate tile_clickable"
+                  onClick={[Function]}
+                >
+                  <div
+                    className="letter letter_replacement"
+                  />
+                  <div
+                    className="points"
+                  >
+                    0
+                  </div>
+                </div>
+                <div
+                  className="tile tile_separate tile_clickable"
+                  onClick={[Function]}
+                >
+                  <div
+                    className="letter"
+                  >
+                    Ż
+                  </div>
+                  <div
+                    className="points"
+                  >
+                    9
+                  </div>
+                </div>
+                <div
+                  className="tile tile_separate tile_clickable"
+                  onClick={[Function]}
+                >
+                  <div
+                    className="letter"
+                  >
+                    Ó
+                  </div>
+                  <div
+                    className="points"
+                  >
+                    7
+                  </div>
+                </div>
                 <button
                   className="ui red disabled button"
                   disabled={true}
@@ -110,10 +183,8 @@ exports[`scrambled Board component renders correctly 1`] = `
                   panel.actions.return
                 </button>
                 <button
-                  className="ui orange disabled button"
-                  disabled={true}
+                  className="ui orange button"
                   onClick={[Function]}
-                  tabIndex={-1}
                 >
                   <i
                     aria-hidden="true"
@@ -123,10 +194,8 @@ exports[`scrambled Board component renders correctly 1`] = `
                   panel.actions.swap
                 </button>
                 <button
-                  className="ui yellow disabled button"
-                  disabled={true}
+                  className="ui yellow button"
                   onClick={[Function]}
-                  tabIndex={-1}
                 >
                   <i
                     aria-hidden="true"
@@ -136,10 +205,8 @@ exports[`scrambled Board component renders correctly 1`] = `
                   panel.actions.skip
                 </button>
                 <button
-                  className="ui green disabled button"
-                  disabled={true}
+                  className="ui green button"
                   onClick={[Function]}
-                  tabIndex={-1}
                 >
                   <i
                     aria-hidden="true"
@@ -571,7 +638,230 @@ exports[`scrambled Board component renders correctly 1`] = `
           </h2>
           <div
             className="ui segments"
-          />
+          >
+            <div
+              className="ui segment player smoothDisabled"
+            >
+              <div
+                className="ui feed"
+              >
+                <div
+                  className="event"
+                >
+                  <div
+                    className="label"
+                  >
+                    <div
+                      style={
+                        Object {
+                          "display": "inline-block",
+                          "height": "100%",
+                          "verticalAlign": "middle",
+                          "width": "100%",
+                        }
+                      }
+                    >
+                      <svg
+                        className="octopus avatar"
+                        style={
+                          Object {
+                            "fill": "#000",
+                            "stroke": "#000",
+                            "strokeLinecap": "round",
+                            "strokeWidth": 0,
+                            "width": "100%",
+                          }
+                        }
+                        viewBox="0 0 200 200"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g
+                          style={
+                            Object {
+                              "fill": "#f4d0b5",
+                              "stroke": "#f4d0b5",
+                            }
+                          }
+                        >
+                          <svg>
+                            03.svg
+                          </svg>
+                        </g>
+                        <svg>
+                          02.svg
+                        </svg>
+                        <svg>
+                          empty.svg
+                        </svg>
+                        <svg>
+                          02.svg
+                        </svg>
+                        <svg>
+                          04.svg
+                        </svg>
+                      </svg>
+                    </div>
+                  </div>
+                  <div
+                    className="content"
+                  >
+                    <div
+                      className="date"
+                    >
+                      user-0
+                       
+                      <span>
+                        (
+                        sidebar.player.you
+                        )
+                      </span>
+                       
+                      <i
+                        aria-hidden="true"
+                        className="green check circle icon"
+                        onClick={[Function]}
+                      />
+                      <i
+                        aria-hidden="true"
+                        className="broken chain icon smoothDisabled hidden"
+                        onClick={[Function]}
+                        style={
+                          Object {
+                            "opacity": 0,
+                          }
+                        }
+                      />
+                    </div>
+                    <div
+                      className="content"
+                    >
+                      <i
+                        aria-hidden="true"
+                        className="yellow trophy icon"
+                        onClick={[Function]}
+                      />
+                      sidebar.player.points
+                    </div>
+                    <div
+                      className="text extra extra"
+                    >
+                      <div
+                        className="ui middle aligned list"
+                        role="list"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="ui disabled segment player smoothDisabled"
+            >
+              <div
+                className="ui feed"
+              >
+                <div
+                  className="event"
+                >
+                  <div
+                    className="label"
+                  >
+                    <div
+                      style={
+                        Object {
+                          "display": "inline-block",
+                          "height": "100%",
+                          "verticalAlign": "middle",
+                          "width": "100%",
+                        }
+                      }
+                    >
+                      <svg
+                        className="octopus avatar"
+                        style={
+                          Object {
+                            "fill": "#000",
+                            "stroke": "#000",
+                            "strokeLinecap": "round",
+                            "strokeWidth": 0,
+                            "width": "100%",
+                          }
+                        }
+                        viewBox="0 0 200 200"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g
+                          style={
+                            Object {
+                              "fill": "#a5673f",
+                              "fillOpacity": 0.3,
+                              "stroke": "#a5673f",
+                              "strokeWidth": 5,
+                            }
+                          }
+                        >
+                          <svg>
+                            01.svg
+                          </svg>
+                        </g>
+                        <svg>
+                          03.svg
+                        </svg>
+                        <svg>
+                          01.svg
+                        </svg>
+                        <svg>
+                          03.svg
+                        </svg>
+                        <svg>
+                          05.svg
+                        </svg>
+                      </svg>
+                    </div>
+                  </div>
+                  <div
+                    className="content"
+                  >
+                    <div
+                      className="date"
+                    >
+                      user-1
+                       
+                       
+                      <i
+                        aria-hidden="true"
+                        className="broken chain icon smoothDisabled "
+                        onClick={[Function]}
+                        style={
+                          Object {
+                            "opacity": 0.45,
+                          }
+                        }
+                      />
+                    </div>
+                    <div
+                      className="content"
+                    >
+                      <i
+                        aria-hidden="true"
+                        className="grey trophy icon"
+                        onClick={[Function]}
+                      />
+                      sidebar.player.points
+                    </div>
+                    <div
+                      className="text extra extra"
+                    >
+                      <div
+                        className="ui middle aligned list"
+                        role="list"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div
             className="ui basic center aligned segment leaveSegment"
           >
@@ -677,461 +967,5 @@ exports[`scrambled Board component renders correctly 1`] = `
       className="Toastify"
     />
   </div>
-</div>
-`;
-
-exports[`scrambled Board component renders waiting board if game not yet started 1`] = `
-<div
-  className="ui container"
->
-  <div
-    className="mainMenu"
-  >
-    <div
-      className="ui container"
-    >
-      <a
-        className="logo"
-        href="/"
-        onClick={[Function]}
-      >
-        <img
-          className="ui image"
-          slt="Octoboard logo"
-          src="/images/octoboard-small.svg"
-        />
-      </a>
-      <span
-        className="gameName"
-      >
-        game.name
-      </span>
-      <span
-        className="ui small label"
-        onClick={[Function]}
-        style={Object {}}
-      >
-        <i
-          aria-hidden="true"
-          className="open lock icon"
-          onClick={[Function]}
-        />
-        <div
-          className="detail"
-        >
-          game.public
-        </div>
-      </span>
-    </div>
-  </div>
-  <div
-    className="ui container"
-  >
-    <h2
-      className="ui center aligned header"
-    >
-      header.wait
-      <div
-        className="sub header"
-      >
-        subheader.wait.play
-      </div>
-    </h2>
-  </div>
-  <div
-    className="ui grid"
-  >
-    <div
-      className="twelve wide computer sixteen wide mobile column"
-    >
-      <div
-        className="row"
-      >
-        <div
-          className="ui basic center aligned segment"
-          style={
-            Object {
-              "alignItems": "center",
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-            }
-          }
-        >
-          <img
-            className="ui image"
-            src="/images/hugo-waiting.png"
-            style={
-              Object {
-                "margin": "0 auto",
-                "width": 400,
-              }
-            }
-          />
-        </div>
-      </div>
-    </div>
-    <div
-      className="four wide computer sixteen wide mobile column"
-    >
-      <div
-        className="row"
-      >
-        <h2
-          className="ui center aligned header"
-          style={
-            Object {
-              "marginBottom": "-5px",
-            }
-          }
-        >
-          game.players
-          <span
-            className="ui small label"
-            onClick={[Function]}
-            style={Object {}}
-          >
-            <i
-              aria-hidden="true"
-              className="open lock icon"
-              onClick={[Function]}
-            />
-            <div
-              className="detail"
-            >
-              game.public
-            </div>
-          </span>
-        </h2>
-        <div
-          className="ui segments"
-        >
-          <div
-            className="ui segment player smoothDisabled"
-          >
-            <div
-              className="ui feed"
-            >
-              <div
-                className="event"
-              >
-                <div
-                  className="label"
-                >
-                  <div
-                    style={
-                      Object {
-                        "display": "inline-block",
-                        "height": "100%",
-                        "verticalAlign": "middle",
-                        "width": "100%",
-                      }
-                    }
-                  >
-                    <svg
-                      className="octopus avatar"
-                      style={
-                        Object {
-                          "fill": "#000",
-                          "stroke": "#000",
-                          "strokeLinecap": "round",
-                          "strokeWidth": 0,
-                          "width": "100%",
-                        }
-                      }
-                      viewBox="0 0 200 200"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g
-                        style={
-                          Object {
-                            "fill": "#f4d0b5",
-                            "stroke": "#f4d0b5",
-                          }
-                        }
-                      >
-                        <svg>
-                          03.svg
-                        </svg>
-                      </g>
-                      <svg>
-                        02.svg
-                      </svg>
-                      <svg>
-                        empty.svg
-                      </svg>
-                      <svg>
-                        02.svg
-                      </svg>
-                      <svg>
-                        04.svg
-                      </svg>
-                    </svg>
-                  </div>
-                </div>
-                <div
-                  className="content"
-                >
-                  <div
-                    className="date"
-                  >
-                    user-0
-                     
-                    <span>
-                      (
-                      sidebar.player.you
-                      )
-                    </span>
-                     
-                    <i
-                      aria-hidden="true"
-                      className="green check circle icon"
-                      onClick={[Function]}
-                    />
-                    <i
-                      aria-hidden="true"
-                      className="broken chain icon smoothDisabled hidden"
-                      onClick={[Function]}
-                      style={
-                        Object {
-                          "opacity": 0,
-                        }
-                      }
-                    />
-                  </div>
-                  <div
-                    className="content"
-                  >
-                    <i
-                      aria-hidden="true"
-                      className="yellow trophy icon"
-                      onClick={[Function]}
-                    />
-                    sidebar.player.points
-                  </div>
-                  <div
-                    className="text extra extra"
-                  >
-                    <div
-                      className="ui middle aligned list"
-                      role="list"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="ui disabled segment player smoothDisabled"
-          >
-            <div
-              className="ui feed"
-            >
-              <div
-                className="event"
-              >
-                <div
-                  className="label"
-                >
-                  <div
-                    style={
-                      Object {
-                        "display": "inline-block",
-                        "height": "100%",
-                        "verticalAlign": "middle",
-                        "width": "100%",
-                      }
-                    }
-                  >
-                    <svg
-                      className="octopus avatar"
-                      style={
-                        Object {
-                          "fill": "#000",
-                          "stroke": "#000",
-                          "strokeLinecap": "round",
-                          "strokeWidth": 0,
-                          "width": "100%",
-                        }
-                      }
-                      viewBox="0 0 200 200"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g
-                        style={
-                          Object {
-                            "fill": "#a5673f",
-                            "fillOpacity": 0.3,
-                            "stroke": "#a5673f",
-                            "strokeWidth": 5,
-                          }
-                        }
-                      >
-                        <svg>
-                          01.svg
-                        </svg>
-                      </g>
-                      <svg>
-                        03.svg
-                      </svg>
-                      <svg>
-                        01.svg
-                      </svg>
-                      <svg>
-                        03.svg
-                      </svg>
-                      <svg>
-                        05.svg
-                      </svg>
-                    </svg>
-                  </div>
-                </div>
-                <div
-                  className="content"
-                >
-                  <div
-                    className="date"
-                  >
-                    user-1
-                     
-                     
-                    <i
-                      aria-hidden="true"
-                      className="broken chain icon smoothDisabled "
-                      onClick={[Function]}
-                      style={
-                        Object {
-                          "opacity": 0.45,
-                        }
-                      }
-                    />
-                  </div>
-                  <div
-                    className="content"
-                  >
-                    <i
-                      aria-hidden="true"
-                      className="grey trophy icon"
-                      onClick={[Function]}
-                    />
-                    sidebar.player.points
-                  </div>
-                  <div
-                    className="text extra extra"
-                  >
-                    <div
-                      className="ui middle aligned list"
-                      role="list"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="ui basic center aligned segment leaveSegment"
-        >
-          <button
-            className="ui blue icon disabled left labeled button"
-            disabled={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onMouseEnter={[Function]}
-            onMouseLeave={[Function]}
-            tabIndex={-1}
-          >
-            <i
-              aria-hidden="true"
-              className="info circle icon"
-              onClick={[Function]}
-            />
-            game.rules.header
-          </button>
-        </div>
-        <div
-          className="ui basic center aligned segment leaveSegment"
-        >
-          <button
-            className="ui red icon left labeled button"
-            onClick={[Function]}
-          >
-            <i
-              aria-hidden="true"
-              className="close icon"
-              onClick={[Function]}
-            />
-            game.leave.button
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    className="wrapper"
-  >
-    <span
-      className="triggerButton"
-      data-unread={0}
-      onClick={[Function]}
-    />
-    <div
-      className="popupChat"
-    >
-      <div
-        className="ui segments chat"
-      >
-        <div
-          className="ui compact segment header"
-        >
-          game.chat.header
-          <span
-            className="closeIcon"
-            onClick={[Function]}
-          >
-            <i
-              aria-hidden="true"
-              className="close icon"
-              onClick={[Function]}
-            />
-          </span>
-        </div>
-        <div
-          className="ui segment messages"
-        >
-          <div
-            className="ui comments"
-          />
-        </div>
-        <div
-          className="ui segment inputBox"
-        >
-          <form
-            onSubmit={[Function]}
-          >
-            <div
-              className="ui fluid icon input"
-            >
-              <input
-                onChange={[Function]}
-                placeholder="game.chat.sendMessage"
-                type="text"
-                value=""
-              />
-              <i
-                aria-hidden="true"
-                className="send icon"
-                onClick={[Function]}
-              />
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    className="Toastify"
-  />
 </div>
 `;

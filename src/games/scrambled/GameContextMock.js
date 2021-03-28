@@ -1,11 +1,16 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { select } from "@storybook/addon-knobs";
 import { action } from "@storybook/addon-actions";
 import { BoardGameProvider } from "contexts/BoardGameContext";
 
 const ref = "Game Context";
 
-const BoardGameContextMock = ({ children }) => {
+const propTypes = {
+  overrideG: PropTypes.object,
+  overrideCtx: PropTypes.object,
+};
+const BoardGameContextMock = ({ children, overrideG, overrideCtx }) => {
   return (
     <BoardGameProvider
       gameName="Scrambled"
@@ -53,6 +58,7 @@ const BoardGameContextMock = ({ children }) => {
           },
           1: {},
         },
+        ...overrideG,
       }}
       moves={{
         PlayTiles: action("PlayTiles"),
@@ -63,6 +69,7 @@ const BoardGameContextMock = ({ children }) => {
         activePlayers: [],
         currentPlayer: "0",
         phase: select("phase", ["wait", "play"], "play", ref),
+        ...overrideCtx,
       }}
       playerID={"0"}
       gameID={"qwe123"}
@@ -78,6 +85,7 @@ const BoardGameContextMock = ({ children }) => {
     </BoardGameProvider>
   );
 };
+BoardGameContextMock.propTypes = propTypes;
 
 export default BoardGameContextMock;
 export const scrambledDecorator = (storyFn) => (

@@ -162,7 +162,7 @@ function validateBlanksReplacements(errors, playedTiles) {
     errors.push("empty_blank");
 }
 
-export function tilesPlacementErrors(G, ctx, playedTiles) {
+export function tilesPlacementErrors(G, currentPlayer, playedTiles) {
   const errors = [];
 
   // Cleanup unused tiles
@@ -172,7 +172,7 @@ export function tilesPlacementErrors(G, ctx, playedTiles) {
   if (playedTiles.length === 0) return errors;
 
   // Some tiles don't belong to player (illegal move)
-  validateTilesOwnership(errors, G.players[ctx.currentPlayer].tiles, playedTiles);
+  validateTilesOwnership(errors, G.players[currentPlayer].tiles, playedTiles);
 
   // Initial word not placed over starting field or too shord
   validateInitialWordPlacement(errors, G.initialWordPlayed, playedTiles, G.board);

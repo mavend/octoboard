@@ -1,13 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withTranslation } from "react-i18next";
-import { Label, Button, Segment, Icon, Sticky } from "semantic-ui-react";
+import { Label, Button, Segment, Icon } from "semantic-ui-react";
 
 import Tile from "../Tile";
 
 const propTypes = {
   t: PropTypes.func.isRequired,
-  stickyRef: PropTypes.object,
   disabled: PropTypes.bool,
   playerTiles: PropTypes.arrayOf(PropTypes.object),
   selectTile: PropTypes.func.isRequired,
@@ -22,7 +21,6 @@ const propTypes = {
 
 const TilesPanel = ({
   t,
-  stickyRef,
   disabled,
   playerTiles,
   selectTile,
@@ -34,43 +32,42 @@ const TilesPanel = ({
   canReturnTiles,
   canPlayTiles,
 }) => (
-  <Sticky context={stickyRef}>
-    <Segment disabled={disabled}>
-      <Label as="span" color="green" ribbon>
-        <Icon name="star" />
-        {t("panel.tiles")}
-      </Label>
-      <div style={{ display: "flex", paddingTop: 10 }}>
-        {playerTiles &&
-          playerTiles.map((tile) => (
-            <Tile
-              separate
-              key={tile.id}
-              onClick={() => selectTile(tile)}
-              raised={selectedTile === tile}
-              disabled={tile.x !== undefined && tile.y !== undefined}
-              {...tile}
-            />
-          ))}
-        <Button color="red" onClick={onReturnTiles} disabled={disabled || !canReturnTiles}>
-          <Icon name="undo" />
-          {t("panel.actions.return")}
-        </Button>
-        <Button color="orange" onClick={onSwapTiles} disabled={disabled}>
-          <Icon name="refresh" />
-          {t("panel.actions.swap")}
-        </Button>
-        <Button color="yellow" onClick={onSkipTurn} disabled={disabled}>
-          <Icon name="forward" />
-          {t("panel.actions.skip")}
-        </Button>
-        <Button color="green" onClick={onPlayTiles} disabled={disabled || !canPlayTiles}>
-          <Icon name="check" />
-          {t("panel.actions.play")}
-        </Button>
-      </div>
-    </Segment>
-  </Sticky>
+  <Segment>
+    <Label as="span" color="green" ribbon>
+      <Icon name="star" />
+      {t("panel.tiles")}
+    </Label>
+    <div style={{ display: "flex", paddingTop: 10 }}>
+      {playerTiles &&
+        playerTiles.map((tile) => (
+          <Tile
+            separate
+            key={tile.id}
+            onClick={() => selectTile(tile)}
+            raised={selectedTile === tile}
+            used={tile.x !== undefined && tile.y !== undefined}
+            disabled={disabled}
+            {...tile}
+          />
+        ))}
+      <Button color="red" onClick={onReturnTiles} disabled={disabled || !canReturnTiles}>
+        <Icon name="undo" />
+        {t("panel.actions.return")}
+      </Button>
+      <Button color="orange" onClick={onSwapTiles} disabled={disabled}>
+        <Icon name="refresh" />
+        {t("panel.actions.swap")}
+      </Button>
+      <Button color="yellow" onClick={onSkipTurn} disabled={disabled}>
+        <Icon name="forward" />
+        {t("panel.actions.skip")}
+      </Button>
+      <Button color="green" onClick={onPlayTiles} disabled={disabled || !canPlayTiles}>
+        <Icon name="check" />
+        {t("panel.actions.play")}
+      </Button>
+    </div>
+  </Segment>
 );
 
 TilesPanel.propTypes = propTypes;
