@@ -18,7 +18,11 @@
       "header": "Your tiles can't be played like this"
     },
     "info": {
-      "bonus": "Bonus"
+      "bonus": "Bonus",
+      "bonuses": {
+        "word": "Word",
+        "letter": "Letter"
+      }
     },
     "modals": {
       "approval": {

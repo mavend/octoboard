@@ -13,6 +13,7 @@ const propTypes = {
   separate: PropTypes.bool,
   highlighted: PropTypes.bool,
   disabled: PropTypes.bool,
+  used: PropTypes.bool,
   onClick: PropTypes.func,
   bonus: PropTypes.object,
 };
@@ -24,6 +25,7 @@ const Tile = ({
   separate,
   highlighted,
   disabled,
+  used,
   bonus,
   onClick,
 }) => (
@@ -35,6 +37,7 @@ const Tile = ({
       [styles.tile_raised]: raised,
       [styles.tile_highlighted]: highlighted,
       [styles.tile_clickable]: onClick || highlighted,
+      [styles.tile_used]: used,
       [styles.tile_disabled]: disabled,
     })}
   >
@@ -55,7 +58,11 @@ const Tile = ({
       <div
         className={styles.points}
         style={{
-          WebkitTextStroke: `2px ${BONUSES[bonus.type][bonus.multiply]}`,
+          textShadow: `-1px -1px 0 ${BONUSES[bonus.type][bonus.multiply]}, 1px -1px 0 ${
+            BONUSES[bonus.type][bonus.multiply]
+          }, -1px  1px 0 ${BONUSES[bonus.type][bonus.multiply]}, 1px  1px 0 ${
+            BONUSES[bonus.type][bonus.multiply]
+          }`,
         }}
       >
         {points * bonus.multiply}

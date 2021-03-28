@@ -18,7 +18,11 @@
       "header": "Nie możesz zagrać takiego układu płytek"
     },
     "info": {
-      "bonus": "Bonus"
+      "bonus": "Bonus",
+      "bonuses": {
+        "word": "Słowo",
+        "letter": "Litera"
+      }
     },
     "modals": {
       "approval": {

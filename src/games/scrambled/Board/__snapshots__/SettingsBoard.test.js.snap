@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`scrambled SettingsBoard component renders correctly 1`] = `
+<div
+  className="ui basic center aligned segment"
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "flexDirection": "column",
+      "justifyContent": "center",
+    }
+  }
+>
+  <div
+    className="ui compact segment"
+  >
+    <form
+      className="ui form"
+      onSubmit={[Function]}
+    >
+      <div
+        className="ui header"
+      >
+        game.settings.language
+      </div>
+      <div
+        className="field"
+      >
+        <div
+          aria-describedby={null}
+          aria-expanded={false}
+          className="ui selection dropdown"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          role="listbox"
+          tabIndex={0}
+        >
+          <div
+            aria-atomic={true}
+            aria-live="polite"
+            className="divider text"
+            role="alert"
+          >
+            English
+          </div>
+          <i
+            aria-hidden="true"
+            className="dropdown icon"
+            onClick={[Function]}
+          />
+          <div
+            className="menu transition"
+          >
+            <div
+              aria-checked={true}
+              aria-selected={true}
+              className="active selected item"
+              onClick={[Function]}
+              role="option"
+              style={
+                Object {
+                  "pointerEvents": "all",
+                }
+              }
+            >
+              <span
+                className="text"
+              >
+                English
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <button
+    className="ui green icon right labeled button"
+    onClick={[Function]}
+  >
+    board.wait.actions.start
+    <i
+      aria-hidden="true"
+      className="pencil icon"
+      onClick={[Function]}
+    />
+  </button>
+</div>
+`;

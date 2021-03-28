@@ -31,6 +31,7 @@ export const Chat = React.memo(({ messages, onSend, onClose }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
+    if (!messagesList.current) return;
     messagesList.current.scrollTop = messagesList.current.scrollHeight;
   }, [messagesList, messages.length]);
 

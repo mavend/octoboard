@@ -49,10 +49,10 @@ function LogWords(G, currentPlayer, words, success) {
   );
 }
 
-export function PlayTiles(G, ctx, tiles) {
-  const playedTiles = filterPlayedTiles(tiles);
+export function PlayTiles(G, ctx, state) {
+  const playedTiles = filterPlayedTiles(state.tiles);
 
-  if (tilesPlacementErrors(G, ctx, playedTiles).length > 0) return INVALID_MOVE;
+  if (tilesPlacementErrors(G, ctx.currentPlayer, playedTiles).length > 0) return INVALID_MOVE;
 
   G.skipCount = 0;
   G.pendingTiles = playedTiles;

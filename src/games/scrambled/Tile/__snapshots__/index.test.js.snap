@@ -21,7 +21,7 @@ exports[`scrambled Tile component renders correctly 1`] = `
     className="points"
     style={
       Object {
-        "WebkitTextStroke": "2px #16919F",
+        "textShadow": "-1px -1px 0 #16919F, 1px -1px 0 #16919F, -1px  1px 0 #16919F, 1px  1px 0 #16919F",
       }
     }
   >

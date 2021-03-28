@@ -2,101 +2,90 @@
 
 exports[`scrambled TilesPanel component renders correctly 1`] = `
 <div
-  className=""
+  className="ui segment"
 >
+  <span
+    className="ui green ribbon label"
+    onClick={[Function]}
+  >
+    <i
+      aria-hidden="true"
+      className="star icon"
+      onClick={[Function]}
+    />
+    panel.tiles
+  </span>
   <div
-    style={Object {}}
-  />
-  <div
-    className="ui sticky"
+    style={
+      Object {
+        "display": "flex",
+        "paddingTop": 10,
+      }
+    }
   >
     <div
-      className="ui segment"
+      className="tile tile_separate tile_clickable"
+      onClick={[Function]}
     >
-      <span
-        className="ui green ribbon label"
-        onClick={[Function]}
-      >
-        <i
-          aria-hidden="true"
-          className="star icon"
-          onClick={[Function]}
-        />
-        panel.tiles
-      </span>
       <div
-        style={
-          Object {
-            "display": "flex",
-            "paddingTop": 10,
-          }
-        }
+        className="letter"
       >
-        <div
-          className="tile tile_separate tile_clickable"
-          onClick={[Function]}
-        >
-          <div
-            className="letter"
-          >
-            A
-          </div>
-          <div
-            className="points"
-          >
-            1
-          </div>
-        </div>
-        <button
-          className="ui red disabled button"
-          disabled={true}
-          onClick={[Function]}
-          tabIndex={-1}
-        >
-          <i
-            aria-hidden="true"
-            className="undo icon"
-            onClick={[Function]}
-          />
-          panel.actions.return
-        </button>
-        <button
-          className="ui orange button"
-          onClick={[Function]}
-        >
-          <i
-            aria-hidden="true"
-            className="refresh icon"
-            onClick={[Function]}
-          />
-          panel.actions.swap
-        </button>
-        <button
-          className="ui yellow button"
-          onClick={[Function]}
-        >
-          <i
-            aria-hidden="true"
-            className="forward icon"
-            onClick={[Function]}
-          />
-          panel.actions.skip
-        </button>
-        <button
-          className="ui green disabled button"
-          disabled={true}
-          onClick={[Function]}
-          tabIndex={-1}
-        >
-          <i
-            aria-hidden="true"
-            className="check icon"
-            onClick={[Function]}
-          />
-          panel.actions.play
-        </button>
+        A
+      </div>
+      <div
+        className="points"
+      >
+        1
       </div>
     </div>
+    <button
+      className="ui red disabled button"
+      disabled={true}
+      onClick={[Function]}
+      tabIndex={-1}
+    >
+      <i
+        aria-hidden="true"
+        className="undo icon"
+        onClick={[Function]}
+      />
+      panel.actions.return
+    </button>
+    <button
+      className="ui orange button"
+      onClick={[Function]}
+    >
+      <i
+        aria-hidden="true"
+        className="refresh icon"
+        onClick={[Function]}
+      />
+      panel.actions.swap
+    </button>
+    <button
+      className="ui yellow button"
+      onClick={[Function]}
+    >
+      <i
+        aria-hidden="true"
+        className="forward icon"
+        onClick={[Function]}
+      />
+      panel.actions.skip
+    </button>
+    <button
+      className="ui green disabled button"
+      disabled={true}
+      onClick={[Function]}
+      tabIndex={-1}
+    >
+      <i
+        aria-hidden="true"
+        className="check icon"
+        onClick={[Function]}
+      />
+      panel.actions.play
+    </button>
   </div>
 </div>
 `;

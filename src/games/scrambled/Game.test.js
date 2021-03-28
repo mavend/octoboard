@@ -150,7 +150,11 @@ describe("scrambled PlayTiles", () => {
       { x: 2, y: 1, ...tiles.D },
     ];
 
-    PlayTiles(G, { currentPlayer: "0", events: { setActivePlayers: jest.fn() } }, playedTiles);
+    PlayTiles(
+      G,
+      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      { tiles: playedTiles }
+    );
 
     expect(G.pendingTiles).toStrictEqual(playedTiles);
   });
@@ -165,7 +169,11 @@ describe("scrambled PlayTiles", () => {
       { x: 2, y: 1, ...tiles.D },
     ];
 
-    PlayTiles(G, { currentPlayer: "0", events: { setActivePlayers: jest.fn() } }, playedTiles);
+    PlayTiles(
+      G,
+      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      { tiles: playedTiles }
+    );
 
     expect(G.players[0].tiles).toStrictEqual(DEFAULT_TILES_SET());
     expect(G.secret.tiles).toStrictEqual([tiles.W, tiles.X, tiles.Y, tiles.Z]);
@@ -183,7 +191,11 @@ describe("scrambled PlayTiles", () => {
       { x: 2, y: 1, ...tiles.D },
     ];
 
-    PlayTiles(G, { currentPlayer: "0", events: { setActivePlayers: jest.fn() } }, playedTiles);
+    PlayTiles(
+      G,
+      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      { tiles: playedTiles }
+    );
 
     expect(G.approvals).toStrictEqual([]);
   });
@@ -196,16 +208,22 @@ describe("scrambled PlayTiles", () => {
     });
 
     // First word not placed on start field
-    let result = PlayTiles(G, { currentPlayer: "0" }, [
-      { x: 2, y: 2, ...tiles.A },
-      { x: 1, y: 2, ...tiles.B },
-    ]);
+    let result = PlayTiles(
+      G,
+      { currentPlayer: "0" },
+      {
+        tiles: [
+          { x: 2, y: 2, ...tiles.A },
+          { x: 1, y: 2, ...tiles.B },
+        ],
+      }
+    );
 
     expect(G.pendingTiles).toStrictEqual([]);
     expect(result).toStrictEqual(INVALID_MOVE);
 
     // First word placed on start field but too short
-    result = PlayTiles(G, { currentPlayer: "0" }, [{ x: 0, y: 0, ...tiles.A }]);
+    result = PlayTiles(G, { currentPlayer: "0" }, { tiles: [{ x: 0, y: 0, ...tiles.A }] });
 
     expect(G.pendingTiles).toStrictEqual([]);
     expect(result).toStrictEqual(INVALID_MOVE);
@@ -215,7 +233,11 @@ describe("scrambled PlayTiles", () => {
       { x: 0, y: 0, ...tiles.A },
       { x: 1, y: 0, ...tiles.B },
     ];
-    PlayTiles(G, { currentPlayer: "0", events: { setActivePlayers: jest.fn() } }, validPlay);
+    PlayTiles(
+      G,
+      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      { tiles: validPlay }
+    );
 
     expect(G.pendingTiles).toStrictEqual(validPlay);
   });
@@ -227,7 +249,7 @@ describe("scrambled PlayTiles", () => {
     // Tiles not placed in a single row or column
     const playedTiles = [{ x: 1, y: 0, ...tiles.BLANK }];
 
-    const result = PlayTiles(G, { currentPlayer: "0" }, playedTiles);
+    const result = PlayTiles(G, { currentPlayer: "0" }, { tiles: playedTiles });
 
     expect(G.pendingTiles).toStrictEqual([]);
     expect(result).toStrictEqual(INVALID_MOVE);
@@ -240,7 +262,11 @@ describe("scrambled PlayTiles", () => {
     // Tiles not placed in a single row or column
     const playedTiles = [{ x: 1, y: 0, replacement: "L", ...tiles.BLANK }];
 
-    PlayTiles(G, { currentPlayer: "0", events: { setActivePlayers: jest.fn() } }, playedTiles);
+    PlayTiles(
+      G,
+      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      { tiles: playedTiles }
+    );
 
     expect(G.pendingTiles).toStrictEqual(playedTiles);
   });
@@ -256,7 +282,7 @@ describe("scrambled PlayTiles", () => {
       { x: 0, y: 2, ...tiles.D },
     ];
 
-    const result = PlayTiles(G, { currentPlayer: "0" }, playedTiles);
+    const result = PlayTiles(G, { currentPlayer: "0" }, { tiles: playedTiles });
 
     expect(G.pendingTiles).toStrictEqual([]);
     expect(result).toStrictEqual(INVALID_MOVE);
@@ -269,7 +295,7 @@ describe("scrambled PlayTiles", () => {
     // Tiles not placed in a single row or column
     const playedTiles = [{ x: 0, y: 0, ...tiles.A }];
 
-    const result = PlayTiles(G, { currentPlayer: "0" }, playedTiles);
+    const result = PlayTiles(G, { currentPlayer: "0" }, { tiles: playedTiles });
 
     expect(G.pendingTiles).toStrictEqual([]);
     expect(result).toStrictEqual(INVALID_MOVE);
@@ -287,7 +313,11 @@ describe("scrambled PlayTiles", () => {
       { x: 2, y: 1, ...tiles.B },
     ];
 
-    PlayTiles(G, { currentPlayer: "0", events: { setActivePlayers: jest.fn() } }, playedTiles);
+    PlayTiles(
+      G,
+      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      { tiles: playedTiles }
+    );
 
     expect(G.pendingTiles).toStrictEqual(playedTiles);
   });
@@ -301,7 +331,7 @@ describe("scrambled PlayTiles", () => {
       { x: 1, y: 2, ...tiles.B },
     ];
 
-    const result = PlayTiles(G, { currentPlayer: "0" }, playedTiles);
+    const result = PlayTiles(G, { currentPlayer: "0" }, { tiles: playedTiles });
 
     expect(G.pendingTiles).toStrictEqual([]);
     expect(result).toStrictEqual(INVALID_MOVE);
@@ -325,7 +355,11 @@ describe("scrambled PlayTiles", () => {
       { x: 1, y: 1, ...tiles.B },
     ];
 
-    PlayTiles(G, { currentPlayer: "0", events: { setActivePlayers: jest.fn() } }, playedTiles);
+    PlayTiles(
+      G,
+      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      { tiles: playedTiles }
+    );
 
     expect(G.pendingTiles).toStrictEqual(playedTiles);
   });
@@ -334,18 +368,30 @@ describe("scrambled PlayTiles", () => {
     expect.hasAssertions();
     const G = setupG();
 
-    let result = PlayTiles(G, { currentPlayer: "0" }, [
-      { x: 1, y: 0, ...tiles.A },
-      { x: 1, y: 2, ...tiles.B },
-    ]);
+    let result = PlayTiles(
+      G,
+      { currentPlayer: "0" },
+      {
+        tiles: [
+          { x: 1, y: 0, ...tiles.A },
+          { x: 1, y: 2, ...tiles.B },
+        ],
+      }
+    );
 
     expect(G.pendingTiles).toStrictEqual([]);
     expect(result).toStrictEqual(INVALID_MOVE);
 
-    result = PlayTiles(G, { currentPlayer: "0" }, [
-      { x: 0, y: 1, ...tiles.A },
-      { x: 2, y: 1, ...tiles.B },
-    ]);
+    result = PlayTiles(
+      G,
+      { currentPlayer: "0" },
+      {
+        tiles: [
+          { x: 0, y: 1, ...tiles.A },
+          { x: 2, y: 1, ...tiles.B },
+        ],
+      }
+    );
 
     expect(G.pendingTiles).toStrictEqual([]);
     expect(result).toStrictEqual(INVALID_MOVE);
@@ -362,7 +408,7 @@ describe("scrambled PlayTiles", () => {
       { x: 2, y: 1, ...tiles.W },
     ];
 
-    const result = PlayTiles(G, { currentPlayer: "0" }, playedTiles);
+    const result = PlayTiles(G, { currentPlayer: "0" }, { tiles: playedTiles });
 
     expect(G.pendingTiles).toStrictEqual([]);
     expect(result).toStrictEqual(INVALID_MOVE);
@@ -382,7 +428,7 @@ describe("scrambled PlayTiles", () => {
     PlayTiles(
       G,
       { currentPlayer: "0", events: { setActivePlayers: setActivePlayersEvent } },
-      playedTiles
+      { tiles: playedTiles }
     );
 
     expect(G.pendingTiles).toStrictEqual(playedTiles);
@@ -399,7 +445,11 @@ describe("scrambled PlayTiles", () => {
     });
     const playedTiles = [{ x: 0, y: 1, ...tiles.B }];
 
-    PlayTiles(G, { currentPlayer: "0", events: { setActivePlayers: jest.fn() } }, playedTiles);
+    PlayTiles(
+      G,
+      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      { tiles: playedTiles }
+    );
 
     expect(G.skipCount).toStrictEqual(0);
   });

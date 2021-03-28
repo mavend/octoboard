@@ -37,8 +37,14 @@
     cursor: pointer;
   }
 
+  &_used {
+    opacity: 0.6;
+  }
+
   &_disabled {
-    opacity: 0.5;
+    cursor: auto;
+    color: #444444;
+    background-color: #cac6c1;
   }
 
   .letter {
@@ -66,7 +72,5 @@
     margin: 2px;
     font-size: 13px;
     line-height: 1;
-    -webkit-text-fill-color: #ffffff;
-    paint-order: stroke fill;
   }
 }

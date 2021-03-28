@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Icon } from "semantic-ui-react";
+import { useTranslation } from "react-i18next";
 
 import Tile from "../Tile";
 import { BONUSES } from "../config";
@@ -30,6 +31,8 @@ const fieldPropTypes = {
   selectionEnabled: PropTypes.bool,
 };
 const Field = ({ base, overlay, clickable, handleFieldClick, selectionEnabled }) => {
+  const { t } = useTranslation("scrambled");
+
   // Permanently placed letter
   if (base.letter || base.replacement) {
     return (
@@ -46,7 +49,7 @@ const Field = ({ base, overlay, clickable, handleFieldClick, selectionEnabled })
     ) : (
       <div className={styles.bonus}>
         <div className={styles.bonus_multiply}>{base.bonus.multiply}x</div>
-        <div className={styles.bonus_type}>{base.bonus.type}</div>
+        <div className={styles.bonus_type}>{t(`game.info.bonuses.${base.bonus.type}`)}</div>
       </div>
     );
     return (
