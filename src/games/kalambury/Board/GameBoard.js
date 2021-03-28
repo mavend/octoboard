@@ -24,8 +24,9 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
   const {
     G,
     moves,
-    player: { isDrawing, phrase },
+    player: { isDrawing },
     playerID,
+    matchID,
     chatMessages,
     sendChatMessage,
   } = useBoardGame();
@@ -47,6 +48,29 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
       ]),
     [sendChatMessage]
   );
+
+  const linesStorageKey = `kalambury-lines-${matchID}-${G.phraseCounter}`;
+
+  // set initial lines
+  useEffect(() => {
+    const key = linesStorageKey;
+    const savedLines = localStorage.getItem(key);
+    if (savedLines) {
+      setLines(JSON.parse(savedLines));
+    } else {
+      setLines([]);
+    }
+    return () => {
+      localStorage.removeItem(key);
+    };
+  }, [setLines, isDrawing, linesStorageKey]);
+
+  // update copy of lines in localStorage
+  useEffect(() => {
+    if (lines.length > 0) {
+      localStorage.setItem(linesStorageKey, JSON.stringify(lines));
+    }
+  }, [lines, isDrawing, linesStorageKey]);
 
   // send full drawing every 1sec
   useEffect(() => {
@@ -75,12 +99,6 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
     setLastSuccess(lastUserGuess.success);
     return () => setLastSuccess(false); // Do cleanup of state
   }, [lastUserGuess.id, lastUserGuess.success]);
-
-  useEffect(() => {
-    if (isDrawing) {
-      setLines([]);
-    }
-  }, [isDrawing, phrase]);
 
   useEffect(() => {
     if (isDrawing || chatMessages.length <= 0) return;
