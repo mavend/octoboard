@@ -19,6 +19,7 @@ function setupGame(ctx, setupData) {
     actionsCount: 0,
     startTime: currentTime(),
     timePerTurn: 120,
+    phraseCounter: 0,
     canChangePhrase: true,
     players: {},
     modes: modes,
@@ -72,6 +73,7 @@ function Guess(G, ctx, phrase) {
 function SetNewPhrase(G, ctx) {
   G.secret.phrase = G.secret.phrases.pop();
   G.players[ctx.currentPlayer].phrase = G.secret.phrase;
+  G.phraseCounter++;
 }
 
 function ChangePhrase(G, ctx) {
