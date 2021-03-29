@@ -53,6 +53,9 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
 
   // set initial lines
   useEffect(() => {
+    // do not execute until player's data is loaded
+    if (isDrawing === undefined) return;
+
     const key = linesStorageKey;
     const savedLines = localStorage.getItem(key);
     if (savedLines) {
