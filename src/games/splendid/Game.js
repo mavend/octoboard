@@ -168,7 +168,7 @@ function ReserveCard(G, ctx, level, cardId) {
 
 function DiscardToken(G, ctx, resource) {
   const player = G.players[ctx.currentPlayer];
-  if (!player.tokens[resource] > 0) {
+  if (player.tokens[resource] <= 0) {
     return INVALID_MOVE;
   }
 
