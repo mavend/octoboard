@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`scrambled WordApprovalIcon component renders correctly for invalid word 1`] = `
+<i
+  aria-hidden="true"
+  className="red remove circle icon"
+  onClick={[Function]}
+/>
+`;
+
+exports[`scrambled WordApprovalIcon component renders correctly for long word 1`] = `
+<i
+  aria-hidden="true"
+  className="blue circle dot outline icon"
+  onClick={[Function]}
+/>
+`;
+
+exports[`scrambled WordApprovalIcon component renders correctly for valid word 1`] = `
+<i
+  aria-hidden="true"
+  className="green check circle icon"
+  onClick={[Function]}
+/>
+`;
+
+exports[`scrambled WordApprovalIcon component renders correctly with disabled checks 1`] = `
+<i
+  aria-hidden="true"
+  className="blue circle dot outline icon"
+  onClick={[Function]}
+/>
+`;

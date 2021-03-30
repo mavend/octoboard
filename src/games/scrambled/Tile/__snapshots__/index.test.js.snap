@@ -2,7 +2,7 @@
 
 exports[`scrambled Tile component renders correctly 1`] = `
 <div
-  className="tile tile_separate tile_raised tile_highlighted tile_clickable"
+  className="tile tile_separate tile_raised tile_highlighted"
 >
   <div
     className="letter"

@@ -1,14 +1,16 @@
-import { INVALID_MOVE, PlayerView, TurnOrder } from "boardgame.io/core";
-import { intersectionBy, keys, pickBy, reduce, remove } from "lodash";
+import { INVALID_MOVE, TurnOrder } from "boardgame.io/core";
+import { keys, map, pick, pickBy, reduce, remove } from "lodash";
 import { getTiles } from "./data/tiles";
 import { getBoard } from "./data/boards";
-import { tilesPlacementErrors, newWords, filterPlayedTiles } from "./utils";
+import { tilesPlacementErrors, newWords, filterPlayedTiles, prepareTiles } from "./utils";
 import { LogAction } from "../../utils/game/moves/LogAction";
 
 function indexOfMax(array) {
   const maxValue = Math.max(...array);
   return keys(pickBy(array, (p) => p === maxValue)).map(Number);
 }
+
+const assists = ["none", "approval", "full"];
 
 function setupGame(ctx, setupData) {
   const G = {
@@ -26,20 +28,26 @@ function setupGame(ctx, setupData) {
     points: Array(ctx.numPlayers).fill(0),
     initialWordPlayed: false,
     skipCount: 0,
+    tilesLeft: 0,
+    assists: assists,
+    assist: assists[1],
   };
 
   for (let i = 0; i < ctx.numPlayers; i++) {
     G.players[i] = {
       tiles: [],
+      tilesCount: 0,
     };
   }
 
   return G;
 }
 
-export function StartGame(G, ctx, language) {
+export function StartGame(G, ctx, language, assist) {
   G.language = language;
+  G.assist = assist;
   G.secret.tiles = ctx.random.Shuffle(getTiles(language));
+  G.tilesLeft = G.secret.tiles.length;
   ctx.events.setPhase("play");
 }
 
@@ -55,7 +63,7 @@ export function PlayTiles(G, ctx, state) {
   if (tilesPlacementErrors(G, ctx.currentPlayer, playedTiles).length > 0) return INVALID_MOVE;
 
   G.skipCount = 0;
-  G.pendingTiles = playedTiles;
+  G.pendingTiles = prepareTiles(playedTiles, G.players[ctx.currentPlayer].tiles);
   G.approvals = [];
 
   ctx.events.setActivePlayers({ currentPlayer: "wait_for_approval", others: "approve" });
@@ -106,10 +114,10 @@ export function SwapTiles(G, ctx, tiles) {
   // Not enough tiles left to make a swap
   if (G.secret.tiles.length < 7) return INVALID_MOVE;
 
+  tiles = prepareTiles(tiles, G.players[ctx.currentPlayer].tiles);
+
   // Some tiles don't belong to player (illegal move)
-  if (intersectionBy(tiles, G.players[ctx.currentPlayer].tiles, "id").length !== tiles.length) {
-    return INVALID_MOVE;
-  }
+  if (!tiles) return INVALID_MOVE;
 
   const newTiles = [];
   tiles.forEach(({ id }) => {
@@ -119,6 +127,7 @@ export function SwapTiles(G, ctx, tiles) {
   G.skipCount = 0;
   G.secret.tiles.push(...tiles);
   G.secret.tiles = ctx.random.Shuffle(G.secret.tiles);
+  G.players[ctx.currentPlayer].tiles.push(...newTiles);
   ctx.events.endTurn();
 }
 
@@ -136,8 +145,10 @@ export function DistributeTilesToPlayers(G, ctx) {
     while (G.secret.tiles.length > 0 && G.players[i].tiles.length < 7) {
       G.players[i].tiles.push(G.secret.tiles.shift());
     }
+    G.players[i].tilesCount = G.players[i].tiles.length;
     if (G.players[i].tiles.length === 0) ctx.events.endGame({ winners: indexOfMax(G.points) });
   }
+  G.tilesLeft = G.secret.tiles.length;
 }
 
 export const Scrambled = {
@@ -220,5 +231,18 @@ export const Scrambled = {
     },
   },
 
-  playerView: PlayerView.STRIP_SECRETS,
+  // remove secret and players tiles, but keep tilesCount for each player
+  playerView: (G, ctx, playerID) => {
+    const r = { ...G };
+
+    if (r.secret !== undefined) {
+      delete r.secret;
+    }
+
+    if (r.players) {
+      r.players = map(r.players, (el, id) => (id === playerID ? el : pick(el, ["tilesCount"])));
+    }
+
+    return r;
+  },
 };

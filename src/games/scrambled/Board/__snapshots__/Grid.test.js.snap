@@ -369,7 +369,7 @@ exports[`scrambled Grid component renders correctly with temporary tiles 1`] = `
             onClick={[Function]}
           >
             <div
-              className="tile tile_highlighted tile_clickable"
+              className="tile tile_highlighted"
             >
               <div
                 className="letter"
@@ -400,7 +400,7 @@ exports[`scrambled Grid component renders correctly with temporary tiles 1`] = `
             }
           >
             <div
-              className="tile tile_highlighted tile_clickable"
+              className="tile tile_highlighted"
             >
               <div
                 className="letter letter_replacement"

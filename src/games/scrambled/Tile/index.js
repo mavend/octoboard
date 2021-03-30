@@ -36,7 +36,7 @@ const Tile = ({
       [styles.tile_separate]: separate,
       [styles.tile_raised]: raised,
       [styles.tile_highlighted]: highlighted,
-      [styles.tile_clickable]: onClick || highlighted,
+      [styles.tile_clickable]: onClick,
       [styles.tile_used]: used,
       [styles.tile_disabled]: disabled,
     })}

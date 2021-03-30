@@ -16,6 +16,14 @@ exports[`scrambled TilesPanel component renders correctly 1`] = `
     panel.tiles
   </span>
   <div
+    className="ui top right attached label"
+    onClick={[Function]}
+  >
+    game.info.tiles.left
+    : 
+    42
+  </div>
+  <div
     style={
       Object {
         "display": "flex",
@@ -52,8 +60,10 @@ exports[`scrambled TilesPanel component renders correctly 1`] = `
       panel.actions.return
     </button>
     <button
-      className="ui orange button"
+      className="ui orange disabled button"
+      disabled={true}
       onClick={[Function]}
+      tabIndex={-1}
     >
       <i
         aria-hidden="true"

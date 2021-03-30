@@ -62,7 +62,7 @@ const SettingsBoard = ({ modes, defaultMode, defaultTimePerTurn, onStartGame }) 
 
   return (
     <WaitingBoard onStartGame={handleStartGame}>
-      <Segment compact style={{ minWidth: "320px" }}>
+      <Segment compact padded>
         <Form>
           <Header>{t("game.settings.mode")}</Header>
           {modes.map((mode) => (

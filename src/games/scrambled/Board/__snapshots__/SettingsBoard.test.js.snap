@@ -13,7 +13,7 @@ exports[`scrambled SettingsBoard component renders correctly 1`] = `
   }
 >
   <div
-    className="ui compact segment"
+    className="ui compact padded segment"
   >
     <form
       className="ui form"
@@ -46,7 +46,7 @@ exports[`scrambled SettingsBoard component renders correctly 1`] = `
             className="divider text"
             role="alert"
           >
-            English
+            polski
           </div>
           <i
             aria-hidden="true"
@@ -71,9 +71,88 @@ exports[`scrambled SettingsBoard component renders correctly 1`] = `
               <span
                 className="text"
               >
+                polski
+              </span>
+            </div>
+            <div
+              aria-checked={false}
+              aria-selected={false}
+              className="item"
+              onClick={[Function]}
+              role="option"
+              style={
+                Object {
+                  "pointerEvents": "all",
+                }
+              }
+            >
+              <span
+                className="text"
+              >
                 English
               </span>
             </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ui header"
+      >
+        game.settings.assist
+      </div>
+      <div
+        className="field"
+      >
+        <div
+          className="field"
+        >
+          <div
+            className="ui checked toggle checkbox"
+            onChange={[Function]}
+            onClick={[Function]}
+            onMouseDown={[Function]}
+            onMouseUp={[Function]}
+          >
+            <input
+              aria-describedby={null}
+              checked={true}
+              className="hidden"
+              readOnly={true}
+              tabIndex={0}
+              type="radio"
+              value="assist1"
+            />
+            <label>
+              game.settings.assists.assist1
+            </label>
+          </div>
+        </div>
+      </div>
+      <div
+        className="field"
+      >
+        <div
+          className="field"
+        >
+          <div
+            className="ui toggle checkbox"
+            onChange={[Function]}
+            onClick={[Function]}
+            onMouseDown={[Function]}
+            onMouseUp={[Function]}
+          >
+            <input
+              aria-describedby={null}
+              checked={false}
+              className="hidden"
+              readOnly={true}
+              tabIndex={0}
+              type="radio"
+              value="assist2"
+            />
+            <label>
+              game.settings.assists.assist2
+            </label>
           </div>
         </div>
       </div>

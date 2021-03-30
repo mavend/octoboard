@@ -1,13 +1,38 @@
-import { intersectionBy, groupBy, keys, find, minBy, maxBy, orderBy, reduce, slice } from "lodash";
+import {
+  intersectionBy,
+  groupBy,
+  keys,
+  find,
+  minBy,
+  maxBy,
+  orderBy,
+  reduce,
+  slice,
+  unzipWith,
+  merge,
+} from "lodash";
 
 export function filterPlayedTiles(tiles) {
   return tiles.filter(({ x, y }) => x !== undefined && y !== undefined);
+}
+
+export function prepareTiles(tiles, ownedTiles) {
+  // extract ownedTiles that were used
+  const extractedTiles = intersectionBy(ownedTiles, tiles, "id");
+
+  // Some tiles don't belong to player - never allow such move
+  if (extractedTiles.length !== tiles.length) return null;
+
+  // Combine played tiles with the ones from hand
+  // this allows setting new attributes, but doesn't allow overwriting existing ones
+  return unzipWith([tiles, extractedTiles], merge);
 }
 
 function boardStateOn(board, tiles, x, y) {
   const playedTile = find(tiles, (tile) => tile.x === x && tile.y === y);
   let tile = null;
   let bonus = null;
+  let newTile = false;
   // Nothing can be placed outside board boundaries
   if (y < 0 || x < 0 || x >= board[0].row.length || y >= board.length)
     return { tile: tile, bonus: bonus };
@@ -15,9 +40,10 @@ function boardStateOn(board, tiles, x, y) {
   if (playedTile) {
     tile = playedTile;
     bonus = board[y].row[x].bonus;
+    newTile = true;
   } else if (board[y].row[x] && (board[y].row[x].letter || board[y].row[x].replacement))
     tile = board[y].row[x];
-  return { tile: tile, bonus: bonus };
+  return { tile, bonus, newTile };
 }
 
 function tilesInRow(board, playedTiles, row) {
@@ -68,6 +94,7 @@ function playedWordsHash(tiles, index) {
   if (wordTiles.length > 1) {
     return {
       letters: wordTiles.map(({ tile }) => tile.letter || tile.replacement),
+      newTiles: wordTiles.map(({ newTile }) => newTile),
       points: reduce(wordTiles, (sum, tile) => sum + tileScore(tile), 0) * wordMultiply,
       wordBonuses: wordTiles
         .filter(({ bonus }) => bonus && bonus.type === "word")

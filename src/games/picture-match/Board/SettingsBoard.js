@@ -30,7 +30,7 @@ const SettingsBoard = ({
 
   return (
     <WaitingBoard onStartGame={() => onStartGame(chosenStyle, gameMode, picturesCount)}>
-      <Segment compact>
+      <Segment compact padded>
         <Form>
           <Header>{t("game.settings.style")}</Header>
           <Image.Group>

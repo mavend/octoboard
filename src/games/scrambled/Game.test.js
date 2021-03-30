@@ -10,6 +10,8 @@ import {
 import { INVALID_MOVE } from "boardgame.io/core";
 import { getTiles } from "./data/tiles";
 import { Client } from "boardgame.io/client";
+import { Local } from "boardgame.io/multiplayer";
+import { map, keys } from "lodash";
 
 const tiles = {
   A: { letter: "A", points: 1, id: 0 },
@@ -51,6 +53,7 @@ function setupG(opts) {
     players: {
       0: {
         tiles: DEFAULT_TILES_SET(),
+        tilesCount: 6,
       },
       1: {},
       2: {},
@@ -97,8 +100,32 @@ describe("scrambled game setup", () => {
     const { G, ctx } = client.store.getState();
 
     expect(G.secret.tiles).toHaveLength(100 - 3 * 7);
+    expect(G.tilesLeft).toStrictEqual(100 - 3 * 7);
+    expect(map(G.players, (player) => player.tilesCount)).toStrictEqual([7, 7, 7]);
     expect(G.players[0].tiles).toHaveLength(7);
     expect(ctx.activePlayers).toStrictEqual({ 0: "play", 1: "wait", 2: "wait" });
+  });
+
+  it("shouldn't return secret or other players tiles", () => {
+    expect.hasAssertions();
+
+    const spec = {
+      game: Scrambled,
+      multiplayer: Local(),
+    };
+
+    const p0 = Client({ ...spec, playerID: "0" });
+    const p1 = Client({ ...spec, playerID: "1" });
+
+    p0.start();
+    p1.start();
+    p0.moves.StartGame();
+
+    const playerState = p0.getState().G;
+
+    expect(keys(playerState.players[0])).toStrictEqual(["tiles", "tilesCount"]);
+    expect(keys(playerState.players[1])).toStrictEqual(["tilesCount"]);
+    expect(playerState.secret).toBeUndefined();
   });
 });
 
@@ -109,9 +136,25 @@ describe("scrambled StartGame", () => {
 
     expect(G.language).toBeUndefined();
 
-    StartGame(G, { random: { Shuffle: jest.fn() }, events: { setPhase: jest.fn() } }, "en");
+    StartGame(G, { random: { Shuffle: jest.fn((x) => x) }, events: { setPhase: jest.fn() } }, "en");
 
     expect(G.language).toStrictEqual("en");
+  });
+
+  it("should store game assist mode", () => {
+    expect.hasAssertions();
+    const G = setupG();
+
+    expect(G.assist).toBeUndefined();
+
+    StartGame(
+      G,
+      { random: { Shuffle: jest.fn((x) => x) }, events: { setPhase: jest.fn() } },
+      "en",
+      "full"
+    );
+
+    expect(G.assist).toStrictEqual("full");
   });
 
   it("should shuffle tiles matching language", () => {
@@ -133,7 +176,11 @@ describe("scrambled StartGame", () => {
     const G = setupG();
     const setPhaseEvent = jest.fn();
 
-    StartGame(G, { random: { Shuffle: jest.fn() }, events: { setPhase: setPhaseEvent } }, "en");
+    StartGame(
+      G,
+      { random: { Shuffle: jest.fn((x) => x) }, events: { setPhase: setPhaseEvent } },
+      "en"
+    );
 
     expect(setPhaseEvent).toHaveBeenCalledWith("play");
   });
@@ -412,6 +459,52 @@ describe("scrambled PlayTiles", () => {
 
     expect(G.pendingTiles).toStrictEqual([]);
     expect(result).toStrictEqual(INVALID_MOVE);
+  });
+
+  it("shouldn't allow cheating by changing letters on tiles", () => {
+    expect.hasAssertions();
+    const G = setupG();
+
+    // Tiles have fake letters
+    const playedTiles = [
+      { ...tiles.A, letter: "L", x: 1, y: 1 },
+      { ...tiles.B, letter: "O", x: 0, y: 1 },
+    ];
+
+    PlayTiles(
+      G,
+      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      { tiles: playedTiles }
+    );
+
+    expect(G.pendingTiles.map((tile) => tile.letter)).not.toContain("L", "O");
+    expect(G.pendingTiles).toStrictEqual([
+      { ...tiles.A, x: 1, y: 1 },
+      { ...tiles.B, x: 0, y: 1 },
+    ]);
+  });
+
+  it("shouldn't allow cheating by changing points on tiles", () => {
+    expect.hasAssertions();
+    const G = setupG();
+
+    // Tiles have fake letters
+    const playedTiles = [
+      { ...tiles.A, points: 99, x: 1, y: 1 },
+      { ...tiles.B, points: 98, x: 0, y: 1 },
+    ];
+
+    PlayTiles(
+      G,
+      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      { tiles: playedTiles }
+    );
+
+    expect(G.pendingTiles.map((tile) => tile.points)).not.toContain(99, 98);
+    expect(G.pendingTiles).toStrictEqual([
+      { ...tiles.A, x: 1, y: 1 },
+      { ...tiles.B, x: 0, y: 1 },
+    ]);
   });
 
   it("should call setActivePlayers event", () => {
@@ -821,7 +914,7 @@ describe("scrambled SwapTiles", () => {
     );
 
     expect(G.players["0"].tiles).not.toStrictEqual(expect.arrayContaining([tiles.A]));
-    expect(G.players["0"].tiles).toStrictEqual(expect.arrayContaining([tiles.B]));
+    expect(G.players["0"].tiles).toStrictEqual([tiles.B, tiles.C]);
     expect(G.secret.tiles).toStrictEqual(expect.arrayContaining([tiles.A]));
   });
 
@@ -851,7 +944,7 @@ describe("scrambled SwapTiles", () => {
     );
 
     expect(G.players["0"].tiles).not.toStrictEqual(expect.arrayContaining([tiles.A]));
-    expect(G.players["0"].tiles).toStrictEqual(expect.arrayContaining([tiles.B, tiles.C]));
+    expect(G.players["0"].tiles).toStrictEqual([tiles.B, tiles.C, tiles.D]);
     expect(G.secret.tiles).toStrictEqual(expect.arrayContaining([tiles.A]));
   });
 
@@ -883,6 +976,74 @@ describe("scrambled SwapTiles", () => {
 
     expect(G.players["0"].tiles).toStrictEqual([tiles.A, tiles.B]);
     expect(result).toStrictEqual(INVALID_MOVE);
+  });
+
+  it("shouldn't allow cheating by changing letters on returned tiles", () => {
+    expect.hasAssertions();
+    const G = setupG({
+      players: {
+        0: {
+          tiles: [tiles.A, tiles.B],
+        },
+      },
+      secret: {
+        tiles: [tiles.C, tiles.D, tiles.E, tiles.W, tiles.X, tiles.Y, tiles.Z, tiles.BLANK],
+      },
+    });
+
+    expect(G.secret.tiles.length).toBeGreaterThan(7);
+
+    // Tiles have faked letters
+    SwapTiles(
+      G,
+      {
+        currentPlayer: "0",
+        events: { endTurn: jest.fn() },
+        random: { Shuffle: jest.fn((arg) => arg) },
+      },
+      [
+        { ...tiles.A, letter: "L" },
+        { ...tiles.B, letter: "O" },
+      ]
+    );
+
+    expect(G.players["0"].tiles).toStrictEqual([tiles.C, tiles.D]);
+    expect(G.secret.tiles.map((tile) => tile.letter)).not.toContain("L", "O");
+    expect(G.secret.tiles).toStrictEqual(expect.arrayContaining([tiles.A, tiles.B]));
+  });
+
+  it("shouldn't allow cheating by changing points on returned tiles", () => {
+    expect.hasAssertions();
+    const G = setupG({
+      players: {
+        0: {
+          tiles: [tiles.A, tiles.B],
+        },
+      },
+      secret: {
+        tiles: [tiles.C, tiles.D, tiles.E, tiles.W, tiles.X, tiles.Y, tiles.Z, tiles.BLANK],
+      },
+    });
+
+    expect(G.secret.tiles.length).toBeGreaterThan(7);
+
+    // Tiles have faked letters
+    SwapTiles(
+      G,
+      {
+        currentPlayer: "0",
+        events: { endTurn: jest.fn() },
+        random: { Shuffle: jest.fn((arg) => arg) },
+      },
+      [
+        { ...tiles.A, points: 99 },
+        { ...tiles.B, points: 98 },
+      ]
+    );
+
+    expect(G.players["0"].tiles).toStrictEqual([tiles.C, tiles.D]);
+    expect(G.secret.tiles.map((tile) => tile.points)).not.toContain(99, 98);
+    expect(G.secret.tiles).toStrictEqual(expect.arrayContaining([tiles.A, tiles.B]));
   });
 
   it("should call endTurn event", () => {
@@ -1032,6 +1193,26 @@ describe("scrambled DistributeTilesToPlayers", () => {
     expect(G.secret.tiles).toStrictEqual([tiles.X, tiles.Y, tiles.Z]);
   });
 
+  it("should update tilesLeft value", () => {
+    expect.hasAssertions();
+    const G = setupG({ tilesLeft: 4 });
+
+    DistributeTilesToPlayers(G, { currentPlayer: "0", numPlayers: 1 });
+
+    expect(G.secret.tiles).toHaveLength(3);
+    expect(G.tilesLeft).toStrictEqual(3);
+  });
+
+  it("should update players tilesCount value", () => {
+    expect.hasAssertions();
+    const G = setupG();
+
+    DistributeTilesToPlayers(G, { currentPlayer: "0", numPlayers: 1 });
+
+    expect(G.players[0].tiles).toHaveLength(7);
+    expect(G.players[0].tilesCount).toStrictEqual(7);
+  });
+
   describe("when tiles run out", () => {
     it("should let player have less than 7 tiles", () => {
       expect.hasAssertions();
@@ -1047,6 +1228,23 @@ describe("scrambled DistributeTilesToPlayers", () => {
 
       expect(G.players[0].tiles).toStrictEqual([tiles.W, tiles.X, tiles.Y, tiles.Z]);
       expect(G.secret.tiles).toHaveLength(0);
+    });
+
+    it("should update players tilesCount value", () => {
+      expect.hasAssertions();
+      const G = setupG({
+        players: {
+          0: {
+            tiles: [],
+            tilesCount: 0,
+          },
+        },
+      });
+
+      DistributeTilesToPlayers(G, { currentPlayer: "0", numPlayers: 1 });
+
+      expect(G.players[0].tiles).toHaveLength(4);
+      expect(G.players[0].tilesCount).toStrictEqual(4);
     });
 
     it("should end game when one of the players ends up with 0 tiles", () => {

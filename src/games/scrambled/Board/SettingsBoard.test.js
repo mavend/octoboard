@@ -11,10 +11,9 @@ describe("scrambled SettingsBoard component", () => {
       component = renderer.create(
         <BoardGameContextMock overrideCtx={{ activePlayers: ["manage"] }}>
           <SettingsBoard
-            languages={[{ key: "en", value: "en", text: "English" }]}
-            language={"en"}
-            setLanguage={jest.fn()}
-            onStartGame={jest.fn()}
+            assists={["assist1", "assist2"]}
+            defaultAssist={"assist1"}
+            StartGame={jest.fn()}
           />
         </BoardGameContextMock>
       );
