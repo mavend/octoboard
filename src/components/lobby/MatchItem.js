@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
+import clsx from "clsx";
 import { Button, Icon } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
@@ -159,7 +159,7 @@ const MatchItem = React.memo(
     });
 
     return (
-      <div className={classNames(styles.matchItem, { [styles.detailsOpen]: open })}>
+      <div className={clsx(styles.matchItem, { [styles.detailsOpen]: open })}>
         <MatchRow
           game={game}
           match={match}

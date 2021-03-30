@@ -89,6 +89,14 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                 panel.tiles
               </span>
               <div
+                className="ui top right attached label"
+                onClick={[Function]}
+              >
+                game.info.tiles.left
+                : 
+                13
+              </div>
+              <div
                 style={
                   Object {
                     "display": "flex",
@@ -205,8 +213,10 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                   panel.actions.skip
                 </button>
                 <button
-                  className="ui green button"
+                  className="ui green disabled button"
+                  disabled={true}
                   onClick={[Function]}
+                  tabIndex={-1}
                 >
                   <i
                     aria-hidden="true"
@@ -750,6 +760,13 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                         role="list"
                       />
                     </div>
+                    <div
+                      className="text extra extra"
+                    >
+                      game.info.tiles.owned
+                      : 
+                      5
+                    </div>
                   </div>
                 </div>
               </div>
@@ -856,6 +873,13 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                         className="ui middle aligned list"
                         role="list"
                       />
+                    </div>
+                    <div
+                      className="text extra extra"
+                    >
+                      game.info.tiles.owned
+                      : 
+                      7
                     </div>
                   </div>
                 </div>

@@ -1,4 +1,4 @@
-import { canPlaceTile } from "./utils";
+import { canPlaceTile, prepareTiles } from "./utils";
 
 const tiles = {
   A: { letter: "A", points: 1, id: 0 },
@@ -32,6 +32,32 @@ function setupG(opts) {
 }
 
 describe("scrambled utils", () => {
+  describe("prepareTiles", () => {
+    it("should return null when some tiles have invalid id", () => {
+      expect.hasAssertions();
+
+      const result = prepareTiles([tiles.A, tiles.B], [tiles.B, tiles.C]);
+
+      expect(result).toBeNull();
+    });
+
+    it("should allow setting new attributes", () => {
+      expect.hasAssertions();
+
+      const result = prepareTiles([{ ...tiles.A, foo: "bar" }], [tiles.A, tiles.B]);
+
+      expect(result[0].foo).toStrictEqual("bar");
+    });
+
+    it("shouldn't allow changing existing attributes", () => {
+      expect.hasAssertions();
+
+      const result = prepareTiles([{ ...tiles.A, letter: "L" }], [tiles.A, tiles.B]);
+
+      expect(result[0].letter).toStrictEqual("A");
+    });
+  });
+
   describe("canPlaceTiles", () => {
     describe("when playing first word in a game", () => {
       it("shouldn't allow placing tile in neither row not column of a start tile", () => {

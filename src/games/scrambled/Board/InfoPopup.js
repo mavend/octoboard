@@ -4,6 +4,9 @@ import { useTranslation } from "react-i18next";
 import { Icon, Popup } from "semantic-ui-react";
 
 import { BONUSES } from "../config";
+import clsx from "clsx";
+
+import WordApprovalIcon from "../WordApprovalIcon";
 
 import styles from "./InfoPopup.module.scss";
 
@@ -69,12 +72,18 @@ const InfoPopup = ({ popupHandleRef, open, errors, newWords, specialBonus }) => 
           })
         ) : (
           <>
-            {newWords.map(({ letters, points, wordBonuses }, idx) => {
+            {newWords.map(({ letters, newTiles, points, wordBonuses }, idx) => {
               return (
                 <div key={idx} className={styles.letter_wrapper}>
-                  <Icon color="green" name="check circle" />
+                  <WordApprovalIcon checkedIn={["full"]} {...{ letters }} />
                   {letters.map((letter, jdx) => (
-                    <span key={`${idx}-${jdx}`} className={styles.letter}>
+                    <span
+                      key={`${idx}-${jdx}`}
+                      className={clsx({
+                        [styles.letter]: true,
+                        [styles.letter_new]: newTiles[jdx],
+                      })}
+                    >
                       {letter}
                     </span>
                   ))}

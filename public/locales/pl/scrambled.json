@@ -2,7 +2,13 @@
   "game": {
     "name": "Scrambled",
     "settings": {
-      "language": "Zestaw płytek"
+      "language": "Zestaw płytek",
+      "assist": "Pomoc z krótkimi słowami",
+      "assists": {
+        "none": "Wyłączona",
+        "approval": "Podczas zatwierdzania",
+        "full": "Zawsze dostępna"
+      }
     },
     "errors": {
       "invalid_player": "Nie możesz wykładać płytek podczas ruchu przeciwników",
@@ -19,6 +25,10 @@
     },
     "info": {
       "bonus": "Bonus",
+      "tiles": {
+        "left": "Pozostałe płytki",
+        "owned": "Posiadane płytki"
+      },
       "bonuses": {
         "word": "Słowo",
         "letter": "Litera"

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import moment from "moment";
-import classNames from "classnames";
+import clsx from "clsx";
 import { Segment, Comment, Icon, Input } from "semantic-ui-react";
 
 import Avatar from "components/user/Avatar";
@@ -55,7 +55,7 @@ export const Chat = React.memo(({ messages, onSend, onClose }) => {
         <Comment.Group>
           {messages.map(({ id, author, text, timestamp }) => (
             <Comment key={id}>
-              <div className={classNames("avatar", styles.avatar)}>
+              <div className={clsx("avatar", styles.avatar)}>
                 <Avatar uid={author.uid} small />
               </div>
               <Comment.Content>

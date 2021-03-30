@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
+import clsx from "clsx";
 import { Popup, Input, Icon } from "semantic-ui-react";
 
 import styles from "./FilterBox.module.scss";
@@ -145,7 +145,7 @@ GameLabel.propTypes = {
 };
 
 const LabelButton = ({ active, children, ...props }) => (
-  <button className={classNames(styles.label, { [styles.active]: active })} {...props}>
+  <button className={clsx(styles.label, { [styles.active]: active })} {...props}>
     {children}
   </button>
 );

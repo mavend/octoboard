@@ -14,6 +14,7 @@ describe("scrambled TilesPanel component", () => {
         onSwapTiles={jest.fn()}
         onSkipTurn={jest.fn()}
         onPlayTiles={jest.fn()}
+        tilesLeft={42}
       />
     );
     const tree = component.toJSON();

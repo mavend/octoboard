@@ -39,6 +39,10 @@ const GameBoard = () => {
   const currentLanguage = availableLaguages.find(({ key }) => key === G.language);
   const playedTiles = filterPlayedTiles(playerTiles);
   const canMakeMove = isCurrentPlayer && phase === "play" && stage === "play";
+  const canReturnTiles = playedTiles.length > 0;
+  const canPlayTiles = playedTiles.length > 0 && moveErrors.length === 0;
+  const canSwapTiles = G.tilesLeft >= 7;
+  const approvalPhase = phase === "play" && stage === "approve";
 
   const onReturnTiles = useCallback(() => {
     Object.values(playerTiles).forEach((tile) => {
@@ -149,9 +153,14 @@ const GameBoard = () => {
     [canBeClicked, playerTiles, selectedTile]
   );
 
-  const canReturnTiles = playedTiles.length > 0;
-  const canPlayTiles = moveErrors.length === 0;
-  const approvalPhase = phase === "play" && stage === "approve";
+  const extraPlayerContent = useCallback(
+    ({ tilesCount }) => (
+      <>
+        {t("game.info.tiles.owned")}: {tilesCount}
+      </>
+    ),
+    [t]
+  );
 
   return (
     <div ref={stickyRef}>
@@ -168,6 +177,7 @@ const GameBoard = () => {
                 disabled={!canMakeMove}
                 onSwapTiles={() => setSwapTilesModal(true)}
                 onSkipTurn={() => setSkipTurnModal(true)}
+                tilesLeft={G.tilesLeft}
                 {...{
                   playerTiles,
                   selectTile,
@@ -175,12 +185,14 @@ const GameBoard = () => {
                   onReturnTiles,
                   onPlayTiles,
                   canReturnTiles,
+                  canSwapTiles,
                   canPlayTiles,
                 }}
               />
             </Sticky>
           </div>
         }
+        extraPlayerContent={extraPlayerContent}
       >
         <InfoPopup
           open={popupOpen && !selectedBlankTile && !swapTilesModal}
@@ -199,7 +211,6 @@ const GameBoard = () => {
         {G.pendingTiles && approvalPhase && (
           <ApprovalModal
             newWords={newWords(G.board, G.pendingTiles)}
-            shorts={currentLanguage.shorts}
             onReject={() => Approve(false)}
             onApprove={() => Approve(true)}
           />

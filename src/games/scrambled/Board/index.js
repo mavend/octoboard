@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { Header } from "semantic-ui-react";
 
@@ -7,31 +7,19 @@ import GameLayout from "components/layout/GameLayout";
 
 import GameBoard from "./GameBoard";
 import SettingsBoard from "./SettingsBoard";
-import { availableLaguages } from "../data/tiles";
 import GameEndingBoard from "components/game/GameEndingBoard";
 
 const Board = () => {
   const {
+    G,
     ctx: { phase, gameover },
     players,
     player: { stage },
     moves: { StartGame },
   } = useBoardGame();
 
-  const { t, i18n } = useTranslation("scrambled");
+  const { t } = useTranslation("scrambled");
   const hasGameStarted = phase === "play";
-
-  const languages = availableLaguages.map((lang) => ({
-    key: lang.key,
-    value: lang.key,
-    text: lang.name,
-  }));
-  const defaultLanguage = languages.find(({ value }) => value === i18n.language) || languages[0];
-  const [language, setLanguage] = useState(defaultLanguage.value);
-
-  const onStartGame = useCallback(() => {
-    StartGame(language);
-  }, [StartGame, language]);
 
   if (hasGameStarted) {
     return <GameBoard />;
@@ -47,7 +35,7 @@ const Board = () => {
         </Header>
       }
     >
-      <SettingsBoard {...{ languages, language, setLanguage, onStartGame }} />
+      <SettingsBoard assists={G.assists} defaultAssist={G.assist} {...{ StartGame }} />
     </GameLayout>
   ) : (
     <GameLayout gameName={t("game.name")}>

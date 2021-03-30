@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useMemo } from "react";
-import classNames from "classnames";
+import clsx from "clsx";
 
 import styles from "./StickyChat.module.css";
 import { Chat } from "./Chat";
@@ -71,11 +71,11 @@ export const StickyChat = React.memo(() => {
   return (
     <div className={styles.wrapper}>
       <span
-        className={classNames(styles.triggerButton, { [styles.unread]: unread > 0 })}
+        className={clsx(styles.triggerButton, { [styles.unread]: unread > 0 })}
         data-unread={unread}
         onClick={toggleChat}
       ></span>
-      <div className={classNames(styles.popupChat, { [styles.collapsed]: !open })}>
+      <div className={clsx(styles.popupChat, { [styles.collapsed]: !open })}>
         <Chat messages={messages} onSend={handleSend} onClose={() => setOpen(false)} />
       </div>
     </div>

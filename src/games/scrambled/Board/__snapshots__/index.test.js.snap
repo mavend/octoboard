@@ -89,6 +89,14 @@ exports[`scrambled Board component renders correctly 1`] = `
                 panel.tiles
               </span>
               <div
+                className="ui top right attached label"
+                onClick={[Function]}
+              >
+                game.info.tiles.left
+                : 
+                13
+              </div>
+              <div
                 style={
                   Object {
                     "display": "flex",

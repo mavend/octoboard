@@ -8,6 +8,12 @@
   .letter {
     margin: 3px;
     font-size: 18px;
+    color: #888888;
+
+    &_new {
+      font-weight: 600;
+      color: #000000;
+    }
   }
 }
 

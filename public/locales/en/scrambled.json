@@ -2,7 +2,13 @@
   "game": {
     "name": "Scrambled",
     "settings": {
-      "language": "Tiles set"
+      "language": "Tiles set",
+      "assist": "Short words assist",
+      "assists": {
+        "none": "Disabled",
+        "approval": "During approval",
+        "full": "Always enabled"
+      }
     },
     "errors": {
       "invalid_player": "You can't play tiles during your opponents turn",
@@ -19,6 +25,10 @@
     },
     "info": {
       "bonus": "Bonus",
+      "tiles": {
+        "left": "Tiles left",
+        "owned": "Owned tiles"
+      },
       "bonuses": {
         "word": "Word",
         "letter": "Letter"

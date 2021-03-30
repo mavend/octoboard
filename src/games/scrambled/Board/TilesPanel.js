@@ -16,7 +16,9 @@ const propTypes = {
   onSkipTurn: PropTypes.func.isRequired,
   onPlayTiles: PropTypes.func.isRequired,
   canReturnTiles: PropTypes.bool,
+  canSwapTiles: PropTypes.bool,
   canPlayTiles: PropTypes.bool,
+  tilesLeft: PropTypes.number,
 };
 
 const TilesPanel = ({
@@ -30,13 +32,20 @@ const TilesPanel = ({
   onSkipTurn,
   onPlayTiles,
   canReturnTiles,
+  canSwapTiles,
   canPlayTiles,
+  tilesLeft,
 }) => (
   <Segment>
     <Label as="span" color="green" ribbon>
       <Icon name="star" />
       {t("panel.tiles")}
     </Label>
+    {tilesLeft && (
+      <Label attached="top right">
+        {t("game.info.tiles.left")}: {tilesLeft}
+      </Label>
+    )}
     <div style={{ display: "flex", paddingTop: 10 }}>
       {playerTiles &&
         playerTiles.map((tile) => (
@@ -54,7 +63,7 @@ const TilesPanel = ({
         <Icon name="undo" />
         {t("panel.actions.return")}
       </Button>
-      <Button color="orange" onClick={onSwapTiles} disabled={disabled}>
+      <Button color="orange" onClick={onSwapTiles} disabled={disabled || !canSwapTiles}>
         <Icon name="refresh" />
         {t("panel.actions.swap")}
       </Button>

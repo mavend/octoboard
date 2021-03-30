@@ -54,16 +54,21 @@ const BoardGameContextMock = ({ children, overrideG, overrideCtx }) => {
               { letter: "Ż", points: 9, id: 3 },
               { letter: "Ó", points: 7, id: 4 },
             ],
+            tilesCount: 5,
             stage: select("stage", ["play", "wait"], "play", ref),
           },
-          1: {},
+          1: { tilesCount: 7 },
         },
+        tilesLeft: 13,
+        assists: ["none", "approval", "full"],
+        assist: select("assist", ["none", "approval", "full"], "approval", ref),
         ...overrideG,
       }}
       moves={{
         PlayTiles: action("PlayTiles"),
         SwapTiles: action("SwapTiles"),
         SkipTurn: action("SkipTurn"),
+        StartGame: action("StartGame"),
       }}
       ctx={{
         activePlayers: [],
