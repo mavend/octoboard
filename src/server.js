@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === "production") {
   config.credential = admin.credential.applicationDefault();
 } else {
   config.projectId = "octoboard-development";
-  process.env.FIRESTORE_EMULATOR_HOST = "localhost:8080";
+  process.env.FIRESTORE_EMULATOR_HOST = "localhost:11180";
 }
 
 const db = new Firestore({ config });

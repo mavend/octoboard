@@ -1,4 +1,4 @@
-export const API_ROOT = process.env.REACT_APP_API_ROOT || "http://localhost:8000";
+export const API_ROOT = process.env.REACT_APP_API_ROOT || "http://localhost:11080";
 
 export const matchesUrl = (gameName) => `${API_ROOT}/games/${gameName}`;
 export const createGameUrl = (gameName) => `${API_ROOT}/games/${gameName}/create`;
