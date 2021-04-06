@@ -15,7 +15,7 @@ const settings = {
 };
 
 if (process.env.NODE_ENV === "development") {
-  settings.host = "localhost:8080";
+  settings.host = "localhost:11180";
   settings.ssl = false;
 }
 

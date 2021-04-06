@@ -1,5 +1,4 @@
-[![Build status](https://github.com/mavend/octoboard/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/mavend/octoboard/actions/workflows/ci.yaml)
-[![Deploy status](https://github.com/mavend/octoboard/actions/workflows/deploy-master.yml/badge.svg)](https://octo-board.web.app/)
+[![Deploy status](https://github.com/mavend/octoboard/actions/workflows/master.yml/badge.svg?branch=master)](https://octo-board.web.app/)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 # Octoboard
@@ -16,6 +15,19 @@ Run development stack (react client, node server, firebase emulators, storybook)
 
 Setting `debug=true` in URL query will show debug overlay.
 
+### Ports
+
+To make local development easier the services are started on the following custom ports (this helps avoid conflicts with other services running locally):
+| Service | Port |
+| --------- | ----- |
+| Server | 11080 |
+| Client | 11030 |
+| Storybook | 11090 |
+| Firestore | 11180 |
+| Auth | 11190 |
+| Hosting | 11150 |
+| Emulators | 11140 |
+
 ### Running individual services
 
 Sometimes you may want to run parts of application on their own. You can do this like this:
@@ -28,4 +40,5 @@ Sometimes you may want to run parts of application on their own. You can do this
 ## Note
 
 This project uses the [boardgame.io](https://boardgame.io) framework which is open source game engine for turn-based games.
+
 Licensed under [GNU AGPLv3](https://choosealicense.com/licenses/agpl-3.0/).

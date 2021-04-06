@@ -49,10 +49,10 @@
     "storybook-ci": "start-storybook --ci --smoke-test --quiet",
     "test-ci": "react-scripts test --coverage --ci --coverageReporters=lcov",
     "build-storybook": "build-storybook -s public",
-    "start:server": "NODE_ENV=development nodemon -r esm src/server.js",
-    "start:client": "react-scripts start",
+    "start:server": "PORT=11080 NODE_ENV=development nodemon -r esm src/server.js",
+    "start:client": "PORT=11030 react-scripts start",
     "start:firebase": "firebase emulators:start --import=./emulators.backup",
-    "start:storybook": "start-storybook -p 9009 -s public --quiet",
+    "start:storybook": "start-storybook -p 11090 -s public --quiet",
     "prepare": "if test \"$NODE_ENV\" != production ; then husky install ; fi"
   },
   "eslintConfig": {
