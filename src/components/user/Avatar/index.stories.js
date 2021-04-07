@@ -1,5 +1,5 @@
 import React from "react";
-import { text, number, boolean } from "@storybook/addon-knobs";
+import { text, boolean } from "@storybook/addon-knobs";
 import { Card } from "semantic-ui-react";
 import Avatar from "./index";
 
@@ -22,23 +22,5 @@ export const NicePreview = () => {
         <Card.Header>{uid}</Card.Header>
       </Card.Content>
     </Card>
-  );
-};
-
-export const WithOverrides = () => {
-  const size = number("Size", 200);
-  return (
-    <Avatar
-      uid={text("UID", "some-user-uid")}
-      empty={boolean("Empty?", false)}
-      color={number("Custom color", 0)}
-      bodyStyle={number("Custom body Style", 0)}
-      body={number("Custom body", 0)}
-      eyes={number("Custom eyes", 0)}
-      glasses={number("Custom glasses", 0)}
-      features={number("Custom features", 0)}
-      border={number("Custom border", 0)}
-      style={{ width: size, height: size }}
-    />
   );
 };
