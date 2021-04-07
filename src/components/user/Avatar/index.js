@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { OctoHead, Empty, AvatarProps } from "@mavend/octoheads";
+import { OctoHead, Empty } from "@mavend/octoheads";
 
 const propTypes = {
   uid: PropTypes.string,
   small: PropTypes.bool,
   style: PropTypes.object,
   empty: PropTypes.bool,
-  octoHeadProps: PropTypes.InferProps(AvatarProps),
+  octoHeadProps: PropTypes.object,
 };
 
 const Avatar = ({ uid, small, empty, octoHeadProps, style, ...props }) => {
