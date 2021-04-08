@@ -10,7 +10,7 @@
     "@sentry/tracing": "^6.2.4",
     "bgio-firebase": "^0.3.1",
     "bgio-storage-cache": "^0.3.0",
-    "boardgame.io": "^0.43.3",
+    "boardgame.io": "^0.44.0",
     "clsx": "^1.1.1",
     "concurrently": "^6.0.0",
     "esm": "^3.2.25",
