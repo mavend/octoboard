@@ -7,3 +7,8 @@ updates:
       day: "thursday"
     ignore:
       - dependency-name: "*storybook*"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "thursday"
