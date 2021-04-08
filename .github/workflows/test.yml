@@ -1,0 +1,55 @@
+name: Test octoboard
+
+on:
+  push:
+    branches: [master]
+    tags:
+      - "!*" # Do not execute on tags
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - run: npm ci
+      - run: npm run prettier-ci
+      - run: npm run lint
+  storybook:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - run: npm ci
+      - run: npm run storybook-ci
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - run: npm ci
+      - name: Run client in background
+        run: npm run start:client &
+      - name: Run Firebase in background
+        run: npm run start:firebase &
+      - name: Run server in background
+        run: npm run start:server &
+      - name: Test
+        run: npm run test-ci
+      - name: Publish code coverage
+        # https://github.blog/changelog/2021-02-19-github-actions-workflows-triggered-by-dependabot-prs-will-run-with-read-only-permissions/
+        # PRs opened by dependabot don't have access to secrets, so this step will fail
+        # We just skip it since it's not that important there - only run it if we have access to secrets
+        if: ${{ env.CC_TEST_REPORTER_ID != null }}
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}

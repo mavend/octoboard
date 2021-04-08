@@ -7,45 +7,9 @@ on:
       - "!*" # Do not execute on tags
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "14"
-      - run: npm ci
-      - run: npm run prettier-ci
-      - run: npm run lint
-  storybook:
-    runs-on: ubuntu-latest
-    needs: lint
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "14"
-      - run: npm ci
-      - run: npm run storybook-ci
-  test:
-    runs-on: ubuntu-latest
-    needs: lint
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "14"
-      - run: npm ci
-      - name: Test & publish code coverage
-        uses: paambaati/codeclimate-action@v2.7.5
-        env:
-          CC_TEST_REPORTER_ID: "${{ secrets.CC_TEST_REPORTER_ID }}"
-        with:
-          coverageCommand: npm run test-ci
   deploy_server:
     name: Deploy server
     runs-on: ubuntu-latest
-    needs: [test, storybook]
     environment:
       name: octoboard-server
       url: https://octo-board.appspot.com/
