@@ -156,6 +156,48 @@ exports[`scrambled SettingsBoard component renders correctly 1`] = `
           </div>
         </div>
       </div>
+      <div
+        className="ui header"
+      >
+        game.settings.opponent_preview
+        <div
+          className="sub header"
+          style={
+            Object {
+              "maxWidth": 260,
+            }
+          }
+        >
+          game.settings.opponent_preview_details
+        </div>
+      </div>
+      <div
+        className="field"
+      >
+        <div
+          className="field"
+        >
+          <div
+            className="ui checked toggle checkbox"
+            onChange={[Function]}
+            onClick={[Function]}
+            onMouseDown={[Function]}
+            onMouseUp={[Function]}
+          >
+            <input
+              aria-describedby={null}
+              checked={true}
+              className="hidden"
+              readOnly={true}
+              tabIndex={0}
+              type="checkbox"
+            />
+            <label>
+              game.settings.opponent_previews.true
+            </label>
+          </div>
+        </div>
+      </div>
     </form>
   </div>
   <button

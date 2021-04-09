@@ -8,6 +8,12 @@
         "none": "Wyłączona",
         "approval": "Podczas zatwierdzania",
         "full": "Zawsze dostępna"
+      },
+      "opponent_preview": "Podgląd ruchów",
+      "opponent_preview_details": "Przeciwnicy będą widzieć puste płytki w miejscu w którym inny gracz układa słowo",
+      "opponent_previews": {
+        "true": "Aktywny",
+        "false": "Nieaktywny"
       }
     },
     "errors": {

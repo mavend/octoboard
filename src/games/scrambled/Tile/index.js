@@ -14,8 +14,9 @@ const propTypes = {
   highlighted: PropTypes.bool,
   disabled: PropTypes.bool,
   used: PropTypes.bool,
-  onClick: PropTypes.func,
   bonus: PropTypes.object,
+  preview: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 const Tile = ({
   letter,
@@ -27,6 +28,7 @@ const Tile = ({
   disabled,
   used,
   bonus,
+  preview,
   onClick,
 }) => (
   <div
@@ -41,8 +43,8 @@ const Tile = ({
       [styles.tile_disabled]: disabled,
     })}
   >
-    {letter ? (
-      <div className={styles.letter}>{letter}</div>
+    {letter || preview ? (
+      <div className={styles.letter}>{preview ? "?" : letter}</div>
     ) : (
       <div className={clsx(styles.letter, styles.letter_replacement)}>{replacement}</div>
     )}
@@ -54,7 +56,7 @@ const Tile = ({
         }}
       ></div>
     )}
-    {bonus && bonus.type === "letter" ? (
+    {!preview && bonus && bonus.type === "letter" ? (
       <div
         className={styles.points}
         style={{
