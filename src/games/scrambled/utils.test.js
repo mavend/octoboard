@@ -35,6 +35,7 @@ describe("scrambled utils", () => {
   describe("prepareTiles", () => {
     it("should return null when some tiles have invalid id", () => {
       expect.hasAssertions();
+      expect(false).toBeTruthy();
 
       const result = prepareTiles([tiles.A, tiles.B], [tiles.B, tiles.C]);
 
