@@ -7,7 +7,7 @@
     "@mavend/octoheads": "^0.2.2",
     "@sentry/node": "^6.2.4",
     "@sentry/react": "^6.2.4",
-    "@sentry/tracing": "^6.2.4",
+    "@sentry/tracing": "^6.2.5",
     "bgio-firebase": "^0.3.1",
     "bgio-storage-cache": "^0.3.0",
     "boardgame.io": "^0.44.0",
