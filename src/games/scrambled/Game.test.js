@@ -141,7 +141,7 @@ describe("scrambled StartGame", () => {
     expect(G.language).toStrictEqual("en");
   });
 
-  it("should store game assist mode", () => {
+  it("should store game assist mode and preview state", () => {
     expect.hasAssertions();
     const G = setupG();
 
@@ -151,10 +151,12 @@ describe("scrambled StartGame", () => {
       G,
       { random: { Shuffle: jest.fn((x) => x) }, events: { setPhase: jest.fn() } },
       "en",
-      "full"
+      "full",
+      true
     );
 
     expect(G.assist).toStrictEqual("full");
+    expect(G.preview).toStrictEqual(true);
   });
 
   it("should shuffle tiles matching language", () => {

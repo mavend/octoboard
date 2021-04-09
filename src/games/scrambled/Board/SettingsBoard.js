@@ -20,11 +20,12 @@ const SettingsBoard = ({ assists, defaultAssist, StartGame }) => {
   }));
   const defaultLanguage = languages.find(({ value }) => value === i18n.language) || languages[0];
   const [gameAssist, setGameAssist] = useState(defaultAssist);
+  const [opponentPreview, setOpponentPreview] = useState(true);
   const [language, setLanguage] = useState(defaultLanguage.value);
 
   const onStartGame = useCallback(() => {
-    StartGame(language, gameAssist);
-  }, [StartGame, gameAssist, language]);
+    StartGame(language, gameAssist, opponentPreview);
+  }, [StartGame, gameAssist, language, opponentPreview]);
 
   return (
     <WaitingBoard onStartGame={onStartGame}>
@@ -48,6 +49,20 @@ const SettingsBoard = ({ assists, defaultAssist, StartGame }) => {
               />
             </Form.Field>
           ))}
+          <Header>
+            {t("game.settings.opponent_preview")}
+            <Header.Subheader style={{ maxWidth: 260 }}>
+              {t("game.settings.opponent_preview_details")}
+            </Header.Subheader>
+          </Header>
+          <Form.Field>
+            <Form.Checkbox
+              toggle
+              label={t(`game.settings.opponent_previews.${opponentPreview}`)}
+              checked={opponentPreview}
+              onChange={() => setOpponentPreview(!opponentPreview)}
+            />
+          </Form.Field>
         </Form>
       </Segment>
     </WaitingBoard>

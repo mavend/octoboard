@@ -31,6 +31,7 @@ function setupGame(ctx, setupData) {
     tilesLeft: 0,
     assists: assists,
     assist: assists[1],
+    preview: true,
   };
 
   for (let i = 0; i < ctx.numPlayers; i++) {
@@ -43,9 +44,10 @@ function setupGame(ctx, setupData) {
   return G;
 }
 
-export function StartGame(G, ctx, language, assist) {
+export function StartGame(G, ctx, language, assist, preview) {
   G.language = language;
   G.assist = assist;
+  G.preview = preview;
   G.secret.tiles = ctx.random.Shuffle(getTiles(language));
   G.tilesLeft = G.secret.tiles.length;
   ctx.events.setPhase("play");

@@ -8,7 +8,7 @@ import GameLayout from "components/layout/GameLayout";
 import Grid from "./Grid";
 import TilesPanel from "./TilesPanel";
 import InfoPopup from "./InfoPopup";
-import { remove, orderBy } from "lodash";
+import { remove, orderBy, pick } from "lodash";
 import { availableLaguages } from "../data/tiles";
 import { tilesPlacementErrors, newWords, filterPlayedTiles, canPlaceTile } from "../utils";
 import ApprovalModal from "../Modals/ApprovalModal";
@@ -21,6 +21,8 @@ const GameBoard = () => {
     ctx: { phase, currentPlayer },
     player: { id, tiles, stage, isCurrentPlayer },
     moves: { PlayTiles, SwapTiles, SkipTurn, Approve },
+    chatMessages,
+    sendChatMessage,
   } = useBoardGame();
 
   const { t } = useTranslation("scrambled");
@@ -33,6 +35,7 @@ const GameBoard = () => {
   const [skipTurnModal, setSkipTurnModal] = useState(false);
   const [selectedForSwap, setSelectedForSwap] = useState([]);
   const [popupOpen, setPopupOpen] = useState(false);
+  const [previewTiles, setPreviewTiles] = useState(null);
   const popupHandleRef = useRef();
   const stickyRef = useRef();
 
@@ -95,6 +98,15 @@ const GameBoard = () => {
     setMoveErrors(tilesPlacementErrors(G, currentPlayer, playedTiles));
   }, [G, currentPlayer, id, playerTiles]);
 
+  useEffect(() => {
+    if (canMakeMove || chatMessages.length <= 0) return;
+    const lastMessage = chatMessages[chatMessages.length - 1].payload;
+
+    if (lastMessage.type && lastMessage.type.startsWith("MovePreview")) {
+      setPreviewTiles(lastMessage.data.map((el) => ({ preview: true, ...el })));
+    }
+  }, [canMakeMove, chatMessages]);
+
   const selectTile = useCallback(
     (tile) => {
       if (!canMakeMove) return;
@@ -119,6 +131,7 @@ const GameBoard = () => {
   const clickBoard = useCallback(
     (x, y) => {
       if (!canBeClicked(x, y)) return;
+      setPreviewTiles(null);
 
       // Remove a tile that's on x,y
       const currentIdx = playerTiles.findIndex((tile) => tile.x === x && tile.y === y);
@@ -149,8 +162,14 @@ const GameBoard = () => {
       if (playedTiles.length > 0)
         orderBy(playedTiles, ["y", "x"], ["asc", "asc"])[0].popupRef = popupHandleRef;
       setPopupOpen(playedTiles.length > 0);
+
+      if (G.preview)
+        sendChatMessage({
+          type: "MovePreview",
+          data: playedTiles.map((el) => pick(el, ["x", "y"])),
+        });
     },
-    [canBeClicked, playerTiles, selectedTile]
+    [G.preview, canBeClicked, playerTiles, selectedTile, sendChatMessage]
   );
 
   const extraPlayerContent = useCallback(
@@ -205,7 +224,7 @@ const GameBoard = () => {
           board={G.board}
           clickable={canBeClicked}
           handleFieldClick={clickBoard}
-          playerTiles={stage === "wait_for_approval" ? G.pendingTiles : playerTiles}
+          playerTiles={stage === "wait_for_approval" ? G.pendingTiles : previewTiles || playerTiles}
           selectionEnabled={selectedTile !== null}
         />
         {G.pendingTiles && approvalPhase && (

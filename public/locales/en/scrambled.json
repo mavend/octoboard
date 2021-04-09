@@ -8,6 +8,12 @@
         "none": "Disabled",
         "approval": "During approval",
         "full": "Always enabled"
+      },
+      "opponent_preview": "Move preview",
+      "opponent_preview_details": "Opponents will see blank placeholder tiles being placed to show other players moves",
+      "opponent_previews": {
+        "true": "Enabled",
+        "false": "Disabled"
       }
     },
     "errors": {

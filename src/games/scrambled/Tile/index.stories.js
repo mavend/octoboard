@@ -19,6 +19,7 @@ export const Default = () => (
     highlighted={boolean("Highlighted?", false)}
     disabled={boolean("Disabled?", false)}
     onClick={action("onClick")}
+    preview={boolean("Preview", false)}
     bonus={select("Bonus", {
       Nothing: null,
       "Letter x3": { type: "letter", multiply: 3 },
