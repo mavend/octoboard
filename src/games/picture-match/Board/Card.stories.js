@@ -38,7 +38,7 @@ export const Default = () => (
   />
 );
 
-export const LayoutDesignSmall = () => {
+export const DevOnlyLayoutDesignSmall = () => {
   const customLayout = [
     pictureKnobs("0"),
     pictureKnobs("1"),
@@ -65,7 +65,7 @@ export const LayoutDesignSmall = () => {
   );
 };
 
-export const LayoutDesignMedium = () => {
+export const DevOnlyLayoutDesignMedium = () => {
   const customLayout = [
     pictureKnobs("0"),
     pictureKnobs("1"),

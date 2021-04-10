@@ -1,0 +1,138 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Splendid/GameCard Default 1`] = `
+<div
+  className="ui card card cardYellow highlighted"
+  onClick={[Function]}
+>
+  <div
+    className="content topContent"
+  >
+    <i
+      aria-hidden="true"
+      className="leaf icon icon"
+      onClick={[Function]}
+      style={
+        Object {
+          "color": "#37E055",
+        }
+      }
+    />
+    <div
+      className="pointsBadge"
+      style={
+        Object {
+          "backgroundColor": "#37E055",
+        }
+      }
+    >
+      1
+    </div>
+  </div>
+  <div
+    className="blurring dimmable"
+  >
+    <div
+      className="imageBox"
+    >
+      <img
+        className="image"
+        src="/images/games/splendid/cards/eco.png"
+      />
+    </div>
+    <div
+      className="ui inverted dimmer"
+      onClick={[Function]}
+    >
+      <div
+        className="content"
+      >
+        <div
+          className="actions"
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="content bottomContent"
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <div
+      className="token"
+      style={
+        Object {
+          "backgroundColor": "#00AEE0",
+        }
+      }
+    >
+      1
+      <div
+        className="iconBadge"
+      >
+        <i
+          aria-hidden="true"
+          className="tint icon icon"
+          onClick={[Function]}
+          style={
+            Object {
+              "color": "#00AEE0",
+            }
+          }
+        />
+      </div>
+    </div>
+    <div
+      className="token"
+      style={
+        Object {
+          "backgroundColor": "#37E055",
+        }
+      }
+    >
+      1
+      <div
+        className="iconBadge"
+      >
+        <i
+          aria-hidden="true"
+          className="leaf icon icon"
+          onClick={[Function]}
+          style={
+            Object {
+              "color": "#37E055",
+            }
+          }
+        />
+      </div>
+    </div>
+    <div
+      className="token"
+      style={
+        Object {
+          "backgroundColor": "#FFB400",
+        }
+      }
+    >
+      1
+      <div
+        className="iconBadge"
+      >
+        <i
+          aria-hidden="true"
+          className="book icon icon"
+          onClick={[Function]}
+          style={
+            Object {
+              "color": "#FFB400",
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -3,7 +3,8 @@ import { string, arrayOf, shape, object, number, bool, oneOfType } from "prop-ty
 export const MatchType = shape({
   matchID: string.isRequired,
   gameName: string.isRequired,
-  players: arrayOf(shape({ id: number.isRequired, name: string })).isRequired,
+  players: arrayOf(oneOfType([shape({ id: number.isRequired, name: string }), shape({})]))
+    .isRequired,
   setupData: object,
 });
 

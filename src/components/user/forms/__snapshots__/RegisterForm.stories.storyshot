@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots User/Forms/RegisterForm Default 1`] = `
+<form
+  className="ui form"
+  onSubmit={[Function]}
+>
+  <div
+    className="ui error message"
+  />
+  <div
+    className="field"
+  >
+    <label>
+      form.nickname
+    </label>
+    <div
+      className="ui input"
+    >
+      <input
+        aria-describedby={null}
+        autoFocus={true}
+        name="form.nickname"
+        onChange={[Function]}
+        placeholder="form.nickname"
+        type="text"
+        value="Whatever"
+      />
+    </div>
+  </div>
+  <div
+    className="field"
+  >
+    <label>
+      form.email
+    </label>
+    <div
+      className="ui input"
+    >
+      <input
+        aria-describedby={null}
+        autoComplete="username"
+        maxLength="24"
+        name="form.email"
+        onChange={[Function]}
+        placeholder="form.email"
+        type="email"
+        value="qwe@qwe.qwe"
+      />
+    </div>
+  </div>
+  <div
+    className="field"
+  >
+    <label>
+      form.password
+    </label>
+    <div
+      className="ui input"
+    >
+      <input
+        aria-describedby={null}
+        autoComplete="new-password"
+        name="form.password"
+        onChange={[Function]}
+        placeholder="form.password"
+        type="password"
+        value="qweqweqwe"
+      />
+    </div>
+  </div>
+  <div
+    className="fields"
+  >
+    <div
+      className="field"
+    >
+      <button
+        aria-describedby={null}
+        className="ui green button"
+        onClick={[Function]}
+      >
+        actions.register
+      </button>
+    </div>
+  </div>
+</form>
+`;

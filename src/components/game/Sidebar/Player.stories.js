@@ -15,6 +15,7 @@ export const Empty = () => <Player />;
 export const Default = () => (
   <Player
     player={{
+      id: 0,
       uid: "user-1",
       isConnected: boolean("Connected", true),
       points: number("Points", 12),
@@ -36,6 +37,7 @@ export const Default = () => (
 export const WithAdditionalContent = () => (
   <Player
     player={{
+      id: 0,
       uid: "user-1",
       isConnected: boolean("Connected", true),
       points: number("Points", 12),

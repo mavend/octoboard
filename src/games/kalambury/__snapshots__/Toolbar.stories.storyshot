@@ -1,0 +1,452 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Kalambury/DrawArea/Toolbar Default 1`] = `
+Array [
+  <div
+    className="fresnel-container fresnel-greaterThanOrEqual-wide_mobile "
+    suppressHydrationWarning={false}
+  >
+    <div
+      className="ui small borderless menu"
+    >
+      <a
+        className="active item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#1b1c1d",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#db2828",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#ff8c21",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#ffd52b",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#21ba45",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#2185d0",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#a333c8",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#eb87bf",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#f4d0b5",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#a5673f",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <i
+          aria-hidden="true"
+          className="eraser fitted icon"
+          onClick={[Function]}
+        />
+      </a>
+      <div
+        className="right menu"
+      >
+        <a
+          className="item"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <i
+            aria-hidden="true"
+            className="undo fitted icon"
+            onClick={[Function]}
+          />
+        </a>
+        <a
+          className="item"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <i
+            aria-hidden="true"
+            className="red trash alternate outline fitted icon"
+            onClick={[Function]}
+          />
+        </a>
+        <a
+          className="item"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <i
+            aria-hidden="true"
+            className="exchange fitted icon"
+            onClick={[Function]}
+          />
+        </a>
+        <a
+          className="item"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <i
+            aria-hidden="true"
+            className="red flag fitted icon"
+            onClick={[Function]}
+          />
+        </a>
+      </div>
+    </div>
+  </div>,
+  <div
+    className="fresnel-container fresnel-lessThan-wide_mobile "
+    suppressHydrationWarning={false}
+  >
+    <div
+      className="ui small three item menu"
+    >
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <i
+          aria-hidden="true"
+          className="red trash alternate outline fitted icon"
+          onClick={[Function]}
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <i
+          aria-hidden="true"
+          className="exchange fitted icon"
+          onClick={[Function]}
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <i
+          aria-hidden="true"
+          className="red flag fitted icon"
+          onClick={[Function]}
+        />
+      </a>
+    </div>
+    <div
+      className="ui small top attached six item menu"
+    >
+      <a
+        className="active item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#1b1c1d",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#db2828",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#ff8c21",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#ffd52b",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#21ba45",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#2185d0",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+    </div>
+    <div
+      className="ui small bottom attached six item menu"
+    >
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#a333c8",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#eb87bf",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#f4d0b5",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#a5673f",
+              "boxSizing": "border-box",
+              "height": "15px",
+              "width": "15px",
+            }
+          }
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <i
+          aria-hidden="true"
+          className="eraser fitted icon"
+          onClick={[Function]}
+        />
+      </a>
+      <a
+        className="item"
+        onClick={[Function]}
+      >
+        <i
+          aria-hidden="true"
+          className="undo fitted icon"
+          onClick={[Function]}
+        />
+      </a>
+    </div>
+  </div>,
+]
+`;

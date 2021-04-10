@@ -2,92 +2,66 @@
 
 exports[`scrambled SettingsBoard component renders correctly 1`] = `
 <div
-  className="ui basic center aligned segment"
-  style={
-    Object {
-      "alignItems": "center",
-      "display": "flex",
-      "flexDirection": "column",
-      "justifyContent": "center",
-    }
-  }
+  class="ui basic center aligned segment"
+  style="display: flex; flex-direction: column; justify-content: center; align-items: center;"
 >
   <div
-    className="ui compact padded segment"
+    class="ui compact padded segment"
   >
     <form
-      className="ui form"
-      onSubmit={[Function]}
+      class="ui form"
     >
       <div
-        className="ui header"
+        class="ui header"
       >
         game.settings.language
       </div>
       <div
-        className="field"
+        class="field"
       >
         <div
-          aria-describedby={null}
-          aria-expanded={false}
-          className="ui selection dropdown"
-          onBlur={[Function]}
-          onChange={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onMouseDown={[Function]}
+          aria-expanded="false"
+          class="ui selection dropdown"
           role="listbox"
-          tabIndex={0}
+          tabindex="0"
         >
           <div
-            aria-atomic={true}
+            aria-atomic="true"
             aria-live="polite"
-            className="divider text"
+            class="divider text"
             role="alert"
           >
-            polski
+            English
           </div>
           <i
             aria-hidden="true"
-            className="dropdown icon"
-            onClick={[Function]}
+            class="dropdown icon"
           />
           <div
-            className="menu transition"
+            class="menu transition"
           >
             <div
-              aria-checked={true}
-              aria-selected={true}
-              className="active selected item"
-              onClick={[Function]}
+              aria-checked="false"
+              aria-selected="false"
+              class="item"
               role="option"
-              style={
-                Object {
-                  "pointerEvents": "all",
-                }
-              }
+              style="pointer-events: all;"
             >
               <span
-                className="text"
+                class="text"
               >
                 polski
               </span>
             </div>
             <div
-              aria-checked={false}
-              aria-selected={false}
-              className="item"
-              onClick={[Function]}
+              aria-checked="true"
+              aria-selected="true"
+              class="active selected item"
               role="option"
-              style={
-                Object {
-                  "pointerEvents": "all",
-                }
-              }
+              style="pointer-events: all;"
             >
               <span
-                className="text"
+                class="text"
               >
                 English
               </span>
@@ -96,29 +70,24 @@ exports[`scrambled SettingsBoard component renders correctly 1`] = `
         </div>
       </div>
       <div
-        className="ui header"
+        class="ui header"
       >
         game.settings.assist
       </div>
       <div
-        className="field"
+        class="field"
       >
         <div
-          className="field"
+          class="field"
         >
           <div
-            className="ui checked toggle checkbox"
-            onChange={[Function]}
-            onClick={[Function]}
-            onMouseDown={[Function]}
-            onMouseUp={[Function]}
+            class="ui checked toggle checkbox"
           >
             <input
-              aria-describedby={null}
-              checked={true}
-              className="hidden"
-              readOnly={true}
-              tabIndex={0}
+              checked=""
+              class="hidden"
+              readonly=""
+              tabindex="0"
               type="radio"
               value="assist1"
             />
@@ -129,24 +98,18 @@ exports[`scrambled SettingsBoard component renders correctly 1`] = `
         </div>
       </div>
       <div
-        className="field"
+        class="field"
       >
         <div
-          className="field"
+          class="field"
         >
           <div
-            className="ui toggle checkbox"
-            onChange={[Function]}
-            onClick={[Function]}
-            onMouseDown={[Function]}
-            onMouseUp={[Function]}
+            class="ui toggle checkbox"
           >
             <input
-              aria-describedby={null}
-              checked={false}
-              className="hidden"
-              readOnly={true}
-              tabIndex={0}
+              class="hidden"
+              readonly=""
+              tabindex="0"
               type="radio"
               value="assist2"
             />
@@ -157,40 +120,32 @@ exports[`scrambled SettingsBoard component renders correctly 1`] = `
         </div>
       </div>
       <div
-        className="ui header"
+        class="ui header"
       >
         game.settings.opponent_preview
         <div
-          className="sub header"
-          style={
-            Object {
-              "maxWidth": 260,
-            }
-          }
+          class="sub header"
+          style="max-width: 260px;"
         >
           game.settings.opponent_preview_details
         </div>
       </div>
       <div
-        className="field"
+        class="field"
       >
         <div
-          className="field"
+          class="field"
         >
           <div
-            className="ui checked toggle checkbox"
-            onChange={[Function]}
-            onClick={[Function]}
-            onMouseDown={[Function]}
-            onMouseUp={[Function]}
+            class="ui checked toggle checkbox"
           >
             <input
-              aria-describedby={null}
-              checked={true}
-              className="hidden"
-              readOnly={true}
-              tabIndex={0}
+              checked=""
+              class="hidden"
+              readonly=""
+              tabindex="0"
               type="checkbox"
+              value=""
             />
             <label>
               game.settings.opponent_previews.true
@@ -201,14 +156,12 @@ exports[`scrambled SettingsBoard component renders correctly 1`] = `
     </form>
   </div>
   <button
-    className="ui green icon right labeled button"
-    onClick={[Function]}
+    class="ui green icon right labeled button"
   >
     board.wait.actions.start
     <i
       aria-hidden="true"
-      className="pencil icon"
-      onClick={[Function]}
+      class="pencil icon"
     />
   </button>
 </div>

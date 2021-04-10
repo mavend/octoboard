@@ -14,8 +14,8 @@ export const Default = () => (
   <GameEndingBoard
     winners={[0, 1]}
     players={[
-      { id: 0, uid: 0, profile: { displayName: "Player zero" }, points: 10 },
-      { id: 1, uid: 1, profile: { displayName: "Player one" }, points: 10 },
+      { id: 0, uid: "user-0", profile: { displayName: "Player zero" }, points: 10 },
+      { id: 1, uid: "user-1", profile: { displayName: "Player one" }, points: 10 },
     ]}
   />
 );

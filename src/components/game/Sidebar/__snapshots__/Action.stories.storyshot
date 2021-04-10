@@ -1,0 +1,144 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Sidebar/Action Action Change 1`] = `
+<div
+  className="ui yellow label"
+  onClick={[Function]}
+  style={
+    Object {
+      "maxWidth": "100%",
+    }
+  }
+>
+  <i
+    aria-hidden="true"
+    className="exchange icon"
+    onClick={[Function]}
+  />
+  sidebar.action.change
+</div>
+`;
+
+exports[`Storyshots Sidebar/Action Action Draw 1`] = `
+<div
+  className="ui label"
+  onClick={[Function]}
+  style={
+    Object {
+      "maxWidth": "100%",
+    }
+  }
+>
+  <i
+    aria-hidden="true"
+    className="pencil icon"
+    onClick={[Function]}
+  />
+  sidebar.action.draw
+</div>
+`;
+
+exports[`Storyshots Sidebar/Action Action Forfeit 1`] = `
+<div
+  className="ui red label"
+  onClick={[Function]}
+  style={
+    Object {
+      "maxWidth": "100%",
+    }
+  }
+>
+  <i
+    aria-hidden="true"
+    className="flag icon"
+    onClick={[Function]}
+  />
+  sidebar.action.forfeit
+</div>
+`;
+
+exports[`Storyshots Sidebar/Action Action Guess 1`] = `
+<div
+  className="ui green left pointing label"
+  onClick={[Function]}
+  style={
+    Object {
+      "cursor": "pointer",
+      "marginLeft": 0,
+      "maxWidth": "100%",
+    }
+  }
+>
+  <i
+    aria-hidden="true"
+    className="check circle icon"
+    onClick={[Function]}
+  />
+  Baba z wozu koniom lżej
+</div>
+`;
+
+exports[`Storyshots Sidebar/Action Action Manage 1`] = `
+<div
+  className="ui label"
+  onClick={[Function]}
+  style={
+    Object {
+      "maxWidth": "100%",
+    }
+  }
+>
+  <i
+    aria-hidden="true"
+    className="yellow chess king icon"
+    onClick={[Function]}
+  />
+  sidebar.action.manage
+</div>
+`;
+
+exports[`Storyshots Sidebar/Action Action Match 1`] = `
+<img
+  className="ui tiny image"
+  src="/images/games/picture-match/pictures/emoji/0.png"
+/>
+`;
+
+exports[`Storyshots Sidebar/Action Action Message 1`] = `
+<div
+  className="ui blue left pointing basic label"
+  onClick={[Function]}
+  style={
+    Object {
+      "marginLeft": 0,
+      "maxWidth": "100%",
+    }
+  }
+>
+  <i
+    aria-hidden="true"
+    className="blue chat icon"
+    onClick={[Function]}
+  />
+  Hello there, shall we begin?
+</div>
+`;
+
+exports[`Storyshots Sidebar/Action Action Timeout 1`] = `
+<div
+  className="ui red label"
+  onClick={[Function]}
+  style={
+    Object {
+      "maxWidth": "100%",
+    }
+  }
+>
+  <i
+    aria-hidden="true"
+    className="clock outline icon"
+    onClick={[Function]}
+  />
+  sidebar.action.timeout
+</div>
+`;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { action } from "@storybook/addon-actions";
 import { text } from "@storybook/addon-knobs";
 
@@ -15,7 +15,7 @@ export default {
 export const Default = () => (
   <GameBoard
     envokeLastAnswer={action("envokeLastAnswer")}
-    guessInputRef={{}}
+    guessInputRef={useRef()}
     guess={text("Guess", "Baba z wozu?")}
     setGuess={action("SetGuess")}
     ChangePhrase={action("ChangePhrase")}

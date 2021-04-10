@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots User/Forms/LoginForm Default 1`] = `
+<form
+  className="ui form"
+  onSubmit={[Function]}
+>
+  <div
+    className="ui error message"
+  />
+  <div
+    className="field"
+  >
+    <label>
+      form.email
+    </label>
+    <div
+      className="ui input"
+    >
+      <input
+        aria-describedby={null}
+        autoComplete="username"
+        autoFocus={true}
+        maxLength="24"
+        name="form.email"
+        onChange={[Function]}
+        placeholder="form.email"
+        type="email"
+        value="qwe@qwe.qwe"
+      />
+    </div>
+  </div>
+  <div
+    className="field"
+  >
+    <label>
+      form.password
+    </label>
+    <div
+      className="ui input"
+    >
+      <input
+        aria-describedby={null}
+        autoComplete="current-password"
+        name="form.password"
+        onChange={[Function]}
+        placeholder="form.password"
+        type="password"
+        value="qweqweqwe"
+      />
+    </div>
+  </div>
+  <div
+    className="fields"
+  >
+    <div
+      className="field"
+    >
+      <button
+        aria-describedby={null}
+        className="ui green button"
+        onClick={[Function]}
+      >
+        actions.login
+      </button>
+    </div>
+  </div>
+</form>
+`;

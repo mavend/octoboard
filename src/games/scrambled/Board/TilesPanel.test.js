@@ -1,11 +1,11 @@
 import React from "react";
-import renderer from "react-test-renderer";
+import { render } from "utils/test/render";
 import TilesPanel from "./TilesPanel";
 
 describe("scrambled TilesPanel component", () => {
   it("renders correctly", () => {
     expect.hasAssertions();
-    const component = renderer.create(
+    const { container } = render(
       <TilesPanel
         t={jest.fn((x) => x)}
         playerTiles={[{ letter: "A", points: 1, id: 1 }]}
@@ -17,7 +17,6 @@ describe("scrambled TilesPanel component", () => {
         tilesLeft={42}
       />
     );
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 });

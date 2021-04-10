@@ -3,42 +3,38 @@
 exports[`scrambled GameBoard component renders correctly 1`] = `
 <div>
   <div
-    className="ui container"
+    class="ui container"
   >
     <div
-      className="mainMenu"
+      class="mainMenu"
     >
       <div
-        className="ui container"
+        class="ui container"
       >
         <a
-          className="logo"
+          class="logo"
           href="/"
-          onClick={[Function]}
         >
           <img
-            className="ui image"
+            class="ui image"
             slt="Octoboard logo"
             src="/images/octoboard-small.svg"
           />
         </a>
         <span
-          className="gameName"
+          class="gameName"
         >
           game.name
         </span>
         <span
-          className="ui small label"
-          onClick={[Function]}
-          style={Object {}}
+          class="ui small label"
         >
           <i
             aria-hidden="true"
-            className="open lock icon"
-            onClick={[Function]}
+            class="open lock icon"
           />
           <div
-            className="detail"
+            class="detail"
           >
             game.public
           </div>
@@ -46,182 +42,151 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
       </div>
     </div>
     <div
-      className="ui container"
+      class="ui container"
     >
       <div
-        style={
-          Object {
-            "marginBottom": "14px",
-          }
-        }
+        style="margin-bottom: 14px;"
       >
         <h2
-          className="ui center aligned header"
+          class="ui center aligned header"
         >
           header.play.play
           <div
-            className="sub header"
+            class="sub header"
           >
             subheader.play.play
           </div>
         </h2>
         <div
-          className=""
+          class=""
         >
+          <div />
           <div
-            style={Object {}}
-          />
-          <div
-            className="ui sticky"
+            class="ui sticky"
           >
             <div
-              className="ui segment"
+              class="ui segment"
             >
               <span
-                className="ui green ribbon label"
-                onClick={[Function]}
+                class="ui green ribbon label"
               >
                 <i
                   aria-hidden="true"
-                  className="star icon"
-                  onClick={[Function]}
+                  class="star icon"
                 />
                 panel.tiles
               </span>
               <div
-                className="ui top right attached label"
-                onClick={[Function]}
+                class="ui top right attached label"
               >
                 game.info.tiles.left
                 : 
                 13
               </div>
               <div
-                style={
-                  Object {
-                    "display": "flex",
-                    "paddingTop": 10,
-                  }
-                }
+                style="display: flex; padding-top: 10px;"
               >
                 <div
-                  className="tile tile_separate tile_clickable"
-                  onClick={[Function]}
+                  class="tile tile_separate tile_clickable tile_used"
                 >
                   <div
-                    className="letter"
+                    class="letter"
                   >
                     A
                   </div>
                   <div
-                    className="points"
+                    class="points"
                   >
                     1
                   </div>
                 </div>
                 <div
-                  className="tile tile_separate tile_clickable"
-                  onClick={[Function]}
+                  class="tile tile_separate tile_clickable"
                 >
                   <div
-                    className="letter"
+                    class="letter"
                   >
                     B
                   </div>
                   <div
-                    className="points"
+                    class="points"
                   >
                     2
                   </div>
                 </div>
                 <div
-                  className="tile tile_separate tile_clickable"
-                  onClick={[Function]}
+                  class="tile tile_separate tile_clickable"
                 >
                   <div
-                    className="letter letter_replacement"
+                    class="letter letter_replacement"
                   />
                   <div
-                    className="points"
+                    class="points"
                   >
                     0
                   </div>
                 </div>
                 <div
-                  className="tile tile_separate tile_clickable"
-                  onClick={[Function]}
+                  class="tile tile_separate tile_clickable"
                 >
                   <div
-                    className="letter"
+                    class="letter"
                   >
                     Ż
                   </div>
                   <div
-                    className="points"
+                    class="points"
                   >
                     9
                   </div>
                 </div>
                 <div
-                  className="tile tile_separate tile_clickable"
-                  onClick={[Function]}
+                  class="tile tile_separate tile_clickable"
                 >
                   <div
-                    className="letter"
+                    class="letter"
                   >
                     Ó
                   </div>
                   <div
-                    className="points"
+                    class="points"
                   >
                     7
                   </div>
                 </div>
                 <button
-                  className="ui red disabled button"
-                  disabled={true}
-                  onClick={[Function]}
-                  tabIndex={-1}
+                  class="ui red button"
                 >
                   <i
                     aria-hidden="true"
-                    className="undo icon"
-                    onClick={[Function]}
+                    class="undo icon"
                   />
                   panel.actions.return
                 </button>
                 <button
-                  className="ui orange button"
-                  onClick={[Function]}
+                  class="ui orange button"
                 >
                   <i
                     aria-hidden="true"
-                    className="refresh icon"
-                    onClick={[Function]}
+                    class="refresh icon"
                   />
                   panel.actions.swap
                 </button>
                 <button
-                  className="ui yellow button"
-                  onClick={[Function]}
+                  class="ui yellow button"
                 >
                   <i
                     aria-hidden="true"
-                    className="forward icon"
-                    onClick={[Function]}
+                    class="forward icon"
                   />
                   panel.actions.skip
                 </button>
                 <button
-                  className="ui green disabled button"
-                  disabled={true}
-                  onClick={[Function]}
-                  tabIndex={-1}
+                  class="ui green button"
                 >
                   <i
                     aria-hidden="true"
-                    className="check icon"
-                    onClick={[Function]}
+                    class="check icon"
                   />
                   panel.actions.play
                 </button>
@@ -232,74 +197,103 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
       </div>
     </div>
     <div
-      className="ui grid"
+      class="ui grid"
     >
       <div
-        className="twelve wide computer sixteen wide mobile column"
+        class="twelve wide computer sixteen wide mobile column"
       >
         <div
-          className="row"
+          class="row"
         >
           <div
-            className="grid"
+            id="words-info-popup"
+            style="pointer-events: none; transition: opacity 0.3s; display: flex; position: absolute; left: 0px; top: 0px; bottom: 0px; transform: translate(0px, -5px);"
+          >
+            <div
+              class="ui top center basic flowing popup transition visible"
+              style="position: initial; opacity: 0.95; border: 0px; border-radius: 10px; background: rgb(245, 245, 245);"
+            >
+              <div
+                class="header"
+              >
+                game.errors.ok
+              </div>
+              <div
+                class="letter_wrapper"
+              >
+                <i
+                  aria-hidden="true"
+                  class="blue circle dot outline icon"
+                />
+                <span
+                  class="letter"
+                >
+                  L
+                </span>
+                <span
+                  class="letter letter_new"
+                >
+                  A
+                </span>
+                <span
+                  class="points_wrapper"
+                >
+                  4
+                </span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="grid"
           >
             <table>
               <tbody>
                 <tr
-                  style={
-                    Object {
-                      "height": 46,
-                    }
-                  }
+                  style="height: 46px;"
                 >
                   <td
-                    className="cell"
+                    class="cell"
                   >
                     <div
-                      className="field"
-                      onClick={[Function]}
-                      style={
-                        Object {
-                          "background": "#BB5C66",
-                        }
-                      }
+                      class="field"
+                      style="background: rgb(187, 92, 102);"
                     >
                       <div
-                        className="bonus"
+                        class="bonus"
                       >
                         <div
-                          className="bonus_multiply"
+                          class="bonus_multiply"
                         >
                           3
                           x
                         </div>
                         <div
-                          className="bonus_type"
+                          class="bonus_type"
                         >
                           game.info.bonuses.word
                         </div>
                       </div>
                       <div
-                        className="field dimmer"
+                        class="field dimmer"
                       />
                     </div>
                   </td>
                   <td
-                    className="cell"
+                    class="cell"
                   >
                     <div
-                      className="field"
+                      class="field"
                     >
                       <div
-                        className="tile"
+                        class="tile"
                       >
                         <div
-                          className="letter"
+                          class="letter"
                         >
                           L
                         </div>
                         <div
-                          className="points"
+                          class="points"
                         >
                           2
                         </div>
@@ -307,21 +301,21 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                     </div>
                   </td>
                   <td
-                    className="cell"
+                    class="cell"
                   >
                     <div
-                      className="field"
+                      class="field"
                     >
                       <div
-                        className="tile"
+                        class="tile"
                       >
                         <div
-                          className="letter"
+                          class="letter"
                         >
                           O
                         </div>
                         <div
-                          className="points"
+                          class="points"
                         >
                           1
                         </div>
@@ -329,21 +323,21 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                     </div>
                   </td>
                   <td
-                    className="cell"
+                    class="cell"
                   >
                     <div
-                      className="field"
+                      class="field"
                     >
                       <div
-                        className="tile"
+                        class="tile"
                       >
                         <div
-                          className="letter letter_replacement"
+                          class="letter letter_replacement"
                         >
                           L
                         </div>
                         <div
-                          className="points"
+                          class="points"
                         >
                           0
                         </div>
@@ -352,259 +346,218 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                   </td>
                 </tr>
                 <tr
-                  style={
-                    Object {
-                      "height": 46,
-                    }
-                  }
+                  style="height: 46px;"
                 >
                   <td
-                    className="cell"
+                    class="cell"
                   >
                     <div
-                      className="field"
-                      onClick={[Function]}
+                      class="field"
                     >
                       <div
-                        className="field dimmer"
+                        class="field dimmer"
                       />
                     </div>
                   </td>
                   <td
-                    className="cell"
+                    class="cell"
                   >
                     <div
-                      className="field"
-                      onClick={[Function]}
-                      style={
-                        Object {
-                          "background": "#21C4D8",
-                        }
-                      }
+                      class="field field_clickable"
+                      style="background: rgb(33, 196, 216);"
                     >
                       <div
-                        className="bonus"
+                        class="tile tile_highlighted"
                       >
                         <div
-                          className="bonus_multiply"
+                          class="letter"
                         >
-                          2
-                          x
+                          A
                         </div>
                         <div
-                          className="bonus_type"
+                          class="bonus"
+                          style="background: rgb(33, 196, 216);"
+                        />
+                        <div
+                          class="points"
+                          style="text-shadow: -1px -1px 0 #21C4D8, 1px -1px 0 #21C4D8, -1px  1px 0 #21C4D8, 1px  1px 0 #21C4D8;"
                         >
-                          game.info.bonuses.letter
+                          2
                         </div>
                       </div>
                       <div
-                        className="field dimmer"
+                        class="field dimmer"
                       />
                     </div>
                   </td>
                   <td
-                    className="cell"
+                    class="cell"
                   >
                     <div
-                      className="field"
-                      onClick={[Function]}
+                      class="field"
                     >
                       <div
-                        className="field dimmer"
+                        class="field dimmer"
                       />
                     </div>
                   </td>
                   <td
-                    className="cell"
+                    class="cell"
                   >
                     <div
-                      className="field"
-                      onClick={[Function]}
+                      class="field"
                     >
                       <div
-                        className="field dimmer"
+                        class="field dimmer"
                       />
                     </div>
                   </td>
                 </tr>
                 <tr
-                  style={
-                    Object {
-                      "height": 46,
-                    }
-                  }
+                  style="height: 46px;"
                 >
                   <td
-                    className="cell"
+                    class="cell"
                   >
                     <div
-                      className="field"
-                      onClick={[Function]}
+                      class="field"
                     >
                       <div
-                        className="field dimmer"
+                        class="field dimmer"
                       />
                     </div>
                   </td>
                   <td
-                    className="cell"
+                    class="cell"
                   >
                     <div
-                      className="field"
-                      onClick={[Function]}
-                      style={
-                        Object {
-                          "background": "#16919F",
-                        }
-                      }
+                      class="field"
+                      style="background: rgb(22, 145, 159);"
                     >
                       <div
-                        className="bonus"
+                        class="bonus"
                       >
                         <div
-                          className="bonus_multiply"
+                          class="bonus_multiply"
                         >
                           3
                           x
                         </div>
                         <div
-                          className="bonus_type"
+                          class="bonus_type"
                         >
                           game.info.bonuses.letter
                         </div>
                       </div>
                       <div
-                        className="field dimmer"
+                        class="field dimmer"
                       />
                     </div>
                   </td>
                   <td
-                    className="cell"
+                    class="cell"
                   >
                     <div
-                      className="field"
-                      onClick={[Function]}
-                      style={
-                        Object {
-                          "background": "#F9C54A",
-                        }
-                      }
+                      class="field"
+                      style="background: rgb(249, 197, 74);"
                     >
                       <div
-                        className="bonus"
+                        class="bonus"
                       >
                         <div
-                          className="bonus_multiply"
+                          class="bonus_multiply"
                         >
                           2
                           x
                         </div>
                         <div
-                          className="bonus_type"
+                          class="bonus_type"
                         >
                           game.info.bonuses.word
                         </div>
                       </div>
                       <div
-                        className="field dimmer"
+                        class="field dimmer"
                       />
                     </div>
                   </td>
                   <td
-                    className="cell"
+                    class="cell"
                   >
                     <div
-                      className="field"
-                      onClick={[Function]}
+                      class="field"
                     >
                       <div
-                        className="field dimmer"
+                        class="field dimmer"
                       />
                     </div>
                   </td>
                 </tr>
                 <tr
-                  style={
-                    Object {
-                      "height": 46,
-                    }
-                  }
+                  style="height: 46px;"
                 >
                   <td
-                    className="cell"
+                    class="cell"
                   >
                     <div
-                      className="field"
-                      onClick={[Function]}
-                      style={
-                        Object {
-                          "background": "#F9C54A",
-                        }
-                      }
+                      class="field"
+                      style="background: rgb(249, 197, 74);"
                     >
                       <div
-                        className="bonus"
+                        class="bonus"
                       >
                         <div
-                          className="bonus_multiply"
+                          class="bonus_multiply"
                         >
                           2
                           x
                         </div>
                         <div
-                          className="bonus_type"
+                          class="bonus_type"
                         >
                           game.info.bonuses.word
                         </div>
                       </div>
                       <div
-                        className="field dimmer"
+                        class="field dimmer"
                       />
                     </div>
                   </td>
                   <td
-                    className="cell"
+                    class="cell"
                   >
                     <div
-                      className="field"
-                      onClick={[Function]}
+                      class="field"
                     >
                       <div
-                        className="field dimmer"
+                        class="field dimmer"
                       />
                     </div>
                   </td>
                   <td
-                    className="cell"
+                    class="cell"
                   >
                     <div
-                      className="field"
-                      onClick={[Function]}
+                      class="field"
                     >
                       <div
-                        className="field dimmer"
+                        class="field dimmer"
                       />
                     </div>
                   </td>
                   <td
-                    className="cell"
+                    class="cell"
                   >
                     <div
-                      className="field"
-                      onClick={[Function]}
-                      style={
-                        Object {
-                          "background": "#F9C54A",
-                        }
-                      }
+                      class="field"
+                      style="background: rgb(249, 197, 74);"
                     >
                       <i
                         aria-hidden="true"
-                        className="star big disabled fitted icon"
-                        onClick={[Function]}
+                        class="star big disabled fitted icon"
                       />
                       <div
-                        className="field dimmer"
+                        class="field dimmer"
                       />
                     </div>
                   </td>
@@ -615,61 +568,47 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
         </div>
       </div>
       <div
-        className="four wide computer sixteen wide mobile column"
+        class="four wide computer sixteen wide mobile column"
       >
         <div
-          className="row"
+          class="row"
         >
           <h2
-            className="ui center aligned header"
-            style={
-              Object {
-                "marginBottom": "-5px",
-              }
-            }
+            class="ui center aligned header"
+            style="margin-bottom: -5px;"
           >
             game.players
             <span
-              className="ui small label"
-              onClick={[Function]}
-              style={Object {}}
+              class="ui small label"
             >
               <i
                 aria-hidden="true"
-                className="open lock icon"
-                onClick={[Function]}
+                class="open lock icon"
               />
               <div
-                className="detail"
+                class="detail"
               >
                 game.public
               </div>
             </span>
           </h2>
           <div
-            className="ui segments"
+            class="ui segments"
           >
             <div
-              className="ui segment player smoothDisabled"
+              class="ui segment player smoothDisabled"
             >
               <div
-                className="ui feed"
+                class="ui feed"
               >
                 <div
-                  className="event"
+                  class="event"
                 >
                   <div
-                    className="label"
+                    class="label"
                   >
                     <div
-                      style={
-                        Object {
-                          "display": "inline-block",
-                          "height": "100%",
-                          "verticalAlign": "middle",
-                          "width": "100%",
-                        }
-                      }
+                      style="display: inline-block; vertical-align: middle; width: 100%; height: 100%;"
                     >
                       <svg
                         seed="user-0"
@@ -751,8 +690,8 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             d="M233.25,495C239.168,329.068 351.68,233.25 499,233.25C646.32,233.25 766.75,346.746 766.75,494.066C766.768,504.077 757.643,676.267 760.561,720.218C767.462,824.156 911.469,848.664 959.478,846.601C983.952,845.547 1002.67,866.735 1005.14,887.918C1007.65,909.451 993.383,930.981 951.307,929.164C764.522,921.101 711.947,816.61 700.846,823.351C675.489,838.731 756.698,912.706 809.101,930.901C870.832,952.34 804.307,1016.61 732.282,994.42C630.025,962.93 570.47,832.435 540.674,867.647C522.173,889.51 588.95,963.9 613.008,980.54C659.672,1012.81 606.157,1067.14 542.546,1028.63C444.848,969.51 441.595,876.876 417.22,883.656C393.533,890.235 402.013,912.001 322.956,967.61C243.903,1023.23 145.768,1035.81 127.011,1005.2C108.255,974.58 153.509,950.43 192.073,936.176C230.633,921.922 297.117,897.772 296.4,866.197C295.679,834.622 261.534,859.306 261.534,859.306C180.189,934.685 -48.726,938.58 -24.565,868.222C-12.404,832.814 12.457,834.289 47.113,835.764C81.308,837.218 125.041,838.676 175.502,804.689C214.699,778.293 233.39,709.516 234.6,637.523C235.063,609.971 230.808,563.466 233.25,495Z"
                             fill="none"
                             stroke="#592d3d"
-                            strokeMiterlimit={10}
-                            strokeWidth="12px"
+                            stroke-miterlimit="10"
+                            stroke-width="12px"
                           />
                           <path
                             d="M271.4,568.53c-1-28.36,18-52.36,43.28-63.56a62.37,62.37,0,0,1,8.16-2.7A70,70,0,0,1,365.05,505a71.67,71.67,0,0,1,8.93,4.16c29.53,15.89,42.79,53.25,31.36,83.46a61.68,61.68,0,0,1-4.18,8.82,54.68,54.68,0,0,1-17.51,20.83,69.25,69.25,0,0,1-7.85,5c-27.38,13-64.38,9-86.45-11.4a68.39,68.39,0,0,1-6.11-7.47,64.89,64.89,0,0,1-5.57-9.5A55.78,55.78,0,0,1,272,577.1,75.67,75.67,0,0,1,271.4,568.53Z"
@@ -762,8 +701,8 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             d="M269.77,550.18c-1-28.36,18-52.36,43.28-63.56a62.23,62.23,0,0,1,8.15-2.7,70,70,0,0,1,42.22,2.68,71.54,71.54,0,0,1,8.92,4.16c29.53,15.89,42.79,53.26,31.36,83.46a59.6,59.6,0,0,1-4.18,8.82,63.85,63.85,0,0,1-4.71,7.8,64.78,64.78,0,0,1-5.68,7,63.08,63.08,0,0,1-7.12,6.07,68.37,68.37,0,0,1-7.85,5c-27.38,13-64.38,9-86.44-11.39a68.28,68.28,0,0,1-6.11-7.48,65,65,0,0,1-5.58-9.5,55.59,55.59,0,0,1-5.71-21.73A71.3,71.3,0,0,1,269.77,550.18Z"
                             fill="#ffffff"
                             stroke="#592d3d"
-                            strokeMiterlimit={10}
-                            strokeWidth="12px"
+                            stroke-miterlimit="10"
+                            stroke-width="12px"
                           />
                           <circle
                             cx="338.51"
@@ -779,8 +718,8 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             d="M589.38,549c.42-14.15,6.42-28.15,14.52-38.66a70.56,70.56,0,0,1,6.86-8A68.55,68.55,0,0,1,697.53,494a69.81,69.81,0,0,1,6.28,4.79c26,20.07,29,59.07,14.74,87.22a56.5,56.5,0,0,1-4.6,6.42,68.91,68.91,0,0,1-7.29,7.6c-19.51,16.68-49.86,20.71-74.49,11.62A68.79,68.79,0,0,1,622,606.9c-17.22-10.08-29.22-29.08-32.17-48.85A56.34,56.34,0,0,1,589.38,549Z"
                             fill="#ffffff"
                             stroke="#592d3d"
-                            strokeMiterlimit={10}
-                            strokeWidth="12px"
+                            stroke-miterlimit="10"
+                            stroke-width="12px"
                           />
                           <circle
                             cx="659.21"
@@ -796,8 +735,8 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             d="M443.14,621.86c0-18.9,113.72-16.06,113.72,0a56.86,56.86,0,0,1-113.72,0Z"
                             fill="none"
                             stroke="#592d3d"
-                            strokeMiterlimit={10}
-                            strokeWidth="6px"
+                            stroke-miterlimit="10"
+                            stroke-width="6px"
                           />
                           <path
                             d="M532.49,646.6c0-8.06-14.55-14.6-32.49-14.6s-32.49,6.54-32.49,14.6h0v44.34c0,14.41,14.55,26.08,32.49,26.08s32.49-11.67,32.49-26.08V646.61Z"
@@ -807,8 +746,8 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             d="M532.49,646.6c0-8.06-14.55-14.6-32.49-14.6s-32.49,6.54-32.49,14.6h0v44.34c0,14.41,14.55,26.08,32.49,26.08s32.49-11.67,32.49-26.08V646.61Z"
                             fill="none"
                             stroke="#592d3d"
-                            strokeMiterlimit={10}
-                            strokeWidth="8px"
+                            stroke-miterlimit="10"
+                            stroke-width="8px"
                           />
                           <path
                             d="M479.31,626.6l.91-.21.76-.14c.49-.08,1-.14,1.46-.18a21.42,21.42,0,0,1,2.89-.1,25,25,0,0,1,5.79.81,21.39,21.39,0,0,1,10.34,6.11A20.07,20.07,0,0,1,506.54,643a17.19,17.19,0,0,1-1.37,10.35c-2.08-2.93-3.66-5.55-5.32-7.76a27.26,27.26,0,0,0-2.46-3,14.09,14.09,0,0,0-2.69-2.16,15.31,15.31,0,0,0-6.11-2.08,25.67,25.67,0,0,0-3.43-.22c-.59,0-1.18,0-1.76,0l-.85.06-.4,0c-.09,0-.29,0-.22,0Z"
@@ -826,13 +765,13 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             cx="382.91"
                             cy="594.66"
                             fill="#ffffff"
-                            opacity={0.2}
+                            opacity="0.2"
                             r="33.84"
                           />
                           <path
                             d="M375.87,631l43.31-41.74a147.47,147.47,0,0,0-7.57-12.9l-45.87,44.21C367.64,621.9,373.72,630.08,375.87,631Z"
                             fill="#ffffff"
-                            opacity={0.4}
+                            opacity="0.4"
                           />
                           <circle
                             cx="382.91"
@@ -840,8 +779,8 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             fill="none"
                             r="33.84"
                             stroke="#592d3d"
-                            strokeMiterlimit={10}
-                            strokeWidth="12px"
+                            stroke-miterlimit="10"
+                            stroke-width="12px"
                           />
                           <path
                             d="M378,580.47c1.22,3.83-3.5,6.78-7,7.37-3.54,0-5.9-2.36-7.08-5.31-.59-2.95,0-5.9,2.36-7.67,2.95-1.18,7.08-2.36,9.7.67A6.85,6.85,0,0,1,378,580.47Z"
@@ -855,13 +794,13 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             cx="615.2"
                             cy="594.66"
                             fill="#ffffff"
-                            opacity={0.2}
+                            opacity="0.2"
                             r="33.84"
                           />
                           <path
                             d="M610.12,628.11l38.54-38.54c-.21-1.37-5.91-8.1-6.29-9.44l-41.72,41.74C602,622.24,608.75,627.91,610.12,628.11Z"
                             fill="#ffffff"
-                            opacity={0.4}
+                            opacity="0.4"
                           />
                           <circle
                             cx="615.2"
@@ -869,8 +808,8 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             fill="none"
                             r="33.84"
                             stroke="#592d3d"
-                            strokeMiterlimit={10}
-                            strokeWidth="12px"
+                            stroke-miterlimit="10"
+                            stroke-width="12px"
                           />
                           <path
                             d="M607.36,579.91c1,3.25-3,5.75-6,6.25-3,0-5-2-6-4.5-.5-2.5,0-5,2-6.5,2.5-1,6-2,8.23.57A5.85,5.85,0,0,1,607.36,579.91Z"
@@ -884,22 +823,22 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             d="M416.74,594.66q83.68-30,164.63,0"
                             fill="none"
                             stroke="#592d3d"
-                            strokeMiterlimit={10}
-                            strokeWidth="12px"
+                            stroke-miterlimit="10"
+                            stroke-width="12px"
                           />
                           <path
                             d="M615.2,634.5A39.9,39.9,0,0,1,575.6,599c-50-17.65-101.46-17.64-153.1,0a39.81,39.81,0,0,1-50.92,33.84,38,38,0,0,0,54.51-29.91c49.22-16.86,98.28-16.88,145.93,0a38,38,0,0,0,54.51,30A40,40,0,0,1,615.2,634.5Z"
-                            opacity={0.15}
+                            opacity="0.15"
                           />
                         </g>
                       </svg>
                     </div>
                   </div>
                   <div
-                    className="content"
+                    class="content"
                   >
                     <div
-                      className="date"
+                      class="date"
                     >
                       user-0
                        
@@ -911,40 +850,33 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                        
                       <i
                         aria-hidden="true"
-                        className="green check circle icon"
-                        onClick={[Function]}
+                        class="green check circle icon"
                       />
                       <i
                         aria-hidden="true"
-                        className="broken chain icon smoothDisabled hidden"
-                        onClick={[Function]}
-                        style={
-                          Object {
-                            "opacity": 0,
-                          }
-                        }
+                        class="broken chain icon smoothDisabled hidden"
+                        style="opacity: 0;"
                       />
                     </div>
                     <div
-                      className="content"
+                      class="content"
                     >
                       <i
                         aria-hidden="true"
-                        className="yellow trophy icon"
-                        onClick={[Function]}
+                        class="yellow trophy icon"
                       />
                       sidebar.player.points
                     </div>
                     <div
-                      className="text extra extra"
+                      class="text extra extra"
                     >
                       <div
-                        className="ui middle aligned list"
+                        class="ui middle aligned list"
                         role="list"
                       />
                     </div>
                     <div
-                      className="text extra extra"
+                      class="text extra extra"
                     >
                       game.info.tiles.owned
                       : 
@@ -955,26 +887,19 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
               </div>
             </div>
             <div
-              className="ui disabled segment player smoothDisabled"
+              class="ui disabled segment player smoothDisabled"
             >
               <div
-                className="ui feed"
+                class="ui feed"
               >
                 <div
-                  className="event"
+                  class="event"
                 >
                   <div
-                    className="label"
+                    class="label"
                   >
                     <div
-                      style={
-                        Object {
-                          "display": "inline-block",
-                          "height": "100%",
-                          "verticalAlign": "middle",
-                          "width": "100%",
-                        }
-                      }
+                      style="display: inline-block; vertical-align: middle; width: 100%; height: 100%;"
                     >
                       <svg
                         seed="user-1"
@@ -998,8 +923,8 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             d="M833.15,369a58.35,58.35,0,0,0-35.89-54.16,58.56,58.56,0,0,0,25.82-48.77c0-27.77-19-51-44.47-56.88a59.13,59.13,0,0,0,7.51-28.9C786.12,148.1,760.55,122,729,122a55.89,55.89,0,0,0-24.2,5.49,58.35,58.35,0,0,0,.67-8.92c0-32.21-25.57-58.33-57.12-58.33a56.49,56.49,0,0,0-43.76,20.86c-1.61-30.74-26.53-55.17-57-55.17A56.9,56.9,0,0,0,497.6,56a56.93,56.93,0,0,0-50-30.07c-30.5,0-55.42,24.43-57,55.17a56.53,56.53,0,0,0-43.77-20.86c-31.53,0-57.11,26.11-57.11,58.33a59.65,59.65,0,0,0,.66,8.92A55.76,55.76,0,0,0,266.21,122c-31.54,0-57.12,26.12-57.12,58.33a59,59,0,0,0,7.51,28.9c-25.45,5.88-44.46,29.11-44.46,56.88A58.56,58.56,0,0,0,198,314.86a58.83,58.83,0,0,0-1.13,107.85,58.81,58.81,0,0,0-14.6,39c0,28.51,20.05,52.25,46.54,57.33-11.51,10.31,545.36,10.93,534.18.55,28.2-3.57,50-28.11,50-57.87a58.87,58.87,0,0,0-14.61-39A58.4,58.4,0,0,0,833.15,369Z"
                             fill="none"
                             stroke="#592d3d"
-                            strokeMiterlimit={10}
-                            strokeWidth="12px"
+                            stroke-miterlimit="10"
+                            stroke-width="12px"
                           />
                           <path
                             d="M233.25,495C239.168,329.068 351.68,233.25 499,233.25C646.32,233.25 766.75,346.746 766.75,494.066C766.768,504.077 757.643,676.267 760.561,720.218C767.462,824.156 911.469,848.664 959.478,846.601C983.952,845.547 1002.67,866.735 1005.14,887.918C1007.65,909.451 993.383,930.981 951.307,929.164C764.522,921.101 711.947,816.61 700.846,823.351C675.489,838.731 756.698,912.706 809.101,930.901C870.832,952.34 804.307,1016.61 732.282,994.42C630.025,962.93 570.47,832.435 540.674,867.647C522.173,889.51 588.95,963.9 613.008,980.54C659.672,1012.81 606.157,1067.14 542.546,1028.63C444.848,969.51 441.595,876.876 417.22,883.656C393.533,890.235 402.013,912.001 322.956,967.61C243.903,1023.23 145.768,1035.81 127.011,1005.2C108.255,974.58 153.509,950.43 192.073,936.176C230.633,921.922 297.117,897.772 296.4,866.197C295.679,834.622 261.534,859.306 261.534,859.306C180.189,934.685 -48.726,938.58 -24.565,868.222C-12.404,832.814 12.457,834.289 47.113,835.764C81.308,837.218 125.041,838.676 175.502,804.689C214.699,778.293 233.39,709.516 234.6,637.523C235.063,609.971 230.808,563.466 233.25,495Z"
@@ -1075,24 +1000,24 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             d="M233.25,495C239.168,329.068 351.68,233.25 499,233.25C646.32,233.25 766.75,346.746 766.75,494.066C766.768,504.077 757.643,676.267 760.561,720.218C767.462,824.156 911.469,848.664 959.478,846.601C983.952,845.547 1002.67,866.735 1005.14,887.918C1007.65,909.451 993.383,930.981 951.307,929.164C764.522,921.101 711.947,816.61 700.846,823.351C675.489,838.731 756.698,912.706 809.101,930.901C870.832,952.34 804.307,1016.61 732.282,994.42C630.025,962.93 570.47,832.435 540.674,867.647C522.173,889.51 588.95,963.9 613.008,980.54C659.672,1012.81 606.157,1067.14 542.546,1028.63C444.848,969.51 441.595,876.876 417.22,883.656C393.533,890.235 402.013,912.001 322.956,967.61C243.903,1023.23 145.768,1035.81 127.011,1005.2C108.255,974.58 153.509,950.43 192.073,936.176C230.633,921.922 297.117,897.772 296.4,866.197C295.679,834.622 261.534,859.306 261.534,859.306C180.189,934.685 -48.726,938.58 -24.565,868.222C-12.404,832.814 12.457,834.289 47.113,835.764C81.308,837.218 125.041,838.676 175.502,804.689C214.699,778.293 233.39,709.516 234.6,637.523C235.063,609.971 230.808,563.466 233.25,495Z"
                             fill="none"
                             stroke="#592d3d"
-                            strokeMiterlimit={10}
-                            strokeWidth="12px"
+                            stroke-miterlimit="10"
+                            stroke-width="12px"
                           />
                           <path
                             d="M296.49,572.61V559.68a49.6,49.6,0,0,1,1.94-25.32,46,46,0,0,1,3.51-7.65C305.29,518,314.29,511,323.29,508c14-4,31-2,42,9,14,15,12,37,12.45,55.62"
                             fill="none"
                             stroke="#592d3d"
-                            strokeLinecap="round"
-                            strokeMiterlimit={10}
-                            strokeWidth="12px"
+                            stroke-linecap="round"
+                            stroke-miterlimit="10"
+                            stroke-width="12px"
                           />
                           <path
                             d="M623.31,573c-2.34-26.62,1.66-63.62,36.13-67.17a45,45,0,0,1,8.12,0A43.68,43.68,0,0,1,690,514.41c18,15,14,39,13.95,58.63"
                             fill="none"
                             stroke="#592d3d"
-                            strokeLinecap="round"
-                            strokeMiterlimit={10}
-                            strokeWidth="12px"
+                            stroke-linecap="round"
+                            stroke-miterlimit="10"
+                            stroke-width="12px"
                           />
                           <path
                             d="M443.14,621.86c0-18.9,113.72-16.06,113.72,0a56.86,56.86,0,0,1-113.72,0Z"
@@ -1106,8 +1031,8 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             d="M443.14,621.86c0-18.9,113.72-16.06,113.72,0a56.86,56.86,0,0,1-113.72,0Z"
                             fill="none"
                             stroke="#592d3d"
-                            strokeMiterlimit={10}
-                            strokeWidth="6px"
+                            stroke-miterlimit="10"
+                            stroke-width="6px"
                           />
                           <path
                             d="M478.12,632.46c.45-.11.63-.16.92-.21l.75-.14c.49-.09,1-.14,1.46-.18a21.54,21.54,0,0,1,2.89-.1,25,25,0,0,1,5.79.81,21.4,21.4,0,0,1,10.35,6.1,20.18,20.18,0,0,1,5.08,10.16A17.27,17.27,0,0,1,504,659.25c-2.07-2.93-3.66-5.56-5.32-7.76a28.41,28.41,0,0,0-2.45-3,14.06,14.06,0,0,0-2.7-2.16,15.48,15.48,0,0,0-6.11-2.09A29.5,29.5,0,0,0,484,644c-.59,0-1.18,0-1.76.05l-.85.06-.39,0c-.1,0-.3,0-.23,0Z"
@@ -1129,8 +1054,8 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             d="M739.66,389.6C665,447,579.07,424.7,533.51,405.69c-10.14,17.94-45.26,27.89-48.15,23.36-2-3.08,8.82-17.65,13.78-37.16-74.28,80.27-259.85,72-259.85,72"
                             fill="none"
                             stroke="#592d3d"
-                            strokeMiterlimit={10}
-                            strokeWidth="12px"
+                            stroke-miterlimit="10"
+                            stroke-width="12px"
                           />
                           <path
                             d="M280.92,140.17a53.59,53.59,0,0,0-20.26,5A45.83,45.83,0,0,0,245,157a18.94,18.94,0,0,0-1.53,1.92c-.48.66-1,1.28-1.46,2a43.23,43.23,0,0,0-2.56,4.23,52.32,52.32,0,0,0-3.9,9.18,62.77,62.77,0,0,0-2.29,20.8A36.91,36.91,0,0,1,229.42,173l.53-2.86.29-1.44c.11-.47.27-.93.41-1.4.28-.94.56-1.88.87-2.81s.76-1.8,1.14-2.71a43.25,43.25,0,0,1,2.76-5.21c.51-.85,1.14-1.61,1.7-2.42a24.27,24.27,0,0,1,1.82-2.33,39.88,39.88,0,0,1,19.58-12.56A34.18,34.18,0,0,1,280.92,140.17Z"
@@ -1149,16 +1074,12 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             fill="#592d3d"
                           />
                           <g
-                            style={
-                              Object {
-                                "transformOrigin": "center",
-                              }
-                            }
+                            style="transform-origin: center;"
                             transform="scale(0)"
                           >
                             <path
                               d="M765.63,495.43s.3-2.94.8-8.24C759.75,345.82,643,233.25,500,233.25c-147.32,0-266.75,119.43-266.75,266.75,0,7.28.31,14.49.89,21.63,12.11-39.32,161.32-77.95,298.44-133.08C631.75,452.24,765.63,495.43,765.63,495.43Z"
-                              opacity={0.15}
+                              opacity="0.15"
                             />
                             <path
                               d="M747.94,163.66l0,0C684.65,74.76,266,93.83,204.16,155.69c-66.94,66.94,29.18,351,29.18,351,0-41.1,160.33-82.31,303.37-139.83,99.17,63.69,228.92,108.54,228.92,108.54S793.59,209.32,747.94,163.66Z"
@@ -1184,8 +1105,8 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                               d="M747.94,163.66l0,0C684.65,74.76,266,93.83,204.16,155.69c-66.94,66.94,29.18,351,29.18,351,0-41.1,160.33-82.31,303.37-139.83,99.17,63.69,228.92,108.54,228.92,108.54S793.59,209.32,747.94,163.66Z"
                               fill="none"
                               stroke="#592d3d"
-                              strokeMiterlimit={10}
-                              strokeWidth="12px"
+                              stroke-miterlimit="10"
+                              stroke-width="12px"
                             />
                             <path
                               d="M534.47,361.33c16.1-6.69,32.19-13.37,48.12-20.36l6-2.61,5.95-2.67,6-2.66,5.91-2.76,5.92-2.73c2-.91,3.92-1.88,5.88-2.81,3.91-1.89,7.83-3.75,11.69-5.74q23.34-11.6,45.56-25.15a427.09,427.09,0,0,0,43-29.7c-1.44,1.66-2.86,3.34-4.34,5s-2.9,3.33-4.49,4.84c-3.12,3.11-6.22,6.29-9.55,9.17-1.64,1.49-3.31,2.92-5,4.39s-3.41,2.8-5.12,4.21-3.45,2.76-5.2,4.11l-5.32,4A448.92,448.92,0,0,1,634.62,328c-3.84,2.18-7.74,4.23-11.63,6.29s-7.8,4.1-11.74,6.08l-5.9,3-6,2.87c-4,1.91-7.92,3.84-11.93,5.64q-24,11.06-48.52,20.65Z"
@@ -1212,13 +1133,13 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             cx="382.91"
                             cy="594.66"
                             fill="#ffffff"
-                            opacity={0.2}
+                            opacity="0.2"
                             r="33.84"
                           />
                           <path
                             d="M375.87,631l43.31-41.74a147.47,147.47,0,0,0-7.57-12.9l-45.87,44.21C367.64,621.9,373.72,630.08,375.87,631Z"
                             fill="#ffffff"
-                            opacity={0.4}
+                            opacity="0.4"
                           />
                           <circle
                             cx="382.91"
@@ -1226,8 +1147,8 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             fill="none"
                             r="33.84"
                             stroke="#592d3d"
-                            strokeMiterlimit={10}
-                            strokeWidth="12px"
+                            stroke-miterlimit="10"
+                            stroke-width="12px"
                           />
                           <path
                             d="M378,580.47c1.22,3.83-3.5,6.78-7,7.37-3.54,0-5.9-2.36-7.08-5.31-.59-2.95,0-5.9,2.36-7.67,2.95-1.18,7.08-2.36,9.7.67A6.85,6.85,0,0,1,378,580.47Z"
@@ -1241,13 +1162,13 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             cx="615.2"
                             cy="594.66"
                             fill="#ffffff"
-                            opacity={0.2}
+                            opacity="0.2"
                             r="33.84"
                           />
                           <path
                             d="M610.12,628.11l38.54-38.54c-.21-1.37-5.91-8.1-6.29-9.44l-41.72,41.74C602,622.24,608.75,627.91,610.12,628.11Z"
                             fill="#ffffff"
-                            opacity={0.4}
+                            opacity="0.4"
                           />
                           <circle
                             cx="615.2"
@@ -1255,8 +1176,8 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             fill="none"
                             r="33.84"
                             stroke="#592d3d"
-                            strokeMiterlimit={10}
-                            strokeWidth="12px"
+                            stroke-miterlimit="10"
+                            stroke-width="12px"
                           />
                           <path
                             d="M607.36,579.91c1,3.25-3,5.75-6,6.25-3,0-5-2-6-4.5-.5-2.5,0-5,2-6.5,2.5-1,6-2,8.23.57A5.85,5.85,0,0,1,607.36,579.91Z"
@@ -1270,57 +1191,51 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
                             d="M416.74,594.66q83.68-30,164.63,0"
                             fill="none"
                             stroke="#592d3d"
-                            strokeMiterlimit={10}
-                            strokeWidth="12px"
+                            stroke-miterlimit="10"
+                            stroke-width="12px"
                           />
                           <path
                             d="M615.2,634.5A39.9,39.9,0,0,1,575.6,599c-50-17.65-101.46-17.64-153.1,0a39.81,39.81,0,0,1-50.92,33.84,38,38,0,0,0,54.51-29.91c49.22-16.86,98.28-16.88,145.93,0a38,38,0,0,0,54.51,30A40,40,0,0,1,615.2,634.5Z"
-                            opacity={0.15}
+                            opacity="0.15"
                           />
                         </g>
                       </svg>
                     </div>
                   </div>
                   <div
-                    className="content"
+                    class="content"
                   >
                     <div
-                      className="date"
+                      class="date"
                     >
                       user-1
                        
                        
                       <i
                         aria-hidden="true"
-                        className="broken chain icon smoothDisabled "
-                        onClick={[Function]}
-                        style={
-                          Object {
-                            "opacity": 0.45,
-                          }
-                        }
+                        class="broken chain icon smoothDisabled "
+                        style="opacity: 0.45;"
                       />
                     </div>
                     <div
-                      className="content"
+                      class="content"
                     >
                       <i
                         aria-hidden="true"
-                        className="grey trophy icon"
-                        onClick={[Function]}
+                        class="grey trophy icon"
                       />
                       sidebar.player.points
                     </div>
                     <div
-                      className="text extra extra"
+                      class="text extra extra"
                     >
                       <div
-                        className="ui middle aligned list"
+                        class="ui middle aligned list"
                         role="list"
                       />
                     </div>
                     <div
-                      className="text extra extra"
+                      class="text extra extra"
                     >
                       game.info.tiles.owned
                       : 
@@ -1332,37 +1247,29 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
             </div>
           </div>
           <div
-            className="ui basic center aligned segment leaveSegment"
+            class="ui basic center aligned segment leaveSegment"
           >
             <button
-              className="ui blue icon disabled left labeled button"
-              disabled={true}
-              onBlur={[Function]}
-              onClick={[Function]}
-              onFocus={[Function]}
-              onMouseEnter={[Function]}
-              onMouseLeave={[Function]}
-              tabIndex={-1}
+              class="ui blue icon disabled left labeled button"
+              disabled=""
+              tabindex="-1"
             >
               <i
                 aria-hidden="true"
-                className="info circle icon"
-                onClick={[Function]}
+                class="info circle icon"
               />
               game.rules.header
             </button>
           </div>
           <div
-            className="ui basic center aligned segment leaveSegment"
+            class="ui basic center aligned segment leaveSegment"
           >
             <button
-              className="ui red icon left labeled button"
-              onClick={[Function]}
+              class="ui red icon left labeled button"
             >
               <i
                 aria-hidden="true"
-                className="close icon"
-                onClick={[Function]}
+                class="close icon"
               />
               game.leave.button
             </button>
@@ -1371,60 +1278,53 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
       </div>
     </div>
     <div
-      className="wrapper"
+      class="wrapper"
     >
       <span
-        className="triggerButton"
-        data-unread={0}
-        onClick={[Function]}
+        class="triggerButton"
+        data-unread="0"
       />
       <div
-        className="popupChat"
+        class="popupChat"
       >
         <div
-          className="ui segments chat"
+          class="ui segments chat"
         >
           <div
-            className="ui compact segment header"
+            class="ui compact segment header"
           >
             game.chat.header
             <span
-              className="closeIcon"
-              onClick={[Function]}
+              class="closeIcon"
             >
               <i
                 aria-hidden="true"
-                className="close icon"
-                onClick={[Function]}
+                class="close icon"
               />
             </span>
           </div>
           <div
-            className="ui segment messages"
+            class="ui segment messages"
           >
             <div
-              className="ui comments"
+              class="ui comments"
             />
           </div>
           <div
-            className="ui segment inputBox"
+            class="ui segment inputBox"
           >
-            <form
-              onSubmit={[Function]}
-            >
+            <form>
               <div
-                className="ui fluid icon input"
+                class="ui fluid icon input"
               >
                 <input
-                  onChange={[Function]}
                   placeholder="game.chat.sendMessage"
                   type="text"
                   value=""
                 />
                 <i
                   aria-hidden="true"
-                  className="send icon"
-                  onClick={[Function]}
+                  class="send icon"
                 />
               </div>
             </form>
@@ -1433,7 +1333,7 @@ exports[`scrambled GameBoard component renders correctly 1`] = `
       </div>
     </div>
     <div
-      className="Toastify"
+      class="Toastify"
     />
   </div>
 </div>

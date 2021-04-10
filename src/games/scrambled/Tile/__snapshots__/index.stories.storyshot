@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Scrambled/Tile Default 1`] = `
+<div
+  className="tile tile_clickable"
+  onClick={[Function]}
+>
+  <div
+    className="letter"
+  >
+    L
+  </div>
+  <div
+    className="points"
+  >
+    5
+  </div>
+</div>
+`;

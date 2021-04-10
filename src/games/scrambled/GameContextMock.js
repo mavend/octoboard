@@ -48,7 +48,7 @@ const BoardGameContextMock = ({ children, overrideG, overrideCtx }) => {
         players: {
           0: {
             tiles: [
-              { letter: "A", points: 1, id: 0 },
+              { letter: "A", points: 1, id: 0, x: 1, y: 1 },
               { letter: "B", points: 2, id: 1 },
               { letter: null, points: 0, id: 2 },
               { letter: "Ż", points: 9, id: 3 },
@@ -69,6 +69,7 @@ const BoardGameContextMock = ({ children, overrideG, overrideCtx }) => {
         SwapTiles: action("SwapTiles"),
         SkipTurn: action("SkipTurn"),
         StartGame: action("StartGame"),
+        Approve: action("Approve"),
       }}
       ctx={{
         activePlayers: [],
@@ -76,7 +77,7 @@ const BoardGameContextMock = ({ children, overrideG, overrideCtx }) => {
         phase: select("phase", ["wait", "play"], "play", ref),
         ...overrideCtx,
       }}
-      playerID={"0"}
+      playerID={0}
       gameID={"qwe123"}
       rawClient={{ transport: { socket: null } }}
       matchData={[

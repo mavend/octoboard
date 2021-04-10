@@ -1,11 +1,11 @@
 import React from "react";
-import renderer from "react-test-renderer";
+import { render } from "utils/test/render";
 import Grid from "./Grid";
 
 describe("scrambled Grid component", () => {
   it("renders correctly when empty", () => {
     expect.hasAssertions();
-    const component = renderer.create(
+    const { container } = render(
       <Grid
         board={[{ row: [0, 0, 0] }, { row: [0, 0, 0] }, { row: [0, 0, 0] }]}
         playerTiles={[]}
@@ -13,13 +13,12 @@ describe("scrambled Grid component", () => {
         handleFieldClick={jest.fn()}
       />
     );
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it("renders correctly with some tiles", () => {
     expect.hasAssertions();
-    const component = renderer.create(
+    const { container } = render(
       <Grid
         board={[
           {
@@ -37,13 +36,12 @@ describe("scrambled Grid component", () => {
         handleFieldClick={jest.fn()}
       />
     );
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it("renders correctly with temporary tiles", () => {
     expect.hasAssertions();
-    const component = renderer.create(
+    const { container } = render(
       <Grid
         board={[
           {
@@ -64,13 +62,12 @@ describe("scrambled Grid component", () => {
         handleFieldClick={jest.fn()}
       />
     );
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it("renders correctly with preview tiles", () => {
     expect.hasAssertions();
-    const component = renderer.create(
+    const { container } = render(
       <Grid
         board={[
           {
@@ -91,7 +88,6 @@ describe("scrambled Grid component", () => {
         handleFieldClick={jest.fn()}
       />
     );
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 });

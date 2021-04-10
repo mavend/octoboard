@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots WaitingBoard Default 1`] = `
+<div
+  className="ui basic center aligned segment"
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "flexDirection": "column",
+      "justifyContent": "center",
+    }
+  }
+>
+  <button
+    className="ui green icon right labeled button"
+    onClick={[Function]}
+  >
+    board.wait.actions.start
+    <i
+      aria-hidden="true"
+      className="pencil icon"
+      onClick={[Function]}
+    />
+  </button>
+</div>
+`;
+
+exports[`Storyshots WaitingBoard With Settings 1`] = `
+<div
+  className="ui basic center aligned segment"
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "flexDirection": "column",
+      "justifyContent": "center",
+    }
+  }
+>
+  <h1>
+    Some form or whatever
+  </h1>
+  <button
+    className="ui green icon right labeled button"
+    onClick={[Function]}
+  >
+    board.wait.actions.start
+    <i
+      aria-hidden="true"
+      className="pencil icon"
+      onClick={[Function]}
+    />
+  </button>
+</div>
+`;

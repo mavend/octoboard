@@ -22,6 +22,11 @@ const costOptions = {
 
 export const Default = () => (
   <GameCard
+    level={select(
+      "level",
+      Object.values(cards).map((level) => level.key),
+      1
+    )}
     img={select("image", images, "eco.png")}
     resource={select("resource", RESOURCES, "nature")}
     points={number("points", 1, costOptions)}

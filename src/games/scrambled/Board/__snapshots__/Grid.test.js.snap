@@ -2,138 +2,117 @@
 
 exports[`scrambled Grid component renders correctly when empty 1`] = `
 <div
-  className="grid"
+  class="grid"
 >
   <table>
     <tbody>
       <tr
-        style={
-          Object {
-            "height": 46,
-          }
-        }
+        style="height: 46px;"
       >
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
       </tr>
       <tr
-        style={
-          Object {
-            "height": 46,
-          }
-        }
+        style="height: 46px;"
       >
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
       </tr>
       <tr
-        style={
-          Object {
-            "height": 46,
-          }
-        }
+        style="height: 46px;"
       >
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
@@ -145,33 +124,29 @@ exports[`scrambled Grid component renders correctly when empty 1`] = `
 
 exports[`scrambled Grid component renders correctly with preview tiles 1`] = `
 <div
-  className="grid"
+  class="grid"
 >
   <table>
     <tbody>
       <tr
-        style={
-          Object {
-            "height": 46,
-          }
-        }
+        style="height: 46px;"
       >
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
+            class="field"
           >
             <div
-              className="tile"
+              class="tile"
             >
               <div
-                className="letter"
+                class="letter"
               >
                 A
               </div>
               <div
-                className="points"
+                class="points"
               >
                 1
               </div>
@@ -179,171 +154,143 @@ exports[`scrambled Grid component renders correctly with preview tiles 1`] = `
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="tile tile_highlighted"
+              class="tile tile_highlighted"
             >
               <div
-                className="letter"
+                class="letter"
               >
                 ?
               </div>
               <div
-                className="points"
+                class="points"
               />
             </div>
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
-            style={
-              Object {
-                "background": "#16919F",
-              }
-            }
+            class="field"
+            style="background: rgb(22, 145, 159);"
           >
             <div
-              className="tile tile_highlighted"
+              class="tile tile_highlighted"
             >
               <div
-                className="letter"
+                class="letter"
               >
                 ?
               </div>
               <div
-                className="bonus"
-                style={
-                  Object {
-                    "background": "#16919F",
-                  }
-                }
+                class="bonus"
+                style="background: rgb(22, 145, 159);"
               />
               <div
-                className="points"
+                class="points"
               />
             </div>
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
       </tr>
       <tr
-        style={
-          Object {
-            "height": 46,
-          }
-        }
+        style="height: 46px;"
       >
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
-            style={
-              Object {
-                "background": "#F9C54A",
-              }
-            }
+            class="field"
+            style="background: rgb(249, 197, 74);"
           >
             <div
-              className="bonus"
+              class="bonus"
             >
               <div
-                className="bonus_multiply"
+                class="bonus_multiply"
               >
                 2
                 x
               </div>
               <div
-                className="bonus_type"
+                class="bonus_type"
               >
                 game.info.bonuses.word
               </div>
             </div>
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
       </tr>
       <tr
-        style={
-          Object {
-            "height": 46,
-          }
-        }
+        style="height: 46px;"
       >
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
@@ -355,33 +302,29 @@ exports[`scrambled Grid component renders correctly with preview tiles 1`] = `
 
 exports[`scrambled Grid component renders correctly with some tiles 1`] = `
 <div
-  className="grid"
+  class="grid"
 >
   <table>
     <tbody>
       <tr
-        style={
-          Object {
-            "height": 46,
-          }
-        }
+        style="height: 46px;"
       >
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
+            class="field"
           >
             <div
-              className="tile"
+              class="tile"
             >
               <div
-                className="letter"
+                class="letter"
               >
                 A
               </div>
               <div
-                className="points"
+                class="points"
               >
                 1
               </div>
@@ -389,144 +332,119 @@ exports[`scrambled Grid component renders correctly with some tiles 1`] = `
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
-            style={
-              Object {
-                "background": "#16919F",
-              }
-            }
+            class="field"
+            style="background: rgb(22, 145, 159);"
           >
             <i
               aria-hidden="true"
-              className="star big disabled fitted icon"
-              onClick={[Function]}
+              class="star big disabled fitted icon"
             />
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
       </tr>
       <tr
-        style={
-          Object {
-            "height": 46,
-          }
-        }
+        style="height: 46px;"
       >
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
-            style={
-              Object {
-                "background": "#F9C54A",
-              }
-            }
+            class="field"
+            style="background: rgb(249, 197, 74);"
           >
             <div
-              className="bonus"
+              class="bonus"
             >
               <div
-                className="bonus_multiply"
+                class="bonus_multiply"
               >
                 2
                 x
               </div>
               <div
-                className="bonus_type"
+                class="bonus_type"
               >
                 game.info.bonuses.word
               </div>
             </div>
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
       </tr>
       <tr
-        style={
-          Object {
-            "height": 46,
-          }
-        }
+        style="height: 46px;"
       >
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
@@ -538,33 +456,29 @@ exports[`scrambled Grid component renders correctly with some tiles 1`] = `
 
 exports[`scrambled Grid component renders correctly with temporary tiles 1`] = `
 <div
-  className="grid"
+  class="grid"
 >
   <table>
     <tbody>
       <tr
-        style={
-          Object {
-            "height": 46,
-          }
-        }
+        style="height: 46px;"
       >
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
+            class="field"
           >
             <div
-              className="tile"
+              class="tile"
             >
               <div
-                className="letter"
+                class="letter"
               >
                 A
               </div>
               <div
-                className="points"
+                class="points"
               >
                 1
               </div>
@@ -572,180 +486,148 @@ exports[`scrambled Grid component renders correctly with temporary tiles 1`] = `
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="tile tile_highlighted"
+              class="tile tile_highlighted"
             >
               <div
-                className="letter"
+                class="letter"
               >
                 B
               </div>
               <div
-                className="points"
+                class="points"
               >
                 3
               </div>
             </div>
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
-            style={
-              Object {
-                "background": "#16919F",
-              }
-            }
+            class="field"
+            style="background: rgb(22, 145, 159);"
           >
             <div
-              className="tile tile_highlighted"
+              class="tile tile_highlighted"
             >
               <div
-                className="letter letter_replacement"
+                class="letter letter_replacement"
               >
                 C
               </div>
               <div
-                className="bonus"
-                style={
-                  Object {
-                    "background": "#16919F",
-                  }
-                }
+                class="bonus"
+                style="background: rgb(22, 145, 159);"
               />
               <div
-                className="points"
-                style={
-                  Object {
-                    "textShadow": "-1px -1px 0 #16919F, 1px -1px 0 #16919F, -1px  1px 0 #16919F, 1px  1px 0 #16919F",
-                  }
-                }
+                class="points"
+                style="text-shadow: -1px -1px 0 #16919F, 1px -1px 0 #16919F, -1px  1px 0 #16919F, 1px  1px 0 #16919F;"
               >
                 0
               </div>
             </div>
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
       </tr>
       <tr
-        style={
-          Object {
-            "height": 46,
-          }
-        }
+        style="height: 46px;"
       >
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
-            style={
-              Object {
-                "background": "#F9C54A",
-              }
-            }
+            class="field"
+            style="background: rgb(249, 197, 74);"
           >
             <div
-              className="bonus"
+              class="bonus"
             >
               <div
-                className="bonus_multiply"
+                class="bonus_multiply"
               >
                 2
                 x
               </div>
               <div
-                className="bonus_type"
+                class="bonus_type"
               >
                 game.info.bonuses.word
               </div>
             </div>
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
       </tr>
       <tr
-        style={
-          Object {
-            "height": 46,
-          }
-        }
+        style="height: 46px;"
       >
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
         <td
-          className="cell"
+          class="cell"
         >
           <div
-            className="field"
-            onClick={[Function]}
+            class="field"
           >
             <div
-              className="field dimmer"
+              class="field dimmer"
             />
           </div>
         </td>
