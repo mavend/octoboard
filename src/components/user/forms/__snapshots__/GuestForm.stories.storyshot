@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots User/Forms/GuestForm Default 1`] = `
+<form
+  className="ui form"
+  onSubmit={[Function]}
+>
+  <div
+    className="ui error message"
+  />
+  <div
+    className="field"
+  >
+    <label>
+      form.nickname
+    </label>
+    <div
+      className="ui input"
+    >
+      <input
+        aria-describedby={null}
+        autoFocus={true}
+        maxLength="24"
+        name="form.nickname"
+        onChange={[Function]}
+        placeholder="form.nickname"
+        type="text"
+        value="Whatever"
+      />
+    </div>
+  </div>
+  <div
+    className="fields"
+  >
+    <div
+      className="field"
+    >
+      <button
+        aria-describedby={null}
+        className="ui green button"
+        onClick={[Function]}
+      >
+        actions.guest_login
+      </button>
+    </div>
+  </div>
+</form>
+`;

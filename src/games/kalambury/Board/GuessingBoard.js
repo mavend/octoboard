@@ -10,7 +10,11 @@ import { LineType } from "config/propTypes";
 const propTypes = {
   guess: PropTypes.string,
   setGuess: PropTypes.func,
-  lastUserGuess: PropTypes.string,
+  lastUserGuess: PropTypes.shape({
+    id: PropTypes.number,
+    phrase: PropTypes.string,
+    success: PropTypes.bool,
+  }),
   envokeLastAnswer: PropTypes.func,
   guessInputRef: PropTypes.object,
   lines: PropTypes.arrayOf(LineType),

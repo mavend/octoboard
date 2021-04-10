@@ -2,97 +2,80 @@
 
 exports[`scrambled TilesPanel component renders correctly 1`] = `
 <div
-  className="ui segment"
+  class="ui segment"
 >
   <span
-    className="ui green ribbon label"
-    onClick={[Function]}
+    class="ui green ribbon label"
   >
     <i
       aria-hidden="true"
-      className="star icon"
-      onClick={[Function]}
+      class="star icon"
     />
     panel.tiles
   </span>
   <div
-    className="ui top right attached label"
-    onClick={[Function]}
+    class="ui top right attached label"
   >
     game.info.tiles.left
     : 
     42
   </div>
   <div
-    style={
-      Object {
-        "display": "flex",
-        "paddingTop": 10,
-      }
-    }
+    style="display: flex; padding-top: 10px;"
   >
     <div
-      className="tile tile_separate tile_clickable"
-      onClick={[Function]}
+      class="tile tile_separate tile_clickable"
     >
       <div
-        className="letter"
+        class="letter"
       >
         A
       </div>
       <div
-        className="points"
+        class="points"
       >
         1
       </div>
     </div>
     <button
-      className="ui red disabled button"
-      disabled={true}
-      onClick={[Function]}
-      tabIndex={-1}
+      class="ui red disabled button"
+      disabled=""
+      tabindex="-1"
     >
       <i
         aria-hidden="true"
-        className="undo icon"
-        onClick={[Function]}
+        class="undo icon"
       />
       panel.actions.return
     </button>
     <button
-      className="ui orange disabled button"
-      disabled={true}
-      onClick={[Function]}
-      tabIndex={-1}
+      class="ui orange disabled button"
+      disabled=""
+      tabindex="-1"
     >
       <i
         aria-hidden="true"
-        className="refresh icon"
-        onClick={[Function]}
+        class="refresh icon"
       />
       panel.actions.swap
     </button>
     <button
-      className="ui yellow button"
-      onClick={[Function]}
+      class="ui yellow button"
     >
       <i
         aria-hidden="true"
-        className="forward icon"
-        onClick={[Function]}
+        class="forward icon"
       />
       panel.actions.skip
     </button>
     <button
-      className="ui green disabled button"
-      disabled={true}
-      onClick={[Function]}
-      tabIndex={-1}
+      class="ui green disabled button"
+      disabled=""
+      tabindex="-1"
     >
       <i
         aria-hidden="true"
-        className="check icon"
-        onClick={[Function]}
+        class="check icon"
       />
       panel.actions.play
     </button>

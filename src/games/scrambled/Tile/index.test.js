@@ -1,12 +1,11 @@
 import React from "react";
-import renderer from "react-test-renderer";
-import { render, screen } from "@testing-library/react";
+import { render, screen } from "utils/test/render";
 import Tile from "./index";
 
 describe("scrambled Tile component", () => {
   it("renders correctly", () => {
     expect.hasAssertions();
-    const component = renderer.create(
+    const { container } = render(
       <Tile
         letter={"X"}
         points={5}
@@ -16,25 +15,24 @@ describe("scrambled Tile component", () => {
         separate
       />
     );
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 
-  it("renders with a letter", () => {
+  it("renders with a letter", async () => {
     expect.hasAssertions();
     render(<Tile letter={"letter-X"} />);
-    expect(screen.queryByText("letter-X")).toBeInTheDocument();
+    expect(await screen.findByText("letter-X")).toBeInTheDocument();
   });
 
-  it("renders with points", () => {
+  it("renders with points", async () => {
     expect.hasAssertions();
     render(<Tile points={15} />);
-    expect(screen.getByText("15")).toBeInTheDocument();
+    expect(await screen.findByText("15")).toBeInTheDocument();
   });
 
-  it("renders with a replacement", () => {
+  it("renders with a replacement", async () => {
     expect.hasAssertions();
     render(<Tile replacement={"replacement-Y"} />);
-    expect(screen.getByText("replacement-Y")).toBeInTheDocument();
+    expect(await screen.findByText("replacement-Y")).toBeInTheDocument();
   });
 });

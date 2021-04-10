@@ -1,0 +1,388 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Lobby/CreateMatchForm Default 1`] = `
+<form
+  className="ui form createMatch"
+  onSubmit={[Function]}
+>
+  <div
+    className="field"
+  >
+    <label>
+      create.game_type
+    </label>
+    <div
+      aria-describedby={null}
+      aria-expanded={false}
+      className="ui fluid selection dropdown"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onMouseDown={[Function]}
+      role="listbox"
+      tabIndex={0}
+    >
+      <div
+        aria-atomic={true}
+        aria-live="polite"
+        className="divider text"
+        role="alert"
+      >
+        <img
+          className="ui avatar image"
+          src="https://placeimg.com/120/120/any"
+        />
+        Kalambury
+      </div>
+      <i
+        aria-hidden="true"
+        className="dropdown icon"
+        onClick={[Function]}
+      />
+      <div
+        className="menu transition"
+      >
+        <div
+          aria-checked={true}
+          aria-selected={true}
+          className="active selected item"
+          onClick={[Function]}
+          role="option"
+          style={
+            Object {
+              "pointerEvents": "all",
+            }
+          }
+        >
+          <img
+            className="ui avatar image"
+            src="https://placeimg.com/120/120/any"
+          />
+          <i
+            aria-hidden="true"
+            className="grey info circle fitted icon right floated"
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          />
+          <span
+            className="text"
+          >
+            Kalambury
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="field"
+  >
+    <label>
+      create.max_players
+    </label>
+    <div
+      aria-describedby={null}
+      aria-expanded={false}
+      className="ui fluid selection dropdown"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onMouseDown={[Function]}
+      role="listbox"
+      tabIndex={0}
+    >
+      <div
+        aria-atomic={true}
+        aria-live="polite"
+        className="divider text"
+        role="alert"
+      >
+        0
+      </div>
+      <i
+        aria-hidden="true"
+        className="dropdown icon"
+        onClick={[Function]}
+      />
+      <div
+        className="menu transition"
+      >
+        <div
+          aria-checked={true}
+          aria-selected={true}
+          className="active selected item"
+          onClick={[Function]}
+          role="option"
+          style={
+            Object {
+              "pointerEvents": "all",
+            }
+          }
+        >
+          <span
+            className="text"
+          >
+            0
+          </span>
+        </div>
+        <div
+          aria-checked={false}
+          aria-selected={false}
+          className="item"
+          onClick={[Function]}
+          role="option"
+          style={
+            Object {
+              "pointerEvents": "all",
+            }
+          }
+        >
+          <span
+            className="text"
+          >
+            1
+          </span>
+        </div>
+        <div
+          aria-checked={false}
+          aria-selected={false}
+          className="item"
+          onClick={[Function]}
+          role="option"
+          style={
+            Object {
+              "pointerEvents": "all",
+            }
+          }
+        >
+          <span
+            className="text"
+          >
+            2
+          </span>
+        </div>
+        <div
+          aria-checked={false}
+          aria-selected={false}
+          className="item"
+          onClick={[Function]}
+          role="option"
+          style={
+            Object {
+              "pointerEvents": "all",
+            }
+          }
+        >
+          <span
+            className="text"
+          >
+            3
+          </span>
+        </div>
+        <div
+          aria-checked={false}
+          aria-selected={false}
+          className="item"
+          onClick={[Function]}
+          role="option"
+          style={
+            Object {
+              "pointerEvents": "all",
+            }
+          }
+        >
+          <span
+            className="text"
+          >
+            4
+          </span>
+        </div>
+        <div
+          aria-checked={false}
+          aria-selected={false}
+          className="item"
+          onClick={[Function]}
+          role="option"
+          style={
+            Object {
+              "pointerEvents": "all",
+            }
+          }
+        >
+          <span
+            className="text"
+          >
+            5
+          </span>
+        </div>
+        <div
+          aria-checked={false}
+          aria-selected={false}
+          className="item"
+          onClick={[Function]}
+          role="option"
+          style={
+            Object {
+              "pointerEvents": "all",
+            }
+          }
+        >
+          <span
+            className="text"
+          >
+            6
+          </span>
+        </div>
+        <div
+          aria-checked={false}
+          aria-selected={false}
+          className="item"
+          onClick={[Function]}
+          role="option"
+          style={
+            Object {
+              "pointerEvents": "all",
+            }
+          }
+        >
+          <span
+            className="text"
+          >
+            7
+          </span>
+        </div>
+        <div
+          aria-checked={false}
+          aria-selected={false}
+          className="item"
+          onClick={[Function]}
+          role="option"
+          style={
+            Object {
+              "pointerEvents": "all",
+            }
+          }
+        >
+          <span
+            className="text"
+          >
+            8
+          </span>
+        </div>
+        <div
+          aria-checked={false}
+          aria-selected={false}
+          className="item"
+          onClick={[Function]}
+          role="option"
+          style={
+            Object {
+              "pointerEvents": "all",
+            }
+          }
+        >
+          <span
+            className="text"
+          >
+            9
+          </span>
+        </div>
+        <div
+          aria-checked={false}
+          aria-selected={false}
+          className="item"
+          onClick={[Function]}
+          role="option"
+          style={
+            Object {
+              "pointerEvents": "all",
+            }
+          }
+        >
+          <span
+            className="text"
+          >
+            10
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="required field"
+  >
+    <label>
+      create.match_name
+    </label>
+    <div
+      className="ui fluid input"
+    >
+      <input
+        aria-describedby={null}
+        onChange={[Function]}
+        placeholder="create.enter_your_own..."
+        required={true}
+        type="text"
+        value=""
+      />
+    </div>
+  </div>
+  <div
+    className="nameProposalPrompt"
+  >
+    create.or_use
+    :
+     
+    <button
+      className="nameProposalButton"
+      onClick={[Function]}
+    >
+      en test
+    </button>
+     
+    <i
+      aria-hidden="true"
+      className="sync link icon"
+      onClick={[Function]}
+    />
+  </div>
+  <div
+    className="field"
+  >
+    <div
+      className="ui checked toggle checkbox"
+      onChange={[Function]}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <input
+        aria-describedby={null}
+        checked={true}
+        className="hidden"
+        readOnly={true}
+        tabIndex={0}
+        type="checkbox"
+      />
+      <label>
+        create.private.true
+      </label>
+    </div>
+  </div>
+  <button
+    className="ui orange fluid disabled button"
+    disabled={true}
+    onClick={[Function]}
+    tabIndex={-1}
+    type="submit"
+  >
+    create.button
+  </button>
+</form>
+`;

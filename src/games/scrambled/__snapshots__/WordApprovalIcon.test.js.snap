@@ -3,31 +3,27 @@
 exports[`scrambled WordApprovalIcon component renders correctly for invalid word 1`] = `
 <i
   aria-hidden="true"
-  className="red remove circle icon"
-  onClick={[Function]}
+  class="red remove circle icon"
 />
 `;
 
 exports[`scrambled WordApprovalIcon component renders correctly for long word 1`] = `
 <i
   aria-hidden="true"
-  className="blue circle dot outline icon"
-  onClick={[Function]}
+  class="blue circle dot outline icon"
 />
 `;
 
 exports[`scrambled WordApprovalIcon component renders correctly for valid word 1`] = `
 <i
   aria-hidden="true"
-  className="green check circle icon"
-  onClick={[Function]}
+  class="green check circle icon"
 />
 `;
 
 exports[`scrambled WordApprovalIcon component renders correctly with disabled checks 1`] = `
 <i
   aria-hidden="true"
-  className="blue circle dot outline icon"
-  onClick={[Function]}
+  class="blue circle dot outline icon"
 />
 `;

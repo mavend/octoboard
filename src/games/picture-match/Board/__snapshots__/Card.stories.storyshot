@@ -1,0 +1,159 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots PictureMatch/Board/Card Default 1`] = `
+<div
+  className="ui circular segment"
+  style={
+    Object {
+      "height": "300px",
+      "transform": "rotate(undefineddeg)",
+      "width": "300px",
+    }
+  }
+>
+  <div
+    onClick={[Function]}
+    style={
+      Object {
+        "backgroundImage": "url(/images/games/picture-match/pictures/color/0.png)",
+        "backgroundSize": "contain",
+        "cursor": "pointer",
+        "display": "inline-block",
+        "height": "95px",
+        "left": "24px",
+        "margin": "2px",
+        "position": "absolute",
+        "top": "64px",
+        "transform": "rotate(41deg)",
+        "width": "95px",
+      }
+    }
+  />
+  <div
+    onClick={[Function]}
+    style={
+      Object {
+        "backgroundImage": "url(/images/games/picture-match/pictures/color/1.png)",
+        "backgroundSize": "contain",
+        "cursor": "pointer",
+        "display": "inline-block",
+        "height": "78px",
+        "left": "48px",
+        "margin": "2px",
+        "position": "absolute",
+        "top": "178px",
+        "transform": "rotate(72deg)",
+        "width": "78px",
+      }
+    }
+  />
+  <div
+    onClick={[Function]}
+    style={
+      Object {
+        "backgroundImage": "url(/images/games/picture-match/pictures/color/2.png)",
+        "backgroundSize": "contain",
+        "cursor": "pointer",
+        "display": "inline-block",
+        "height": "81px",
+        "left": "114px",
+        "margin": "2px",
+        "position": "absolute",
+        "top": "129px",
+        "transform": "rotate(200deg)",
+        "width": "81px",
+      }
+    }
+  />
+  <div
+    onClick={[Function]}
+    style={
+      Object {
+        "backgroundImage": "url(/images/games/picture-match/pictures/color/3.png)",
+        "backgroundSize": "contain",
+        "cursor": "pointer",
+        "display": "inline-block",
+        "height": "56.99999999999999px",
+        "left": "110px",
+        "margin": "2px",
+        "position": "absolute",
+        "top": "18px",
+        "transform": "rotate(243deg)",
+        "width": "56.99999999999999px",
+      }
+    }
+  />
+  <div
+    onClick={[Function]}
+    style={
+      Object {
+        "backgroundImage": "url(/images/games/picture-match/pictures/color/4.png)",
+        "backgroundSize": "contain",
+        "cursor": "pointer",
+        "display": "inline-block",
+        "height": "74px",
+        "left": "140px",
+        "margin": "2px",
+        "position": "absolute",
+        "top": "203px",
+        "transform": "rotate(103deg)",
+        "width": "74px",
+      }
+    }
+  />
+  <div
+    onClick={[Function]}
+    style={
+      Object {
+        "backgroundImage": "url(/images/games/picture-match/pictures/color/5.png)",
+        "backgroundSize": "contain",
+        "cursor": "pointer",
+        "display": "inline-block",
+        "height": "69px",
+        "left": "158px",
+        "margin": "2px",
+        "position": "absolute",
+        "top": "58px",
+        "transform": "rotate(313deg)",
+        "width": "69px",
+      }
+    }
+  />
+  <div
+    onClick={[Function]}
+    style={
+      Object {
+        "backgroundImage": "url(/images/games/picture-match/pictures/color/6.png)",
+        "backgroundSize": "contain",
+        "cursor": "pointer",
+        "display": "inline-block",
+        "height": "50px",
+        "left": "228px",
+        "margin": "2px",
+        "position": "absolute",
+        "top": "108px",
+        "transform": "rotate(53deg)",
+        "width": "50px",
+      }
+    }
+  />
+  <div
+    onClick={[Function]}
+    style={
+      Object {
+        "backgroundImage": "url(/images/games/picture-match/pictures/color/7.png)",
+        "backgroundSize": "contain",
+        "cursor": "pointer",
+        "display": "inline-block",
+        "height": "56.00000000000001px",
+        "left": "210px",
+        "margin": "2px",
+        "position": "absolute",
+        "top": "166px",
+        "transform": "rotate(40deg)",
+        "width": "56.00000000000001px",
+      }
+    }
+  />
+</div>
+`;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { action } from "@storybook/addon-actions";
 import { text } from "@storybook/addon-knobs";
 
@@ -18,8 +18,8 @@ export const Default = () => (
     lines={lines}
     guess={text("Guess", "Baba z wozu?")}
     setGuess={action("SetGuess")}
-    lastUserGuess={text("Last Guess", "Dziad z wozu?")}
-    guessInputRef={{}}
+    lastUserGuess={{ id: 1, phrase: text("Last Guess", "Dziad z wozu?"), success: false }}
+    guessInputRef={useRef()}
     previousUserGuesses={[]}
     envokeLastAnswer={action("envokeLastAnswer")}
   />

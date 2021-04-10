@@ -26,7 +26,7 @@ export const Guest = () => (
       setNickname={action("setNickname")}
       formValid={boolean("Form valid?", true)}
     />
-    <OtherLoginOptions setError={action("setError")} setIsLoading={action("setIsLoading")} />
+    <OtherLoginOptions setError={action("setError")} setLoading={action("setLoading")} />
   </CredentialsLayout>
 );
 
@@ -44,7 +44,7 @@ export const Register = () => (
       setPassword={action("setPassword")}
       formValid={boolean("Form valid?", true)}
     />
-    <OtherLoginOptions setError={action("setError")} setIsLoading={action("setIsLoading")} />
+    <OtherLoginOptions setError={action("setError")} setLoading={action("setLoading")} />
   </CredentialsLayout>
 );
 
@@ -60,7 +60,7 @@ export const Login = () => (
       setPassword={action("setPassword")}
       formValid={boolean("Form valid?", true)}
     />
-    <OtherLoginOptions setError={action("setError")} setIsLoading={action("setIsLoading")} />
+    <OtherLoginOptions setError={action("setError")} setLoading={action("setLoading")} />
   </CredentialsLayout>
 );
 

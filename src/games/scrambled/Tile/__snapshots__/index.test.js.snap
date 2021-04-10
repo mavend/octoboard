@@ -2,28 +2,20 @@
 
 exports[`scrambled Tile component renders correctly 1`] = `
 <div
-  className="tile tile_separate tile_raised tile_highlighted"
+  class="tile tile_separate tile_raised tile_highlighted"
 >
   <div
-    className="letter"
+    class="letter"
   >
     X
   </div>
   <div
-    className="bonus"
-    style={
-      Object {
-        "background": "#16919F",
-      }
-    }
+    class="bonus"
+    style="background: rgb(22, 145, 159);"
   />
   <div
-    className="points"
-    style={
-      Object {
-        "textShadow": "-1px -1px 0 #16919F, 1px -1px 0 #16919F, -1px  1px 0 #16919F, 1px  1px 0 #16919F",
-      }
-    }
+    class="points"
+    style="text-shadow: -1px -1px 0 #16919F, 1px -1px 0 #16919F, -1px  1px 0 #16919F, 1px  1px 0 #16919F;"
   >
     15
   </div>

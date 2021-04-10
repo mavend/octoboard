@@ -1,23 +1,17 @@
 import React from "react";
-import renderer from "react-test-renderer";
+import { render, screen } from "utils/test/render";
 import GameBoard from "./GameBoard";
 import BoardGameContextMock from "../GameContextMock";
-import { MemoryRouter } from "react-router";
 
 describe("scrambled GameBoard component", () => {
-  it("renders correctly", () => {
+  it("renders correctly", async () => {
     expect.hasAssertions();
-    let component;
-    renderer.act(() => {
-      component = renderer.create(
-        <MemoryRouter>
-          <BoardGameContextMock>
-            <GameBoard />
-          </BoardGameContextMock>
-        </MemoryRouter>
-      );
-    });
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+    const { container } = render(
+      <BoardGameContextMock>
+        <GameBoard />
+      </BoardGameContextMock>
+    );
+    expect(await screen.findByText("game.errors.ok")).toBeInTheDocument();
+    expect(container.firstChild).toMatchSnapshot();
   });
 });

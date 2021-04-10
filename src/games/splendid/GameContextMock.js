@@ -1,7 +1,6 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
 import { select } from "@storybook/addon-knobs";
-import { shuffle } from "lodash";
 import { BoardGameProvider } from "contexts/BoardGameContext";
 import cards from "./data/cards.json";
 import bonuses from "./data/bonuses.json";
@@ -14,9 +13,9 @@ const BoardGameContextMock = ({ children }) => {
       gameName="Splendid"
       G={{
         table: {
-          1: shuffle(cards["1"]).slice(0, 4),
-          2: [...shuffle(cards["2"]).slice(0, 3), null],
-          3: shuffle(cards["3"]).slice(0, 4),
+          1: cards["1"].slice(0, 4),
+          2: [...cards["2"].slice(0, 3), null],
+          3: cards["3"].slice(0, 4),
         },
         tokens: { edu: 7, water: 7, nature: 3, tech: 7, lab: 5, gold: 5 },
         points: [10, 3],
@@ -32,7 +31,7 @@ const BoardGameContextMock = ({ children }) => {
             reservedCards: [],
           },
         },
-        bonuses: shuffle(bonuses).slice(0, 5),
+        bonuses: bonuses.slice(0, 5),
       }}
       moves={{
         BuyCard: action("BuyCard"),
