@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`scrambled InfoPopup component renders correctly 1`] = `
+<div
+  id="words-info-popup"
+  style="pointer-events: auto; transition: opacity 0.3s; display: flex; position: absolute; left: 0px; top: 0px; bottom: 0px; transform: translate(0px, 0px);"
+>
+  <div
+    class="ui top center basic flowing popup transition visible"
+    style="position: initial; opacity: 0.95; border: 0px; border-radius: 10px; background: rgb(245, 245, 245);"
+  >
+    <div
+      class="header"
+    >
+      game.errors.ok
+    </div>
+    <div
+      class="letter_wrapper"
+    >
+      <i
+        aria-hidden="true"
+        class="yellow winner icon"
+      />
+      game.info.bonus
+      <span
+        class="bonus_wrapper"
+        style="background: rgb(22, 171, 57);"
+      >
+        +50
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`scrambled InfoPopup component renders errors correctly 1`] = `
+<div
+  id="words-info-popup"
+  style="pointer-events: auto; transition: opacity 0.3s; display: flex; position: absolute; left: 0px; top: 0px; bottom: 0px; transform: translate(0px, 0px);"
+>
+  <div
+    class="ui top center basic flowing popup transition visible"
+    style="position: initial; opacity: 0.95; border: 0px; border-radius: 10px; background: rgb(245, 245, 245);"
+  >
+    <div
+      class="header"
+    >
+      game.errors.header
+    </div>
+    <p>
+      <i
+        aria-hidden="true"
+        class="orange warning sign icon"
+      />
+       
+      game.errors.test_error
+    </p>
+  </div>
+</div>
+`;

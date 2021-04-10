@@ -41,7 +41,7 @@
     "start": "NODE_ENV=development concurrently -p \"{time} [{name}]\" -t \"HH:mm:ss.SSS\" -n \"client,server,firebase,storybook,test\" -c \"green.bold,blue.bold,yellow.bold,magenta.bold,red.bold\" \"npm:start:client\" \"npm:start:server\" \"npm:start:firebase\" \"npm:start:storybook\" \"npm:test\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "coverage": "react-scripts test --coverage --watchAll",
+    "coverage": "react-scripts test --coverage --watchAll --testPathIgnorePatterns='.*e2e.*'",
     "eject": "react-scripts eject",
     "lint": "eslint '**/*.{js,jsx,json}'",
     "prettier": "prettier --write .",
@@ -85,7 +85,8 @@
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       ".stories.js",
-      "GameContextMock.js"
+      "GameContextMock.js",
+      ".test.js"
     ]
   },
   "devDependencies": {

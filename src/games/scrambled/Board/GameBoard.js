@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Header, Confirm, Sticky } from "semantic-ui-react";
 
@@ -7,11 +7,10 @@ import GameLayout from "components/layout/GameLayout";
 
 import Grid from "./Grid";
 import TilesPanel from "./TilesPanel";
-import InfoPopup from "./InfoPopup";
+import WordsPopup from "./WordsPopup";
 import { remove, orderBy, pick } from "lodash";
 import { availableLaguages } from "../data/tiles";
-import { tilesPlacementErrors, newWords, filterPlayedTiles, canPlaceTile } from "../utils";
-import ApprovalModal from "../Modals/ApprovalModal";
+import { tilesPlacementErrors, filterPlayedTiles, canPlaceTile } from "../utils";
 import SwapTilesModal from "../Modals/SwapTilesModal";
 import BlankTileModal from "../Modals/BlankTileModal";
 
@@ -20,7 +19,7 @@ const GameBoard = () => {
     G,
     ctx: { phase, currentPlayer },
     player: { id, tiles, stage, isCurrentPlayer },
-    moves: { PlayTiles, SwapTiles, SkipTurn, Approve },
+    moves: { PlayTiles, SwapTiles, SkipTurn },
     chatMessages,
     sendChatMessage,
   } = useBoardGame();
@@ -34,7 +33,6 @@ const GameBoard = () => {
   const [swapTilesModal, setSwapTilesModal] = useState(false);
   const [skipTurnModal, setSkipTurnModal] = useState(false);
   const [selectedForSwap, setSelectedForSwap] = useState([]);
-  const [popupOpen, setPopupOpen] = useState(false);
   const [previewTiles, setPreviewTiles] = useState(null);
   const popupHandleRef = useRef();
   const stickyRef = useRef();
@@ -46,6 +44,26 @@ const GameBoard = () => {
   const canPlayTiles = playedTiles.length > 0 && moveErrors.length === 0;
   const canSwapTiles = G.tilesLeft >= 7;
   const approvalPhase = phase === "play" && stage === "approve";
+  const usedTiles = useMemo(() => {
+    return (
+      (stage === "play" ? playedTiles : stage === "wait" ? previewTiles : G.pendingTiles) || []
+    );
+  }, [G.pendingTiles, playedTiles, previewTiles, stage]);
+  const popupOpen = usedTiles.length > 0 && (stage === "play" || stage === "approve");
+
+  useEffect(() => {
+    // Select new tile for holding info popup
+    if (usedTiles.length > 0)
+      orderBy(usedTiles, ["y", "x"], ["asc", "asc"])[0].popupRef = popupHandleRef;
+  }, [usedTiles]);
+
+  useEffect(() => {
+    if (phase === "play" && stage === "approve") {
+      orderBy(G.pendingTiles, ["y", "x"], ["asc", "asc"])[0].popupRef = popupHandleRef;
+    } else {
+      setPreviewTiles([]);
+    }
+  }, [G.pendingTiles, phase, stage]);
 
   const onReturnTiles = useCallback(() => {
     Object.values(playerTiles).forEach((tile) => {
@@ -54,14 +72,12 @@ const GameBoard = () => {
       delete tile.popupRef;
     });
     setPlayerTiles([...playerTiles]);
-    setPopupOpen(false);
   }, [playerTiles]);
 
   const onPlayTiles = useCallback(() => {
     playerTiles.forEach((tile) => {
       tile.popupRef = undefined;
     });
-    setPopupOpen(false);
     PlayTiles({ tiles: playerTiles });
   }, [PlayTiles, playerTiles]);
 
@@ -70,7 +86,6 @@ const GameBoard = () => {
     playerTiles.forEach((tile) => {
       tile.popupRef = undefined;
     });
-    setPopupOpen(false);
     SkipTurn();
   }, [SkipTurn, playerTiles]);
 
@@ -89,14 +104,13 @@ const GameBoard = () => {
   }, [tiles]);
 
   useEffect(() => {
-    // player.isCurrentPlayer didn't seem to work properly
-    if (id !== undefined && id.toString() !== currentPlayer) {
-      setMoveErrors(["invalid_player"]);
+    setMoveErrors([]);
+    if (!isCurrentPlayer) {
       return;
     }
     const playedTiles = filterPlayedTiles(playerTiles);
     setMoveErrors(tilesPlacementErrors(G, currentPlayer, playedTiles));
-  }, [G, currentPlayer, id, playerTiles]);
+  }, [G, currentPlayer, id, isCurrentPlayer, playerTiles]);
 
   useEffect(() => {
     if (canMakeMove || chatMessages.length <= 0) return;
@@ -158,10 +172,6 @@ const GameBoard = () => {
       });
 
       const playedTiles = filterPlayedTiles(playerTiles);
-      // Select new tile for holding info popup
-      if (playedTiles.length > 0)
-        orderBy(playedTiles, ["y", "x"], ["asc", "asc"])[0].popupRef = popupHandleRef;
-      setPopupOpen(playedTiles.length > 0);
 
       if (G.preview)
         sendChatMessage({
@@ -213,27 +223,21 @@ const GameBoard = () => {
         }
         extraPlayerContent={extraPlayerContent}
       >
-        <InfoPopup
-          open={popupOpen && !selectedBlankTile && !swapTilesModal}
-          errors={moveErrors}
-          newWords={newWords(G.board, playerTiles)}
-          specialBonus={playedTiles.length === 7}
-          {...{ popupHandleRef }}
-        />
+        {usedTiles && popupOpen && (
+          <WordsPopup
+            errors={moveErrors}
+            tiles={usedTiles}
+            type={approvalPhase ? "approval" : "info"}
+            {...{ popupHandleRef }}
+          />
+        )}
         <Grid
           board={G.board}
           clickable={canBeClicked}
           handleFieldClick={clickBoard}
-          playerTiles={stage === "wait_for_approval" ? G.pendingTiles : previewTiles || playerTiles}
+          playerTiles={usedTiles}
           selectionEnabled={selectedTile !== null}
         />
-        {G.pendingTiles && approvalPhase && (
-          <ApprovalModal
-            newWords={newWords(G.board, G.pendingTiles)}
-            onReject={() => Approve(false)}
-            onApprove={() => Approve(true)}
-          />
-        )}
         {swapTilesModal && (
           <SwapTilesModal
             onClose={() => {
