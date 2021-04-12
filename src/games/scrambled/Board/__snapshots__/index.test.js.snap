@@ -878,9 +878,28 @@ exports[`scrambled Board component renders correctly 1`] = `
                     <div
                       class="text extra extra"
                     >
-                      game.info.tiles.owned
-                      : 
-                      5
+                      <div
+                        class="ui label"
+                      >
+                        <i
+                          aria-hidden="true"
+                          class="grey star icon"
+                        />
+                        game.info.tiles.owned
+                        : 
+                        5
+                      </div>
+                      <div />
+                      <button
+                        class="ui grey tiny basic icon left labeled button"
+                        style="margin-top: 10px;"
+                      >
+                        <i
+                          aria-hidden="true"
+                          class="bell slash outline icon"
+                        />
+                        game.settings.notifications.false
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -1237,9 +1256,18 @@ exports[`scrambled Board component renders correctly 1`] = `
                     <div
                       class="text extra extra"
                     >
-                      game.info.tiles.owned
-                      : 
-                      7
+                      <div
+                        class="ui label"
+                      >
+                        <i
+                          aria-hidden="true"
+                          class="grey star icon"
+                        />
+                        game.info.tiles.owned
+                        : 
+                        7
+                      </div>
+                      <div />
                     </div>
                   </div>
                 </div>

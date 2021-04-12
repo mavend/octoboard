@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Header, Confirm, Sticky } from "semantic-ui-react";
+import { Header, Confirm, Sticky, Button, Icon, Label } from "semantic-ui-react";
 
 import { useBoardGame } from "contexts/BoardGameContext";
 import GameLayout from "components/layout/GameLayout";
@@ -9,10 +9,15 @@ import Grid from "./Grid";
 import TilesPanel from "./TilesPanel";
 import WordsPopup from "./WordsPopup";
 import { remove, orderBy, pick } from "lodash";
+import { toast } from "react-toastify";
+import useSound from "use-sound";
 import { availableLaguages } from "../data/tiles";
 import { tilesPlacementErrors, filterPlayedTiles, canPlaceTile } from "../utils";
 import SwapTilesModal from "../Modals/SwapTilesModal";
 import BlankTileModal from "../Modals/BlankTileModal";
+
+import popSfx from "../../../assets/audio/pop.mp3";
+import blinkSfx from "../../../assets/audio/blink.mp3";
 
 const GameBoard = () => {
   const {
@@ -34,8 +39,12 @@ const GameBoard = () => {
   const [skipTurnModal, setSkipTurnModal] = useState(false);
   const [selectedForSwap, setSelectedForSwap] = useState([]);
   const [previewTiles, setPreviewTiles] = useState(null);
+  const [notificationsEnabled, setNotificationEnabled] = useState(false);
   const popupHandleRef = useRef();
   const stickyRef = useRef();
+
+  const [playPop] = useSound(popSfx, { volume: 0.8 });
+  const [playBlink] = useSound(blinkSfx);
 
   const currentLanguage = availableLaguages.find(({ key }) => key === G.language);
   const playedTiles = filterPlayedTiles(playerTiles);
@@ -50,6 +59,29 @@ const GameBoard = () => {
     );
   }, [G.pendingTiles, playedTiles, previewTiles, stage]);
   const popupOpen = usedTiles.length > 0 && (stage === "play" || stage === "approve");
+
+  useEffect(() => {
+    if (phase !== "play") return;
+
+    const config = {
+      play: { sound: playPop, notification: toast.success },
+      approve: { sound: playBlink, notification: toast.info },
+    };
+
+    switch (stage) {
+      case "play":
+      case "approve":
+        if (toast.isActive(`${stage}-toast`)) return;
+        if (notificationsEnabled) config[stage].sound();
+        config[stage].notification(t(`game.notifications.${stage}`), {
+          autoClose: 2000,
+          toastId: `${stage}-toast`,
+        });
+        break;
+      default:
+        break;
+    }
+  }, [notificationsEnabled, phase, playBlink, playPop, stage, t]);
 
   useEffect(() => {
     // Select new tile for holding info popup
@@ -183,12 +215,30 @@ const GameBoard = () => {
   );
 
   const extraPlayerContent = useCallback(
-    ({ tilesCount }) => (
+    ({ isCurrentPlayer, isYou, tilesCount }) => (
       <>
-        {t("game.info.tiles.owned")}: {tilesCount}
+        <Label>
+          <Icon name="star" color="grey" />
+          {t("game.info.tiles.owned")}: {tilesCount}
+        </Label>
+        <div></div>
+        {isYou && (
+          <Button
+            style={{ marginTop: 10 }}
+            basic
+            color={notificationsEnabled ? "green" : "grey"}
+            size="tiny"
+            icon
+            onClick={() => setNotificationEnabled(!notificationsEnabled)}
+            labelPosition="left"
+          >
+            <Icon name={notificationsEnabled ? "bell" : "bell slash outline"} />
+            {t(`game.settings.notifications.${notificationsEnabled}`)}
+          </Button>
+        )}
       </>
     ),
-    [t]
+    [notificationsEnabled, t]
   );
 
   return (
