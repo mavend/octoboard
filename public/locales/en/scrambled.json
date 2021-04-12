@@ -14,7 +14,15 @@
       "opponent_previews": {
         "true": "Enabled",
         "false": "Disabled"
+      },
+      "notifications": {
+        "true": "Audible notifications",
+        "false": "Silent notifications"
       }
+    },
+    "notifications": {
+      "play": "It's your turn now",
+      "approve": "Check if those words are correct"
     },
     "errors": {
       "invalid_player": "You can't play tiles during your opponents turn",
