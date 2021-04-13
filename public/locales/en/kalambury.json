@@ -11,7 +11,11 @@
       },
       "language": "Language",
       "category": "Category",
-      "all": "All"
+      "all": "All",
+      "sound": {
+        "true": "Sound enabled",
+        "false": "Sound disabled"
+      }
     }
   },
   "tools": {

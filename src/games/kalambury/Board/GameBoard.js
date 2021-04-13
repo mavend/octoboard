@@ -13,14 +13,18 @@ import DrawArea from "../DrawArea";
 import GuessingBoard from "./GuessingBoard";
 import Countdown from "./Countdown";
 
+import { random } from "lodash";
+import { useWhiteboardAudio } from "utils/game/audio";
+
 const propTypes = {
   guess: PropTypes.string,
   setGuess: PropTypes.func,
   envokeLastAnswer: PropTypes.func,
   guessInputRef: PropTypes.object,
+  soundsEnabled: PropTypes.bool,
 };
 
-const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
+const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef, soundsEnabled }) => {
   const {
     G,
     moves,
@@ -37,6 +41,8 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
     id: null,
     success: false,
   };
+
+  const { whiteboard } = useWhiteboardAudio();
 
   const throttledSendAppend = useMemo(
     () =>
@@ -103,20 +109,42 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef }) => {
     return () => setLastSuccess(false); // Do cleanup of state
   }, [lastUserGuess.id, lastUserGuess.success]);
 
+  const PlayAudio = useCallback(
+    (updateType) => {
+      const audioSettings = {
+        add: {
+          sampleName: () => `tap${random(2)}`,
+          squeakProbability: 0.15,
+        },
+        append: {
+          sampleName: () => `draw${random(7)}`,
+          squeakProbability: 0.03,
+        },
+      }[updateType];
+      if (!audioSettings) return;
+
+      whiteboard({ id: audioSettings.sampleName() });
+      if (Math.random() > 1 - audioSettings.squeakProbability)
+        whiteboard({ id: `squeak${random(2)}` });
+    },
+    [whiteboard]
+  );
+
   useEffect(() => {
     if (isDrawing || chatMessages.length <= 0) return;
     const lastMessage = chatMessages[chatMessages.length - 1].payload;
 
     if (lastMessage.type && lastMessage.type.startsWith("UpdateDrawing")) {
       const updateType = lastMessage.type.split(":")[1];
+      if (soundsEnabled) PlayAudio(updateType);
       setLines((lines) => updateLines(lines, updateType, lastMessage.data));
     }
-  }, [isDrawing, chatMessages, setLines]);
+  }, [isDrawing, chatMessages, setLines, PlayAudio, soundsEnabled]);
 
   const handleLinesUpdate = useCallback(
     (type, data) => {
       setLines((lines) => updateLines(lines, type, data));
-      if (type === UpdateTypes.add) {
+      if (type === UpdateTypes.append) {
         throttledSendAppend({ type: `UpdateDrawing:${type}`, data });
       } else {
         throttledSendAppend.flush();

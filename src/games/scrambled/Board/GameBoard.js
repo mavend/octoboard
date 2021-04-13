@@ -10,14 +10,12 @@ import TilesPanel from "./TilesPanel";
 import WordsPopup from "./WordsPopup";
 import { remove, orderBy, pick } from "lodash";
 import { toast } from "react-toastify";
-import useSound from "use-sound";
 import { availableLaguages } from "../data/tiles";
 import { tilesPlacementErrors, filterPlayedTiles, canPlaceTile } from "../utils";
 import SwapTilesModal from "../Modals/SwapTilesModal";
 import BlankTileModal from "../Modals/BlankTileModal";
 
-import popSfx from "../../../assets/audio/pop.mp3";
-import blinkSfx from "../../../assets/audio/blink.mp3";
+import { useDefaultAudio } from "utils/game/audio";
 
 const GameBoard = () => {
   const {
@@ -43,8 +41,7 @@ const GameBoard = () => {
   const popupHandleRef = useRef();
   const stickyRef = useRef();
 
-  const [playPop] = useSound(popSfx, { volume: 0.8 });
-  const [playBlink] = useSound(blinkSfx);
+  const { playPop, playBlink } = useDefaultAudio();
 
   const currentLanguage = availableLaguages.find(({ key }) => key === G.language);
   const playedTiles = filterPlayedTiles(playerTiles);
@@ -215,7 +212,7 @@ const GameBoard = () => {
   );
 
   const extraPlayerContent = useCallback(
-    ({ isCurrentPlayer, isYou, tilesCount }) => (
+    ({ isYou, tilesCount }) => (
       <>
         <Label>
           <Icon name="star" color="grey" />
