@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "module": "esnext",
+    "module": "commonjs",
     "baseUrl": "./src",
     "jsx": "react-jsx",
     "allowJs": true,
@@ -16,8 +16,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "noImplicitAny": false,
-    "lib": ["dom", "dom.iterable", "esnext"]
+    "noImplicitAny": false
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "build"]

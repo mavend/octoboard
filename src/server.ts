@@ -1,12 +1,15 @@
-const admin = require("firebase-admin");
-const Sentry = require("@sentry/node");
-const { Kalambury } = require("./games/kalambury/Game");
-const { Splendid } = require("./games/splendid/Game");
-const { PictureMatch } = require("./games/picture-match/Game");
-const { Scrambled } = require("./games/scrambled/Game");
-const { Server } = require("boardgame.io/server");
-const { StorageCache } = require("bgio-storage-cache");
-const { Firestore } = require("bgio-firebase");
+import { Server } from "boardgame.io/server";
+import { Firestore } from "bgio-firebase";
+import { StorageCache } from "bgio-storage-cache";
+import admin from "firebase-admin";
+import * as Sentry from "@sentry/node";
+
+import { Kalambury } from "games/kalambury/Game";
+import { Splendid } from "games/splendid/Game";
+import { PictureMatch } from "games/picture-match/Game";
+import { Scrambled } from "games/scrambled/Game";
+
+export {};
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
@@ -14,7 +17,7 @@ Sentry.init({
   tracesSampleRate: 1.0,
 });
 
-const config = {};
+const config: admin.AppOptions = {};
 
 if (process.env.NODE_ENV === "production") {
   config.credential = admin.credential.applicationDefault();
@@ -40,4 +43,4 @@ server.app.on("error", (err, ctx) => {
   });
 });
 
-server.run(process.env.PORT || 8000);
+server.run(parseInt(process.env.PORT || "8000"));

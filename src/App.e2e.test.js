@@ -1,4 +1,3 @@
-/* eslint-disable jest/no-hooks */
 import { internet } from "faker";
 const puppeteer = require("puppeteer");
 

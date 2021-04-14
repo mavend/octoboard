@@ -55,7 +55,7 @@
     "storybook-ci": "start-storybook --ci --smoke-test --quiet",
     "test-ci": "react-scripts test --coverage --ci --coverageReporters=lcov --runInBand",
     "build-storybook": "build-storybook -s public",
-    "start:server": "PORT=11080 NODE_ENV=development nodemon -r esm src/server.js",
+    "start:server": "PORT=11080 NODE_ENV=development nodemon",
     "start:client": "PORT=11030 react-scripts start",
     "start:firebase": "firebase emulators:start --import=./emulators.backup",
     "start:storybook": "start-storybook -p 11090 -s public --quiet",
@@ -134,6 +134,8 @@
     "prettier": "^2.2.1",
     "puppeteer": "^8.0.0",
     "storybook": "^6.2.7",
-    "storybook-react-router": "^1.0.8"
+    "storybook-react-router": "^1.0.8",
+    "ts-node": "^9.1.1",
+    "tsconfig-paths": "^3.9.0"
   }
 }

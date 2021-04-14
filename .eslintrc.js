@@ -22,6 +22,7 @@ module.exports = {
   plugins: ["react", "react-hooks", "prettier", "jest", "json"],
   rules: {
     "react/prop-types": [2, { ignore: ["children"] }],
+    "jest/no-hooks": "off",
   },
   settings: {
     react: {
