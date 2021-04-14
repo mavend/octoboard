@@ -29,4 +29,15 @@ module.exports = {
     },
   },
   ignorePatterns: ["node_modules/**", "build/**"],
+  overrides: [
+    {
+      files: ["**/*.ts", "**/*.tsx"],
+      parser: "@typescript-eslint/parser",
+      plugins: ["@typescript-eslint"],
+      rules: {
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-use-before-define": ["error"],
+      },
+    },
+  ],
 };
