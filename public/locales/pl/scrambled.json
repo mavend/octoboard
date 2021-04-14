@@ -14,7 +14,15 @@
       "opponent_previews": {
         "true": "Aktywny",
         "false": "Nieaktywny"
+      },
+      "notifications": {
+        "true": "Powiadomienia z dźwiękiem",
+        "false": "Powiadomienia bez dźwięku"
       }
+    },
+    "notifications": {
+      "play": "Czas na Twój ruch",
+      "approve": "Sprawdź ułożone słowa"
     },
     "errors": {
       "invalid_player": "Nie możesz wykładać płytek podczas ruchu przeciwników",
