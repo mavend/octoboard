@@ -1,3 +1,4 @@
 {
-  "watch": ["games/*/Game.js", "games/*/data/*", "utils.js", "config.js", "server.js"]
+  "watch": ["games/*/Game.{js,ts}", "games/*/data/*", "utils.js", "config.js", "server.ts"],
+  "exec": "ts-node --project ./tsconfig-server.json -r esm -r tsconfig-paths/register ./src/server.ts"
 }
