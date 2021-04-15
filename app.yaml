@@ -1,5 +1,5 @@
 runtime: nodejs14
-entrypoint: ts-node --project ./tsconfig-server.json -r esm -r tsconfig-paths/register ./src/server.ts
+entrypoint: node_modules/.bin/ts-node --project ./tsconfig-server.json -r esm -r tsconfig-paths/register ./src/server.ts
 instance_class: F1
 
 automatic_scaling:
