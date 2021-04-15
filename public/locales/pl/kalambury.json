@@ -11,7 +11,11 @@
       },
       "language": "Język",
       "category": "Kategoria",
-      "all": "Wszystkie"
+      "all": "Wszystkie",
+      "sound": {
+        "true": "Dźwięk włączony",
+        "false": "Dźwięk wyłączony"
+      }
     }
   },
   "tools": {

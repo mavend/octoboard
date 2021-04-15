@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Header } from "semantic-ui-react";
+import { Header, Button, Icon } from "semantic-ui-react";
 import { isEqual } from "lodash";
 
 import { useDeepCompareEffect } from "utils/hooks";
@@ -23,6 +23,7 @@ const Board = () => {
   const { t } = useTranslation("kalambury");
 
   const [guess, setGuess] = useState("");
+  const [soundsEnabled, setSoundsEnabled] = useState(false);
   const guessInputRef = useRef();
 
   const hasGameStarted = phase === "play";
@@ -67,11 +68,31 @@ const Board = () => {
     }
   }, [UpdateConnectedPlayers, connectedPlayers, G.connectedPlayers]);
 
+  const extraPlayerContent = useCallback(
+    ({ isYou }) =>
+      isYou && (
+        <Button
+          style={{ marginTop: 10 }}
+          basic
+          color={soundsEnabled ? "green" : "grey"}
+          size="tiny"
+          icon
+          onClick={() => setSoundsEnabled(!soundsEnabled)}
+          labelPosition="left"
+        >
+          <Icon name={soundsEnabled ? "volume up" : "volume off"} />
+          {t(`game.settings.sound.${soundsEnabled}`)}
+        </Button>
+      ),
+    [soundsEnabled, t]
+  );
+
   return (
     <GameLayout
       gameName={t("game.name")}
       privateMatch={G.privateMatch}
       handleActionClick={handleActionClick}
+      extraPlayerContent={extraPlayerContent}
     >
       {phase ? (
         <>
@@ -87,6 +108,7 @@ const Board = () => {
               setGuess={setGuess}
               guessInputRef={guessInputRef}
               envokeLastAnswer={envokeLastAnswer}
+              soundsEnabled={soundsEnabled}
             />
           ) : (
             <SettingsBoard

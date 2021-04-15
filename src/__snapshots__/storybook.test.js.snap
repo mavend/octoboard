@@ -1042,6 +1042,20 @@ exports[`Storyshots Kalambury/Board Default 1`] = `
                       role="list"
                     />
                   </div>
+                  <div
+                    class="text extra extra"
+                  >
+                    <button
+                      class="ui grey tiny basic icon left labeled button"
+                      style="margin-top: 10px;"
+                    >
+                      <i
+                        aria-hidden="true"
+                        class="volume off icon"
+                      />
+                      game.settings.sound.false
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1394,6 +1408,9 @@ exports[`Storyshots Kalambury/Board Default 1`] = `
                       role="list"
                     />
                   </div>
+                  <div
+                    class="text extra extra"
+                  />
                 </div>
               </div>
             </div>
@@ -1707,6 +1724,9 @@ exports[`Storyshots Kalambury/Board Default 1`] = `
                       role="list"
                     />
                   </div>
+                  <div
+                    class="text extra extra"
+                  />
                 </div>
               </div>
             </div>
