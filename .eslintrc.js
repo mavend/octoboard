@@ -29,7 +29,7 @@ module.exports = {
       version: "detect",
     },
   },
-  ignorePatterns: ["node_modules/**", "build/**"],
+  ignorePatterns: ["node_modules/**", "build/**", "dist/**"],
   overrides: [
     {
       files: ["**/*.ts", "**/*.tsx"],

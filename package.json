@@ -39,7 +39,6 @@
     "remove-accents": "^0.4.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.3",
-    "ts-node": "^9.1.1",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^4.2.4",
     "use-sound": "^2.0.1"
@@ -62,7 +61,9 @@
     "start:client": "PORT=11030 react-scripts start",
     "start:firebase": "firebase emulators:start --import=./emulators.backup",
     "start:storybook": "start-storybook -p 11090 -s public --quiet",
-    "prepare": "if test \"$NODE_ENV\" != production ; then husky install ; fi"
+    "prepare": "if test \"$NODE_ENV\" != production ; then husky install ; fi",
+    "gcp-build": "tsc --build tsconfig-server.json",
+    "prod-server": "node -r esm -r tsconfig-paths/register dist/server.js"
   },
   "eslintConfig": {
     "extends": "react-app",
@@ -137,6 +138,7 @@
     "prettier": "^2.2.1",
     "puppeteer": "^8.0.0",
     "storybook": "^6.2.7",
-    "storybook-react-router": "^1.0.8"
+    "storybook-react-router": "^1.0.8",
+    "ts-node": "^9.1.1"
   }
 }

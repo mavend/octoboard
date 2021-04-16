@@ -2,7 +2,6 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "baseUrl": "./src",
     "jsx": "react-jsx",
     "allowJs": true,
     "strict": true,
@@ -15,9 +14,10 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "outDir": "dist",
+    "baseUrl": "./src"
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "build"]
+  "exclude": ["node_modules", "build", "dist"]
 }
