@@ -62,6 +62,9 @@
       "turn": "Tura",
       "disconnected": "Połączenie przerwane",
       "points": "Punkty: {{points}}"
+    },
+    "action": {
+      "manage": "Administrator pokoju"
     }
   }
 }

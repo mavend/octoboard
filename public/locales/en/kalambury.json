@@ -56,13 +56,10 @@
       }
     }
   },
-  "sidebar": {
-    "action": {
-      "change": "Changed phrase. Old one was {{phrase}}",
-      "forfeit": "Gave up. The phrase was {{phrase}}",
-      "manage": "Can now manage game",
-      "draw": "Is now drawing...",
-      "timeout": "Ran out of time. Phrase was {{phrase}}"
-    }
+  "action": {
+    "change": "Changed phrase. Old one was {{phrase}}",
+    "forfeit": "Gave up. The phrase was {{phrase}}",
+    "draw": "Is now drawing...",
+    "timeout": "Ran out of time. Phrase was {{phrase}}"
   }
 }

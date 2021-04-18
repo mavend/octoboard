@@ -3,7 +3,7 @@ import { keys, map, pick, pickBy, reduce, remove } from "lodash";
 import { getTiles } from "./data/tiles";
 import { getBoard } from "./data/boards";
 import { tilesPlacementErrors, newWords, filterPlayedTiles, prepareTiles } from "./utils";
-import { LogAction } from "../../utils/game/moves/LogAction";
+import { PluginActions } from "plugins/actions";
 
 function indexOfMax(array) {
   const maxValue = Math.max(...array);
@@ -53,9 +53,9 @@ export function StartGame(G, ctx, language, assist, preview) {
   ctx.events.setPhase("play");
 }
 
-function LogWords(G, currentPlayer, words, success) {
+function LogWords(ctx, words, success) {
   words.forEach((word) =>
-    LogAction(G, currentPlayer, "guess", { phrase: word.letters.join(""), success: success }, false)
+    ctx.actions.log(ctx.currentPlayer, "word", { word: word.letters.join(""), success })
   );
 }
 
@@ -91,7 +91,7 @@ function FinalizePlayTiles(G, ctx) {
     if (!G.board[y].row[x].letter) G.board[y].row[x].replacement = replacement;
   });
 
-  LogWords(G, ctx.currentPlayer, newWords(G.board, G.pendingTiles), true);
+  LogWords(ctx, newWords(G.board, G.pendingTiles), true);
 
   ctx.events.endTurn();
 }
@@ -99,7 +99,7 @@ function FinalizePlayTiles(G, ctx) {
 export function Approve(G, ctx, decision) {
   // If anyone disagrees - word is marked invalid
   if (decision === false) {
-    LogWords(G, ctx.currentPlayer, newWords(G.board, G.pendingTiles), false);
+    LogWords(ctx, newWords(G.board, G.pendingTiles), false);
     ctx.events.endTurn();
   } else {
     if (G.approvals.includes(ctx.playerID)) return INVALID_MOVE; // can't approve twice
@@ -161,6 +161,7 @@ export const Scrambled = {
 
   seed: process.env.NODE_ENV === "production" ? undefined : "test",
   setup: setupGame,
+  plugins: [PluginActions()],
 
   phases: {
     wait: {
@@ -168,7 +169,7 @@ export const Scrambled = {
       next: "play",
       turn: {
         onBegin: (G, ctx) => {
-          LogAction(G, ctx.currentPlayer, "manage");
+          ctx.actions.log(ctx.currentPlayer, "manage");
           ctx.events.setActivePlayers({ currentPlayer: "manage", others: "wait" });
         },
         stages: {

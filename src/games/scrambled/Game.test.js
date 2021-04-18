@@ -44,6 +44,11 @@ const VALID_FIRST_MOVE = () => [
   { x: 2, y: 1, ...tiles.D },
 ];
 
+const actions = {
+  log: (...args) => {},
+  clear: (...args) => {},
+};
+
 function setupG(opts) {
   return {
     board: DEFAULT_BOARD(),
@@ -559,7 +564,13 @@ describe("scrambled Approve", () => {
       const endTurnEvent = jest.fn();
       Approve(
         G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: endTurnEvent } },
+        {
+          currentPlayer: "0",
+          playerID: 1,
+          numPlayers: 3,
+          events: { endTurn: endTurnEvent },
+          actions,
+        },
         false
       );
 
@@ -572,7 +583,7 @@ describe("scrambled Approve", () => {
 
       Approve(
         G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() } },
+        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
         false
       );
 
@@ -585,7 +596,7 @@ describe("scrambled Approve", () => {
 
       Approve(
         G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() } },
+        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
         false
       );
 
@@ -600,7 +611,7 @@ describe("scrambled Approve", () => {
 
       Approve(
         G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() } },
+        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
         true
       );
 
@@ -613,7 +624,7 @@ describe("scrambled Approve", () => {
 
       Approve(
         G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() } },
+        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
         true
       );
 
@@ -626,7 +637,7 @@ describe("scrambled Approve", () => {
 
       const result = Approve(
         G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() } },
+        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
         true
       );
 
@@ -641,7 +652,13 @@ describe("scrambled Approve", () => {
       const endTurnEvent = jest.fn();
       const result = Approve(
         G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: endTurnEvent } },
+        {
+          currentPlayer: "0",
+          playerID: 1,
+          numPlayers: 3,
+          events: { endTurn: endTurnEvent },
+          actions,
+        },
         false
       );
 
@@ -655,7 +672,7 @@ describe("scrambled Approve", () => {
 
       Approve(
         G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() } },
+        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
         true
       );
 
@@ -670,7 +687,7 @@ describe("scrambled Approve", () => {
 
       Approve(
         G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() } },
+        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
         true
       );
 
@@ -687,7 +704,7 @@ describe("scrambled Approve", () => {
 
       Approve(
         G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() } },
+        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
         true
       );
 
@@ -709,7 +726,7 @@ describe("scrambled Approve", () => {
 
       Approve(
         G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() } },
+        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
         true
       );
 
@@ -732,7 +749,7 @@ describe("scrambled Approve", () => {
 
       Approve(
         G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() } },
+        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
         true
       );
 
@@ -763,7 +780,7 @@ describe("scrambled Approve", () => {
       ];
       Approve(
         G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() } },
+        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
         true
       );
 
@@ -775,7 +792,7 @@ describe("scrambled Approve", () => {
       G.pendingTiles = [{ x: 1, y: 0, ...tiles.B }];
       Approve(
         G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() } },
+        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
         true
       );
 
@@ -793,7 +810,7 @@ describe("scrambled Approve", () => {
 
       Approve(
         G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() } },
+        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
         true
       );
 
@@ -830,7 +847,7 @@ describe("scrambled Approve", () => {
       ];
       Approve(
         G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() } },
+        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
         true
       );
 
@@ -851,11 +868,11 @@ describe("scrambled Approve", () => {
       expect.hasAssertions();
       const G = setupG({ pendingTiles: VALID_FIRST_MOVE(), approvals: [2] });
 
-      const endTurnEvent = jest.fn();
+      const endTurn = jest.fn();
 
       Approve(
         G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: endTurnEvent } },
+        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn }, actions },
         true
       );
 
@@ -864,7 +881,7 @@ describe("scrambled Approve", () => {
         { row: [tiles.B, tiles.A, tiles.D] },
         { row: [0, 0, 0] },
       ]);
-      expect(endTurnEvent).toHaveBeenCalledWith();
+      expect(endTurn).toHaveBeenCalledWith();
     });
   });
 });

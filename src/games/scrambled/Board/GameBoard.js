@@ -238,6 +238,19 @@ const GameBoard = () => {
     [notificationsEnabled, t]
   );
 
+  const actionsMapper = useCallback(
+    ({ name, data }) =>
+      name === "word"
+        ? {
+            actionType: data.success ? "success" : "warning",
+            icon: data.success ? "check circle" : "times circle",
+            personal: true,
+            content: data.word,
+          }
+        : null,
+    []
+  );
+
   return (
     <div ref={stickyRef}>
       <GameLayout
@@ -269,6 +282,7 @@ const GameBoard = () => {
           </div>
         }
         extraPlayerContent={extraPlayerContent}
+        actionsMapper={actionsMapper}
       >
         {usedTiles && popupOpen && (
           <WordsPopup

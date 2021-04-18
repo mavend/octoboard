@@ -39,14 +39,49 @@ const Board = () => {
     setGuess("");
   }, [isDrawing]);
 
-  const handleActionClick = useCallback(
-    ({ action, phrase }) => {
-      if (!isDrawing && action === "guess") {
-        setGuess(phrase);
-        guessInputRef.current.focus();
+  const actionsMapper = useCallback(
+    (action) => {
+      const { success, phrase } = action.data || {};
+      switch (action.name) {
+        case "guess": {
+          return {
+            actionType: success ? "success" : "warning",
+            icon: success ? "check circle" : "times circle",
+            personal: true,
+            content: phrase,
+            onClick: isDrawing
+              ? undefined
+              : () => {
+                  setGuess(phrase);
+                  guessInputRef.current.focus();
+                },
+          };
+        }
+        case "draw":
+          return { icon: "pencil", content: t("action.draw") };
+        case "change":
+          return {
+            actionType: "alert",
+            icon: "exchange",
+            content: t("action.change", { phrase }),
+          };
+        case "forfeit":
+          return {
+            actionType: "danger",
+            icon: "flag",
+            content: t("action.forfeit", { phrase }),
+          };
+        case "timeout":
+          return {
+            actionType: "danger",
+            icon: "clock outline",
+            content: t("action.timeout", { phrase }),
+          };
+        default:
+          return null;
       }
     },
-    [isDrawing]
+    [isDrawing, t]
   );
 
   const envokeLastAnswer = useCallback(
@@ -91,8 +126,8 @@ const Board = () => {
     <GameLayout
       gameName={t("game.name")}
       privateMatch={G.privateMatch}
-      handleActionClick={handleActionClick}
       extraPlayerContent={extraPlayerContent}
+      actionsMapper={actionsMapper}
     >
       {phase ? (
         <>

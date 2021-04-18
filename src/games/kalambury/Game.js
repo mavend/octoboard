@@ -6,7 +6,7 @@ import { getPhrases } from "./data/phrases";
 import { currentTime } from "./utils/time";
 import removeAccents from "remove-accents";
 
-import { LogAction } from "../../utils/game/moves/LogAction";
+import { PluginActions } from "plugins/actions";
 
 const modes = ["regular", "infinite"];
 
@@ -54,9 +54,10 @@ function Guess(G, ctx, phrase) {
     G.points[ctx.playerID] += 1;
     G.points[ctx.currentPlayer] += 1;
     ctx.events.endTurn();
+    ctx.actions.clear();
   }
 
-  LogAction(G, ctx.playerID, "guess", { phrase, success }, success);
+  ctx.actions.log(ctx.playerID, "guess", { phrase, success });
 }
 
 function SetNewPhrase(G, ctx) {
@@ -70,14 +71,17 @@ function ChangePhrase(G, ctx) {
   if (!G.canChangePhrase) {
     return INVALID_MOVE;
   }
-  LogAction(G, ctx.playerID, "change", { previous: G.secret.phrase });
+  const { phrase } = G.secret;
+  ctx.actions.log(ctx.playerID, "change", { phrase });
   G.canChangePhrase = false;
   SetNewPhrase(G, ctx);
 }
 
 function Forfeit(G, ctx) {
   G.points[ctx.playerID] -= 1;
-  LogAction(G, ctx.playerID, "forfeit", { previous: G.secret.phrase }, true);
+  const { phrase } = G.secret;
+  ctx.actions.clear();
+  ctx.actions.log(G, ctx.playerID, "forfeit", { phrase });
   ctx.events.endTurn();
 }
 
@@ -113,13 +117,15 @@ export const Kalambury = {
   seed: process.env.NODE_ENV === "production" ? undefined : "test",
   setup: setupGame,
 
+  plugins: [PluginActions()],
+
   phases: {
     wait: {
       start: true,
       next: "play",
       turn: {
         onBegin: (G, ctx) => {
-          LogAction(G, ctx.currentPlayer, "manage");
+          ctx.actions.log(ctx.currentPlayer, "manage");
           ctx.events.setActivePlayers({ currentPlayer: "manage", others: "wait" });
         },
         stages: {
@@ -153,12 +159,14 @@ export const Kalambury = {
           G.canChangePhrase = true;
           SetNewPhrase(G, ctx);
           G.turnEndTime = currentTime() + G.timePerTurn;
-          LogAction(G, ctx.currentPlayer, "draw");
+          ctx.actions.log(ctx.currentPlayer, "draw");
           ctx.events.setActivePlayers({ currentPlayer: "draw", others: "guess" });
         },
         onEnd: (G, ctx) => {
           if (currentTime() >= G.turnEndTime) {
-            LogAction(G, ctx.currentPlayer, "timeout", { previous: G.secret.phrase }, true);
+            const { phrase } = G.secret;
+            ctx.actions.clear();
+            ctx.actions.log(ctx.currentPlayer, "timeout", { phrase });
             G.points[ctx.currentPlayer] -= 1;
           }
         },

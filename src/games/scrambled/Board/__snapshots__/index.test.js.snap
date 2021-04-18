@@ -578,19 +578,6 @@ exports[`scrambled Board component renders correctly 1`] = `
             style="margin-bottom: -5px;"
           >
             game.players
-            <span
-              class="ui small label"
-            >
-              <i
-                aria-hidden="true"
-                class="open lock icon"
-              />
-              <div
-                class="detail"
-              >
-                game.public
-              </div>
-            </span>
           </h2>
           <div
             class="ui segments"
@@ -871,14 +858,6 @@ exports[`scrambled Board component renders correctly 1`] = `
                       class="text extra extra"
                     >
                       <div
-                        class="ui middle aligned list"
-                        role="list"
-                      />
-                    </div>
-                    <div
-                      class="text extra extra"
-                    >
-                      <div
                         class="ui label"
                       >
                         <i
@@ -900,6 +879,27 @@ exports[`scrambled Board component renders correctly 1`] = `
                         />
                         game.settings.notifications.false
                       </button>
+                      <div
+                        class="ui middle aligned list"
+                        role="list"
+                      >
+                        <div
+                          class="item"
+                          role="listitem"
+                          style="opacity: 1; margin-right: 8px;"
+                        >
+                          <div
+                            class="ui label"
+                            style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                          >
+                            <i
+                              aria-hidden="true"
+                              class="yellow chess king icon"
+                            />
+                            sidebar.action.manage
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1249,14 +1249,6 @@ exports[`scrambled Board component renders correctly 1`] = `
                       class="text extra extra"
                     >
                       <div
-                        class="ui middle aligned list"
-                        role="list"
-                      />
-                    </div>
-                    <div
-                      class="text extra extra"
-                    >
-                      <div
                         class="ui label"
                       >
                         <i
@@ -1268,6 +1260,43 @@ exports[`scrambled Board component renders correctly 1`] = `
                         7
                       </div>
                       <div />
+                      <div
+                        class="ui middle aligned list"
+                        role="list"
+                      >
+                        <div
+                          class="item"
+                          role="listitem"
+                          style="opacity: 1; margin-right: 8px;"
+                        >
+                          <div
+                            class="ui red left pointing basic label"
+                            style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                          >
+                            <i
+                              aria-hidden="true"
+                              class="red times circle icon"
+                            />
+                            FOOBAR
+                          </div>
+                        </div>
+                        <div
+                          class="item"
+                          role="listitem"
+                          style="opacity: 0.8333333333333333; margin-right: 8px;"
+                        >
+                          <div
+                            class="ui green left pointing label"
+                            style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                          >
+                            <i
+                              aria-hidden="true"
+                              class="check circle icon"
+                            />
+                            TESTER
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1453,19 +1482,6 @@ exports[`scrambled Board component renders waiting board if game not yet started
           style="margin-bottom: -5px;"
         >
           game.players
-          <span
-            class="ui small label"
-          >
-            <i
-              aria-hidden="true"
-              class="open lock icon"
-            />
-            <div
-              class="detail"
-            >
-              game.public
-            </div>
-          </span>
         </h2>
         <div
           class="ui segments"
@@ -1748,7 +1764,24 @@ exports[`scrambled Board component renders waiting board if game not yet started
                     <div
                       class="ui middle aligned list"
                       role="list"
-                    />
+                    >
+                      <div
+                        class="item"
+                        role="listitem"
+                        style="opacity: 1; margin-right: 8px;"
+                      >
+                        <div
+                          class="ui label"
+                          style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                        >
+                          <i
+                            aria-hidden="true"
+                            class="yellow chess king icon"
+                          />
+                          sidebar.action.manage
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2096,12 +2129,7 @@ exports[`scrambled Board component renders waiting board if game not yet started
                   </div>
                   <div
                     class="text extra extra"
-                  >
-                    <div
-                      class="ui middle aligned list"
-                      role="list"
-                    />
-                  </div>
+                  />
                 </div>
               </div>
             </div>

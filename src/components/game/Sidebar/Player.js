@@ -1,17 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Icon, Segment, Feed, List } from "semantic-ui-react";
+import { Icon, Segment, Feed } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 import { PlayerType } from "config/propTypes";
-import Action from "./Action";
 import Avatar from "components/user/Avatar";
 
 import styles from "./Player.module.css";
 
 const propTypes = {
   player: PlayerType,
-  handleActionClick: PropTypes.func,
-  extraContent: PropTypes.func,
   showCurrentPlayer: PropTypes.bool,
   maxPoints: PropTypes.number,
 };
@@ -21,12 +18,10 @@ const defaultProps = {
 };
 
 const Player = ({
-  player,
-  player: { uid, isConnected, points, actions, isWinning, isYou, isCurrentPlayer, profile },
-  handleActionClick,
+  player: { uid, isConnected, points, isWinning, isYou, isCurrentPlayer, profile },
   maxPoints,
-  extraContent,
   showCurrentPlayer,
+  children,
 }) => {
   const { t } = useTranslation("lobby");
 
@@ -48,7 +43,6 @@ const Player = ({
   }
 
   const { displayName } = profile;
-  const visibleActions = actions.slice(0, 3);
 
   return (
     <Segment disabled={!isConnected} className={`${styles.player} ${styles.smoothDisabled}`}>
@@ -69,16 +63,14 @@ const Player = ({
             </Feed.Date>
             <Feed.Content>
               <Icon name="trophy" color={isWinning ? "yellow" : "grey"} />
-              {t("sidebar.player.points", {
-                points: maxPoints ? `${points} / ${maxPoints}` : points,
-              })}
+              {points !== undefined &&
+                t("sidebar.player.points", {
+                  points: maxPoints ? `${points} / ${maxPoints}` : points,
+                })}
             </Feed.Content>
-            <Feed.Extra text className={styles.extra}>
-              <ActionsList actions={visibleActions} handleActionClick={handleActionClick} />
-            </Feed.Extra>
-            {extraContent && (
+            {children && (
               <Feed.Extra text className={styles.extra}>
-                {extraContent(player)}
+                {children}
               </Feed.Extra>
             )}
           </Feed.Content>
@@ -87,24 +79,6 @@ const Player = ({
     </Segment>
   );
 };
-
-const ActionsList = ({ actions, handleActionClick }) => (
-  <List verticalAlign="middle">
-    {actions.map((action, idx) => (
-      <List.Item
-        key={action.id}
-        style={{ opacity: ((3 - idx) * 0.5) / 3 + 0.5, marginRight: "8px" }}
-      >
-        <Action action={action} handleActionClick={handleActionClick} />
-      </List.Item>
-    ))}
-  </List>
-);
-ActionsList.propTypes = {
-  actions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  handleActionClick: PropTypes.func,
-};
-
 Player.propTypes = propTypes;
 Player.defaultProps = defaultProps;
 
