@@ -18,7 +18,7 @@ module.exports = {
       user: "app",
       host: process.env.PRODUCTION_HOST,
       key: "deploy.key",
-      ref: "origin/vps-server",
+      ref: "origin/master",
       repo: "https://github.com/mavend/octoboard",
       path: "/home/app/octoboard",
       "post-deploy":

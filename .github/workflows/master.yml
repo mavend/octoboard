@@ -2,7 +2,7 @@ name: Deploy Production to octoboard
 
 on:
   push:
-    branches: [vps-server]
+    branches: [master]
     tags:
       - "!*" # Do not execute on tags
 
