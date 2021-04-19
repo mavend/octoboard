@@ -1,3 +1,4 @@
+import os from "os";
 import { Server } from "boardgame.io/server";
 import { Firestore } from "bgio-firebase";
 import { StorageCache } from "bgio-storage-cache";
@@ -20,7 +21,7 @@ Sentry.init({
 const config: admin.AppOptions = {};
 
 if (process.env.NODE_ENV === "production") {
-  const serviceAccount = require("~/firebaseKey.json");
+  const serviceAccount = require(os.homedir() + "/firebaseKey.json");
   config.credential = admin.credential.cert(serviceAccount);
 } else {
   config.projectId = "octoboard-development";
