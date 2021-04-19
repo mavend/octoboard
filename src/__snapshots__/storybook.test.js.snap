@@ -16287,6 +16287,17 @@ exports[`Storyshots User/CredentialsLayout Change Password 1`] = `
       </a>
     </div>
     <div
+      class="item"
+      style="color: rgb(170, 170, 170);"
+    >
+      <a
+        href="/privacy_policy"
+        style="color: rgb(170, 170, 170); text-decoration: underline dashed #ddd;"
+      >
+        privacy_policy.title
+      </a>
+    </div>
+    <div
       class="right menu"
     >
       <div
@@ -16350,6 +16361,36 @@ exports[`Storyshots User/CredentialsLayout Change Password 1`] = `
       </div>
     </div>
   </footer>
+  <div
+    class="ui floating message"
+    style="position: fixed; width: 80vw; max-width: 1128px; bottom: 60px; margin: 0px; left: 50%; transform: translate(-50%, 0); display: flex; align-items: center;"
+  >
+    <i
+      aria-hidden="true"
+      class="close icon"
+    />
+    <img
+      alt="cookie"
+      class="ui image"
+      src="/images/cookie.png"
+      style="width: 50px; height: 50px; margin-right: 20px;"
+    />
+    <div
+      class="content"
+    >
+      <div
+        class="header"
+      >
+        cookies.header
+      </div>
+      cookies.content 
+      <a
+        href="/privacy_policy"
+      >
+        cookies.privacy_policy
+      </a>
+    </div>
+  </div>
 </div>
 `;
 
@@ -17640,6 +17681,17 @@ exports[`Storyshots User/CredentialsLayout Guest 1`] = `
       </a>
     </div>
     <div
+      class="item"
+      style="color: rgb(170, 170, 170);"
+    >
+      <a
+        href="/privacy_policy"
+        style="color: rgb(170, 170, 170); text-decoration: underline dashed #ddd;"
+      >
+        privacy_policy.title
+      </a>
+    </div>
+    <div
       class="right menu"
     >
       <div
@@ -17703,6 +17755,36 @@ exports[`Storyshots User/CredentialsLayout Guest 1`] = `
       </div>
     </div>
   </footer>
+  <div
+    class="ui floating message"
+    style="position: fixed; width: 80vw; max-width: 1128px; bottom: 60px; margin: 0px; left: 50%; transform: translate(-50%, 0); display: flex; align-items: center;"
+  >
+    <i
+      aria-hidden="true"
+      class="close icon"
+    />
+    <img
+      alt="cookie"
+      class="ui image"
+      src="/images/cookie.png"
+      style="width: 50px; height: 50px; margin-right: 20px;"
+    />
+    <div
+      class="content"
+    >
+      <div
+        class="header"
+      >
+        cookies.header
+      </div>
+      cookies.content 
+      <a
+        href="/privacy_policy"
+      >
+        cookies.privacy_policy
+      </a>
+    </div>
+  </div>
 </div>
 `;
 
@@ -18993,6 +19075,17 @@ exports[`Storyshots User/CredentialsLayout Login 1`] = `
       </a>
     </div>
     <div
+      class="item"
+      style="color: rgb(170, 170, 170);"
+    >
+      <a
+        href="/privacy_policy"
+        style="color: rgb(170, 170, 170); text-decoration: underline dashed #ddd;"
+      >
+        privacy_policy.title
+      </a>
+    </div>
+    <div
       class="right menu"
     >
       <div
@@ -19056,6 +19149,36 @@ exports[`Storyshots User/CredentialsLayout Login 1`] = `
       </div>
     </div>
   </footer>
+  <div
+    class="ui floating message"
+    style="position: fixed; width: 80vw; max-width: 1128px; bottom: 60px; margin: 0px; left: 50%; transform: translate(-50%, 0); display: flex; align-items: center;"
+  >
+    <i
+      aria-hidden="true"
+      class="close icon"
+    />
+    <img
+      alt="cookie"
+      class="ui image"
+      src="/images/cookie.png"
+      style="width: 50px; height: 50px; margin-right: 20px;"
+    />
+    <div
+      class="content"
+    >
+      <div
+        class="header"
+      >
+        cookies.header
+      </div>
+      cookies.content 
+      <a
+        href="/privacy_policy"
+      >
+        cookies.privacy_policy
+      </a>
+    </div>
+  </div>
 </div>
 `;
 
@@ -20346,6 +20469,17 @@ exports[`Storyshots User/CredentialsLayout Register 1`] = `
       </a>
     </div>
     <div
+      class="item"
+      style="color: rgb(170, 170, 170);"
+    >
+      <a
+        href="/privacy_policy"
+        style="color: rgb(170, 170, 170); text-decoration: underline dashed #ddd;"
+      >
+        privacy_policy.title
+      </a>
+    </div>
+    <div
       class="right menu"
     >
       <div
@@ -20409,6 +20543,36 @@ exports[`Storyshots User/CredentialsLayout Register 1`] = `
       </div>
     </div>
   </footer>
+  <div
+    class="ui floating message"
+    style="position: fixed; width: 80vw; max-width: 1128px; bottom: 60px; margin: 0px; left: 50%; transform: translate(-50%, 0); display: flex; align-items: center;"
+  >
+    <i
+      aria-hidden="true"
+      class="close icon"
+    />
+    <img
+      alt="cookie"
+      class="ui image"
+      src="/images/cookie.png"
+      style="width: 50px; height: 50px; margin-right: 20px;"
+    />
+    <div
+      class="content"
+    >
+      <div
+        class="header"
+      >
+        cookies.header
+      </div>
+      cookies.content 
+      <a
+        href="/privacy_policy"
+      >
+        cookies.privacy_policy
+      </a>
+    </div>
+  </div>
 </div>
 `;
 

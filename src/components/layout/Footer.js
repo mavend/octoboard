@@ -52,8 +52,11 @@ const Footer = () => {
         {t("footer.graphics")}: <FooterLink text="Icons8" href="https://icons8.com" />
       </FooterItem>
       <FooterItem>
-        <Link to={routes.privacy_policy()}>
-          <FooterLink>{t("privacy_policy.title")}</FooterLink>
+        <Link
+          to={routes.privacy_policy()}
+          style={{ color: "#aaa", textDecoration: "underline dashed #ddd" }}
+        >
+          {t("privacy_policy.title")}
         </Link>
       </FooterItem>
       <Menu.Menu position="right">
