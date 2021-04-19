@@ -12,7 +12,7 @@ const FirebaseAuth = firebase.auth();
 
 if (process.env.NODE_ENV === "development") {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  FirebaseAuth.useEmulator("http://localhost:11190/");
+  FirebaseAuth.useEmulator("http://localhost:11190/", { disableWarnings: true });
 }
 
 const AuthProvider = {

@@ -21,6 +21,7 @@ import RegisterPage from "views/user/RegisterPage";
 import ChangePassword from "views/user/ChangePassword";
 import ErrorPage from "views/ErrorPage";
 import { CLIENT_URL } from "config/constants";
+import PrivacyPolicy from "views/PrivacyPolicy";
 
 const Loading = () => (
   <Dimmer active inverted>
@@ -46,6 +47,9 @@ const App = () => {
                   <Switch>
                     <Route exact path={routes.lobby()}>
                       <LobbyPage />
+                    </Route>
+                    <Route path={routes.privacy_policy()}>
+                      <PrivacyPolicy />
                     </Route>
                     <NotLoggedInRoute exact path={routes.login()}>
                       <LoginPage />

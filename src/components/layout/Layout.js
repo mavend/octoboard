@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Container } from "semantic-ui-react";
 import UserMenu from "components/user/UserMenu";
 import Footer from "./Footer";
+import CookiesConsent from "./CookiesConsent";
 
 const propTypes = {
   hideUserMenu: PropTypes.bool,
@@ -13,6 +14,7 @@ const Layout = ({ hideUserMenu, children }) => (
     {!hideUserMenu && <UserMenu />}
     <main style={{ flex: "1 0 auto" }}>{children}</main>
     <Footer />
+    <CookiesConsent />
   </Container>
 );
 Layout.propTypes = propTypes;
