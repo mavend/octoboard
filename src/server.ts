@@ -20,7 +20,8 @@ Sentry.init({
 const config: admin.AppOptions = {};
 
 if (process.env.NODE_ENV === "production") {
-  config.credential = admin.credential.applicationDefault();
+  const serviceAccount = require("~/firebaseKey.json");
+  config.credential = admin.credential.cert(serviceAccount);
 } else {
   config.projectId = "octoboard-development";
   process.env.FIRESTORE_EMULATOR_HOST = "localhost:11180";
