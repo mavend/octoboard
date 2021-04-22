@@ -13,7 +13,7 @@
     "@types/react-dom": "^17.0.3",
     "bgio-firebase": "^0.3.1",
     "bgio-storage-cache": "^0.3.0",
-    "boardgame.io": "^0.44.0",
+    "boardgame.io": "^0.44.1",
     "clsx": "^1.1.1",
     "concurrently": "^6.0.2",
     "esm": "^3.2.25",
