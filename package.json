@@ -12,7 +12,7 @@
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
     "bgio-firebase": "^0.3.1",
-    "bgio-storage-cache": "^0.3.0",
+    "bgio-storage-cache": "^0.3.1",
     "boardgame.io": "^0.44.1",
     "clsx": "^1.1.1",
     "concurrently": "^6.0.2",
