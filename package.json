@@ -5,7 +5,7 @@
   "dependencies": {
     "@artsy/fresnel": "^1.4.0",
     "@mavend/octoheads": "^0.2.4",
-    "@sentry/node": "^6.3.0",
+    "@sentry/node": "^6.3.4",
     "@sentry/react": "^6.3.4",
     "@sentry/tracing": "^6.3.4",
     "@types/node": "^14.14.41",
