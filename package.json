@@ -5,7 +5,7 @@
   "dependencies": {
     "@artsy/fresnel": "^1.4.0",
     "@mavend/octoheads": "^0.2.4",
-    "@sentry/node": "^6.3.0",
+    "@sentry/node": "^6.3.4",
     "@sentry/react": "^6.3.4",
     "@sentry/tracing": "^6.3.4",
     "@types/node": "^14.14.41",
@@ -31,7 +31,7 @@
     "react-dom": "^17.0.2",
     "react-dom-confetti": "^0.2.0",
     "react-helmet-async": "^1.0.9",
-    "react-i18next": "^11.8.13",
+    "react-i18next": "^11.8.15",
     "react-query": "^3.13.11",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
