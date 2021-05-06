@@ -63,8 +63,8 @@
     "start:storybook": "start-storybook -p 11090 -s public --quiet",
     "prepare": "if test \"$NODE_ENV\" != production ; then husky install ; fi",
     "gcp-build": "tsc --build tsconfig-server.json",
-    "server-build": "tsc --build tsconfig-server.json",
-    "prod-server": "node -r esm -r tsconfig-paths/register dist/server.js",
+    "build-server": "tsc --build tsconfig-server.json",
+    "prod-server": "node -r esm -r ts-node/register/transpile-only -r tsconfig-paths/register dist/server.js",
     "deploy": "pm2 deploy ecosystem.config.js production"
   },
   "eslintConfig": {

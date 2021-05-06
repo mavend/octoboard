@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: "octoborad-server",
+      name: "octoboard-server",
       script: "npm run prod-server",
       time: true,
       instances: 1,
@@ -22,7 +22,7 @@ module.exports = {
       repo: "https://github.com/mavend/octoboard",
       path: "/home/app/octoboard",
       "post-deploy":
-        "npm install && npm run server-build && pm2 reload ecosystem.config.js --env production && pm2 save && git checkout package-lock.json",
+        "npm install && npm run build-server && pm2 reload ecosystem.config.js --env production && pm2 save && git checkout package-lock.json",
       env: {
         NODE_ENV: "production",
         ENVIRONMENT: "production",
