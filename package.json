@@ -9,7 +9,7 @@
     "@sentry/react": "^6.3.5",
     "@sentry/tracing": "^6.3.5",
     "@types/node": "^15.0.2",
-    "@types/react": "^17.0.4",
+    "@types/react": "^17.0.5",
     "@types/react-dom": "^17.0.3",
     "bgio-firebase": "^0.3.1",
     "bgio-storage-cache": "^0.3.1",
