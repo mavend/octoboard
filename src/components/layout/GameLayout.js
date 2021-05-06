@@ -17,7 +17,7 @@ const propTypes = {
   gameName: PropTypes.string.isRequired,
   privateMatch: PropTypes.bool,
   header: PropTypes.node,
-  handleActionClick: PropTypes.func,
+  actionsMapper: PropTypes.func,
   extraPlayerContent: PropTypes.func,
   sidebarHeader: PropTypes.node,
   sidebarSize: PropTypes.number,
@@ -35,7 +35,7 @@ const GameLayout = ({
   gameName,
   privateMatch,
   header,
-  handleActionClick,
+  actionsMapper,
   sidebarHeader,
   extraPlayerContent,
   children,
@@ -55,7 +55,7 @@ const GameLayout = ({
             <Grid.Row>
               <Sidebar
                 header={sidebarHeader}
-                handleActionClick={handleActionClick}
+                actionsMapper={actionsMapper}
                 extraPlayerContent={extraPlayerContent}
                 showCurrentPlayer={showCurrentPlayer}
               />

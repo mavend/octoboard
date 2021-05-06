@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { select } from "@storybook/addon-knobs";
 import { action } from "@storybook/addon-actions";
 import { BoardGameProvider } from "contexts/BoardGameContext";
+import { actionsDataMock } from "plugins/actions.mock";
 
 const ref = "Game Context";
 
@@ -86,6 +87,14 @@ const BoardGameContextMock = ({ children, overrideG, overrideCtx }) => {
       ]}
       chatMessages={[]}
       sendChatMessage={action("sendChatMessage")}
+      plugins={{
+        actions: actionsDataMock({
+          1: [
+            { id: 2, playerID: "1", name: "word", data: { word: "FOOBAR", success: false } },
+            { id: 3, playerID: "1", name: "word", data: { word: "TESTER", success: true } },
+          ],
+        }),
+      }}
     >
       {children}
     </BoardGameProvider>
