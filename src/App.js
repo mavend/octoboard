@@ -21,7 +21,7 @@ import RegisterPage from "views/user/RegisterPage";
 import ChangePassword from "views/user/ChangePassword";
 import ErrorPage from "views/ErrorPage";
 import { CLIENT_URL } from "config/constants";
-import PrivacyPolicy from "views/PrivacyPolicy";
+import PrivacyPolicy from "views/policy/PrivacyPolicy";
 
 const Loading = () => (
   <Dimmer active inverted>
