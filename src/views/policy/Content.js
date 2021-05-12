@@ -13,20 +13,20 @@ export const Content = ({ lang }) => {
 export const ContentEN = (
   <>
     <p>
-      We are very delighted that you have shown interest in our enterprise. Data protection is of a
+      We are very delighted that you have shown interest in our website. Data protection is of a
       particularly high priority for the management of the Octoboards. The use of the Internet pages
       of the Octoboards is possible without any indication of personal data; however, if a data
-      subject wants to use special enterprise services via our website, processing of personal data
-      could become necessary. If the processing of personal data is necessary and there is no
-      statutory basis for such processing, we generally obtain consent from the data subject.
+      subject wants to use special services via our website, processing of personal data could
+      become necessary. If the processing of personal data is necessary and there is no statutory
+      basis for such processing, we generally obtain consent from the data subject.
     </p>
     <p>
       The processing of personal data, such as the name, address, e-mail address, or telephone
       number of a data subject shall always be in line with the General Data Protection Regulation
       (GDPR), and in accordance with the country-specific data protection regulations applicable to
-      the Octoboards. By means of this data protection declaration, our enterprise would like to
-      inform the general public of the nature, scope, and purpose of the personal data we collect,
-      use and process. Furthermore, data subjects are informed, by means of this data protection
+      the Octoboards. By means of this data protection declaration, our website would like to inform
+      the general public of the nature, scope, and purpose of the personal data we collect, use and
+      process. Furthermore, data subjects are informed, by means of this data protection
       declaration, of the rights to which they are entitled.
     </p>
     <p>
@@ -219,7 +219,7 @@ export const ContentEN = (
       and (4) provide law enforcement authorities with the information necessary for criminal
       prosecution in case of a cyber-attack. Therefore, the Octoboards analyzes anonymously
       collected data and information statistically, with the aim of increasing the data protection
-      and data security of our enterprise, and to ensure an optimal level of protection for the
+      and data security of our website, and to ensure an optimal level of protection for the
       personal data we process. The anonymous data of the server log files are stored separately
       from all personal data provided by a data subject.
     </p>
@@ -259,9 +259,9 @@ export const ContentEN = (
     <h3 id="6-contact-possibility-via-the-website">6. Contact possibility via the website</h3>
     <p>
       The website of the Octoboards contains information that enables a quick electronic contact to
-      our enterprise, as well as direct communication with us, which also includes a general address
-      of the so-called electronic mail (e-mail address). If a data subject contacts the controller
-      by e-mail or via a contact form, the personal data transmitted by the data subject are
+      our website, as well as direct communication with us, which also includes a general address of
+      the so-called electronic mail (e-mail address). If a data subject contacts the controller by
+      e-mail or via a contact form, the personal data transmitted by the data subject are
       automatically stored. Such personal data transmitted on a voluntary basis by a data subject to
       the data controller are stored for the purpose of processing or contacting the data subject.
       There is no transfer of this personal data to third parties.
@@ -706,10 +706,10 @@ export const ContentEN = (
 export const ContentPL = (
   <>
     <p>
-      Cieszymy się bardzo z zainteresowania naszą firmą. Ochrona danych osobowych ma istotne
-      znaczenie przy prowadzeniu spraw od Octoboards. W zasadzie korzystanie ze stron internetowych
-      Octoboards jest możliwe bez konieczności podawania jakichkolwiek danych osobowych. Jeśli
-      jednak osoba, której dane dotyczą, chciałaby korzystać ze specjalnych usług naszej firmy
+      Cieszymy się bardzo z zainteresowania naszą stroną internetową. Ochrona danych osobowych ma
+      istotne znaczenie przy prowadzeniu spraw od Octoboards. W zasadzie korzystanie ze stron
+      internetowych Octoboards jest możliwe bez konieczności podawania jakichkolwiek danych
+      osobowych. Jeśli jednak osoba, której dane dotyczą, chciałaby korzystać ze specjalnych usług
       poprzez naszą stronę internetową, wtedy przetwarzanie danych osobowych może okazać się
       konieczne. Jeżeli zachodzi konieczność przetwarzania danych, a nie ma podstawy prawnej dla
       tego rodzaju działania, uzyskujemy generalnie zgodę osoby, której dane dotyczą.
@@ -934,10 +934,10 @@ export const ContentPL = (
       udostępnienia koniecznych informacji potrzebnych do ścigania karnego organom ścigania w
       przypadku ataku cybernetycznego. Niniejsze dane i informacje, zebrane w sposób anonimowy,
       poddawane są zatem przez Octoboards analizie statystycznej, ponadto działania te mają na celu
-      zwiększyć ochronę i bezpieczeństwo danych w naszej firmie, aby zagwarantować optymalny poziom
-      ochrony przetwarzanych przez nas danych osobowych. Anonimowe dane z rejestru zdarzeń serwera
-      (po ang. "server log files”) są przechowywane oddzielnie od wszystkich danych osobowych
-      podanych przez osobę, której dane dotyczą.
+      zwiększyć ochronę i bezpieczeństwo danych na naszej stronie, aby zagwarantować optymalny
+      poziom ochrony przetwarzanych przez nas danych osobowych. Anonimowe dane z rejestru zdarzeń
+      serwera (po ang. "server log files”) są przechowywane oddzielnie od wszystkich danych
+      osobowych podanych przez osobę, której dane dotyczą.
     </p>
 
     <h4>5. Rejestracja na naszej stronie internetowej.</h4>
@@ -946,9 +946,7 @@ export const ContentPL = (
       danych osobowych. Z panelu logowania, który stosowany jest przy rejestracji wynika, które dane
       osobowe zostaną przekazane administratorowi. Dane osobowe przekazane przez osobę, której dane
       dotyczą, są przechowywane wyłącznie do użytku wewnętrznego administratora i wykorzystywane do
-      jego własnych celów. Administrator może przekazać dane do jednego lub wielu podmiotów
-      przetwarzających, na przykład firmie kurierskiej, która wykorzystuje dane osobowe wyłącznie do
-      użytku wewnętrznego administratora.
+      jego własnych celów.
     </p>
 
     <p>
