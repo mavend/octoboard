@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@artsy/fresnel": "^1.4.0",
+    "@artsy/fresnel": "^1.5.0",
     "@mavend/octoheads": "^0.2.4",
     "@sentry/node": "^6.3.5",
     "@sentry/react": "^6.3.5",
@@ -134,7 +134,7 @@
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
     "faker": "^5.5.3",
-    "firebase-tools": "^9.10.1",
+    "firebase-tools": "^9.10.2",
     "husky": "^6.0.0",
     "nodemon": "^2.0.7",
     "pm2": "^4.5.6",
