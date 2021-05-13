@@ -10,7 +10,7 @@
     "@sentry/tracing": "^6.3.5",
     "@types/node": "^15.0.2",
     "@types/react": "^17.0.5",
-    "@types/react-dom": "^17.0.3",
+    "@types/react-dom": "^17.0.5",
     "bgio-firebase": "^0.3.2",
     "bgio-storage-cache": "^0.3.1",
     "boardgame.io": "^0.44.3",
