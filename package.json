@@ -17,7 +17,7 @@
     "clsx": "^1.1.1",
     "concurrently": "^6.0.2",
     "esm": "^3.2.25",
-    "firebase": "^8.5.0",
+    "firebase": "^8.6.1",
     "firebase-admin": "^9.8.0",
     "i18next": "^20.2.2",
     "i18next-browser-languagedetector": "^6.1.0",
