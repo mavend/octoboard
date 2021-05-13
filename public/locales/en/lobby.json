@@ -63,6 +63,9 @@
       "disconnected": "Disconnected",
       "points": "{{points}} Point",
       "points_plural": "{{points}} Points"
+    },
+    "action": {
+      "manage": "Can now manage game"
     }
   }
 }

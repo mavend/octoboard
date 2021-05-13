@@ -1,7 +1,9 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
-import { boolean, number, text, select } from "@storybook/addon-knobs";
+import { boolean, number, select } from "@storybook/addon-knobs";
 import { BoardGameProvider } from "contexts/BoardGameContext";
+
+import { actionsDataMock } from "plugins/actions.mock";
 
 const ref = "Game Context";
 
@@ -12,9 +14,6 @@ const BoardGameContextMock = ({ children }) => {
       G={{
         points: [10, 3],
         maxPoints: number("Max points", 15, ref),
-        actions: [
-          { action: "message", text: text("Message text", "Hello there, shall we begin?", ref) },
-        ],
         privateMatch: boolean("Private", true, ref),
         players: {
           0: { canManageGame: true },
@@ -36,6 +35,9 @@ const BoardGameContextMock = ({ children }) => {
         { id: 2, name: "user-2", isConnected: true },
         { id: 3 },
       ]}
+      plugins={{
+        actions: actionsDataMock(),
+      }}
       chatMessages={[]}
       sendChatMessage={action("sendChatMessage")}
     >

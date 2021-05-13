@@ -20,7 +20,12 @@ Sentry.init({
 const config: admin.AppOptions = {};
 
 if (process.env.NODE_ENV === "production") {
-  config.credential = admin.credential.applicationDefault();
+  if (process.env.FIREBASE_KEY_PATH) {
+    const serviceAccount = require(process.env.FIREBASE_KEY_PATH);
+    config.credential = admin.credential.cert(serviceAccount);
+  } else {
+    config.credential = admin.credential.applicationDefault();
+  }
 } else {
   config.projectId = "octoboard-development";
   process.env.FIRESTORE_EMULATOR_HOST = "localhost:11180";

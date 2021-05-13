@@ -1,8 +1,8 @@
 import React from "react";
-import { action } from "@storybook/addon-actions";
-import { text, boolean, number, object } from "@storybook/addon-knobs";
+import { text, boolean, number } from "@storybook/addon-knobs";
 
 import Player from "./Player";
+import { ActionsList } from "./ActionsList";
 
 export default {
   component: Player,
@@ -12,6 +12,16 @@ export default {
 
 export const Empty = () => <Player />;
 
+const actionsMapper = (act) => {
+  switch (act.name) {
+    case "guess":
+      return {
+        actionType: "warning",
+        icon: "check circle",
+        content: act.data.phrase,
+      };
+  }
+};
 export const Default = () => (
   <Player
     player={{
@@ -19,18 +29,13 @@ export const Default = () => (
       uid: "user-1",
       isConnected: boolean("Connected", true),
       points: number("Points", 12),
-      actions: object("Actions array", [
-        { action: "guess", id: "123", phrase: "Baba z wozu?" },
-        { action: "manage", id: "456" },
-      ]),
       isWinning: boolean("Is player winning?", true),
       isYou: boolean("Are you this player?", true),
       profile: {
         displayName: text("Name", "Mieczysław Czosnek"),
-        photoURL: text("Avatar URL", "https://api.adorable.io/avatars/128/Mieczysław-Czosnek.png"),
       },
     }}
-    handleActionClick={action("handleActionClick")}
+    actionsMapper={actionsMapper}
   />
 );
 
@@ -41,18 +46,15 @@ export const WithAdditionalContent = () => (
       uid: "user-1",
       isConnected: boolean("Connected", true),
       points: number("Points", 12),
-      actions: object("Actions array", [
-        { action: "guess", id: "123", phrase: "Baba z wozu?" },
-        { action: "manage", id: "456" },
-      ]),
       isWinning: boolean("Is player winning?", true),
       isYou: boolean("Are you this player?", true),
       profile: {
         displayName: text("Name", "Mieczysław Czosnek"),
-        photoURL: text("Avatar URL", "https://api.adorable.io/avatars/128/Mieczysław-Czosnek.png"),
       },
     }}
-    handleActionClick={action("handleActionClick")}
-    additionalContent={({ profile: { displayName } }) => <span>Hello {displayName}!</span>}
-  />
+    actionsMapper={actionsMapper}
+    extraContent={({ profile: { displayName } }) => <span>Hello {displayName}!</span>}
+  >
+    <ActionsList actions={[{ name: "manage", id: "456" }]} />
+  </Player>
 );

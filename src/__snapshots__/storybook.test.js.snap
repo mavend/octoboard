@@ -745,19 +745,6 @@ exports[`Storyshots Kalambury/Board Default 1`] = `
           style="margin-bottom: -5px;"
         >
           game.players
-          <span
-            class="ui small label"
-          >
-            <i
-              aria-hidden="true"
-              class="lock icon"
-            />
-            <div
-              class="detail"
-            >
-              game.private
-            </div>
-          </span>
         </h2>
         <div
           class="ui segments"
@@ -1037,14 +1024,6 @@ exports[`Storyshots Kalambury/Board Default 1`] = `
                   <div
                     class="text extra extra"
                   >
-                    <div
-                      class="ui middle aligned list"
-                      role="list"
-                    />
-                  </div>
-                  <div
-                    class="text extra extra"
-                  >
                     <button
                       class="ui grey tiny basic icon left labeled button"
                       style="margin-top: 10px;"
@@ -1055,6 +1034,27 @@ exports[`Storyshots Kalambury/Board Default 1`] = `
                       />
                       game.settings.sound.false
                     </button>
+                    <div
+                      class="ui middle aligned list"
+                      role="list"
+                    >
+                      <div
+                        class="item"
+                        role="listitem"
+                        style="opacity: 1; margin-right: 8px;"
+                      >
+                        <div
+                          class="ui label"
+                          style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                        >
+                          <i
+                            aria-hidden="true"
+                            class="yellow chess king icon"
+                          />
+                          sidebar.action.manage
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1406,11 +1406,57 @@ exports[`Storyshots Kalambury/Board Default 1`] = `
                     <div
                       class="ui middle aligned list"
                       role="list"
-                    />
+                    >
+                      <div
+                        class="item"
+                        role="listitem"
+                        style="opacity: 1; margin-right: 8px;"
+                      >
+                        <div
+                          class="ui red left pointing basic label"
+                          style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                        >
+                          <i
+                            aria-hidden="true"
+                            class="red times circle icon"
+                          />
+                          abc
+                        </div>
+                      </div>
+                      <div
+                        class="item"
+                        role="listitem"
+                        style="opacity: 0.8333333333333333; margin-right: 8px;"
+                      >
+                        <div
+                          class="ui green left pointing label"
+                          style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                        >
+                          <i
+                            aria-hidden="true"
+                            class="check circle icon"
+                          />
+                          foobar
+                        </div>
+                      </div>
+                      <div
+                        class="item"
+                        role="listitem"
+                        style="opacity: 0.6666666666666666; margin-right: 8px;"
+                      >
+                        <div
+                          class="ui label"
+                          style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                        >
+                          <i
+                            aria-hidden="true"
+                            class="pencil icon"
+                          />
+                          action.draw
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div
-                    class="text extra extra"
-                  />
                 </div>
               </div>
             </div>
@@ -1722,11 +1768,57 @@ exports[`Storyshots Kalambury/Board Default 1`] = `
                     <div
                       class="ui middle aligned list"
                       role="list"
-                    />
+                    >
+                      <div
+                        class="item"
+                        role="listitem"
+                        style="opacity: 1; margin-right: 8px;"
+                      >
+                        <div
+                          class="ui red label"
+                          style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                        >
+                          <i
+                            aria-hidden="true"
+                            class="clock outline icon"
+                          />
+                          action.timeout
+                        </div>
+                      </div>
+                      <div
+                        class="item"
+                        role="listitem"
+                        style="opacity: 0.8333333333333333; margin-right: 8px;"
+                      >
+                        <div
+                          class="ui red label"
+                          style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                        >
+                          <i
+                            aria-hidden="true"
+                            class="flag icon"
+                          />
+                          action.forfeit
+                        </div>
+                      </div>
+                      <div
+                        class="item"
+                        role="listitem"
+                        style="opacity: 0.6666666666666666; margin-right: 8px;"
+                      >
+                        <div
+                          class="ui yellow label"
+                          style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                        >
+                          <i
+                            aria-hidden="true"
+                            class="exchange icon"
+                          />
+                          action.change
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div
-                    class="text extra extra"
-                  />
                 </div>
               </div>
             </div>
@@ -5430,19 +5522,6 @@ exports[`Storyshots PictureMatch/Board Default 1`] = `
           style="margin-bottom: -5px;"
         >
           game.players
-          <span
-            class="ui small label"
-          >
-            <i
-              aria-hidden="true"
-              class="lock icon"
-            />
-            <div
-              class="detail"
-            >
-              game.private
-            </div>
-          </span>
         </h2>
         <div
           class="ui segments"
@@ -5721,7 +5800,24 @@ exports[`Storyshots PictureMatch/Board Default 1`] = `
                     <div
                       class="ui middle aligned list"
                       role="list"
-                    />
+                    >
+                      <div
+                        class="item"
+                        role="listitem"
+                        style="opacity: 1; margin-right: 8px;"
+                      >
+                        <div
+                          class="ui label"
+                          style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                        >
+                          <i
+                            aria-hidden="true"
+                            class="yellow chess king icon"
+                          />
+                          sidebar.action.manage
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -6069,12 +6165,7 @@ exports[`Storyshots PictureMatch/Board Default 1`] = `
                   </div>
                   <div
                     class="text extra extra"
-                  >
-                    <div
-                      class="ui middle aligned list"
-                      role="list"
-                    />
-                  </div>
+                  />
                 </div>
               </div>
             </div>
@@ -6378,7 +6469,6 @@ exports[`Storyshots PictureMatch/Board Default 1`] = `
                       aria-hidden="true"
                       class="grey trophy icon"
                     />
-                    sidebar.player.points
                   </div>
                   <div
                     class="text extra extra"
@@ -6386,7 +6476,53 @@ exports[`Storyshots PictureMatch/Board Default 1`] = `
                     <div
                       class="ui middle aligned list"
                       role="list"
-                    />
+                    >
+                      <div
+                        class="item"
+                        role="listitem"
+                        style="opacity: 1; margin-right: 8px;"
+                      >
+                        <div
+                          class="ui label"
+                          style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                        >
+                          <img
+                            class="ui tiny image"
+                            src="/images/games/picture-match/pictures/emoji/5.png"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="item"
+                        role="listitem"
+                        style="opacity: 0.8333333333333333; margin-right: 8px;"
+                      >
+                        <div
+                          class="ui label"
+                          style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                        >
+                          <img
+                            class="ui tiny image"
+                            src="/images/games/picture-match/pictures/lines/11.png"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="item"
+                        role="listitem"
+                        style="opacity: 0.6666666666666666; margin-right: 8px;"
+                      >
+                        <div
+                          class="ui label"
+                          style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                        >
+                          <img
+                            class="ui tiny image"
+                            src="/images/games/picture-match/pictures/circle/16.png"
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -7649,19 +7785,6 @@ exports[`Storyshots Scrambled/Board Default 1`] = `
             style="margin-bottom: -5px;"
           >
             game.players
-            <span
-              class="ui small label"
-            >
-              <i
-                aria-hidden="true"
-                class="open lock icon"
-              />
-              <div
-                class="detail"
-              >
-                game.public
-              </div>
-            </span>
           </h2>
           <div
             class="ui segments"
@@ -7942,14 +8065,6 @@ exports[`Storyshots Scrambled/Board Default 1`] = `
                       class="text extra extra"
                     >
                       <div
-                        class="ui middle aligned list"
-                        role="list"
-                      />
-                    </div>
-                    <div
-                      class="text extra extra"
-                    >
-                      <div
                         class="ui label"
                       >
                         <i
@@ -7971,6 +8086,27 @@ exports[`Storyshots Scrambled/Board Default 1`] = `
                         />
                         game.settings.notifications.false
                       </button>
+                      <div
+                        class="ui middle aligned list"
+                        role="list"
+                      >
+                        <div
+                          class="item"
+                          role="listitem"
+                          style="opacity: 1; margin-right: 8px;"
+                        >
+                          <div
+                            class="ui label"
+                            style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                          >
+                            <i
+                              aria-hidden="true"
+                              class="yellow chess king icon"
+                            />
+                            sidebar.action.manage
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -8320,14 +8456,6 @@ exports[`Storyshots Scrambled/Board Default 1`] = `
                       class="text extra extra"
                     >
                       <div
-                        class="ui middle aligned list"
-                        role="list"
-                      />
-                    </div>
-                    <div
-                      class="text extra extra"
-                    >
-                      <div
                         class="ui label"
                       >
                         <i
@@ -8339,6 +8467,43 @@ exports[`Storyshots Scrambled/Board Default 1`] = `
                         7
                       </div>
                       <div />
+                      <div
+                        class="ui middle aligned list"
+                        role="list"
+                      >
+                        <div
+                          class="item"
+                          role="listitem"
+                          style="opacity: 1; margin-right: 8px;"
+                        >
+                          <div
+                            class="ui red left pointing basic label"
+                            style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                          >
+                            <i
+                              aria-hidden="true"
+                              class="red times circle icon"
+                            />
+                            FOOBAR
+                          </div>
+                        </div>
+                        <div
+                          class="item"
+                          role="listitem"
+                          style="opacity: 0.8333333333333333; margin-right: 8px;"
+                        >
+                          <div
+                            class="ui green left pointing label"
+                            style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                          >
+                            <i
+                              aria-hidden="true"
+                              class="check circle icon"
+                            />
+                            TESTER
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -9364,19 +9529,6 @@ exports[`Storyshots Scrambled/Board During Approval 1`] = `
             style="margin-bottom: -5px;"
           >
             game.players
-            <span
-              class="ui small label"
-            >
-              <i
-                aria-hidden="true"
-                class="open lock icon"
-              />
-              <div
-                class="detail"
-              >
-                game.public
-              </div>
-            </span>
           </h2>
           <div
             class="ui segments"
@@ -9657,14 +9809,6 @@ exports[`Storyshots Scrambled/Board During Approval 1`] = `
                       class="text extra extra"
                     >
                       <div
-                        class="ui middle aligned list"
-                        role="list"
-                      />
-                    </div>
-                    <div
-                      class="text extra extra"
-                    >
-                      <div
                         class="ui label"
                       >
                         <i
@@ -9686,6 +9830,27 @@ exports[`Storyshots Scrambled/Board During Approval 1`] = `
                         />
                         game.settings.notifications.false
                       </button>
+                      <div
+                        class="ui middle aligned list"
+                        role="list"
+                      >
+                        <div
+                          class="item"
+                          role="listitem"
+                          style="opacity: 1; margin-right: 8px;"
+                        >
+                          <div
+                            class="ui label"
+                            style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                          >
+                            <i
+                              aria-hidden="true"
+                              class="yellow chess king icon"
+                            />
+                            sidebar.action.manage
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -10035,14 +10200,6 @@ exports[`Storyshots Scrambled/Board During Approval 1`] = `
                       class="text extra extra"
                     >
                       <div
-                        class="ui middle aligned list"
-                        role="list"
-                      />
-                    </div>
-                    <div
-                      class="text extra extra"
-                    >
-                      <div
                         class="ui label"
                       >
                         <i
@@ -10054,6 +10211,43 @@ exports[`Storyshots Scrambled/Board During Approval 1`] = `
                         7
                       </div>
                       <div />
+                      <div
+                        class="ui middle aligned list"
+                        role="list"
+                      >
+                        <div
+                          class="item"
+                          role="listitem"
+                          style="opacity: 1; margin-right: 8px;"
+                        >
+                          <div
+                            class="ui red left pointing basic label"
+                            style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                          >
+                            <i
+                              aria-hidden="true"
+                              class="red times circle icon"
+                            />
+                            FOOBAR
+                          </div>
+                        </div>
+                        <div
+                          class="item"
+                          role="listitem"
+                          style="opacity: 0.8333333333333333; margin-right: 8px;"
+                        >
+                          <div
+                            class="ui green left pointing label"
+                            style="max-width: 100%; margin-left: 0px; cursor: auto;"
+                          >
+                            <i
+                              aria-hidden="true"
+                              class="check circle icon"
+                            />
+                            TESTER
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -10176,117 +10370,71 @@ exports[`Storyshots Sidebar Default 1`] = `
   style="margin-bottom: -5px;"
 >
   game.players
-  <span
-    class="ui small label"
-  >
-    <i
-      aria-hidden="true"
-      class="lock icon"
-    />
-    <div
-      class="detail"
-    >
-      game.private
-    </div>
-  </span>
 </h2>
-`;
-
-exports[`Storyshots Sidebar/Action Action Change 1`] = `
-<div
-  class="ui yellow label"
-  style="max-width: 100%;"
->
-  <i
-    aria-hidden="true"
-    class="exchange icon"
-  />
-  sidebar.action.change
-</div>
-`;
-
-exports[`Storyshots Sidebar/Action Action Draw 1`] = `
-<div
-  class="ui label"
-  style="max-width: 100%;"
->
-  <i
-    aria-hidden="true"
-    class="pencil icon"
-  />
-  sidebar.action.draw
-</div>
-`;
-
-exports[`Storyshots Sidebar/Action Action Forfeit 1`] = `
-<div
-  class="ui red label"
-  style="max-width: 100%;"
->
-  <i
-    aria-hidden="true"
-    class="flag icon"
-  />
-  sidebar.action.forfeit
-</div>
-`;
-
-exports[`Storyshots Sidebar/Action Action Guess 1`] = `
-<div
-  class="ui green left pointing label"
-  style="max-width: 100%; margin-left: 0px; cursor: pointer;"
->
-  <i
-    aria-hidden="true"
-    class="check circle icon"
-  />
-  Baba z wozu koniom lżej
-</div>
-`;
-
-exports[`Storyshots Sidebar/Action Action Manage 1`] = `
-<div
-  class="ui label"
-  style="max-width: 100%;"
->
-  <i
-    aria-hidden="true"
-    class="yellow chess king icon"
-  />
-  sidebar.action.manage
-</div>
-`;
-
-exports[`Storyshots Sidebar/Action Action Match 1`] = `
-<img
-  class="ui tiny image"
-  src="/images/games/picture-match/pictures/emoji/0.png"
-/>
 `;
 
 exports[`Storyshots Sidebar/Action Action Message 1`] = `
 <div
-  class="ui blue left pointing basic label"
-  style="max-width: 100%; margin-left: 0px;"
+  class="ui label"
+  style="max-width: 100%; margin-left: 0px; cursor: auto;"
 >
-  <i
-    aria-hidden="true"
-    class="blue chat icon"
-  />
-  Hello there, shall we begin?
+  Test
 </div>
 `;
 
-exports[`Storyshots Sidebar/Action Action Timeout 1`] = `
+exports[`Storyshots Sidebar/ActionsList Default 1`] = `
 <div
-  class="ui red label"
-  style="max-width: 100%;"
+  class="ui middle aligned list"
+  role="list"
 >
-  <i
-    aria-hidden="true"
-    class="clock outline icon"
-  />
-  sidebar.action.timeout
+  <div
+    class="item"
+    role="listitem"
+    style="opacity: 1; margin-right: 8px;"
+  >
+    <div
+      class="ui green label"
+      style="max-width: 100%; margin-left: 0px; cursor: auto;"
+    >
+      <i
+        aria-hidden="true"
+        class="check circle icon"
+      />
+      Baba z wozu?
+    </div>
+  </div>
+  <div
+    class="item"
+    role="listitem"
+    style="opacity: 0.8333333333333333; margin-right: 8px;"
+  >
+    <div
+      class="ui label"
+      style="max-width: 100%; margin-left: 0px; cursor: auto;"
+    >
+      <i
+        aria-hidden="true"
+        class="yellow chess king icon"
+      />
+      sidebar.action.manage
+    </div>
+  </div>
+  <div
+    class="item"
+    role="listitem"
+    style="opacity: 0.6666666666666666; margin-right: 8px;"
+  >
+    <div
+      class="ui red basic label"
+      style="max-width: 100%; margin-left: 0px; cursor: auto;"
+    >
+      <i
+        aria-hidden="true"
+        class="red times circle icon"
+      />
+      test
+    </div>
+  </div>
 </div>
 `;
 
@@ -10635,47 +10783,6 @@ exports[`Storyshots Sidebar/Player Default 1`] = `
             class="yellow trophy icon"
           />
           sidebar.player.points
-        </div>
-        <div
-          class="text extra extra"
-        >
-          <div
-            class="ui middle aligned list"
-            role="list"
-          >
-            <div
-              class="item"
-              role="listitem"
-              style="opacity: 1; margin-right: 8px;"
-            >
-              <div
-                class="ui red left pointing basic label"
-                style="max-width: 100%; margin-left: 0px; cursor: pointer;"
-              >
-                <i
-                  aria-hidden="true"
-                  class="red times circle icon"
-                />
-                Baba z wozu?
-              </div>
-            </div>
-            <div
-              class="item"
-              role="listitem"
-              style="opacity: 0.8333333333333333; margin-right: 8px;"
-            >
-              <div
-                class="ui label"
-                style="max-width: 100%;"
-              >
-                <i
-                  aria-hidden="true"
-                  class="yellow chess king icon"
-                />
-                sidebar.action.manage
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -11221,24 +11328,8 @@ exports[`Storyshots Sidebar/Player With Additional Content 1`] = `
               style="opacity: 1; margin-right: 8px;"
             >
               <div
-                class="ui red left pointing basic label"
-                style="max-width: 100%; margin-left: 0px; cursor: pointer;"
-              >
-                <i
-                  aria-hidden="true"
-                  class="red times circle icon"
-                />
-                Baba z wozu?
-              </div>
-            </div>
-            <div
-              class="item"
-              role="listitem"
-              style="opacity: 0.8333333333333333; margin-right: 8px;"
-            >
-              <div
                 class="ui label"
-                style="max-width: 100%;"
+                style="max-width: 100%; margin-left: 0px; cursor: auto;"
               >
                 <i
                   aria-hidden="true"
@@ -13638,14 +13729,6 @@ exports[`Storyshots Splendid/Board Default 1`] = `
                   <div
                     class="text extra extra"
                   >
-                    <div
-                      class="ui middle aligned list"
-                      role="list"
-                    />
-                  </div>
-                  <div
-                    class="text extra extra"
-                  >
                     <i
                       aria-hidden="true"
                       class="yellow bookmark big icon bookmark"
@@ -14177,14 +14260,6 @@ exports[`Storyshots Splendid/Board Default 1`] = `
                       class="grey trophy icon"
                     />
                     sidebar.player.points
-                  </div>
-                  <div
-                    class="text extra extra"
-                  >
-                    <div
-                      class="ui middle aligned list"
-                      role="list"
-                    />
                   </div>
                   <div
                     class="text extra extra"

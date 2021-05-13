@@ -1,18 +1,17 @@
 /* eslint-disable react/prop-types */
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { find, isEqual } from "lodash";
-
-import filterActions from "utils/user/filterActions";
 import { useProfiles } from "./UserContext";
 
 export const BoardGameContext = createContext({});
 
 export const BoardGameProvider = ({ children, ...props }) => {
   const {
-    G: { points, actions, players: playersData },
+    G: { points, players: playersData },
     ctx: { activePlayers, currentPlayer },
     matchData,
     playerID,
+    plugins,
   } = props;
   const [players, setPlayers] = useState([]);
   const [player, setPlayer] = useState({
@@ -21,6 +20,9 @@ export const BoardGameProvider = ({ children, ...props }) => {
     stage: "wait",
   });
   const profiles = useProfiles();
+
+  // get actions from plugin
+  const { actions } = plugins?.actions?.data || { actions: {} };
 
   // Set players list
   useEffect(() => {
@@ -35,7 +37,7 @@ export const BoardGameProvider = ({ children, ...props }) => {
         isConnected,
         stage,
         points: points[id],
-        actions: filterActions(actions, id),
+        actions: actions[id] || [],
         isDrawing: stage === "draw",
         canManageGame: stage === "manage",
         isYou: id.toString() === playerID.toString(),

@@ -56,13 +56,10 @@
       }
     }
   },
-  "sidebar": {
-    "action": {
-      "change": "Zmiana hasła. Porzednie hasło to: {{phrase}}",
-      "forfeit": "Runda poddana. Hasło to: {{phrase}}",
-      "manage": "Administrator pokoju",
-      "draw": "Rysuje...",
-      "timeout": "Koniec czasu. Hasło to: {{phrase}}"
-    }
+  "action": {
+    "change": "Zmiana hasła. Porzednie hasło to: {{phrase}}",
+    "forfeit": "Runda poddana. Hasło to: {{phrase}}",
+    "draw": "Rysuje...",
+    "timeout": "Koniec czasu. Hasło to: {{phrase}}"
   }
 }

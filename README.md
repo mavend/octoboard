@@ -1,11 +1,11 @@
-[![Deploy status](https://github.com/mavend/octoboard/actions/workflows/master.yml/badge.svg?branch=master)](https://octo-board.web.app/)
+[![Deploy status](https://github.com/mavend/octoboard/actions/workflows/master.yml/badge.svg?branch=master)](https://octoboards.com/)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 # Octoboard
 
-[![Octoboard banner](.github/banner.png)](https://octo-board.web.app/)
+[![Octoboard banner](.github/banner.png)](https://octoboards.com/)
 
-This is a collection of games that may help you and your friends kill the boredom of COVID19 quarantine. It's free and available online here: https://octo-board.web.app/
+This is a collection of games that may help you and your friends kill the boredom of COVID19 quarantine. It's free and available online here: [octoboards.com](https://octoboards.com)
 
 ## Development
 

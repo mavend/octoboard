@@ -6,7 +6,6 @@ import { currentTime } from "../utils/time";
 import { updateLines, UpdateTypes } from "../utils/updateLines";
 import { WIDE_CONFETTI } from "config/confetti";
 import { useBoardGame } from "contexts/BoardGameContext";
-import filterActions from "utils/user/filterActions";
 import { throttleAccumulate } from "utils/throttle";
 
 import DrawArea from "../DrawArea";
@@ -28,8 +27,7 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef, soundsEna
   const {
     G,
     moves,
-    player: { isDrawing },
-    playerID,
+    player: { isDrawing, actions },
     matchID,
     chatMessages,
     sendChatMessage,
@@ -37,9 +35,9 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef, soundsEna
   const [lines, setLines] = useState([]);
   const [remainingSeconds, setRemainingSeconds] = useState(G.turnEndTime - currentTime());
   const [lastSuccess, setLastSuccess] = useState(false);
-  const lastUserGuess = filterActions(G.actions, playerID, "guess")[0] || {
+  const lastUserGuess = actions?.find(({ name }) => name === "guess") || {
     id: null,
-    success: false,
+    data: {},
   };
 
   const { whiteboard } = useWhiteboardAudio();
@@ -105,9 +103,9 @@ const GameBoard = ({ guess, setGuess, envokeLastAnswer, guessInputRef, soundsEna
   }, [G.turnEndTime, setRemainingSeconds, moves, isDrawing]);
 
   useEffect(() => {
-    setLastSuccess(lastUserGuess.success);
+    setLastSuccess(lastUserGuess.data.success);
     return () => setLastSuccess(false); // Do cleanup of state
-  }, [lastUserGuess.id, lastUserGuess.success]);
+  }, [lastUserGuess.id, lastUserGuess.data.success]);
 
   const PlayAudio = useCallback(
     (updateType) => {

@@ -4,7 +4,7 @@ import cards from "./data/cards.json";
 import bonuses from "./data/bonuses.json";
 import { canBuyCard, canTakeBonus, fromEntries } from "./utils";
 import { RESOURCES, RESOURCES_CONFIG, WINNING_POINTS } from "./config";
-import { LogAction } from "../../utils/game/moves/LogAction";
+import { PluginActions } from "plugins/actions";
 
 const REGULAR_RESOURCES = RESOURCES.filter((res) => res !== "gold");
 const CARDS_PER_LEVEL = 4;
@@ -201,6 +201,7 @@ export const Splendid = {
 
   seed: process.env.NODE_ENV === "production" ? undefined : "test",
   setup: setupGame,
+  plugins: [PluginActions()],
 
   phases: {
     wait: {
@@ -208,7 +209,7 @@ export const Splendid = {
       next: "play",
       turn: {
         onBegin: (G, ctx) => {
-          LogAction(G, ctx.currentPlayer, "manage");
+          ctx.actions.log(ctx.currentPlayer, "manage");
           ctx.events.setActivePlayers({ currentPlayer: "manage", others: "wait" });
         },
         stages: {
