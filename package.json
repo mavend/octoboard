@@ -15,7 +15,7 @@
     "bgio-storage-cache": "^0.3.1",
     "boardgame.io": "^0.44.3",
     "clsx": "^1.1.1",
-    "concurrently": "^6.0.2",
+    "concurrently": "^6.1.0",
     "esm": "^3.2.25",
     "firebase": "^8.6.1",
     "firebase-admin": "^9.8.0",
