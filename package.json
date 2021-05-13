@@ -11,7 +11,7 @@
     "@types/node": "^15.0.2",
     "@types/react": "^17.0.5",
     "@types/react-dom": "^17.0.3",
-    "bgio-firebase": "^0.3.1",
+    "bgio-firebase": "^0.3.2",
     "bgio-storage-cache": "^0.3.1",
     "boardgame.io": "^0.44.3",
     "clsx": "^1.1.1",
