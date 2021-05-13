@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import { Menu, Icon, Dropdown } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 import { breakpoints } from "config/media";
+import { routes } from "config/routes";
 
 const FooterLink = ({ text, children, ...props }) => (
   <a
@@ -48,6 +50,14 @@ const Footer = () => {
       </FooterItem>
       <FooterItem>
         {t("footer.graphics")}: <FooterLink text="Icons8" href="https://icons8.com" />
+      </FooterItem>
+      <FooterItem>
+        <Link
+          to={routes.privacy_policy()}
+          style={{ color: "#aaa", textDecoration: "underline dashed #ddd" }}
+        >
+          {t("privacy_policy.title")}
+        </Link>
       </FooterItem>
       <Menu.Menu position="right">
         <FooterItem>

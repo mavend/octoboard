@@ -32,6 +32,14 @@
     "github": "Jesteśmy na GitHubie",
     "graphics": "Grafiki od"
   },
+  "cookies": {
+    "header": "Używamy cookies",
+    "content": "Używamy informacji zapisanych za pomocą plików cookies w celu zapewnienia poprawnego funkcjonowania naszego serwisu oraz analizy odwiedzin. Kontunuując przeglądanie strony zgadzasz się z naszą ",
+    "privacy_policy": "Polityką prywatności"
+  },
+  "privacy_policy": {
+    "title": "Polityka prywatności"
+  },
   "board": {
     "wait": {
       "actions": {

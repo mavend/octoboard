@@ -32,6 +32,14 @@
     "github": "We are on GitHub",
     "graphics": "Graphics from"
   },
+  "cookies": {
+    "header": "We use cookies",
+    "content": "This website uses cookies to provide personalized browsing experience and to analyse traffic. By continuing to browse this website, you are agreeing to our ",
+    "privacy_policy": "Privacy policy"
+  },
+  "privacy_policy": {
+    "title": "Privacy policy"
+  },
   "board": {
     "wait": {
       "actions": {
