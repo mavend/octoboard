@@ -7,7 +7,7 @@
     "@mavend/octoheads": "^0.2.4",
     "@sentry/node": "^6.3.6",
     "@sentry/react": "^6.3.6",
-    "@sentry/tracing": "^6.3.6",
+    "@sentry/tracing": "^6.4.1",
     "@types/node": "^15.0.3",
     "@types/react": "^17.0.5",
     "@types/react-dom": "^17.0.5",
