@@ -102,7 +102,7 @@
   },
   "devDependencies": {
     "@prettier/plugin-xml": "^0.13.1",
-    "@sentry/types": "^6.4.1",
+    "@sentry/types": "^6.5.1",
     "@storybook/addon-actions": "^6.2.7",
     "@storybook/addon-essentials": "^6.2.7",
     "@storybook/addon-knobs": "^6.2.7",
