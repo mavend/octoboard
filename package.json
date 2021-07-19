@@ -139,7 +139,7 @@
     "nodemon": "^2.0.7",
     "pm2": "^4.5.6",
     "prettier": "^2.3.0",
-    "puppeteer": "^9.1.1",
+    "puppeteer": "^10.1.0",
     "storybook": "^6.2.7",
     "storybook-react-router": "^1.0.8",
     "ts-node": "^10.1.0"
