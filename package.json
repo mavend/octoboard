@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@artsy/fresnel": "^1.5.0",
+    "@artsy/fresnel": "^1.9.0",
     "@mavend/octoheads": "^0.2.4",
     "@sentry/node": "^6.5.1",
     "@sentry/react": "^6.5.1",
