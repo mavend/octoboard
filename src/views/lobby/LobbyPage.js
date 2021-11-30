@@ -31,11 +31,14 @@ const LobbyPage = ({ noRefetch }) => {
   const games = gameComponents.map((g) => g.game);
   const user = useUser();
 
-  const { data: matchesData, error: matchesError, status, isFetching } = useQuery(
-    "matches",
-    () => lobbyClient.listAllMatches(games),
-    { refetchInterval: noRefetch ? false : 1000 }
-  );
+  const {
+    data: matchesData,
+    error: matchesError,
+    status,
+    isFetching,
+  } = useQuery("matches", () => lobbyClient.listAllMatches(games), {
+    refetchInterval: noRefetch ? false : 1000,
+  });
 
   useEffect(() => {
     if (isFetching) return;
@@ -65,7 +68,7 @@ const LobbyPage = ({ noRefetch }) => {
   }, [location, history, setError, t]);
 
   const handleJoinMatch = useCallback(
-    ({ gameName, matchID, players, playerID }) => {
+    ({ gameName, matchID, playerID }) => {
       if (!user) {
         history.push({
           pathname: routes.login_guest(),
@@ -80,9 +83,8 @@ const LobbyPage = ({ noRefetch }) => {
       }
 
       setLoading(true);
-      const freeSpotId = (playerID || players.find((p) => !p.name).id).toString();
       lobbyClient
-        .joinMatch(gameName, matchID, { playerID: freeSpotId, playerName: user.uid })
+        .joinMatch(gameName, matchID, { playerID, playerName: user.uid })
         .then(async ({ playerCredentials }) => {
           await DataStore.addCredentials(user.uid, matchID, playerCredentials);
           setLoading(false);
