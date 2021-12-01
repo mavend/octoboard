@@ -113,8 +113,8 @@ export const PictureMatch = {
       turn: {
         onBegin: (G, ctx) => {
           ctx.actions.log(ctx.currentPlayer, "manage");
-          ctx.events.setActivePlayers({ currentPlayer: "manage", others: "wait" });
         },
+        activePlayers: { currentPlayer: "manage", others: "wait" },
         stages: {
           manage: {
             moves: {
@@ -140,9 +140,9 @@ export const PictureMatch = {
         for (let i = 0; i < ctx.numPlayers; i++) {
           G.players[i].card = G.secret.deck.pop();
         }
-        ctx.events.setActivePlayers({ all: "match" });
       },
       turn: {
+        activePlayers: { all: "match" },
         stages: {
           match: {
             moves: {

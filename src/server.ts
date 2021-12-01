@@ -1,4 +1,4 @@
-import { Server } from "boardgame.io/server";
+import { Server, Origins } from "boardgame.io/server";
 import { Firestore } from "bgio-firebase";
 import { StorageCache } from "bgio-storage-cache";
 import admin from "firebase-admin";
@@ -37,6 +37,7 @@ const dbWithCaching = new StorageCache(db, { cacheSize: 200 });
 const server = Server({
   games: [Kalambury, PictureMatch, Splendid, Scrambled],
   db: dbWithCaching,
+  origins: ["https://octoboards.com", "https://*.octoboards.com", Origins.LOCALHOST_IN_DEVELOPMENT],
 });
 
 server.app.on("error", (err, ctx) => {
