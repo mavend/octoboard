@@ -54,6 +54,15 @@
             "value": "max-age=3600,public,must-revalidate"
           }
         ]
+      },
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*.octoboards.com"
+          }
+        ]
       }
     ]
   }
