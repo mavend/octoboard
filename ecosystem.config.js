@@ -26,7 +26,7 @@ module.exports = {
       env: {
         NODE_ENV: "production",
         ENVIRONMENT: "production",
-        FIREBASE_KEY_PATH: "/home/app/firebaseKey.json",
+        GOOGLE_APPLICATION_CREDENTIALS: "/home/app/firebaseKey.json",
         SENTRY_DSN: process.env.SENTRY_DSN,
       },
     },

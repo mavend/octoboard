@@ -18,7 +18,7 @@
     "concurrently": "^6.2.0",
     "esm": "^3.2.25",
     "firebase": "^8.7.1",
-    "firebase-admin": "^9.9.0",
+    "firebase-admin": "^10.0.0",
     "i18next": "^20.3.1",
     "i18next-browser-languagedetector": "^6.1.2",
     "i18next-xhr-backend": "^3.2.2",
