@@ -20,7 +20,7 @@ jobs:
           SENTRY_DSN: ${{ secrets.APP_SENTRY_DSN }}
           ENVIRONMENT: staging
       - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0.2.1
+        uses: google-github-actions/setup-gcloud@v0.3
         with:
           project_id: octoboard-development
           service_account_key: ${{ secrets.APP_ENGINE_SERVICE_ACCOUNT_OCTOBOARD_DEVELOPMENT }}
