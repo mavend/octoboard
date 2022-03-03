@@ -14,7 +14,7 @@ jobs:
       url: https://${{ github.head_ref }}-dot-octoboard-development.appspot.com
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - uses: ikuanyshbekov/app-yaml-env-compiler@v1.1
         env:
           SENTRY_DSN: ${{ secrets.APP_SENTRY_DSN }}
@@ -40,7 +40,7 @@ jobs:
       REACT_APP_ENVIRONMENT: staging
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Build
         run: npm ci && npm run build
       - name: Preview
