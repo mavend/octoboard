@@ -33,7 +33,7 @@
     "react-i18next": "^11.11.0",
     "react-query": "^3.16.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^5.0.1",
     "react-toastify": "^7.0.4",
     "remove-accents": "^0.4.2",
     "sass": "^1.44.0",
