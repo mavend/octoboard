@@ -53,6 +53,6 @@ jobs:
         # PRs opened by dependabot don't have access to secrets, so this step will fail
         # We just skip it since it's not that important there - only run it if we have access to secrets
         if: ${{ env.CC_TEST_REPORTER_ID != null }}
-        uses: paambaati/codeclimate-action@v2.7.5
+        uses: paambaati/codeclimate-action@v3.2.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
