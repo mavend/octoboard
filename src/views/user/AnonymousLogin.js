@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import AuthProvider from "services/Auth";
 import CredentialsLayout from "components/layout/CredentialsLayout";
@@ -12,14 +12,16 @@ const AnonymousLoginPage = () => {
   const [nickname, setNickname] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const formValid = nickname.length > 0;
   const handleLoginFunc = handleAuthorization(
     () => AuthProvider.logInAnonymously(nickname),
     setError,
     setIsLoading,
-    history
+    navigate,
+    location
   );
 
   return (

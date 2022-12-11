@@ -1,6 +1,5 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
-import { boolean } from "@storybook/addon-knobs";
 
 import CreateMatchForm from "./CreateMatchForm";
 
@@ -10,10 +9,8 @@ export default {
   excludeStories: /.*Data$/,
 };
 
-export const Default = () => (
+export const Default = (args) => (
   <CreateMatchForm
-    loading={boolean("Loading?", false)}
-    disabled={boolean("Disabled?", false)}
     games={[
       {
         name: "Kalambury",
@@ -23,5 +20,6 @@ export const Default = () => (
       },
     ]}
     onCreate={action("onCreate")}
+    {...args}
   />
 );

@@ -29,7 +29,9 @@ const Footer = () => {
     { key: "en", text: "English", value: "en" },
     { key: "pl", text: "polski", value: "pl" },
   ];
-  const currentLanguage = languages.find(({ key }) => key === i18n.language);
+
+  const currentLanguage =
+    languages.find(({ key }) => key === i18n.language.slice(0, 2)) || languages[0];
 
   const handleLanguageChange = (e, { value }) => {
     i18n.changeLanguage(value);

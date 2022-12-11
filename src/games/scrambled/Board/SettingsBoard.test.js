@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "utils/test/render";
 import SettingsBoard from "./SettingsBoard";
-import BoardGameContextMock from "../GameContextMock";
+import { BoardGameContextMock } from "../GameContextMock";
 
 describe("scrambled SettingsBoard component", () => {
   it("renders correctly", () => {

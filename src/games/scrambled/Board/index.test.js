@@ -1,18 +1,15 @@
 import React from "react";
 import { render, screen } from "utils/test/render";
 import Board from "./index";
-import BoardGameContextMock from "../GameContextMock";
-import { MemoryRouter } from "react-router";
+import { BoardGameContextMock } from "../GameContextMock";
 
 describe("scrambled Board component", () => {
   it("renders correctly", async () => {
     expect.hasAssertions();
     const { container } = render(
-      <MemoryRouter>
-        <BoardGameContextMock>
-          <Board />
-        </BoardGameContextMock>
-      </MemoryRouter>
+      <BoardGameContextMock>
+        <Board />
+      </BoardGameContextMock>
     );
     expect(await screen.findByText("game.errors.ok")).toBeInTheDocument();
     expect(container.firstChild).toMatchSnapshot();
@@ -21,11 +18,9 @@ describe("scrambled Board component", () => {
   it("renders waiting board if game not yet started", () => {
     expect.hasAssertions();
     const { container } = render(
-      <MemoryRouter>
-        <BoardGameContextMock overrideCtx={{ phase: "wait" }}>
-          <Board />
-        </BoardGameContextMock>
-      </MemoryRouter>
+      <BoardGameContextMock overrideCtx={{ phase: "wait" }}>
+        <Board />
+      </BoardGameContextMock>
     );
     expect(container.firstChild).toMatchSnapshot();
   });

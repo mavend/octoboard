@@ -41,11 +41,8 @@ export function PluginActions(): Plugin<ActionsApi, ActionsData> {
     // This is called at the beginning of a move or event.
     // This object will be held in memory until flush (below)
     // is called.
-    api: ({ data }: any): ActionsApi => {
-      const state: ActionsData = {
-        actions: data.actions,
-        idx: data.idx,
-      };
+    api: ({ data: { actions, idx } }: any): ActionsApi => {
+      const state: ActionsData = { actions, idx };
 
       const log = (playerID: PlayerID, name: string, data?: object) => {
         const action = {
@@ -55,7 +52,7 @@ export function PluginActions(): Plugin<ActionsApi, ActionsData> {
           time: new Date().toISOString(),
           data,
         };
-        state.actions[playerID] = [action, ...state.actions[playerID]];
+        state.actions[playerID] = [action, ...(state.actions[playerID] || [])];
       };
 
       const get = (playerID: PlayerID): Action[] => state.actions[playerID];

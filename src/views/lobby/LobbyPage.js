@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet-async";
@@ -25,7 +25,7 @@ const LobbyPage = ({ noRefetch }) => {
   const [loading, setLoading] = useState(true);
   const [matches, setMatches] = useState([]);
   const [currentMatch, setCurrentMatch] = useState();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation("lobby");
   const games = gameComponents.map((g) => g.game);
@@ -63,22 +63,21 @@ const LobbyPage = ({ noRefetch }) => {
     const { state } = location;
     if (state && state.error) {
       setError(t(state.error));
-      history.replace({ state: { ...state, error: null } });
+      navigate(location.pathname, { state: { ...state, error: null } });
     }
-  }, [location, history, setError, t]);
+  }, [location, navigate, setError, t]);
 
   const handleJoinMatch = useCallback(
     ({ gameName, matchID, playerID }) => {
       if (!user) {
-        history.push({
-          pathname: routes.login_guest(),
+        navigate(routes.login_guest(), {
           state: { from: { pathname: routes.game(gameName, matchID) } },
         });
         return;
       }
 
       if (currentMatch) {
-        history.push(routes.game(gameName, matchID));
+        navigate(routes.game(gameName, matchID));
         return;
       }
 
@@ -88,11 +87,11 @@ const LobbyPage = ({ noRefetch }) => {
         .then(async ({ playerCredentials }) => {
           await DataStore.addCredentials(user.uid, matchID, playerCredentials);
           setLoading(false);
-          history.push(routes.game(gameName, matchID));
+          navigate(routes.game(gameName, matchID));
         })
         .catch((e) => setError(e.message));
     },
-    [user, currentMatch, setLoading, setError, history]
+    [user, currentMatch, setLoading, setError, navigate]
   );
 
   const handleCreate = useCallback(

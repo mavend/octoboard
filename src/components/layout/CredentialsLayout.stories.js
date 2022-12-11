@@ -1,7 +1,5 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
-import { boolean, text } from "@storybook/addon-knobs";
-
 import CredentialsLayout from "./CredentialsLayout";
 
 import GuestForm from "components/user/forms/GuestForm";
@@ -20,11 +18,11 @@ export const Guest = () => (
   <CredentialsLayout action="guest">
     <GuestForm
       handleLoginFunc={action("handleLoginFunc")}
-      isLoading={boolean("Is loading?", false)}
-      error={text("Error", null)}
-      nickname={text("Nickname", "Whatever")}
+      isLoading={false}
+      error={null}
+      nickname="Whatever"
       setNickname={action("setNickname")}
-      formValid={boolean("Form valid?", true)}
+      formValid={true}
     />
     <OtherLoginOptions setError={action("setError")} setLoading={action("setLoading")} />
   </CredentialsLayout>
@@ -34,15 +32,15 @@ export const Register = () => (
   <CredentialsLayout action="register">
     <RegisterForm
       handleRegisterFunc={action("handleRegisterFunc")}
-      isLoading={boolean("Is loading?", false)}
-      error={text("Error", null)}
-      nickname={text("Nickname", "Whatever")}
+      isLoading={false}
+      error={null}
+      nickname="Whatever"
       setNickname={action("setNickname")}
-      email={text("Email", "qwe@qwe.qwe")}
-      setEmail={action("setEmail")}
-      password={text("Password", "Whatever")}
+      email="qwe@qwe.qwe"
+      setEmail="setEmail"
+      password="Whatever"
       setPassword={action("setPassword")}
-      formValid={boolean("Form valid?", true)}
+      formValid={true}
     />
     <OtherLoginOptions setError={action("setError")} setLoading={action("setLoading")} />
   </CredentialsLayout>
@@ -52,13 +50,13 @@ export const Login = () => (
   <CredentialsLayout action="login">
     <LoginForm
       handleLoginFunc={action("handleLoginFunc")}
-      isLoading={boolean("Is loading?", false)}
-      error={text("Error", null)}
-      email={text("Email", "qwe@qwe.qwe")}
+      isLoading={false}
+      error={null}
+      email="qwe@qwe.qwe"
       setEmail={action("setEmail")}
-      password={text("Password", "Whatever")}
+      password="Whatever"
       setPassword={action("setPassword")}
-      formValid={boolean("Form valid?", true)}
+      formValid={true}
     />
     <OtherLoginOptions setError={action("setError")} setLoading={action("setLoading")} />
   </CredentialsLayout>
@@ -70,13 +68,13 @@ export const ChangePassword = () => (
     modalOptions={{ closeIcon: true, onClose: action("onClose") }}
   >
     <ChangePasswordForm
-      isLoading={boolean("Is loading?", false)}
-      error={text("Error", null)}
+      isLoading={false}
+      error={null}
       handleChangePassword={action("handleChangePassword")}
-      success={text("Success", null)}
-      newPassword={text("New password", "Whatever")}
+      success={null}
+      newPassword="Whatever"
       setNewPassword={action("setNewPassword")}
-      formValid={boolean("Form valid?", true)}
+      formValid={true}
     />
   </CredentialsLayout>
 );

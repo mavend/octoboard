@@ -1,6 +1,7 @@
 /* eslint-disable jest/prefer-strict-equal */
-import { PluginActions } from "./actions";
+import { ActionsApi, PluginActions } from "./actions";
 import { Client } from "boardgame.io/client";
+import { Game } from "boardgame.io";
 
 const ISO_TIME_REGEX = /^(\d{4})-0?(\d+)-0?(\d+)[T ]0?(\d+):0?(\d+):0?(\d+)\.(\d+)Z?$/;
 
@@ -8,7 +9,7 @@ describe("default values", () => {
   it("playerState is not passed", () => {
     expect.hasAssertions();
     const plugin = PluginActions();
-    const game = {
+    const game: Game = {
       plugins: [plugin],
     };
     const client = Client({ game });
@@ -24,16 +25,16 @@ describe("in game", () => {
   let client;
 
   beforeEach(() => {
-    const game = {
+    const game: Game<any, { actions: ActionsApi }> = {
       moves: {
-        LogAction: (_, ctx, playerID, name, data?) => {
-          ctx.actions.log(playerID, name, data);
+        LogAction: ({ actions }, playerID, name, data?) => {
+          actions.log(playerID, name, data);
         },
-        LoadActions: (G, ctx, playerID) => {
-          G.playerActions = ctx.actions.get(playerID);
+        LoadActions: ({ G, actions }, playerID) => {
+          G.playerActions = actions.get(playerID);
         },
-        Clear: (_, ctx, playerID) => {
-          ctx.actions.clear(playerID);
+        Clear: ({ actions }, playerID) => {
+          actions.clear(playerID);
         },
       },
       plugins: [PluginActions()],

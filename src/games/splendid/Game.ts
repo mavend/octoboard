@@ -1,4 +1,5 @@
 import { INVALID_MOVE, TurnOrder } from "boardgame.io/core";
+import { CustomGame } from "games/types";
 import { mapValues, sum } from "lodash";
 import cards from "./data/cards.json";
 import bonuses from "./data/bonuses.json";
@@ -9,17 +10,17 @@ import { PluginActions } from "plugins/actions";
 const REGULAR_RESOURCES = RESOURCES.filter((res) => res !== "gold");
 const CARDS_PER_LEVEL = 4;
 
-function setupGame(ctx, setupData) {
+function setupGame({ ctx, random }, setupData) {
   const G = {
     privateMatch: setupData && setupData.private,
     actionsCount: 0,
     players: {},
     points: Array(ctx.numPlayers).fill(0),
     actions: [],
-    deck: mapValues(cards, ctx.random.Shuffle),
+    deck: mapValues(cards, random.Shuffle),
     table: mapValues(cards, () => Array(CARDS_PER_LEVEL).fill(null)),
     tokens: mapValues(RESOURCES_CONFIG, (res) => res.tokensCount[ctx.numPlayers - 1]),
-    bonuses: ctx.random.Shuffle(bonuses).slice(0, ctx.numPlayers + 1),
+    bonuses: random.Shuffle(bonuses).slice(0, ctx.numPlayers + 1),
   };
 
   for (let i = 0; i < ctx.numPlayers; i++) {
@@ -34,9 +35,9 @@ function setupGame(ctx, setupData) {
   return G;
 }
 
-function StartGame(G, ctx) {
+function StartGame({ G, events }) {
   G.actions = [];
-  ctx.events.setPhase("play", { next: "0" });
+  events.setPhase("play", { next: "0" });
 }
 
 function canTakeTokens(availableTokens, requestedTokens, playerTokens) {
@@ -59,7 +60,16 @@ function canTakeTokens(availableTokens, requestedTokens, playerTokens) {
   return allowedResources && withinLimit && (upToThreeDifferent || twoSame);
 }
 
-function TakeTokens(G, ctx, requestedTokens) {
+function checkBonusAndEndTurn({ G, ctx, events }) {
+  const player = G.players[ctx.currentPlayer];
+  if (G.bonuses.some((bonus) => canTakeBonus(player.cards, bonus))) {
+    events.setStage("bonus");
+  } else {
+    events.endTurn();
+  }
+}
+
+function TakeTokens({ G, ctx, events }, requestedTokens: Record<string, number>) {
   const player = G.players[ctx.currentPlayer];
   if (!canTakeTokens(G.tokens, requestedTokens, player.tokens)) {
     return INVALID_MOVE;
@@ -70,7 +80,7 @@ function TakeTokens(G, ctx, requestedTokens) {
     player.tokens[res] += count;
   }
 
-  checkBonusAndEndTurn(G, ctx);
+  checkBonusAndEndTurn({ G, ctx, events });
 }
 
 function findCardOnTheTable(G, level, cardId) {
@@ -82,7 +92,7 @@ function removeCardFromTheTable(G, level, cardId) {
 }
 
 function payForCard(player, card, publicTokens) {
-  for (const [res, cost] of Object.entries(card.cost)) {
+  for (const [res, cost] of Object.entries(card.cost as Record<string, number>)) {
     const tokens = player.tokens[res];
     const cards = player.cards[res];
     let tokensPaid = 0;
@@ -100,7 +110,7 @@ function payForCard(player, card, publicTokens) {
   }
 }
 
-function BuyCard(G, ctx, level, cardId) {
+function BuyCard({ G, ctx, events }, level, cardId) {
   const player = G.players[ctx.currentPlayer];
   const { tokens, cards } = player;
   const card = findCardOnTheTable(G, level, cardId);
@@ -115,10 +125,10 @@ function BuyCard(G, ctx, level, cardId) {
   G.points[ctx.currentPlayer] += card.points;
   removeCardFromTheTable(G, level, cardId);
 
-  checkBonusAndEndTurn(G, ctx);
+  checkBonusAndEndTurn({ G, ctx, events });
 }
 
-function BuyReserved(G, ctx, cardId) {
+function BuyReserved({ G, ctx, events }, cardId) {
   const player = G.players[ctx.currentPlayer];
   const { tokens, cards } = player;
   const card = player.reservedCards.find((card) => card.id === cardId);
@@ -133,10 +143,10 @@ function BuyReserved(G, ctx, cardId) {
   G.points[ctx.currentPlayer] += card.points;
   player.reservedCards = player.reservedCards.filter((card) => card.id !== cardId);
 
-  checkBonusAndEndTurn(G, ctx);
+  checkBonusAndEndTurn({ G, ctx, events });
 }
 
-function ReserveCard(G, ctx, level, cardId) {
+function ReserveCard({ G, ctx, events }, level, cardId) {
   const player = G.players[ctx.currentPlayer];
   const card = findCardOnTheTable(G, level, cardId);
 
@@ -151,10 +161,10 @@ function ReserveCard(G, ctx, level, cardId) {
   player.reservedCards.push(card);
   removeCardFromTheTable(G, level, cardId);
 
-  checkBonusAndEndTurn(G, ctx);
+  checkBonusAndEndTurn({ G, ctx, events });
 }
 
-function DiscardToken(G, ctx, resource) {
+function DiscardToken({ G, ctx }, resource) {
   const player = G.players[ctx.currentPlayer];
   if (player.tokens[resource] <= 0) {
     return INVALID_MOVE;
@@ -164,7 +174,7 @@ function DiscardToken(G, ctx, resource) {
   G.tokens[resource] += 1;
 }
 
-function TakeBonus(G, ctx, id) {
+function TakeBonus({ G, ctx, events }, id) {
   const player = G.players[ctx.currentPlayer];
   const bonus = G.bonuses.find((bonus) => bonus.id === id);
   if (!bonus || !canTakeBonus(player.cards, bonus)) {
@@ -174,17 +184,8 @@ function TakeBonus(G, ctx, id) {
   G.points[ctx.currentPlayer] += bonus.points;
   player.bonuses.push(bonus);
   G.bonuses = G.bonuses.filter((bonus) => bonus.id !== id);
-  ctx.events.endStage();
-  ctx.events.endTurn();
-}
-
-function checkBonusAndEndTurn(G, ctx) {
-  const player = G.players[ctx.currentPlayer];
-  if (G.bonuses.some((bonus) => canTakeBonus(player.cards, bonus))) {
-    ctx.events.setStage("bonus");
-  } else {
-    ctx.events.endTurn();
-  }
+  events.endStage();
+  events.endTurn();
 }
 
 function addCardsToTheTable(G) {
@@ -193,7 +194,7 @@ function addCardsToTheTable(G) {
   });
 }
 
-export const Splendid = {
+export const Splendid: CustomGame = {
   name: "Splendid",
   image: "/images/games/splendid/icon.png",
   minPlayers: 2,
@@ -208,9 +209,9 @@ export const Splendid = {
       start: true,
       next: "play",
       turn: {
-        onBegin: (G, ctx) => {
-          ctx.actions.log(ctx.currentPlayer, "manage");
-          ctx.events.setActivePlayers({ currentPlayer: "manage", others: "wait" });
+        onBegin: ({ G, ctx, actions, events }) => {
+          actions.log(ctx.currentPlayer, "manage");
+          events.setActivePlayers({ currentPlayer: "manage", others: "wait" });
         },
         stages: {
           manage: {
@@ -227,23 +228,19 @@ export const Splendid = {
     play: {
       moves: { TakeTokens, BuyCard, ReserveCard, DiscardToken, BuyReserved },
       turn: {
-        onBegin: (G, ctx) => {
+        onBegin: ({ G, ctx }) => {
           addCardsToTheTable(G);
           if (G.lastPlayer === ctx.currentPlayer) {
             G.calculateWinner = true;
           }
         },
-        onEnd: (G, ctx) => {
+        onEnd: ({ G, ctx }) => {
           const points = G.points[ctx.currentPlayer];
           if (points >= WINNING_POINTS && !G.lastPlayer) {
             G.lastPlayer = ctx.currentPlayer;
           }
         },
         order: TurnOrder.RESET,
-        events: {
-          endGame: false,
-          endTurn: false,
-        },
         stages: {
           bonus: {
             moves: { TakeBonus },
@@ -252,7 +249,7 @@ export const Splendid = {
       },
     },
   },
-  endIf: (G, ctx) => {
+  endIf: ({ G, ctx }) => {
     if (G.calculateWinner) {
       const cardsCount = (playerID) => sum(Object.values(G.players[playerID].cards));
       const bonusesCount = (playerID) => G.player[playerID].bonuses.length;

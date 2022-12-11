@@ -12,6 +12,7 @@ const DB = firebase.firestore();
 
 const settings = {
   experimentalAutoDetectLongPolling: true,
+  merge: true,
 };
 
 if (process.env.NODE_ENV === "development") {

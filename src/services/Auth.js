@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
-import DataStore from "./DataStore";
 import "firebase/auth";
+import DataStore from "./DataStore";
 
 async function initUserProfile(user, { displayName }) {
   await DataStore.updateProfile(user.uid, { displayName });

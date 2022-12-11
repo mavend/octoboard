@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "utils/test/render";
-import BoardGameContextMock from "./GameContextMock";
+import { BoardGameContextMock } from "./GameContextMock";
 import WordApprovalIcon from "./WordApprovalIcon";
 
 describe("scrambled WordApprovalIcon component", () => {

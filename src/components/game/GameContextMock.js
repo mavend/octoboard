@@ -1,20 +1,25 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import { action } from "@storybook/addon-actions";
-import { boolean, number, select } from "@storybook/addon-knobs";
 import { BoardGameProvider } from "contexts/BoardGameContext";
 
 import { actionsDataMock } from "plugins/actions.mock";
 
-const ref = "Game Context";
-
-const BoardGameContextMock = ({ children }) => {
+const BoardGameContextMock = ({
+  maxPoints,
+  privateMatch,
+  phase,
+  numPlayers,
+  children,
+  ...args
+}) => {
   return (
     <BoardGameProvider
       gameName="SuperGame"
       G={{
         points: [10, 3],
-        maxPoints: number("Max points", 15, ref),
-        privateMatch: boolean("Private", true, ref),
+        maxPoints,
+        privateMatch,
         players: {
           0: { canManageGame: true },
           1: {},
@@ -24,8 +29,8 @@ const BoardGameContextMock = ({ children }) => {
       ctx={{
         activePlayers: [],
         currentPlayer: "0",
-        phase: select("phase", ["wait", "play"], "play", ref),
-        numPlayers: number("Player count", 4, { range: true, min: 2, max: 10, step: 1 }, ref),
+        phase,
+        numPlayers,
       }}
       playerID={"0"}
       matchID={"qwe123"}
@@ -40,10 +45,18 @@ const BoardGameContextMock = ({ children }) => {
       }}
       chatMessages={[]}
       sendChatMessage={action("sendChatMessage")}
+      {...args}
     >
       {children}
     </BoardGameProvider>
   );
+};
+
+BoardGameContextMock.args = {
+  maxPoints: 15,
+  privateMatch: true,
+  phase: "play",
+  numPlayers: 3,
 };
 
 export default BoardGameContextMock;

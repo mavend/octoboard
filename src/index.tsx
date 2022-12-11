@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 
 import { initErrorTracking } from "services/Sentry";
 import configureFirebase from "services/Firebase";
@@ -11,5 +11,6 @@ initErrorTracking();
 
 configureFirebase().then(async () => {
   const { default: App } = await import("App");
-  ReactDOM.render(<App />, document.getElementById("root"));
+  const root = createRoot(document.getElementById("root")!);
+  root.render(<App />);
 });

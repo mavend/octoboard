@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import AuthProvider from "services/Auth";
 import handleAuthorization from "utils/user/handleAuthorization";
@@ -14,14 +14,16 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const formValid = email.length > 0 && password.length > 0;
   const handleLoginFunc = handleAuthorization(
     () => AuthProvider.logIn(email, password),
     setError,
     setIsLoading,
-    history
+    navigate,
+    location
   );
 
   return (

@@ -141,7 +141,7 @@ describe("scrambled StartGame", () => {
 
     expect(G.language).toBeUndefined();
 
-    StartGame(G, { random: { Shuffle: jest.fn((x) => x) }, events: { setPhase: jest.fn() } }, "en");
+    StartGame({ G, random: { Shuffle: jest.fn((x) => x) }, events: { setPhase: jest.fn() } }, "en");
 
     expect(G.language).toStrictEqual("en");
   });
@@ -153,8 +153,7 @@ describe("scrambled StartGame", () => {
     expect(G.assist).toBeUndefined();
 
     StartGame(
-      G,
-      { random: { Shuffle: jest.fn((x) => x) }, events: { setPhase: jest.fn() } },
+      { G, random: { Shuffle: jest.fn((x) => x) }, events: { setPhase: jest.fn() } },
       "en",
       "full",
       true
@@ -171,7 +170,7 @@ describe("scrambled StartGame", () => {
 
     expect(G.secret.tiles).toHaveLength(0);
 
-    StartGame(G, { random: { Shuffle: shuffle }, events: { setPhase: jest.fn() } }, "pl");
+    StartGame({ G, random: { Shuffle: shuffle }, events: { setPhase: jest.fn() } }, "pl");
 
     const expectedTiles = getTiles("pl");
     expect(shuffle).toHaveBeenCalledWith(expectedTiles);
@@ -184,8 +183,7 @@ describe("scrambled StartGame", () => {
     const setPhaseEvent = jest.fn();
 
     StartGame(
-      G,
-      { random: { Shuffle: jest.fn((x) => x) }, events: { setPhase: setPhaseEvent } },
+      { G, random: { Shuffle: jest.fn((x) => x) }, events: { setPhase: setPhaseEvent } },
       "en"
     );
 
@@ -205,8 +203,7 @@ describe("scrambled PlayTiles", () => {
     ];
 
     PlayTiles(
-      G,
-      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      { G, ctx: { currentPlayer: "0" }, events: { setActivePlayers: jest.fn() } },
       { tiles: playedTiles }
     );
 
@@ -224,8 +221,7 @@ describe("scrambled PlayTiles", () => {
     ];
 
     PlayTiles(
-      G,
-      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      { G, ctx: { currentPlayer: "0" }, events: { setActivePlayers: jest.fn() } },
       { tiles: playedTiles }
     );
 
@@ -246,8 +242,7 @@ describe("scrambled PlayTiles", () => {
     ];
 
     PlayTiles(
-      G,
-      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      { G, ctx: { currentPlayer: "0" }, events: { setActivePlayers: jest.fn() } },
       { tiles: playedTiles }
     );
 
@@ -263,8 +258,10 @@ describe("scrambled PlayTiles", () => {
 
     // First word not placed on start field
     let result = PlayTiles(
-      G,
-      { currentPlayer: "0" },
+      {
+        G,
+        ctx: { currentPlayer: "0" },
+      },
       {
         tiles: [
           { x: 2, y: 2, ...tiles.A },
@@ -277,7 +274,7 @@ describe("scrambled PlayTiles", () => {
     expect(result).toStrictEqual(INVALID_MOVE);
 
     // First word placed on start field but too short
-    result = PlayTiles(G, { currentPlayer: "0" }, { tiles: [{ x: 0, y: 0, ...tiles.A }] });
+    result = PlayTiles({ G, ctx: { currentPlayer: "0" } }, { tiles: [{ x: 0, y: 0, ...tiles.A }] });
 
     expect(G.pendingTiles).toStrictEqual([]);
     expect(result).toStrictEqual(INVALID_MOVE);
@@ -288,8 +285,7 @@ describe("scrambled PlayTiles", () => {
       { x: 1, y: 0, ...tiles.B },
     ];
     PlayTiles(
-      G,
-      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      { G, ctx: { currentPlayer: "0" }, events: { setActivePlayers: jest.fn() } },
       { tiles: validPlay }
     );
 
@@ -303,7 +299,7 @@ describe("scrambled PlayTiles", () => {
     // Tiles not placed in a single row or column
     const playedTiles = [{ x: 1, y: 0, ...tiles.BLANK }];
 
-    const result = PlayTiles(G, { currentPlayer: "0" }, { tiles: playedTiles });
+    const result = PlayTiles({ G, ctx: { currentPlayer: "0" } }, { tiles: playedTiles });
 
     expect(G.pendingTiles).toStrictEqual([]);
     expect(result).toStrictEqual(INVALID_MOVE);
@@ -317,8 +313,7 @@ describe("scrambled PlayTiles", () => {
     const playedTiles = [{ x: 1, y: 0, replacement: "L", ...tiles.BLANK }];
 
     PlayTiles(
-      G,
-      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      { G, ctx: { currentPlayer: "0" }, events: { setActivePlayers: jest.fn() } },
       { tiles: playedTiles }
     );
 
@@ -336,7 +331,7 @@ describe("scrambled PlayTiles", () => {
       { x: 0, y: 2, ...tiles.D },
     ];
 
-    const result = PlayTiles(G, { currentPlayer: "0" }, { tiles: playedTiles });
+    const result = PlayTiles({ G, ctx: { currentPlayer: "0" } }, { tiles: playedTiles });
 
     expect(G.pendingTiles).toStrictEqual([]);
     expect(result).toStrictEqual(INVALID_MOVE);
@@ -349,7 +344,7 @@ describe("scrambled PlayTiles", () => {
     // Tiles not placed in a single row or column
     const playedTiles = [{ x: 0, y: 0, ...tiles.A }];
 
-    const result = PlayTiles(G, { currentPlayer: "0" }, { tiles: playedTiles });
+    const result = PlayTiles({ G, ctx: { currentPlayer: "0" } }, { tiles: playedTiles });
 
     expect(G.pendingTiles).toStrictEqual([]);
     expect(result).toStrictEqual(INVALID_MOVE);
@@ -368,8 +363,7 @@ describe("scrambled PlayTiles", () => {
     ];
 
     PlayTiles(
-      G,
-      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      { G, ctx: { currentPlayer: "0" }, events: { setActivePlayers: jest.fn() } },
       { tiles: playedTiles }
     );
 
@@ -385,7 +379,7 @@ describe("scrambled PlayTiles", () => {
       { x: 1, y: 2, ...tiles.B },
     ];
 
-    const result = PlayTiles(G, { currentPlayer: "0" }, { tiles: playedTiles });
+    const result = PlayTiles({ G, ctx: { currentPlayer: "0" } }, { tiles: playedTiles });
 
     expect(G.pendingTiles).toStrictEqual([]);
     expect(result).toStrictEqual(INVALID_MOVE);
@@ -410,8 +404,7 @@ describe("scrambled PlayTiles", () => {
     ];
 
     PlayTiles(
-      G,
-      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      { G, ctx: { currentPlayer: "0" }, events: { setActivePlayers: jest.fn() } },
       { tiles: playedTiles }
     );
 
@@ -423,8 +416,7 @@ describe("scrambled PlayTiles", () => {
     const G = setupG();
 
     let result = PlayTiles(
-      G,
-      { currentPlayer: "0" },
+      { G, ctx: { currentPlayer: "0" } },
       {
         tiles: [
           { x: 1, y: 0, ...tiles.A },
@@ -437,8 +429,7 @@ describe("scrambled PlayTiles", () => {
     expect(result).toStrictEqual(INVALID_MOVE);
 
     result = PlayTiles(
-      G,
-      { currentPlayer: "0" },
+      { G, ctx: { currentPlayer: "0" } },
       {
         tiles: [
           { x: 0, y: 1, ...tiles.A },
@@ -462,7 +453,7 @@ describe("scrambled PlayTiles", () => {
       { x: 2, y: 1, ...tiles.W },
     ];
 
-    const result = PlayTiles(G, { currentPlayer: "0" }, { tiles: playedTiles });
+    const result = PlayTiles({ G, ctx: { currentPlayer: "0" } }, { tiles: playedTiles });
 
     expect(G.pendingTiles).toStrictEqual([]);
     expect(result).toStrictEqual(INVALID_MOVE);
@@ -479,8 +470,7 @@ describe("scrambled PlayTiles", () => {
     ];
 
     PlayTiles(
-      G,
-      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      { G, ctx: { currentPlayer: "0" }, events: { setActivePlayers: jest.fn() } },
       { tiles: playedTiles }
     );
 
@@ -502,8 +492,7 @@ describe("scrambled PlayTiles", () => {
     ];
 
     PlayTiles(
-      G,
-      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      { G, ctx: { currentPlayer: "0" }, events: { setActivePlayers: jest.fn() } },
       { tiles: playedTiles }
     );
 
@@ -526,8 +515,11 @@ describe("scrambled PlayTiles", () => {
     const setActivePlayersEvent = jest.fn();
 
     PlayTiles(
-      G,
-      { currentPlayer: "0", events: { setActivePlayers: setActivePlayersEvent } },
+      {
+        G,
+        ctx: { currentPlayer: "0" },
+        events: { setActivePlayers: setActivePlayersEvent },
+      },
       { tiles: playedTiles }
     );
 
@@ -546,8 +538,11 @@ describe("scrambled PlayTiles", () => {
     const playedTiles = [{ x: 0, y: 1, ...tiles.B }];
 
     PlayTiles(
-      G,
-      { currentPlayer: "0", events: { setActivePlayers: jest.fn() } },
+      {
+        G,
+        ctx: { currentPlayer: "0" },
+        events: { setActivePlayers: jest.fn() },
+      },
       { tiles: playedTiles }
     );
 
@@ -563,11 +558,10 @@ describe("scrambled Approve", () => {
 
       const endTurnEvent = jest.fn();
       Approve(
-        G,
         {
-          currentPlayer: "0",
+          G,
+          ctx: { currentPlayer: "0", numPlayers: 3 },
           playerID: 1,
-          numPlayers: 3,
           events: { endTurn: endTurnEvent },
           actions,
         },
@@ -582,8 +576,13 @@ describe("scrambled Approve", () => {
       const G = setupG({ pendingTiles: VALID_FIRST_MOVE() });
 
       Approve(
-        G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
+        {
+          G,
+          ctx: { currentPlayer: "0", numPlayers: 3 },
+          playerID: 1,
+          events: { endTurn: jest.fn() },
+          actions,
+        },
         false
       );
 
@@ -595,8 +594,13 @@ describe("scrambled Approve", () => {
       const G = setupG({ pendingTiles: VALID_FIRST_MOVE() });
 
       Approve(
-        G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
+        {
+          G,
+          ctx: { currentPlayer: "0", numPlayers: 3 },
+          playerID: 1,
+          events: { endTurn: jest.fn() },
+          actions,
+        },
         false
       );
 
@@ -610,8 +614,13 @@ describe("scrambled Approve", () => {
       const G = setupG({ pendingTiles: VALID_FIRST_MOVE() });
 
       Approve(
-        G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
+        {
+          G,
+          ctx: { currentPlayer: "0", numPlayers: 3 },
+          playerID: 1,
+          events: { endTurn: jest.fn() },
+          actions,
+        },
         true
       );
 
@@ -623,8 +632,13 @@ describe("scrambled Approve", () => {
       const G = setupG({ pendingTiles: VALID_FIRST_MOVE() });
 
       Approve(
-        G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
+        {
+          G,
+          ctx: { currentPlayer: "0", numPlayers: 3 },
+          playerID: 1,
+          events: { endTurn: jest.fn() },
+          actions,
+        },
         true
       );
 
@@ -636,8 +650,13 @@ describe("scrambled Approve", () => {
       const G = setupG({ pendingTiles: VALID_FIRST_MOVE(), approvals: [1] });
 
       const result = Approve(
-        G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
+        {
+          G,
+          ctx: { currentPlayer: "0", numPlayers: 3 },
+          playerID: 1,
+          events: { endTurn: jest.fn() },
+          actions,
+        },
         true
       );
 
@@ -651,11 +670,10 @@ describe("scrambled Approve", () => {
 
       const endTurnEvent = jest.fn();
       const result = Approve(
-        G,
         {
-          currentPlayer: "0",
+          G,
+          ctx: { currentPlayer: "0", numPlayers: 3 },
           playerID: 1,
-          numPlayers: 3,
           events: { endTurn: endTurnEvent },
           actions,
         },
@@ -671,8 +689,13 @@ describe("scrambled Approve", () => {
       const G = setupG({ pendingTiles: VALID_FIRST_MOVE(), approvals: [1] });
 
       Approve(
-        G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
+        {
+          G,
+          ctx: { currentPlayer: "0", numPlayers: 3 },
+          playerID: 1,
+          events: { endTurn: jest.fn() },
+          actions,
+        },
         true
       );
 
@@ -686,8 +709,13 @@ describe("scrambled Approve", () => {
       const G = setupG({ pendingTiles: VALID_FIRST_MOVE(), approvals: [2] });
 
       Approve(
-        G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
+        {
+          G,
+          ctx: { currentPlayer: "0", numPlayers: 3 },
+          playerID: 1,
+          events: { endTurn: jest.fn() },
+          actions,
+        },
         true
       );
 
@@ -703,8 +731,13 @@ describe("scrambled Approve", () => {
       const G = setupG({ pendingTiles: VALID_FIRST_MOVE(), approvals: [2] });
 
       Approve(
-        G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
+        {
+          G,
+          ctx: { currentPlayer: "0", numPlayers: 3 },
+          playerID: 1,
+          events: { endTurn: jest.fn() },
+          actions,
+        },
         true
       );
 
@@ -725,8 +758,13 @@ describe("scrambled Approve", () => {
       });
 
       Approve(
-        G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
+        {
+          G,
+          ctx: { currentPlayer: "0", numPlayers: 3 },
+          playerID: 1,
+          events: { endTurn: jest.fn() },
+          actions,
+        },
         true
       );
 
@@ -748,8 +786,13 @@ describe("scrambled Approve", () => {
       });
 
       Approve(
-        G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
+        {
+          G,
+          ctx: { currentPlayer: "0", numPlayers: 3 },
+          playerID: 1,
+          events: { endTurn: jest.fn() },
+          actions,
+        },
         true
       );
 
@@ -779,8 +822,13 @@ describe("scrambled Approve", () => {
         { x: 0, y: 0, ...tiles.E },
       ];
       Approve(
-        G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
+        {
+          G,
+          ctx: { currentPlayer: "0", numPlayers: 3 },
+          playerID: 1,
+          events: { endTurn: jest.fn() },
+          actions,
+        },
         true
       );
 
@@ -791,8 +839,13 @@ describe("scrambled Approve", () => {
       G.approvals = [2];
       G.pendingTiles = [{ x: 1, y: 0, ...tiles.B }];
       Approve(
-        G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
+        {
+          G,
+          ctx: { currentPlayer: "0", numPlayers: 3 },
+          playerID: 1,
+          events: { endTurn: jest.fn() },
+          actions,
+        },
         true
       );
 
@@ -809,8 +862,13 @@ describe("scrambled Approve", () => {
       ];
 
       Approve(
-        G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
+        {
+          G,
+          ctx: { currentPlayer: "0", numPlayers: 3 },
+          playerID: 1,
+          events: { endTurn: jest.fn() },
+          actions,
+        },
         true
       );
 
@@ -846,8 +904,13 @@ describe("scrambled Approve", () => {
         { x: 6, y: 0, ...tiles.X },
       ];
       Approve(
-        G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn: jest.fn() }, actions },
+        {
+          G,
+          ctx: { currentPlayer: "0", numPlayers: 3 },
+          playerID: 1,
+          events: { endTurn: jest.fn() },
+          actions,
+        },
         true
       );
 
@@ -871,8 +934,13 @@ describe("scrambled Approve", () => {
       const endTurn = jest.fn();
 
       Approve(
-        G,
-        { currentPlayer: "0", playerID: 1, numPlayers: 3, events: { endTurn }, actions },
+        {
+          G,
+          ctx: { currentPlayer: "0", numPlayers: 3 },
+          playerID: 1,
+          events: { endTurn },
+          actions,
+        },
         true
       );
 
@@ -894,9 +962,11 @@ describe("scrambled SwapTiles", () => {
     expect(G.secret.tiles.length).toBeLessThan(7);
 
     const result = SwapTiles(
-      G,
       {
-        currentPlayer: "0",
+        G,
+        ctx: {
+          currentPlayer: "0",
+        },
         events: { endTurn: jest.fn() },
         random: { Shuffle: jest.fn((arg) => arg) },
       },
@@ -923,9 +993,11 @@ describe("scrambled SwapTiles", () => {
     expect(G.secret.tiles.length).toBeGreaterThan(7);
 
     SwapTiles(
-      G,
       {
-        currentPlayer: "0",
+        G,
+        ctx: {
+          currentPlayer: "0",
+        },
         events: { endTurn: jest.fn() },
         random: { Shuffle: jest.fn((arg) => arg) },
       },
@@ -953,9 +1025,11 @@ describe("scrambled SwapTiles", () => {
     expect(G.secret.tiles).toHaveLength(7);
 
     SwapTiles(
-      G,
       {
-        currentPlayer: "0",
+        G,
+        ctx: {
+          currentPlayer: "0",
+        },
         events: { endTurn: jest.fn() },
         random: { Shuffle: jest.fn((arg) => arg) },
       },
@@ -984,9 +1058,11 @@ describe("scrambled SwapTiles", () => {
 
     // One of the tiles is not owned by the player
     const result = SwapTiles(
-      G,
       {
-        currentPlayer: "0",
+        G,
+        ctx: {
+          currentPlayer: "0",
+        },
         events: { endTurn: jest.fn() },
         random: { Shuffle: jest.fn((arg) => arg) },
       },
@@ -1014,9 +1090,11 @@ describe("scrambled SwapTiles", () => {
 
     // Tiles have faked letters
     SwapTiles(
-      G,
       {
-        currentPlayer: "0",
+        G,
+        ctx: {
+          currentPlayer: "0",
+        },
         events: { endTurn: jest.fn() },
         random: { Shuffle: jest.fn((arg) => arg) },
       },
@@ -1048,9 +1126,11 @@ describe("scrambled SwapTiles", () => {
 
     // Tiles have faked letters
     SwapTiles(
-      G,
       {
-        currentPlayer: "0",
+        G,
+        ctx: {
+          currentPlayer: "0",
+        },
         events: { endTurn: jest.fn() },
         random: { Shuffle: jest.fn((arg) => arg) },
       },
@@ -1077,21 +1157,23 @@ describe("scrambled SwapTiles", () => {
         tiles: [tiles.C, tiles.D, tiles.E, tiles.W, tiles.X, tiles.Y, tiles.Z, tiles.BLANK],
       },
     });
-    const endTurnEvent = jest.fn();
+    const endTurn = jest.fn();
 
     expect(G.secret.tiles.length).toBeGreaterThan(7);
 
     SwapTiles(
-      G,
       {
-        currentPlayer: "0",
-        events: { endTurn: endTurnEvent },
+        G,
+        ctx: {
+          currentPlayer: "0",
+        },
+        events: { endTurn },
         random: { Shuffle: jest.fn((arg) => arg) },
       },
       [tiles.A]
     );
 
-    expect(endTurnEvent).toHaveBeenCalledWith();
+    expect(endTurn).toHaveBeenCalledWith();
   });
 
   it("should reset skips counter", () => {
@@ -1109,9 +1191,11 @@ describe("scrambled SwapTiles", () => {
     });
 
     SwapTiles(
-      G,
       {
-        currentPlayer: "0",
+        G,
+        ctx: {
+          currentPlayer: "0",
+        },
         events: { endTurn: jest.fn() },
         random: { Shuffle: jest.fn((arg) => arg) },
       },
@@ -1138,8 +1222,14 @@ describe("scrambled SwapTiles", () => {
     const shuffle = jest.fn((arg) => arg);
 
     SwapTiles(
-      G,
-      { currentPlayer: "0", events: { endTurn: jest.fn() }, random: { Shuffle: shuffle } },
+      {
+        G,
+        ctx: {
+          currentPlayer: "0",
+        },
+        events: { endTurn: jest.fn() },
+        random: { Shuffle: shuffle },
+      },
       [tiles.A]
     );
 
@@ -1162,7 +1252,7 @@ describe("scrambled SkipTurn", () => {
     const G = setupG();
     const endTurnEvent = jest.fn();
 
-    SkipTurn(G, { currentPlayer: "0", events: { endTurn: endTurnEvent } });
+    SkipTurn({ G, ctx: { currentPlayer: "0" }, events: { endTurn: endTurnEvent } });
 
     expect(endTurnEvent).toHaveBeenCalledWith();
     expect(G.board).toStrictEqual(DEFAULT_BOARD());
@@ -1174,7 +1264,7 @@ describe("scrambled SkipTurn", () => {
 
     expect(G.skipCount).toStrictEqual(0);
 
-    SkipTurn(G, { currentPlayer: "0", events: { endTurn: jest.fn() } });
+    SkipTurn({ G, ctx: { currentPlayer: "0" }, events: { endTurn: jest.fn() } });
 
     expect(G.skipCount).toStrictEqual(1);
   });
@@ -1187,7 +1277,7 @@ describe("scrambled SkipTurn", () => {
 
     const endGameEvent = jest.fn();
 
-    SkipTurn(G, { currentPlayer: "0", numPlayers: 1, events: { endGame: endGameEvent } });
+    SkipTurn({ G, ctx: { currentPlayer: "0", numPlayers: 1 }, events: { endGame: endGameEvent } });
 
     expect(endGameEvent).toHaveBeenCalledWith({ winners: [0] });
   });
@@ -1198,7 +1288,7 @@ describe("scrambled DistributeTilesToPlayers", () => {
     expect.hasAssertions();
     const G = setupG();
 
-    DistributeTilesToPlayers(G, { currentPlayer: "0", numPlayers: 1 });
+    DistributeTilesToPlayers({ G, ctx: { currentPlayer: "0", numPlayers: 1 } });
 
     expect(G.players[0].tiles).toStrictEqual([
       tiles.A,
@@ -1216,7 +1306,7 @@ describe("scrambled DistributeTilesToPlayers", () => {
     expect.hasAssertions();
     const G = setupG({ tilesLeft: 4 });
 
-    DistributeTilesToPlayers(G, { currentPlayer: "0", numPlayers: 1 });
+    DistributeTilesToPlayers({ G, ctx: { currentPlayer: "0", numPlayers: 1 } });
 
     expect(G.secret.tiles).toHaveLength(3);
     expect(G.tilesLeft).toStrictEqual(3);
@@ -1226,7 +1316,7 @@ describe("scrambled DistributeTilesToPlayers", () => {
     expect.hasAssertions();
     const G = setupG();
 
-    DistributeTilesToPlayers(G, { currentPlayer: "0", numPlayers: 1 });
+    DistributeTilesToPlayers({ G, ctx: { currentPlayer: "0", numPlayers: 1 } });
 
     expect(G.players[0].tiles).toHaveLength(7);
     expect(G.players[0].tilesCount).toStrictEqual(7);
@@ -1243,7 +1333,7 @@ describe("scrambled DistributeTilesToPlayers", () => {
         },
       });
 
-      DistributeTilesToPlayers(G, { currentPlayer: "0", numPlayers: 1 });
+      DistributeTilesToPlayers({ G, ctx: { currentPlayer: "0", numPlayers: 1 } });
 
       expect(G.players[0].tiles).toStrictEqual([tiles.W, tiles.X, tiles.Y, tiles.Z]);
       expect(G.secret.tiles).toHaveLength(0);
@@ -1260,7 +1350,7 @@ describe("scrambled DistributeTilesToPlayers", () => {
         },
       });
 
-      DistributeTilesToPlayers(G, { currentPlayer: "0", numPlayers: 1 });
+      DistributeTilesToPlayers({ G, ctx: { currentPlayer: "0", numPlayers: 1 } });
 
       expect(G.players[0].tiles).toHaveLength(4);
       expect(G.players[0].tilesCount).toStrictEqual(4);
@@ -1280,9 +1370,9 @@ describe("scrambled DistributeTilesToPlayers", () => {
       });
 
       const endGameEvent = jest.fn();
-      DistributeTilesToPlayers(G, {
-        currentPlayer: "0",
-        numPlayers: 1,
+      DistributeTilesToPlayers({
+        G,
+        ctx: { currentPlayer: "0", numPlayers: 1 },
         events: { endGame: endGameEvent },
       });
 

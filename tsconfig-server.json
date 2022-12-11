@@ -5,7 +5,7 @@
     "jsx": "react-jsx",
     "allowJs": true,
     "strict": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,

@@ -7417,7 +7417,7 @@ exports[`Storyshots Scrambled/Board Default 1`] = `
             style="pointer-events: none; transition: opacity 0.3s; display: flex; position: absolute; left: 0px; top: 0px;"
           >
             <div
-              class="ui top center basic flowing popup transition visible"
+              class="ui bottom center basic flowing popup transition visible"
               style="position: initial; opacity: 0.95; border: 0px; border-radius: 10px; background: rgb(245, 245, 245);"
             >
               <div
@@ -9131,7 +9131,7 @@ exports[`Storyshots Scrambled/Board During Approval 1`] = `
             style="pointer-events: auto; transition: opacity 0.3s; display: flex; position: absolute; left: 0px; top: 0px;"
           >
             <div
-              class="ui top center basic flowing popup transition visible"
+              class="ui bottom center basic flowing popup transition visible"
               style="position: initial; opacity: 0.95; border: 0px; border-radius: 10px; background: rgb(245, 245, 245);"
             >
               <div

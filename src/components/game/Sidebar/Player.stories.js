@@ -1,5 +1,5 @@
+/* eslint-disable react/prop-types */
 import React from "react";
-import { text, boolean, number } from "@storybook/addon-knobs";
 
 import Player from "./Player";
 import { ActionsList } from "./ActionsList";
@@ -22,39 +22,58 @@ const actionsMapper = (act) => {
       };
   }
 };
-export const Default = () => (
+export const Default = ({ isConnected, points, isWinning, isYou, displayName, ...args }) => (
   <Player
     player={{
       id: 0,
       uid: "user-1",
-      isConnected: boolean("Connected", true),
-      points: number("Points", 12),
-      isWinning: boolean("Is player winning?", true),
-      isYou: boolean("Are you this player?", true),
+      isConnected,
+      points,
+      isWinning,
+      isYou,
       profile: {
-        displayName: text("Name", "Mieczysław Czosnek"),
+        displayName,
       },
     }}
     actionsMapper={actionsMapper}
+    {...args}
   />
 );
 
-export const WithAdditionalContent = () => (
+export const WithAdditionalContent = ({
+  isConnected,
+  points,
+  isWinning,
+  isYou,
+  displayName,
+  ...args
+}) => (
   <Player
     player={{
       id: 0,
       uid: "user-1",
-      isConnected: boolean("Connected", true),
-      points: number("Points", 12),
-      isWinning: boolean("Is player winning?", true),
-      isYou: boolean("Are you this player?", true),
+      isConnected,
+      points,
+      isWinning,
+      isYou,
       profile: {
-        displayName: text("Name", "Mieczysław Czosnek"),
+        displayName,
       },
     }}
     actionsMapper={actionsMapper}
     extraContent={({ profile: { displayName } }) => <span>Hello {displayName}!</span>}
+    {...args}
   >
     <ActionsList actions={[{ name: "manage", id: "456" }]} />
   </Player>
 );
+
+Default.args = {
+  isConnected: true,
+  points: 12,
+  isWinning: true,
+  isYou: true,
+  displayName: "Mieczysław Czosnek",
+};
+
+WithAdditionalContent.args = Default.args;

@@ -7,7 +7,7 @@ import { useBoardGame } from "contexts/BoardGameContext";
 import LeaveButton from "components/game/LeaveButton";
 import GameRulesButton from "components/game/GameRulesButton";
 import { useUser } from "contexts/UserContext";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { leaveGame } from "utils/game/leave";
 
 import styles from "./Sidebar.module.css";
@@ -31,10 +31,10 @@ const defaultProps = {
 const Sidebar = ({ actionsMapper, header, extraPlayerContent, showCurrentPlayer }) => {
   const { G, players, playerID, matchID, gameName, credentials } = useBoardGame();
   const user = useUser();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleLeave = () => {
-    leaveGame(gameName, matchID, playerID, user.uid, credentials, history);
+    leaveGame(gameName, matchID, playerID, user.uid, credentials, navigate);
   };
 
   return (

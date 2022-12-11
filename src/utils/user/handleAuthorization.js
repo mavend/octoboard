@@ -1,15 +1,22 @@
-const handleAuthorization = (loginFunc, setError, setLoading, history, setSuccess = null) => {
+const handleAuthorization = (
+  loginFunc,
+  setError,
+  setLoading,
+  navigate,
+  location,
+  setSuccess = null
+) => {
   return async () => {
     try {
       setError(null);
       setLoading(true);
       let from = { from: { pathname: "/" } };
-      if (history.location.state && history.location.state.from) {
-        from = { ...history.location.state.from };
+      if (location.state && location.state.from) {
+        from = { ...location.state.from };
       }
 
       await loginFunc();
-      history.replace(from);
+      navigate(from, { replace: true });
     } catch (e) {
       setLoading(false);
       setError(e.message);

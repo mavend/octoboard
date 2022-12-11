@@ -2,7 +2,6 @@
 
 import React from "react";
 import Card from "./Card";
-import { number, boolean } from "@storybook/addon-knobs";
 import { action } from "@storybook/addon-actions";
 
 export default {
@@ -11,27 +10,22 @@ export default {
   excludeStories: /.*Data$/,
 };
 
-const pictureKnobs = (id) => {
+const pictureKnobs = () => {
   return {
-    r: number("r", Math.floor(Math.random() * 360), { range: true, min: 0, max: 359, step: 1 }, id),
-    s: number(
-      "s",
-      0.5 + Math.floor(Math.random() * 50) / 100,
-      { range: true, min: 0.5, max: 1, step: 0.01 },
-      id
-    ),
-    x: number("x", Math.floor(Math.random() * 240), { range: true, min: 0, max: 240, step: 1 }, id),
-    y: number("y", Math.floor(Math.random() * 240), { range: true, min: 0, max: 240, step: 1 }, id),
+    r: Math.floor(Math.random() * 360),
+    s: 0.5 + Math.floor(Math.random() * 50) / 100,
+    x: Math.floor(Math.random() * 240),
+    y: Math.floor(Math.random() * 240),
   };
 };
 
 export const Default = () => (
   <Card
     card={{
-      pictures: Array(boolean("Small card", false) ? 6 : 8)
+      pictures: Array(8)
         .fill()
         .map((item, idx) => idx),
-      layout: number("Layout", 0),
+      layout: 0,
     }}
     style="color"
     handleClick={action("handleClick")}
@@ -40,12 +34,12 @@ export const Default = () => (
 
 export const DevOnlyLayoutDesignSmall = () => {
   const customLayout = [
-    pictureKnobs("0"),
-    pictureKnobs("1"),
-    pictureKnobs("2"),
-    pictureKnobs("3"),
-    pictureKnobs("4"),
-    pictureKnobs("5"),
+    pictureKnobs(),
+    pictureKnobs(),
+    pictureKnobs(),
+    pictureKnobs(),
+    pictureKnobs(),
+    pictureKnobs(),
   ];
 
   return (
@@ -54,7 +48,7 @@ export const DevOnlyLayoutDesignSmall = () => {
         card={{
           pictures: [0, 1, 2, 3, 4, 5],
           layout: 0,
-          rotation: number("Card Rotation", 0, { range: true, min: 0, max: 359, step: 1 }),
+          rotation: 0,
         }}
         style="color"
         customLayout={customLayout}
@@ -67,14 +61,14 @@ export const DevOnlyLayoutDesignSmall = () => {
 
 export const DevOnlyLayoutDesignMedium = () => {
   const customLayout = [
-    pictureKnobs("0"),
-    pictureKnobs("1"),
-    pictureKnobs("2"),
-    pictureKnobs("3"),
-    pictureKnobs("4"),
-    pictureKnobs("5"),
-    pictureKnobs("6"),
-    pictureKnobs("7"),
+    pictureKnobs(),
+    pictureKnobs(),
+    pictureKnobs(),
+    pictureKnobs(),
+    pictureKnobs(),
+    pictureKnobs(),
+    pictureKnobs(),
+    pictureKnobs(),
   ];
 
   return (
@@ -83,7 +77,7 @@ export const DevOnlyLayoutDesignMedium = () => {
         card={{
           pictures: [0, 1, 2, 3, 4, 5, 6, 7],
           layout: 0,
-          rotation: number("Card Rotation", 0, { range: true, min: 0, max: 359, step: 1 }),
+          rotation: 0,
         }}
         style="color"
         customLayout={customLayout}

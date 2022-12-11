@@ -1,30 +1,19 @@
 /* eslint-disable react/prop-types */
-import { Route, Redirect } from "react-router-dom";
-import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useUser } from "contexts/UserContext";
 import { routes } from "config/routes";
 
-export function PrivateRoute({ children, computedMatch, ...rest }) {
+export function PrivateRoute({ children, ...rest }) {
   const user = useUser();
-  const { params } = computedMatch;
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  return (
-    <Route
-      {...rest}
-      render={({ location }) => {
-        if (user) {
-          return children;
-        } else {
-          return (
-            <Redirect
-              to={{
-                pathname: routes.login_guest(),
-                state: { from: location, params: params },
-              }}
-            />
-          );
-        }
-      }}
-    />
-  );
+  useEffect(() => {
+    if (!user) {
+      navigate(routes.login_guest(), { state: { from: location.pathname } });
+    }
+  }, [user, navigate, location]);
+
+  return children;
 }

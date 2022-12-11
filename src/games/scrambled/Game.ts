@@ -1,9 +1,10 @@
 import { INVALID_MOVE, TurnOrder } from "boardgame.io/core";
 import { keys, map, pick, pickBy, reduce, remove } from "lodash";
-import { getTiles } from "./data/tiles";
+import { getTiles, Tile } from "./data/tiles";
 import { getBoard } from "./data/boards";
 import { tilesPlacementErrors, newWords, filterPlayedTiles, prepareTiles } from "./utils";
 import { PluginActions } from "plugins/actions";
+import { CustomGame, CustomMoveFn } from "games/types";
 
 function indexOfMax(array) {
   const maxValue = Math.max(...array);
@@ -12,7 +13,7 @@ function indexOfMax(array) {
 
 const assists = ["none", "approval", "full"];
 
-function setupGame(ctx, setupData) {
+function setupGame({ ctx }, setupData) {
   const G = {
     secret: {
       tiles: [],
@@ -29,7 +30,7 @@ function setupGame(ctx, setupData) {
     initialWordPlayed: false,
     skipCount: 0,
     tilesLeft: 0,
-    assists: assists,
+    assists,
     assist: assists[1],
     preview: true,
   };
@@ -44,22 +45,22 @@ function setupGame(ctx, setupData) {
   return G;
 }
 
-export function StartGame(G, ctx, language, assist, preview) {
+export const StartGame: CustomMoveFn = ({ G, events, random }, language, assist, preview) => {
   G.language = language;
   G.assist = assist;
   G.preview = preview;
-  G.secret.tiles = ctx.random.Shuffle(getTiles(language));
+  G.secret.tiles = random.Shuffle(getTiles(language));
   G.tilesLeft = G.secret.tiles.length;
-  ctx.events.setPhase("play");
-}
+  events.setPhase("play");
+};
 
-function LogWords(ctx, words, success) {
+function LogWords({ ctx, actions }, words, success) {
   words.forEach((word) =>
-    ctx.actions.log(ctx.currentPlayer, "word", { word: word.letters.join(""), success })
+    actions.log(ctx.currentPlayer, "word", { word: word.letters.join(""), success })
   );
 }
 
-export function PlayTiles(G, ctx, state) {
+export const PlayTiles: CustomMoveFn = ({ G, ctx, events }, state) => {
   const playedTiles = filterPlayedTiles(state.tiles);
 
   if (tilesPlacementErrors(G, ctx.currentPlayer, playedTiles).length > 0) return INVALID_MOVE;
@@ -68,10 +69,10 @@ export function PlayTiles(G, ctx, state) {
   G.pendingTiles = prepareTiles(playedTiles, G.players[ctx.currentPlayer].tiles);
   G.approvals = [];
 
-  ctx.events.setActivePlayers({ currentPlayer: "wait_for_approval", others: "approve" });
-}
+  events.setActivePlayers({ currentPlayer: "wait_for_approval", others: "approve" });
+};
 
-function FinalizePlayTiles(G, ctx) {
+function FinalizePlayTiles({ G, ctx, actions, events }) {
   G.initialWordPlayed = true;
 
   // Calculate points before modifying board
@@ -87,32 +88,35 @@ function FinalizePlayTiles(G, ctx) {
   }
 
   G.pendingTiles.forEach(({ id, x, y, replacement }) => {
-    G.board[y].row[x] = remove(G.players[ctx.currentPlayer].tiles, (tile) => tile.id === id)[0];
+    G.board[y].row[x] = remove(
+      G.players[ctx.currentPlayer].tiles,
+      (tile: Tile) => tile.id === id
+    )[0];
     if (!G.board[y].row[x].letter) G.board[y].row[x].replacement = replacement;
   });
 
-  LogWords(ctx, newWords(G.board, G.pendingTiles), true);
+  LogWords({ ctx, actions }, newWords(G.board, G.pendingTiles), true);
 
-  ctx.events.endTurn();
+  events.endTurn();
 }
 
-export function Approve(G, ctx, decision) {
+export const Approve: CustomMoveFn = ({ G, ctx, actions, events, playerID }, decision) => {
   // If anyone disagrees - word is marked invalid
   if (decision === false) {
-    LogWords(ctx, newWords(G.board, G.pendingTiles), false);
-    ctx.events.endTurn();
+    LogWords({ ctx, actions }, newWords(G.board, G.pendingTiles), false);
+    events.endTurn();
   } else {
-    if (G.approvals.includes(ctx.playerID)) return INVALID_MOVE; // can't approve twice
+    if (G.approvals.includes(playerID)) return INVALID_MOVE; // can't approve twice
 
-    G.approvals.push(ctx.playerID);
+    G.approvals.push(playerID);
     // If everyone agrees - word is played
     if (G.approvals.length === ctx.numPlayers - 1) {
-      FinalizePlayTiles(G, ctx);
+      FinalizePlayTiles({ G, ctx, actions, events });
     }
   }
-}
+};
 
-export function SwapTiles(G, ctx, tiles) {
+export const SwapTiles: CustomMoveFn = ({ G, ctx, events, random }, tiles) => {
   // Not enough tiles left to make a swap
   if (G.secret.tiles.length < 7) return INVALID_MOVE;
 
@@ -121,39 +125,39 @@ export function SwapTiles(G, ctx, tiles) {
   // Some tiles don't belong to player (illegal move)
   if (!tiles) return INVALID_MOVE;
 
-  const newTiles = [];
+  const newTiles: Tile[] = [];
   tiles.forEach(({ id }) => {
-    remove(G.players[ctx.currentPlayer].tiles, (tile) => tile.id === id);
+    remove(G.players[ctx.currentPlayer].tiles, (tile: Tile) => tile.id === id);
     newTiles.push(G.secret.tiles.shift());
   });
   G.skipCount = 0;
   G.secret.tiles.push(...tiles);
-  G.secret.tiles = ctx.random.Shuffle(G.secret.tiles);
+  G.secret.tiles = random.Shuffle(G.secret.tiles);
   G.players[ctx.currentPlayer].tiles.push(...newTiles);
-  ctx.events.endTurn();
-}
+  events.endTurn();
+};
 
-export function SkipTurn(G, ctx) {
+export function SkipTurn({ G, ctx, events }) {
   G.skipCount += 1;
   if (G.skipCount >= ctx.numPlayers * 2) {
-    ctx.events.endGame({ winners: indexOfMax(G.points) });
+    events.endGame({ winners: indexOfMax(G.points) });
   } else {
-    ctx.events.endTurn();
+    events.endTurn();
   }
 }
 
-export function DistributeTilesToPlayers(G, ctx) {
+export function DistributeTilesToPlayers({ G, ctx, events }) {
   for (let i = 0; i < ctx.numPlayers; i++) {
     while (G.secret.tiles.length > 0 && G.players[i].tiles.length < 7) {
       G.players[i].tiles.push(G.secret.tiles.shift());
     }
     G.players[i].tilesCount = G.players[i].tiles.length;
-    if (G.players[i].tiles.length === 0) ctx.events.endGame({ winners: indexOfMax(G.points) });
+    if (G.players[i].tiles.length === 0) events.endGame({ winners: indexOfMax(G.points) });
   }
   G.tilesLeft = G.secret.tiles.length;
 }
 
-export const Scrambled = {
+export const Scrambled: CustomGame = {
   name: "Scrambled",
   image: "/images/games/scrambled/icon.png",
   minPlayers: 2,
@@ -168,9 +172,9 @@ export const Scrambled = {
       start: true,
       next: "play",
       turn: {
-        onBegin: (G, ctx) => {
-          ctx.actions.log(ctx.currentPlayer, "manage");
-          ctx.events.setActivePlayers({ currentPlayer: "manage", others: "wait" });
+        onBegin: ({ G, ctx, actions, events }) => {
+          actions.log(ctx.currentPlayer, "manage");
+          events.setActivePlayers({ currentPlayer: "manage", others: "wait" });
         },
         stages: {
           manage: {
@@ -188,15 +192,15 @@ export const Scrambled = {
       },
     },
     play: {
-      onBegin: (G, ctx) => {
-        DistributeTilesToPlayers(G, ctx);
+      onBegin: (gctx) => {
+        DistributeTilesToPlayers(gctx);
       },
       turn: {
-        onBegin: (G, ctx) => {
-          ctx.events.setActivePlayers({ currentPlayer: "play", others: "wait" });
+        onBegin: ({ events }) => {
+          events.setActivePlayers({ currentPlayer: "play", others: "wait" });
         },
-        onEnd: (G, ctx) => {
-          DistributeTilesToPlayers(G, ctx);
+        onEnd: (gctx) => {
+          DistributeTilesToPlayers(gctx);
         },
         order: TurnOrder.RESET,
         stages: {
@@ -235,7 +239,7 @@ export const Scrambled = {
   },
 
   // remove secret and players tiles, but keep tilesCount for each player
-  playerView: (G, ctx, playerID) => {
+  playerView: ({ G, playerID }) => {
     const r = { ...G };
 
     if (r.secret !== undefined) {

@@ -1,6 +1,5 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
-import { boolean, text } from "@storybook/addon-knobs";
 
 import RegisterForm from "./RegisterForm";
 
@@ -13,14 +12,14 @@ export default {
 export const Default = () => (
   <RegisterForm
     handleRegisterFunc={action("handleRegisterFunc")}
-    isLoading={boolean("Is loading?", false)}
-    error={text("Error", null)}
-    nickname={text("Nickname", "Whatever")}
+    isLoading={false}
+    error={null}
+    nickname="Whatever"
     setNickname={action("setNickname")}
-    email={text("Email", "qwe@qwe.qwe")}
-    password={text("Password", "qweqweqwe")}
+    email="qwe@qwe.qwe"
+    password="qweqweqwe"
     setPasssword={action("setPassword")}
     setEmail={action("setEmail")}
-    formValid={boolean("Form valid?", true)}
+    formValid={true}
   />
 );

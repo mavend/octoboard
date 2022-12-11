@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import { action } from "@storybook/addon-actions";
-import { text } from "@storybook/addon-knobs";
 
 import { kalamburyDecorator } from "../GameContextMock";
 import GameBoard from "./GameBoard";
@@ -16,7 +15,7 @@ export const Default = () => (
   <GameBoard
     envokeLastAnswer={action("envokeLastAnswer")}
     guessInputRef={useRef()}
-    guess={text("Guess", "Baba z wozu?")}
+    guess="Baba z wozu?"
     setGuess={action("SetGuess")}
     ChangePhrase={action("ChangePhrase")}
   />

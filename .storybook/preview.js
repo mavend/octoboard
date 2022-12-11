@@ -2,8 +2,7 @@ import React, { Suspense } from "react";
 import { addParameters, addDecorator } from "@storybook/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MINIMAL_VIEWPORTS } from "@storybook/addon-viewport";
-import { withKnobs } from "@storybook/addon-knobs";
-import StoryRouter from "storybook-react-router";
+import { withRouter } from "storybook-addon-react-router-v6";
 import { HelmetProvider } from "react-helmet-async";
 import UserContextMock from "./UserContextMock";
 import { MediaContextProvider } from "config/media";
@@ -14,8 +13,7 @@ import "../src/index.css";
 
 const queryClient = new QueryClient();
 
-addDecorator(withKnobs);
-addDecorator(StoryRouter());
+addDecorator(withRouter);
 addDecorator((storyFn) => <Suspense fallback="Loading...">{storyFn()}</Suspense>);
 addDecorator((storyFn) => <MediaContextProvider>{storyFn()}</MediaContextProvider>);
 addDecorator((storyFn) => <HelmetProvider>{storyFn()}</HelmetProvider>);
