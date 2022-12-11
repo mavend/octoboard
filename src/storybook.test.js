@@ -1,5 +1,5 @@
 import initStoryshots from "@storybook/addon-storyshots";
-import { render } from "utils/test/render";
+import { render } from "@testing-library/react";
 
 const reactTestingLibrarySerializer = {
   print: (val, serialize, indent) => serialize(val.container.firstChild),

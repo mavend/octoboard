@@ -7,10 +7,11 @@ import { currentTime } from "./utils/time";
 import removeAccents from "remove-accents";
 
 import { PluginActions } from "plugins/actions";
+import { CustomGame, CustomMoveFn } from "games/types";
 
 const modes = ["regular", "infinite"];
 
-function setupGame(ctx, setupData) {
+function setupGame({ ctx }, setupData) {
   const G = {
     started: false,
     secret: {
@@ -24,7 +25,7 @@ function setupGame(ctx, setupData) {
     phraseCounter: 0,
     canChangePhrase: true,
     players: {},
-    modes: modes,
+    modes,
     mode: modes[0],
     points: Array(ctx.numPlayers).fill(0),
     maxPoints: 0,
@@ -45,60 +46,60 @@ function stripPhrase(phrase) {
   return removeAccents(phrase).toLowerCase().replace(/\W/g, "");
 }
 
-function Guess(G, ctx, phrase) {
+const Guess: CustomMoveFn = ({ G, ctx, actions, events, playerID }, phrase) => {
   if (!stripPhrase(phrase)) return;
 
   const success = stripPhrase(phrase).includes(stripPhrase(G.secret.phrase));
 
   if (success) {
-    G.points[ctx.playerID] += 1;
+    G.points[playerID] += 1;
     G.points[ctx.currentPlayer] += 1;
-    ctx.events.endTurn();
-    ctx.actions.clear();
+    events.endTurn();
+    actions.clear();
   }
 
-  ctx.actions.log(ctx.playerID, "guess", { phrase, success });
-}
+  actions.log(playerID, "guess", { phrase, success });
+};
 
-function SetNewPhrase(G, ctx) {
+function SetNewPhrase({ G, ctx }) {
   G.secret.phrase = G.secret.phrases.pop();
   G.players[ctx.currentPlayer].phrase = G.secret.phrase;
   G.phraseCounter++;
 }
 
-function ChangePhrase(G, ctx) {
+function ChangePhrase({ G, ctx, actions, playerID }) {
   // TODO: Track number of allowed changes?
   if (!G.canChangePhrase) {
     return INVALID_MOVE;
   }
   const { phrase } = G.secret;
-  ctx.actions.log(ctx.playerID, "change", { phrase });
+  actions.log(playerID, "change", { phrase });
   G.canChangePhrase = false;
-  SetNewPhrase(G, ctx);
+  SetNewPhrase({ G, ctx });
 }
 
-function Forfeit(G, ctx) {
-  G.points[ctx.playerID] -= 1;
+function Forfeit({ G, ctx, actions, events, playerID }) {
+  G.points[playerID] -= 1;
   const { phrase } = G.secret;
-  ctx.actions.clear();
-  ctx.actions.log(G, ctx.playerID, "forfeit", { phrase });
-  ctx.events.endTurn();
+  actions.clear();
+  actions.log(G, playerID, "forfeit", { phrase });
+  events.endTurn();
 }
 
-function StartGame(G, ctx, gameMode, maxPoints, language, category, timePerTurn) {
+function StartGame({ G, events, random }, gameMode, maxPoints, language, category, timePerTurn) {
   G.started = true;
   G.mode = gameMode;
   if (G.gameMode !== "infinite") {
     G.maxPoints = Number(maxPoints) || 0;
   }
-  G.secret.phrases = ctx.random.Shuffle(getPhrases(language, category));
+  G.secret.phrases = random.Shuffle(getPhrases(language, category));
   G.timePerTurn = Number(timePerTurn);
-  ctx.events.setPhase("play");
+  events.setPhase("play");
 }
 
-function NotifyTimeout(G, ctx) {}
+function NotifyTimeout({ G, ctx }) {}
 
-function UpdateConnectedPlayers(G, ctx, connectedPlayers) {
+function UpdateConnectedPlayers({ G, ctx }, connectedPlayers) {
   G.connectedPlayers = connectedPlayers;
 }
 
@@ -107,7 +108,7 @@ function indexOfMax(array) {
   return keys(pickBy(array, (p) => p === maxValue)).map(Number);
 }
 
-export const Kalambury = {
+export const Kalambury: CustomGame = {
   name: "Kalambury",
   displayName: "Pictionary",
   image: "/images/games/kalambury/icon.png",
@@ -124,9 +125,9 @@ export const Kalambury = {
       start: true,
       next: "play",
       turn: {
-        onBegin: (G, ctx) => {
-          ctx.actions.log(ctx.currentPlayer, "manage");
-          ctx.events.setActivePlayers({ currentPlayer: "manage", others: "wait" });
+        onBegin: ({ G, ctx, actions, events }) => {
+          actions.log(ctx.currentPlayer, "manage");
+          events.setActivePlayers({ currentPlayer: "manage", others: "wait" });
         },
         stages: {
           manage: {
@@ -154,26 +155,26 @@ export const Kalambury = {
     },
     play: {
       turn: {
-        onBegin: (G, ctx) => {
+        onBegin: ({ G, ctx, actions, events }) => {
           G.startTime = currentTime();
           G.canChangePhrase = true;
-          SetNewPhrase(G, ctx);
+          SetNewPhrase({ G, ctx });
           G.turnEndTime = currentTime() + G.timePerTurn;
-          ctx.actions.log(ctx.currentPlayer, "draw");
-          ctx.events.setActivePlayers({ currentPlayer: "draw", others: "guess" });
+          actions.log(ctx.currentPlayer, "draw");
+          events.setActivePlayers({ currentPlayer: "draw", others: "guess" });
         },
-        onEnd: (G, ctx) => {
+        onEnd: ({ G, ctx, actions }) => {
           if (currentTime() >= G.turnEndTime) {
             const { phrase } = G.secret;
-            ctx.actions.clear();
-            ctx.actions.log(ctx.currentPlayer, "timeout", { phrase });
+            actions.clear();
+            actions.log(ctx.currentPlayer, "timeout", { phrase });
             G.points[ctx.currentPlayer] -= 1;
           }
         },
-        endIf: (G, _ctx) => currentTime() >= G.turnEndTime,
+        endIf: ({ G }) => currentTime() >= G.turnEndTime,
         order: {
           first: () => 0,
-          next: (G, ctx) => {
+          next: ({ G, ctx }) => {
             const currentPlayer = parseInt(ctx.currentPlayer);
             if (G.connectedPlayers && G.connectedPlayers.length > 0) {
               const nextActiveIdx =
@@ -223,14 +224,14 @@ export const Kalambury = {
     },
   },
 
-  endIf: (G, ctx) => {
+  endIf: ({ G, ctx, events }) => {
     if (G.started && G.secret.phrases.length === 0 && !G.secret.phrase) {
-      ctx.events.setActivePlayers({ all: Stage.NULL });
+      events.setActivePlayers({ all: Stage.NULL });
       return { winners: indexOfMax(G.points) };
     }
     const winner = G.points.findIndex((points) => points >= G.maxPoints);
     if (G.mode !== "infinite" && G.maxPoints > 0 && winner >= 0) {
-      ctx.events.setActivePlayers({ all: Stage.NULL });
+      events.setActivePlayers({ all: Stage.NULL });
       return { winners: indexOfMax(G.points) };
     }
   },

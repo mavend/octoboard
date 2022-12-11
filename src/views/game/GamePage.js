@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { useParams, Redirect } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
 import { API_ROOT } from "config/api";
@@ -20,6 +20,7 @@ import { Helmet } from "react-helmet-async";
 
 const GamePage = () => {
   const { matchID, gameName } = useParams();
+  const navigate = useNavigate();
 
   const [error, setError] = useState();
   const [playerID, setPlayerID] = useState();
@@ -29,6 +30,12 @@ const GamePage = () => {
   const gameCredentials = credentials && credentials[matchID];
 
   const { game, Board } = gameComponents.find((gc) => gc.game.name === gameName);
+
+  useEffect(() => {
+    if (error) {
+      navigate(routes.lobby(), { state: { error } });
+    }
+  }, [error, navigate]);
 
   const fetchPlayerID = useCallback(() => {
     lobbyClient
@@ -110,7 +117,7 @@ const GamePage = () => {
   const NewGameClient = useMemo(
     () =>
       Client({
-        game: game,
+        game,
         board: BoardGameProvider,
         loading: Loading,
         multiplayer: SocketIO({ server: API_ROOT }),
@@ -126,7 +133,6 @@ const GamePage = () => {
           {gameName} [{matchID}] | octoboard
         </title>
       </Helmet>
-      {error && <Redirect pass to={{ pathname: routes.lobby(), state: { error: error } }} />}
       {gameName && matchID && playerID && gameCredentials && (
         <>
           <NewGameClient

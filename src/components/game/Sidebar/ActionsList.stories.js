@@ -1,5 +1,4 @@
 import React from "react";
-import { boolean, number, object } from "@storybook/addon-knobs";
 
 import ActionsList from "./ActionsList";
 
@@ -26,17 +25,16 @@ const actionsMapper = (act) => {
   }
 };
 
-export const Default = () => (
-  <ActionsList
-    actions={object("Actions array", [
-      { name: "guess", id: "123", data: { phrase: "Baba z wozu?" } },
-      { name: "manage", id: "456" },
-      { name: "foo", id: "124", data: { foo: "test" } },
-      { name: "bar", id: "125" },
-      { name: "foo", id: "126", data: { foo: "test" } },
-    ])}
-    actionsMapper={actionsMapper}
-    maxActions={number("maxActions", 3)}
-    fade={boolean("fade", true)}
-  />
-);
+export const Default = (args) => <ActionsList actionsMapper={actionsMapper} {...args} />;
+
+Default.args = {
+  actions: [
+    { name: "guess", id: "123", data: { phrase: "Baba z wozu?" } },
+    { name: "manage", id: "456" },
+    { name: "foo", id: "124", data: { foo: "test" } },
+    { name: "bar", id: "125" },
+    { name: "foo", id: "126", data: { foo: "test" } },
+  ],
+  maxActions: 3,
+  fade: true,
+};

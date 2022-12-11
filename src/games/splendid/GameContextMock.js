@@ -1,11 +1,8 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
-import { select } from "@storybook/addon-knobs";
 import { BoardGameProvider } from "contexts/BoardGameContext";
 import cards from "./data/cards.json";
 import bonuses from "./data/bonuses.json";
-
-const ref = "Game Context";
 
 const BoardGameContextMock = ({ children }) => {
   return (
@@ -41,7 +38,7 @@ const BoardGameContextMock = ({ children }) => {
       ctx={{
         activePlayers: [],
         currentPlayer: "0",
-        phase: select("phase", ["wait", "play"], "play", ref),
+        phase: "play",
       }}
       playerID={"0"}
       matchID={"qwe123"}

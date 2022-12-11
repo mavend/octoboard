@@ -8,6 +8,7 @@ import { Kalambury } from "games/kalambury/Game";
 import { Splendid } from "games/splendid/Game";
 import { PictureMatch } from "games/picture-match/Game";
 import { Scrambled } from "games/scrambled/Game";
+import { Game } from "boardgame.io";
 
 export {};
 
@@ -35,7 +36,7 @@ const db = new Firestore({ config });
 const dbWithCaching = new StorageCache(db, { cacheSize: 200 });
 
 const server = Server({
-  games: [Kalambury, PictureMatch, Splendid, Scrambled],
+  games: [Kalambury, PictureMatch, Splendid, Scrambled] as Game[],
   db: dbWithCaching,
   origins: ["https://octoboards.com", "https://*.octoboards.com", Origins.LOCALHOST_IN_DEVELOPMENT],
 });

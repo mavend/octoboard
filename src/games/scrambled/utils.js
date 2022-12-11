@@ -34,8 +34,7 @@ function boardStateOn(board, tiles, x, y) {
   let bonus = null;
   let newTile = false;
   // Nothing can be placed outside board boundaries
-  if (y < 0 || x < 0 || x >= board[0].row.length || y >= board.length)
-    return { tile: tile, bonus: bonus };
+  if (y < 0 || x < 0 || x >= board[0].row.length || y >= board.length) return { tile, bonus };
 
   if (playedTile) {
     tile = playedTile;

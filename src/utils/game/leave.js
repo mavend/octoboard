@@ -2,15 +2,15 @@ import DataStore from "services/DataStore";
 import { lobbyClient } from "services/LobbyClient";
 import { routes } from "config/routes";
 
-function leaveGame(gameName, matchID, playerID, playerUID, credentials, history) {
+function leaveGame(gameName, matchID, playerID, playerUID, credentials, navigate) {
   lobbyClient
     .leaveMatch(gameName, matchID, { playerID, credentials })
     .then(async () => {
       await DataStore.deleteCredentials(playerUID, matchID);
-      history.push(routes.lobby());
+      navigate(routes.lobby());
     })
     .catch((e) => {
-      history.push(routes.lobby(), { error: e.message });
+      navigate(routes.lobby(), { error: e.message });
     });
 }
 

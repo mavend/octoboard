@@ -1,22 +1,24 @@
+/* eslint-disable react/prop-types */
 import React from "react";
-import PropTypes from "prop-types";
-import { select } from "@storybook/addon-knobs";
 import { action } from "@storybook/addon-actions";
 import { BoardGameProvider } from "contexts/BoardGameContext";
 import { actionsDataMock } from "plugins/actions.mock";
 
-const ref = "Game Context";
-
-const propTypes = {
-  overrideG: PropTypes.object,
-  overrideCtx: PropTypes.object,
-};
-const BoardGameContextMock = ({ children, overrideG, overrideCtx }) => {
+export const BoardGameContextMock = ({
+  children,
+  overrideG,
+  overrideCtx,
+  language,
+  stage,
+  assist,
+  phase,
+  ...args
+}) => {
   return (
     <BoardGameProvider
       gameName="Scrambled"
       G={{
-        language: select("Language", ["en", "pl"], "en", ref),
+        language,
         initialWordPlayed: true,
         board: [
           {
@@ -56,13 +58,13 @@ const BoardGameContextMock = ({ children, overrideG, overrideCtx }) => {
               { letter: "Ó", points: 7, id: 4 },
             ],
             tilesCount: 5,
-            stage: select("stage", ["play", "wait"], "play", ref),
+            stage,
           },
           1: { tilesCount: 7 },
         },
         tilesLeft: 13,
         assists: ["none", "approval", "full"],
-        assist: select("assist", ["none", "approval", "full"], "approval", ref),
+        assist,
         ...overrideG,
       }}
       moves={{
@@ -75,7 +77,7 @@ const BoardGameContextMock = ({ children, overrideG, overrideCtx }) => {
       ctx={{
         activePlayers: [],
         currentPlayer: "0",
-        phase: select("phase", ["wait", "play"], "play", ref),
+        phase,
         ...overrideCtx,
       }}
       playerID={0}
@@ -95,14 +97,19 @@ const BoardGameContextMock = ({ children, overrideG, overrideCtx }) => {
           ],
         }),
       }}
+      {...args}
     >
       {children}
     </BoardGameProvider>
   );
 };
-BoardGameContextMock.propTypes = propTypes;
+BoardGameContextMock.defaultProps = {
+  assist: "approval",
+  phase: "play",
+  stage: "play",
+  language: "en",
+};
 
-export default BoardGameContextMock;
 export const scrambledDecorator = (storyFn) => (
   <BoardGameContextMock>{storyFn()}</BoardGameContextMock>
 );

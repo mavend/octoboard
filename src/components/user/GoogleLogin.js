@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Icon } from "semantic-ui-react";
 import { func } from "prop-types";
 
@@ -12,10 +12,11 @@ const propTypes = {
 };
 
 const GoogleLoginOption = ({ setError, setLoading }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { logInGoogle } = AuthProvider;
   return (
-    <Button onClick={handleAuthorization(logInGoogle, setError, setLoading, history)}>
+    <Button onClick={handleAuthorization(logInGoogle, setError, setLoading, navigate, location)}>
       <Icon name={"google"} />
       <span> Google </span>
     </Button>

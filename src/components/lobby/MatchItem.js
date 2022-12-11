@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import { Button, Icon } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { MatchType, GameType } from "config/propTypes";
 import { useUser, useCredentials, useProfiles } from "contexts/UserContext";
 import { leaveGame } from "utils/game/leave";
@@ -127,7 +127,7 @@ MatchRow.propTypes = matchItemPropTypes;
 const MatchItem = React.memo(
   ({ match, match: { matchID, gameName, players }, game, onJoin, current, disabled }) => {
     const { t } = useTranslation("lobby");
-    const history = useHistory();
+    const navigate = useNavigate();
     const user = useUser();
     const profiles = useProfiles();
     const credentials = useCredentials();
@@ -149,7 +149,7 @@ const MatchItem = React.memo(
         currentPlayers.find(({ name }) => name === user.uid).id.toString(),
         user.uid,
         gameCredentials,
-        history
+        navigate
       );
     };
 

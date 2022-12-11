@@ -8,7 +8,7 @@ export const breakpoints = {
 };
 
 const AppMedia = createMedia({
-  breakpoints: breakpoints,
+  breakpoints,
 });
 
 export const mediaStyle = AppMedia.createMediaStyle();

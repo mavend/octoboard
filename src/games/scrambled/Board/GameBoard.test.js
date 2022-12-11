@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "utils/test/render";
 import GameBoard from "./GameBoard";
-import BoardGameContextMock from "../GameContextMock";
+import { BoardGameContextMock } from "../GameContextMock";
 
 describe("scrambled GameBoard component", () => {
   it("renders correctly", async () => {

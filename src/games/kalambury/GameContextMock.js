@@ -1,40 +1,25 @@
 import React from "react";
-import { boolean, number, text, select } from "@storybook/addon-knobs";
 import { action } from "@storybook/addon-actions";
 import { BoardGameProvider } from "contexts/BoardGameContext";
 import { actionsDataMock } from "plugins/actions.mock";
 
-const ref = "Game Context";
-
-const BoardGameContextMock = ({ children }) => {
+const BoardGameContextMock = ({ children, ...args }) => {
   return (
     <BoardGameProvider
       gameName="Kalambury"
       G={{
         timePerTurn: 120,
-        turnEndTime:
-          Math.floor(new Date().getTime() / 1000) +
-          number(
-            "Remaining seconds",
-            100,
-            {
-              range: true,
-              min: 0,
-              max: 120,
-              step: 1,
-            },
-            ref
-          ),
+        turnEndTime: Math.floor(new Date().getTime() / 1000) + 100,
         points: [10, 3, 6],
-        maxPoints: number("Max points", 15, ref),
-        privateMatch: boolean("Private", true, ref),
+        maxPoints: 15,
+        privateMatch: true,
         players: {
           0: {
-            phrase: text("Phrase", "Baba z wozu", ref),
+            phrase: "Baba z wozu",
           },
           1: {},
         },
-        canChangePhrase: boolean("Can change phrase?", true, ref),
+        canChangePhrase: true,
       }}
       moves={{
         Guess: action("Guess"),
@@ -45,14 +30,9 @@ const BoardGameContextMock = ({ children }) => {
         Forfeit: action("Forfeit"),
       }}
       ctx={{
-        activePlayers: [
-          select("stage", ["draw", "guess", "wait", "manage", "match"], "draw", ref),
-          "guess",
-          "guess",
-          "guess",
-        ],
+        activePlayers: ["draw", "guess", "guess", "guess"],
         currentPlayer: "0",
-        phase: select("phase", ["wait", "play"], "play", ref),
+        phase: "play",
       }}
       playerID={"0"}
       matchID={"qwe123"}
@@ -78,6 +58,7 @@ const BoardGameContextMock = ({ children }) => {
       }}
       chatMessages={[]}
       sendChatMessage={action("sendChatMessage")}
+      {...args}
     >
       {children}
     </BoardGameProvider>

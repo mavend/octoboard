@@ -1,13 +1,7 @@
 import React from "react";
 
-import BoardGameContextMock from "../GameContextMock";
+import { BoardGameContextMock } from "../GameContextMock";
 import Board from ".";
-
-export default {
-  component: Board,
-  title: "Scrambled/Board",
-  excludeStories: /.*Data$/,
-};
 
 export const Default = () => (
   <BoardGameContextMock>
@@ -32,3 +26,10 @@ export const DuringApproval = () => (
     <Board />
   </BoardGameContextMock>
 );
+
+export default {
+  component: Board,
+  title: "Scrambled/Board",
+  excludeStories: /.*Data$/,
+  subcomponents: [BoardGameContextMock],
+};

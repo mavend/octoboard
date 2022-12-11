@@ -1,6 +1,5 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
-import { boolean } from "@storybook/addon-knobs";
 
 import Lobby from "./Lobby";
 
@@ -12,7 +11,7 @@ export default {
 
 export const Default = () => (
   <Lobby
-    loading={boolean("Loading?", false)}
+    loading={false}
     matches={[]}
     games={[{ name: "Kalambury", image: "", minPlayers: 0, maxPlayers: 10 }]}
     handleCreate={action("handleCreate")}
@@ -22,7 +21,7 @@ export const Default = () => (
 
 export const WithMatches = () => (
   <Lobby
-    loading={boolean("Loading?", false)}
+    loading={false}
     matches={[
       {
         matchID: "qweasd1",
@@ -51,20 +50,18 @@ export const WithMatches = () => (
       },
       { matchID: "qweasd4", gameName: "Kalambury", players: [{}, {}], setupData: {} },
     ]}
-    currentMatch={
-      boolean("Is in game?", true) && {
-        matchID: "qweasd0",
-        gameName: "Kalambury",
-        players: [
-          { id: 0, name: "user-0" },
-          { id: 1, name: "user-1" },
-          { id: 2, name: "user-2" },
-          {},
-          {},
-        ],
-        setupData: { private: true },
-      }
-    }
+    currentMatch={{
+      matchID: "qweasd0",
+      gameName: "Kalambury",
+      players: [
+        { id: 0, name: "user-0" },
+        { id: 1, name: "user-1" },
+        { id: 2, name: "user-2" },
+        {},
+        {},
+      ],
+      setupData: { private: true },
+    }}
     games={[
       {
         name: "Kalambury",

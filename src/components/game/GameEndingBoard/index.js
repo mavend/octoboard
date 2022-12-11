@@ -8,7 +8,7 @@ import { lobbyClient } from "services/LobbyClient";
 import DataStore from "services/DataStore";
 
 import { useUser } from "contexts/UserContext";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { routes } from "config/routes";
 import { PlayerType } from "config/propTypes";
 
@@ -26,26 +26,26 @@ const GameEndingBoard = ({ winners, players }) => {
   const [loading, setLoading] = useState(false);
 
   const user = useUser();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleNewMatch = useCallback(() => {
     setLoading(true);
     lobbyClient
-      .playAgain(gameName, matchID, { playerID: playerID, credentials: credentials })
+      .playAgain(gameName, matchID, { playerID, credentials })
       .then(async ({ nextMatchID }) => {
         await lobbyClient.leaveMatch(gameName, matchID, {
-          playerID: playerID,
-          credentials: credentials,
+          playerID,
+          credentials,
         });
         await lobbyClient
-          .joinMatch(gameName, nextMatchID, { playerID: playerID, playerName: user.uid })
+          .joinMatch(gameName, nextMatchID, { playerID, playerName: user.uid })
           .then(async ({ playerCredentials }) => {
             await DataStore.addCredentials(user.uid, nextMatchID, playerCredentials);
-            history.push(routes.game(gameName, nextMatchID));
+            navigate(routes.game(gameName, nextMatchID));
           });
       })
-      .catch((e) => history.push(routes.lobby(), { error: e.message }));
-  }, [credentials, playerID, matchID, gameName, history, user.uid]);
+      .catch((e) => navigate(routes.lobby(), { error: e.message }));
+  }, [credentials, playerID, matchID, gameName, navigate, user.uid]);
 
   return (
     <>

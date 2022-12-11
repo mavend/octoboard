@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -15,7 +15,8 @@ const ChangePassword = () => {
   const [success, setSuccess] = useState(null);
 
   const { t } = useTranslation("credentials");
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const formValid = newPassword.length > 0;
 
@@ -23,13 +24,14 @@ const ChangePassword = () => {
     () => AuthProvider.changePassword(currentPassword, newPassword),
     setError,
     setIsLoading,
-    history,
+    navigate,
+    location,
     () => setSuccess(t("change_password.success"))
   );
 
   const modalOptions = {
     closeIcon: true,
-    onClose: () => history.goBack(),
+    onClose: () => navigate(-1),
   };
 
   return (

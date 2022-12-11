@@ -1,10 +1,7 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
-import { boolean, number, select } from "@storybook/addon-knobs";
 import { BoardGameProvider } from "contexts/BoardGameContext";
 import { actionsDataMock } from "plugins/actions.mock";
-
-const ref = "Game Context";
 
 const BoardGameContextMock = ({ children }) => {
   return (
@@ -12,8 +9,8 @@ const BoardGameContextMock = ({ children }) => {
       gameName="PictureMatch"
       G={{
         points: [10, 3],
-        maxPoints: number("Max points", 15, ref),
-        privateMatch: boolean("Private", true, ref),
+        maxPoints: 15,
+        privateMatch: true,
         pictures: [],
         players: {
           0: {
@@ -25,14 +22,9 @@ const BoardGameContextMock = ({ children }) => {
       }}
       moves={{}}
       ctx={{
-        activePlayers: [
-          select("match", ["match", "wait"], "match", ref),
-          "match",
-          "match",
-          "match",
-        ],
+        activePlayers: ["match", "match", "match", "match"],
         currentPlayer: "0",
-        phase: select("phase", ["wait", "play"], "play", ref),
+        phase: "play",
       }}
       playerID={"0"}
       matchID={"qwe123"}

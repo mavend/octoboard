@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import AuthProvider from "services/Auth";
 import handleAuthorization from "utils/user/handleAuthorization";
@@ -15,14 +15,16 @@ const RegisterPage = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const formValid = nickname.length > 0 && email.length > 0 && password.length > 0;
   const handleRegisterFunc = handleAuthorization(
     () => AuthProvider.register(nickname, email, password),
     setError,
     setIsLoading,
-    history
+    navigate,
+    location
   );
 
   return (

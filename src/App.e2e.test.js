@@ -1,8 +1,8 @@
-import { internet } from "faker";
-const puppeteer = require("puppeteer");
+import { faker } from "@faker-js/faker";
+import puppeteer from "puppeteer";
 
 const user = {
-  username: internet.userName(),
+  username: faker.internet.userName(),
 };
 
 const isDebugging = () => {
